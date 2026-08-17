@@ -86,3 +86,5 @@ Contorno já embutido no `scripts/setup.sh`: quando o `apt` falha, baixa o build
 ## Histórico de decisões
 
 - **17/ago/2026**: estúdio criado a partir do template do `eita-conteudo`. Infra e gotchas técnicos herdados integralmente; marca, persona, voz, pilares e credencial **não** herdados (decisão explícita do usuário).
+- **17/ago/2026**: usuário apontou as fontes primárias da marca (site, Central de Ajuda no Notion, `@elevenlabsio` como referência de estilo) e confirmou que a regra da credencial do EITA não vale aqui. Site e Notion **não puderam ser lidos**: bloqueados pelo proxy de egresso. Marca registrada a partir de busca na web, a confirmar.
+- **17/ago/2026**: Kairogen mantido no plano FREE sem créditos por decisão do usuário (B-roll por IA segue indisponível). Chave antiga da ElevenLabs mantida ativa por ora.
