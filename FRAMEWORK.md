@@ -6,11 +6,18 @@ Estúdio de edição e agendamento para as redes da **Profissio.ai**. Espelha a 
 
 ## Persona e voz do perfil
 
-- Produto / proposta da Profissio.ai: **PENDENTE**.
-- Quem fala no perfil (persona, tom, nível de formalidade): **PENDENTE**.
-- Credencial de quem assina, quando citada: **PENDENTE**.
-- CTA padrão: **PENDENTE**.
-- Bordões e vocabulário próprio: **PENDENTE**.
+**Produto**: IA sob medida, 24/7, para Vendas, Atendimento, Suporte, Experiência e Produtividade. Plataforma unificada que integra os pontos de contato com o cliente por IA. Tagline do site: "AI built for your business's day-to-day". Detalhes e limites da fonte no `CLAUDE.md`, seção "A marca".
+
+**Público: B2B.** Quem assiste é decisor ou operador de empresa (dono, head de vendas, head de CX, gerente de suporte), não consumidor final. O conteúdo mostra trabalho sendo resolvido, não autoajuda.
+
+**Referência de estilo**: `@elevenlabsio` no Instagram. Marca de produto de IA que comunica por demo do produto funcionando, recorte curto e limpo, sem influencer falando para a câmera o tempo todo. Serve como referência de **formato e ritmo**, não de posicionamento.
+
+Ainda **PENDENTE**, precisa da equipe:
+
+- Quem fala no perfil (persona, tom, nível de formalidade; se há rosto humano recorrente ou se a marca fala sozinha).
+- Credencial de quem assina, quando citada.
+- CTA padrão (o site é B2B, então provavelmente agendamento de demo ou fale com especialista, mas a frase exata precisa ser definida).
+- Bordões e vocabulário próprio; termos do produto a usar com consistência (extrair da Central de Ajuda).
 
 ### REGRAS INEGOCIÁVEIS
 
@@ -21,14 +28,14 @@ Estúdio de edição e agendamento para as redes da **Profissio.ai**. Espelha a 
 
 ## Pilares de conteúdo
 
-**PENDENTE.** Definir com a equipe antes do primeiro vídeo. Formato da tabela, para preencher:
+**Hipóteses iniciais, a validar com a equipe e com desempenho.** Derivadas do que a Profissio.ai faz e do modelo do `@elevenlabsio`. Não produzir em cima disso sem aprovação.
 
-| Pilar | Formato | Referência |
+| Pilar | Formato | Origem |
 |---|---|---|
-| A | | |
-| B | | |
-| C | | |
-| D | | |
+| A | **Demo do agente funcionando**: conversa real no WhatsApp virando reel (botões inteligentes, indicador de digitação, reações). Mostra o produto resolvendo, não explicando. | Stack visível do produto |
+| B | **Caso de uso por área**: um problema concreto de Vendas, Atendimento, Suporte, Experiência ou Produtividade e como o agente resolve. | Proposta do produto |
+| C | **Bastidor da engenharia**: como informação bruta vira prompt estruturado, orquestração de agentes, os três níveis de validação (IA testadora, engenharia, cliente). Diferencial forte e pouco explorado por concorrente. | Processo da empresa |
+| D | **Educação e termos do produto**: explicar conceitos e funcionalidades da Central de Ajuda em formato curto. | **Central de Ajuda (Notion), fonte principal segundo o usuário** |
 
 ## Assinaturas de edição
 

@@ -6,6 +6,31 @@ Este repositório é o **Profissio.ai Conteúdo Studio**: edição e agendamento
 
 > **Nada de EITA nem de Anaclaudia Zani aqui.** Este repo nasceu a partir do template do `eita-conteudo`, mas a marca, a persona, a voz e a credencial da Profissio.ai são independentes. Não herde posicionamento, bordões, CTA nem credencial daquele estúdio. O que ainda não foi definido está marcado como **PENDENTE** e deve ser perguntado, nunca inventado.
 
+## A marca: o que é a Profissio.ai
+
+**Empresa**: Profissio.ai Tecnologia Ltda, São Paulo (CNPJ 59.095.658/0001-77). Atividade: desenvolvimento e licenciamento de programas de computador customizáveis.
+
+**Tagline do site**: "AI built for your business's day-to-day".
+
+**Proposta**: IA sob medida, funcionando 24/7, para resolver desafios de negócio em **Vendas, Atendimento, Suporte, Experiência e Produtividade**. Plataforma unificada que integra todos os pontos de contato com o cliente por IA.
+
+**Como o serviço funciona** (diferencial que aparece na comunicação):
+1. A equipe mergulha no negócio do cliente para entender nuances e desafios.
+2. Engenheiros de IA transformam informação bruta em prompts estruturados e orquestram agentes para cenários complexos.
+3. Qualidade validada em três níveis: IA testadora, depois a equipe de engenharia, depois o cliente.
+
+**Stack visível**: WhatsApp Cloud API com botões inteligentes, indicador de digitação e reações a mensagens.
+
+**Natureza do negócio: B2B / enterprise.** Isso muda tudo em relação aos estúdios irmãos, que são B2C de mentoria emocional. O conteúdo daqui fala com decisor de empresa, não com consumidor final.
+
+> **Fonte e limite**: tudo acima veio de busca na web em 17/ago/2026, **não** das fontes primárias. `www.profissio.ai` e `profissio.notion.site` estão **bloqueados pelo proxy de egresso** (respondem 000), então o site e a Central de Ajuda ainda não foram lidos. Confirmar e aprofundar assim que os domínios forem liberados.
+
+### Fontes primárias a estudar (PENDENTE, bloqueadas pelo proxy)
+
+- Site: `https://www.profissio.ai/`
+- **Central de Ajuda (Notion)**: `https://profissio.notion.site/Central-de-Ajuda-28f69608eef980599e84e08569fce83a`. **Muitos conteúdos partirão daqui** (instrução do usuário em 17/ago/2026). Estudar em detalhe e resumir nesta memória: funcionalidades, como usar, dúvidas frequentes, integrações e termos próprios do produto.
+- Referência de estilo de conteúdo: `https://www.instagram.com/elevenlabsio/` (perfil da ElevenLabs). Referência de **formato e linguagem visual** para marca de produto de IA, não de posicionamento.
+
 ## Regras que valem em qualquer resposta pública
 
 - Nunca usar travessão em texto público (caption, lettering, legenda): reescrever a frase.
