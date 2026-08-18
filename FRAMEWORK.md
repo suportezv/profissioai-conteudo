@@ -6,36 +6,39 @@ Estúdio de edição e agendamento para as redes da **Profissio.ai**. Espelha a 
 
 ## Persona e voz do perfil
 
-**Produto**: IA sob medida, 24/7, para Vendas, Atendimento, Suporte, Experiência e Produtividade. Plataforma unificada que integra os pontos de contato com o cliente por IA. Tagline do site: "AI built for your business's day-to-day". Detalhes e limites da fonte no `CLAUDE.md`, seção "A marca".
+**Produto**: a **COP (Customer OmniAI Platform)**, agentes de IA sob medida que vendem, atendem e escalam 24/7 em WhatsApp, Instagram, site e e-mail. Tagline oficial: **"IA à prova do dia-a-dia do seu negócio."** Detalhes completos, incluindo dores e soluções por eixo, no `CLAUDE.md`.
 
-**Público: B2B.** Quem assiste é decisor ou operador de empresa (dono, head de vendas, head de CX, gerente de suporte), não consumidor final. O conteúdo mostra trabalho sendo resolvido, não autoajuda.
+**Quem fala**: a **Agente Profissio.ai**, tratada no feminino em pt-BR (o site também usa "o Profissio.ai Agent" em inglês). A marca fala pelo produto funcionando, não por um rosto humano de autoridade. Não há credencial de criadora a citar, e a regra do estúdio EITA não se aplica aqui.
 
-**Referência de estilo**: `@elevenlabsio` no Instagram. Marca de produto de IA que comunica por demo do produto funcionando, recorte curto e limpo, sem influencer falando para a câmera o tempo todo. Serve como referência de **formato e ritmo**, não de posicionamento.
+**Tom**: direto, competente e concreto. O site vende "tecnologia humana, poderosa, acessível e totalmente funcional" e "IA que não falha". Então nada de promessa vaga nem de hype de IA: mostrar o agente resolvendo, com número quando houver.
 
-Ainda **PENDENTE**, precisa da equipe:
+**Público: B2B.** Dono de negócio, head de vendas, head de CX, gerente de suporte, operação. O conteúdo mostra trabalho sendo resolvido, não autoajuda.
 
-- Quem fala no perfil (persona, tom, nível de formalidade; se há rosto humano recorrente ou se a marca fala sozinha).
-- Credencial de quem assina, quando citada.
-- CTA padrão (o site é B2B, então provavelmente agendamento de demo ou fale com especialista, mas a frase exata precisa ser definida).
-- Bordões e vocabulário próprio; termos do produto a usar com consistência (extrair da Central de Ajuda).
+**Referência de estilo**: `@elevenlabsio`. Marca de produto de IA que comunica por demo do produto funcionando, corte curto e limpo, sem influencer falando para a câmera. Referência de **formato e ritmo**, não de posicionamento.
+
+**CTAs oficiais** (usar estes, não inventar): "Conheça a plataforma" · "Quero conhecer a COP" · "Teste agora a diferença" · "Falar com o Profissio.ai Agent" · "Converse agora com a Agente Profissio.ai".
+
+Ainda **PENDENTE**: definir com a equipe se há rosto humano recorrente (fundador, especialista) e qual CTA vira padrão para Instagram.
 
 ### REGRAS INEGOCIÁVEIS
 
 1. **Nunca usar travessão em texto público.** Reescrever a frase.
 2. **Palavrão bipa, não corta** (sine 1000 Hz curto, voz mutada no trecho).
 3. **Loudness final: -14 LUFS.**
-4. Credencial de quem assina sempre completa e literal: **PENDENTE definir**.
+4. **Não há credencial de criadora a citar.** Quem assina é a marca. A regra do estúdio EITA não vale aqui.
 
 ## Pilares de conteúdo
 
-**Hipóteses iniciais, a validar com a equipe e com desempenho.** Derivadas do que a Profissio.ai faz e do modelo do `@elevenlabsio`. Não produzir em cima disso sem aprovação.
+Derivados das fontes primárias. **Validar desempenho antes de fixar proporção.**
 
-| Pilar | Formato | Origem |
+| Pilar | Formato | Matéria-prima |
 |---|---|---|
-| A | **Demo do agente funcionando**: conversa real no WhatsApp virando reel (botões inteligentes, indicador de digitação, reações). Mostra o produto resolvendo, não explicando. | Stack visível do produto |
-| B | **Caso de uso por área**: um problema concreto de Vendas, Atendimento, Suporte, Experiência ou Produtividade e como o agente resolve. | Proposta do produto |
-| C | **Bastidor da engenharia**: como informação bruta vira prompt estruturado, orquestração de agentes, os três níveis de validação (IA testadora, engenharia, cliente). Diferencial forte e pouco explorado por concorrente. | Processo da empresa |
-| D | **Educação e termos do produto**: explicar conceitos e funcionalidades da Central de Ajuda em formato curto. | **Central de Ajuda (Notion), fonte principal segundo o usuário** |
+| **A. Demo do agente** | Conversa real de WhatsApp virando reel: a Agente qualificando, respondendo e fechando. O site já tem o roteiro pronto na simulação **Hit&Fit** (varejo de moda), da apresentação ao botão de compra. | Site + prints do app |
+| **B. Dor por eixo** | Uma dor concreta de Vendas, Atendimento, Experiência ou Operação e como a COP resolve. As dores estão literalmente listadas no `CLAUDE.md` ("perda de leads por demora na resposta", "casos repetidos consumindo o time sênior", "dados isolados em planilhas"). | Site, tabela dos quatro eixos |
+| **C. Bastidor da engenharia** | O processo de 5 etapas: mergulho consultivo, engenharia de IA, teste de toda incidência, lançamento, melhoria contínua. Diferencial forte e pouco usado por concorrente. | Site |
+| **D. Central de Ajuda em vídeo** | Cada dúvida frequente e cada funcionalidade vira um reel curto: janela de 24 horas, assumir conversa, status das conversas, funil automático, painel de análises, ativações, modelos de mensagem com `/`. **Os artigos já têm vídeo de passo a passo e prints para aproveitar.** | **Central de Ajuda (Notion), 28 artigos** |
+
+**Termos do produto a usar com consistência** (vocabulário próprio, extraído da Central de Ajuda): COP, Agente, App Profissio, Conversas, Funil, Análises, Contatos, Ativações, Assumir conversa, Janela de 24 horas, Aguardando Atendente, Atendente Gerenciando, IA Gerenciando, Modelos de Mensagem, Tags/Etiquetas, Templates, Meta Business, Tempo economizado, Taxa de retorno.
 
 ## Assinaturas de edição
 
@@ -43,7 +46,7 @@ Herdadas dos estúdios irmãos (validadas nos testes 01 e 02 do `ana-conteudo` e
 
 - Hook verbal ou visual + título na tela nos **2 primeiros segundos**.
 - Lettering condensado caps branco com sombra dura (fonte: Helvetica Neue Condensed Black no Mac; Liberation Sans Bold como fallback Linux).
-  - Cor de acento nas ênfases: **PENDENTE** (usar a cor da identidade da Profissio.ai. O amarelo `#FFE234` é do ecossistema EITA, não usar aqui).
+  - Cor de acento nas ênfases: **rosa `#E255A0`** (`--rose-bright` do site). Apoio: violeta `#6B3CB8` e ciano `#3DBFF2`. Fundo escuro da marca: `#07060B`. O amarelo `#FFE234` é do ecossistema EITA, não usar aqui.
 - Legendas frase a frase em branco (não karaokê), terço inferior, **SEMPRE por último no filter chain**.
 - Cortes secos; punch-ins de zoom 1.10 a 1.22x; freeze frames P&B com card para punchlines; cutaways como payoff de piada.
 - Palavrão não corta: **bipa**.
@@ -56,7 +59,7 @@ Estrutura herdada; o conteúdo de cada bloco depende do posicionamento **PENDENT
 
 1. Hook em 1 linha (dor ou cena concreta, sem travessão)
 2. 2 a 3 parágrafos curtos
-3. CTA (**PENDENTE** definir a frase padrão)
+3. CTA oficial (ver lista na seção Persona; para Instagram, "Falar com o Profissio.ai Agent" ou "Conheça a plataforma")
 4. Pergunta de engajamento
 
 ## Fluxo por vídeo

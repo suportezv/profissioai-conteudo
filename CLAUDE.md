@@ -8,28 +8,99 @@ Este repositório é o **Profissio.ai Conteúdo Studio**: edição e agendamento
 
 ## A marca: o que é a Profissio.ai
 
-**Empresa**: Profissio.ai Tecnologia Ltda, São Paulo (CNPJ 59.095.658/0001-77). Atividade: desenvolvimento e licenciamento de programas de computador customizáveis.
+**Empresa**: Profissio.ai Tecnologia Ltda, São Paulo (CNPJ 59.095.658/0001-77). Contato: `suporte@profissio.ai`.
 
-**Tagline do site**: "AI built for your business's day-to-day".
+**Tagline oficial (pt-BR)**: **"IA à prova do dia-a-dia do seu negócio."** Variante usada em seção: "Soluções à prova do dia-a-dia do seu negócio". Descritor curto: "Tecnologia humana, poderosa, acessível e totalmente funcional".
 
-**Proposta**: IA sob medida, funcionando 24/7, para resolver desafios de negócio em **Vendas, Atendimento, Suporte, Experiência e Produtividade**. Plataforma unificada que integra todos os pontos de contato com o cliente por IA.
+**Descrição one-liner**: "A Profissio.ai cria agentes de IA sob medida que vendem, atendem e escalam 24/7 em todos os canais: WhatsApp, Instagram, site e e-mail."
 
-**Como o serviço funciona** (diferencial que aparece na comunicação):
-1. A equipe mergulha no negócio do cliente para entender nuances e desafios.
-2. Engenheiros de IA transformam informação bruta em prompts estruturados e orquestram agentes para cenários complexos.
-3. Qualidade validada em três níveis: IA testadora, depois a equipe de engenharia, depois o cliente.
+**Produto nomeado**: **COP, Customer OmniAI Platform**. "Plataforma unificada que integra todos os pontos de contato com seus clientes através de IA." A COP "centraliza dados, canais e fluxos de trabalho em um único agente inteligente, pronto para escalar sem perder a identidade da sua marca."
 
-**Stack visível**: WhatsApp Cloud API com botões inteligentes, indicador de digitação e reações a mensagens.
+**Idiomas e mercados**: site em pt-BR, en-US, es-ES e ar-AE. Atende BR, US, AE e América Latina. Redes oficiais: Instagram `@profissio.ai`, LinkedIn `company/profissio-ai`. App: `https://app.profissioai.com/login`.
 
-**Natureza do negócio: B2B / enterprise.** Isso muda tudo em relação aos estúdios irmãos, que são B2C de mentoria emocional. O conteúdo daqui fala com decisor de empresa, não com consumidor final.
+### Os quatro eixos (cada um com dor e solução, direto do site)
 
-> **Fonte e limite**: tudo acima veio de busca na web em 17/ago/2026, **não** das fontes primárias. `www.profissio.ai` e `profissio.notion.site` estão **bloqueados pelo proxy de egresso** (respondem 000), então o site e a Central de Ajuda ainda não foram lidos. Confirmar e aprofundar assim que os domínios forem liberados.
+| Eixo | Dores citadas | Soluções citadas |
+|---|---|---|
+| **Vendas** | Perda de leads por demora na resposta; atendimento de vendas fora de horário; acompanhamento e nutrição dos contatos manual | Atendimento 24/7 em múltiplos canais e idiomas; qualificação automática e roteamento inteligente; copilot de vendas com geração de propostas e follow-up |
+| **Atendimento/Suporte** | Inconsistência no tom e na qualidade das interações; casos repetidos consumindo o time sênior | **Resolução autônoma de até 80% dos tickets recorrentes**; atendimento humanizado, multimarca e multilíngue; roteiros vivos que aprendem com a base de conhecimento; escalonamento inteligente para agentes humanos |
+| **Experiência (CX)** | Pesquisas de satisfação ignoradas pela operação; personalização limitada à régua de marketing | Visão 360° do cliente em todos os pontos de contato; detecção automática de churn e insatisfação; personalização por perfil, jornada e contexto; loops de melhoria contínua |
+| **Operação/Produtividade** | Dados isolados em planilhas e sistemas legados; falta de orquestração entre áreas | Automação de fluxos com IA generativa nativa; integrações com ERP, CRM, helpdesk e BI; painel único com indicadores em tempo real |
 
-### Fontes primárias a estudar (PENDENTE, bloqueadas pelo proxy)
+### Como o serviço funciona (5 etapas, linguagem do site)
 
-- Site: `https://www.profissio.ai/`
-- **Central de Ajuda (Notion)**: `https://profissio.notion.site/Central-de-Ajuda-28f69608eef980599e84e08569fce83a`. **Muitos conteúdos partirão daqui** (instrução do usuário em 17/ago/2026). Estudar em detalhe e resumir nesta memória: funcionalidades, como usar, dúvidas frequentes, integrações e termos próprios do produto.
-- Referência de estilo de conteúdo: `https://www.instagram.com/elevenlabsio/` (perfil da ElevenLabs). Referência de **formato e linguagem visual** para marca de produto de IA, não de posicionamento.
+1. **Mergulho consultivo**: "Nossa equipe mergulha na sua operação, entendendo cada nuance, desafio e oportunidade para entregar uma solução única."
+2. **Engenharia de IA**: "desenvolve inteligência focada no seu negócio através de dados, regras, processos e exemplos reais."
+3. **Teste de toda incidência**: "Realizamos testes e simulações antes de colocar sua nova IA em produção, garantindo eficiência, clareza e performance."
+4. **Lançamento do projeto**: "com suporte ao cliente envolvendo toda a operação."
+5. **Melhoria contínua**: "A IA evolui constantemente através de análises, feedbacks e otimizações."
+
+### Diferenciais declarados
+
+- **Criação de IA, agentes e fluxos sob medida**: "Tecnologia desenhada para os processos, jornadas e estratégias específicas da sua empresa."
+- **IA que não falha**: "Sistemas robustos, treinados e preparados para atuar de maneira consistente mesmo em cenários complexos."
+- **Experiência única de tecnologia**: "A junção da plataforma Profissio.ai com IA cria uma experiência única de atendimento e operação."
+- **Consistência de Marca**: "Sua inteligência em todos os canais da marca, mantendo o mesmo tom de voz e a mesma excelência."
+- **Escalabilidade modular**: "Amplie sua operação e ative módulos conforme as necessidades do negócio crescem."
+
+### CTAs reais do site (usar estes, não inventar)
+
+"Conheça a plataforma" · "Quero conhecer a COP" · "Teste agora a diferença" · **"Falar com o Profissio.ai Agent"** · "Converse agora com a Agente Profissio.ai" · "Comece agora mesmo com a Agente Profissio.ai."
+
+> Nota de gênero: o site trata o assistente como **"a Agente Profissio.ai"** (feminino) e também como "o Profissio.ai Agent". Manter a forma feminina em pt-BR.
+
+### Demo oficial do site (modelo pronto para o pilar A)
+
+O site roda uma simulação com cliente fictício **Hit&Fit** (varejo de moda, online e loja física). O roteiro: a Agente se apresenta, pergunta empresa e maior dificuldade, encontra o site e o Instagram do cliente, analisa "catálogo, tom de voz e fluxos", e então simula um atendimento de ponta a ponta até o botão de compra com desconto. **Esse é o formato de demo que a marca já usa, replicar em vídeo.**
+
+### Identidade visual (extraída do CSS do site)
+
+- **Rosa/magenta** (cor de acento principal): `--rose-bright #E255A0`, `--rose #BE3F84`, `--rose-soft #D86AA8`
+- **Violeta**: `--violet #6B3CB8` · **Azul ciano**: `--cyber #3DBFF2`, `--neoblue #57E3F2` · **Azul profundo**: `--quantum #2F4073`
+- **Fundos escuros**: `--bg #07060B`, `--bg-2 #0E0B16`, `--surface #15101F`
+- **Fontes do site**: Sora (texto), Archivo Black e Bebas Neue (display), Inter Tight, DM Serif Display, Cairo (árabe)
+
+## A Central de Ajuda (Notion): fonte principal de conteúdo
+
+Lida integralmente em 18/ago/2026 via API pública do Notion. **28 artigos em 4 seções mais FAQs.** Fonte declarada pelo usuário como origem de muitos conteúdos.
+
+Rota técnica para reler (o Notion é SPA, `curl` na URL não traz conteúdo):
+```
+curl -s -X POST https://profissio.notion.site/api/v3/loadPageChunk \
+  -H "Content-Type: application/json" \
+  -d '{"pageId":"28f69608-eef9-8059-9e84-e08569fce83a","limit":200,"cursor":{"stack":[]},"chunkNumber":0,"verticalColumns":false}'
+```
+O `recordMap.block` traz a árvore; cada subpágina exige uma chamada com o próprio id.
+
+### Seção 1: Acessos (10 artigos)
+
+Instalação do App no iOS (Safari, compartilhar, "Adicionar a tela de início") e Android (Chrome, "Adicionar à Tela Inicial", Instalar). É **PWA, não passa por loja de app**. Acesso por navegador em `app.profissioai.com/login`. Recuperação de senha **só via suporte ou CS** (não há autoatendimento). Troca de senha em avatar > Configurações > Minha conta. Primeiro acesso, adicionar usuário, acessar Meta Business, configurar horário de atendimento, escolher número do WhatsApp Business.
+
+### Seção 2: Usabilidade (14 artigos), o coração do produto
+
+**Abas do app**: Conversas, Funil, Análises, Contatos, Ativações.
+
+- **Conversas**: status inteligentes de conversa, e este é um conceito central: **Aguardando Atendente**, **Atendente Gerenciando**, **IA Gerenciando**, **Conversas Passadas**. Botão **"Assumir conversa"** faz o Agente parar de responder e o humano assumir. Envio de texto (negrito/itálico), áudio, imagem, PDF e documentos.
+- **Janela de 24 horas**: limite da META. Dentro dela responde livremente; fora aparece "Janela expirada" e **só templates funcionam**. Conceito que aparece em quase todo artigo.
+- **Gestão de visibilidade por operador**: avatar colorido é o atendente ativo, avatar cinza já participou, vários avatares mostram histórico. **Bloqueio temporário da caixa de texto** evita dois atendentes na mesma conversa. Chave "Limitar operadores às próprias conversas" em Configurações > Geral. Admin e Analista sempre veem tudo.
+- **Modelos de Mensagem** (Respostas Rápidas): atalho digitando `/` mais o nome (ex.: `/saudacao`) ou pelo ícone na caixa de texto.
+- **Funil**: classifica leads **automaticamente** analisando conteúdo das mensagens, tipo de interação e palavras-chave/intenções, e move a conversa de estágio sozinho.
+- **Painel de Análises**, 5 abas: **Geral** (mensagens trocadas por usuário/Agente/humano, **tempo economizado**, total de conversas, mensagens por conversa), **Multimídia** (texto, áudio, imagem, documento), **Engajamento** (usuários ativos diários/semanais/mensais, **taxa de retorno**, mensagens por usuário, distribuição de atividade, status da janela de 24h), **Menções** (palavras-chave rastreadas, por usuário vs por assistente, conversas únicas), **Público** (país, região do Brasil e top 20 cidades, inferido pelo **DDD** do telefone).
+- **Ativações**: envio de mensagens em escala, segmentado, para pesquisas de satisfação, avisos, marketing, lembretes e reengajamento.
+- Também: tags/etiquetas, templates, filtro avançado de conversas, menções, gravação de áudio, personalizar conversa, gerenciar contatos (CRM), importação e visualização de dados de vendas.
+
+### Seção 3: Recebimento de Pagamentos (3 artigos)
+
+- **Stripe**: o Agente envia link seguro de pagamento; **o Agente não coleta dados de cartão no chat**. Cobrança recorrente (mensal, trimestral, anual). Cliente precisa dar acesso de desenvolvedor ao e-mail da Profissio no painel Stripe. **Habilitação por agente**, pode não estar ativa em todos.
+- **Banco Inter**: recebimento via Pix e gestão de usuário.
+
+### Seção 4: FAQs recorrentes
+
+"O que são Tags/Etiquetas?", "O que são Templates?", "O que significa janela de 24 horas?", "Qual valor para envio de Templates?", "O que é o Meta Business?" (as respostas ficam em blocos toggle que a API não devolveu no chunk inicial; o conteúdo equivalente está no corpo dos artigos).
+
+**Suporte**: WhatsApp da equipe Profissio e `suporte@profissio.ai`.
+
+> Cada artigo tem vídeo de passo a passo e prints. **Isso é matéria-prima direta**: os vídeos existentes viram cortes verticais, e cada dúvida frequente vira um reel curto.
 
 ## Regras que valem em qualquer resposta pública
 
@@ -55,19 +126,24 @@ Este repositório é o **Profissio.ai Conteúdo Studio**: edição e agendamento
 - **Kairogen** (B-roll por IA): conta **suporte@profissio.ai**, plano **FREE**, **0 créditos**, 1 geração concorrente. **B-roll por IA indisponível até haver créditos.** Estúdios irmãos usam a conta `suporte@zavi.ag` no plano Essential (`veo3-1-lite`); decidir se esta conta faz upgrade ou se o estúdio usa a conta da agência.
 - **Google Drive** (brutos): conector oficial conectado. Pasta de brutos da Profissio.ai: **PENDENTE: criar/apontar** (padrão: pasta com "qualquer pessoa com o link: leitor" para download direto).
 
-## Rede do environment (verificado em 17/ago/2026)
+## Rede do environment (verificado em 18/ago/2026)
 
-O environment está com network **Custom** liberando só `drive.google.com`, `drive.usercontent.google.com` e `api.elevenlabs.io`. GitHub (incluindo Releases) passa. **Tudo o mais responde 403 no proxy**, e isso derruba parte do setup:
+Network **Custom**. Domínios liberados: `drive.google.com`, `drive.usercontent.google.com`, `api.elevenlabs.io`, `pypi.org`, `files.pythonhosted.org`, `registry.npmjs.org`, `www.profissio.ai`, `profissio.ai`, `profissio.notion.site`, `notion.so`.
 
-| Host | Status | O que quebra |
+**Gotcha central, custou tempo e vale sempre**: `pypi.org`, `files.pythonhosted.org` e `registry.npmjs.org` vêm na variável `no_proxy` do container. Por isso **contornam o agent proxy** e batem direto no firewall de egresso, que responde **403 "Host not in allowlist"** mesmo estando na allowlist. **Roteando pelo agent proxy respondem 200.** O contorno está embutido no `scripts/setup.sh`: quando existe `HTTPS_PROXY`, ele limpa `no_proxy` e aponta pip, uv e npm para o proxy com o CA bundle `/root/.ccr/ca-bundle.crt`.
+
+Diagnóstico rápido de qualquer host: comparar `curl <host>` com `curl --noproxy "" -x "$HTTPS_PROXY" <host>`. Se o segundo responde e o primeiro não, é o caso acima.
+
+| Host | Status | Observação |
 |---|---|---|
-| `archive.ubuntu.com`, `security.ubuntu.com` | 403 | `apt-get` (contornado: ffmpeg estático do GitHub Releases) |
-| `pypi.org`, `files.pythonhosted.org` | 403 | `pillow` (lettering/overlays), `numpy` (detecção de batidas), `librosa` e as deps do video-use |
-| `registry.npmjs.org` | 403 | `npx hyperframes skills update` |
+| `pypi.org`, `files.pythonhosted.org` | OK **pelo proxy** | pillow, numpy, librosa e deps do video-use instalam |
+| `registry.npmjs.org` | OK **pelo proxy** | `npx` baixa pacote |
+| `raw.githubusercontent.com` | **000, bloqueado** | trava `npx hyperframes skills update`, que busca o manifesto de skills ali. **Adicionar à allowlist** para o hyperframes funcionar |
+| `archive.ubuntu.com`, `security.ubuntu.com` | 403 | `apt-get` indisponível (contornado com ffmpeg estático do GitHub Releases) |
+| `api.github.com`, GitHub Releases | OK | clone e download de release funcionam |
+| WebFetch (ferramenta) | bloqueado para estes domínios | tem rota de egresso própria, que não acompanhou a allowlist. **Usar `curl` do container**, que funciona |
 
-**Para o estúdio ficar 100% operacional, adicionar à lista Custom do environment**: `pypi.org`, `files.pythonhosted.org`, `registry.npmjs.org`. Opcionalmente `archive.ubuntu.com` e `security.ubuntu.com` (dispensáveis com o ffmpeg estático). Mudanças valem para **sessões novas**.
-
-Contorno já embutido no `scripts/setup.sh`: quando o `apt` falha, baixa o build estático `ffmpeg-master-latest-linux64-gpl` do BtbN via GitHub Releases (traz libass para `subtitles` e zimg para `zscale`) e instala em `/usr/local/bin`.
+O bloqueio de `raw.githubusercontent.com` **não** afeta o truque de mídia pública para o Metricool: quem baixa a URL é o servidor do Metricool, não este container.
 
 ## Gotchas essenciais (herdados dos estúdios irmãos, todos validados)
 
@@ -88,3 +164,5 @@ Contorno já embutido no `scripts/setup.sh`: quando o `apt` falha, baixa o build
 - **17/ago/2026**: estúdio criado a partir do template do `eita-conteudo`. Infra e gotchas técnicos herdados integralmente; marca, persona, voz, pilares e credencial **não** herdados (decisão explícita do usuário).
 - **17/ago/2026**: usuário apontou as fontes primárias da marca (site, Central de Ajuda no Notion, `@elevenlabsio` como referência de estilo) e confirmou que a regra da credencial do EITA não vale aqui. Site e Notion **não puderam ser lidos**: bloqueados pelo proxy de egresso. Marca registrada a partir de busca na web, a confirmar.
 - **17/ago/2026**: Kairogen mantido no plano FREE sem créditos por decisão do usuário (B-roll por IA segue indisponível). Chave antiga da ElevenLabs mantida ativa por ora.
+- **18/ago/2026**: domínios liberados pelo usuário. Site e Central de Ajuda **lidos integralmente** (Notion via API pública `loadPageChunk`, 28 artigos). Marca, tagline, COP, quatro eixos, processo de 5 etapas, CTAs oficiais, paleta e vocabulário do produto gravados aqui e no `FRAMEWORK.md`. Persona definida: quem fala é a **Agente Profissio.ai** (feminino), sem credencial de criadora.
+- **18/ago/2026**: descoberto que `pypi`/`npm` estavam em `no_proxy` e por isso falhavam mesmo na allowlist; contorno pelo agent proxy embutido no `setup.sh`. pillow, numpy, librosa e deps do video-use instalados. Falta liberar `raw.githubusercontent.com` para o hyperframes.
