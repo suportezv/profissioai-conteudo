@@ -11,9 +11,9 @@ O zip do Claude Design traz a composição (`Reel Funil Profissio.dc.html` + `an
 
 ## Voz
 
-**Ana Alice, "Friendly & Clear"** (`ORgG8rwdAiMYRug8RJwR`), eleven_multilingual_v2, stability 0.5, similarity 0.75. Combina com "tecnologia humana, acessível". Alternativa gerada para comparação: Bia, "Direct and Assertive" (`Eyspt3SYhZzXd1Jd3J8O`).
+**v2 (escolha do usuário, 18/ago/2026): voice_id `LetL52AJ3xLLkD3x88iE`**, eleven_multilingual_v2. Histórico: v1 usou Ana Alice (`ORgG8rwdAiMYRug8RJwR`); a entonação de "Seu time chega antes." saiu estranha isolada, corrigir dando contexto prosódico via `previous_text`.
 
-- Escrever "Profissio ponto A I" força a pronúncia certa de ".ai" (validado por STT).
+- **Pronúncia oficial da marca: "profício ei ai"** (o ".ai" em inglês, sem falar "ponto"). Em TTS escrever "Profício ei ai" e validar com STT. A grafia v1 "Profissio ponto A I" está descontinuada.
 - **"com a Agente" soa como "com a gente"**: evitar essa sequência. CTA final virou "A Agente Profissio.ai te espera no WhatsApp", que desfaz a ambiguidade.
 - Conferir pronúncia sem ouvir: gerar TTS e passar no Scribe (STT). Barato e pega erro.
 
@@ -21,7 +21,7 @@ O zip do Claude Design traz a composição (`Reel Funil Profissio.dc.html` + `an
 
 Cenas (playback): Gancho 0-3.9 · Dor 3.9-10.9 · Virada 10.9-29.4 · Aprofundamento 29.4-37.9 · CTA 37.9-43.9.
 
-VO: vo1@0.55 · vo2@6.5 · vo3@26.2 · vo4a@34.6 ("Classificado por intenção...") · vo4b@38.9 ("Seu time chega antes.") · vo5@40.3.
+VO: vo1@0.55 · vo2@6.5 · vo3@26.2 · vo4a@34.6 ("Classificado por intenção...") · vo4b@38.9 ("Seu time chega antes.") · vo5@40.3. Na v2, vo4b é gerado com `previous_text` da vo4a para a entonação não sair isolada; se as durações mudarem, manter os starts e reconferir que vo5 termina antes de 43.8.
 
 SFX (33 instâncias de 11 sons ElevenLabs sound-generation): shimmer na palavra rosa (2.35, 9.7, 13.95, 14.75, 28.2, 39.0) · pop nas mensagens/logo (3.25, 12.35, 20.5, 22.85, 40.45) · click+drag+settle nos dois arrastos manuais (5.15-8.0) · sweep nas linhas do grafo (15.85, 20.95, 23.85, 29.5, 35.3) · move nos cards que andam sozinhos (16.75, 21.35, 24.95) · tick nos chips do grafo (30.9, 31.4, 31.9) · ping no "estágio atualizado" (33.4) · counter (35.9) · typing no CTA digitado (41.3) · swell final (42.3).
 
