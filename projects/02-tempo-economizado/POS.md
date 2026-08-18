@@ -26,3 +26,10 @@ Só locução: 6 gerações TTS (~280 caracteres, ~280 créditos) + 2 verificaç
 - Master v2: -14.01 LUFS, TP -1.0.
 
 Aprendizado: para trilha musical, usar o **Eleven Music** (`POST /v1/music`, `music_length_ms` até 600000) em vez do sound-generation; o sound-generation fica para SFX.
+
+## Agendamento (18/ago/2026)
+
+- **Post Metricool ID 363780635** (id final, após o update da legenda; o id original do create foi substituído, gotcha do update confirmado na prática), Instagram Reel, marca Profissio.ai (blog_id 6736175), **rascunho** para **19/08/2026 às 20:00** (America/Sao_Paulo).
+- Legenda final sem a linha de abertura (ajuste do usuário): direto na frase de valor.
+- Correção feita na própria sessão executora via trigger com `persistent_session_id` + `fire_trigger`: a sessão manteve contexto (id do post) e o conector, rota validada para follow-ups em sessões filhas.
+- Mídia temporária removida do repo após o Metricool copiar para o CDN.
