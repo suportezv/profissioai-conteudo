@@ -3,7 +3,7 @@
 **Pilar**: D (Central de Ajuda em vídeo), cruzado com B (dor do eixo Vendas).
 **Feature**: Aba Funil, classificação automática de leads.
 **Formato**: motion graphic vertical, sem locução na v1. Áudio e pós na etapa seguinte.
-**Duração alvo**: 30s. **Canvas**: 1080x1920 (9:16), 30fps.
+**Duração alvo**: ~31s. **Canvas**: 1080x1920 (9:16), 30fps.
 **Execução**: Claude Design, cena a cena.
 
 ## Por que esta feature
@@ -31,15 +31,17 @@ Vice-campeãs, guardadas para os próximos: **Assumir conversa** (a passagem de 
 | 4 | 0:17–0:25 | Aprofundamento | Ela classifica por intenção, não por formulário |
 | 5 | 0:25–0:30 | CTA | Fale com a Agente Profissio.ai no WhatsApp |
 
-## Sistema visual (fixo em todas as cenas)
+## Sistema visual (v2, fixo em todas as cenas)
 
-- **Fundo**: `#07060B`. Superfícies de card: `#15101F`, elevada `#1B1428`.
-- **Acento**: rosa `#E255A0`. Apoio: violeta `#6B3CB8`, ciano `#3DBFF2`.
-- **Texto**: branco `#FFFFFF`, secundário `#B6B0C5`.
-- **Display**: Archivo Black (ou Bebas Neue). **Interface e corpo**: Sora. **Chips**: Inter Tight.
-- **Easing**: `cubic-bezier(0.16, 1, 0.3, 1)` nas entradas. Sem bounce, sem overshoot elástico.
-- **Área segura**: nada de texto nos 220px do topo nem nos 420px de baixo (UI do Instagram).
-- **Regra de marca**: nunca usar travessão. Reescrever a frase.
+Reescrito após análise frame a frame de 4 vídeos reais do `@elevenlabsio` (18/ago/2026). Gramática completa no `CLAUDE.md`.
+
+- **Fundo aurora claro**: base `#F2EFF7`, manchas desfocadas rosa `#E255A0`/`#D86AA8` (superior direito) e violeta `#6B3CB8` (inferior esquerdo), drift lento contínuo, grão 2%.
+- **Tinta**: `#15101F`. Secundário `#4F4858`. Micro rótulos `#7B7589`. Palavra-chave rosa `#E255A0`.
+- **Tipografia**: Sora em tudo, sentence case, sem caixa alta. Micro rótulos em Inter Tight.
+- **UI**: painéis brancos `#FFFFFF`, cantos 16 a 20px, sombra difusa rgba(21,16,31,0.10); cards internos `#F7F4FB`.
+- **Movimento**: peça contínua sem cortes; easing `cubic-bezier(0.16,1,0.3,1)`; estados seguram 2 a 3s; transições por escala e fade.
+- **Área segura**: 220px topo, 420px base.
+- **Regra de marca**: nunca usar travessão.
 
 ## Restrições herdadas do FRAMEWORK
 

@@ -1,214 +1,184 @@
-# Prompts por cena para o Claude Design
+# Prompts por cena para o Claude Design (v2, gramática @elevenlabsio)
 
-Cada bloco é autocontido. Executar na ordem. O sistema visual está repetido em todos de propósito, para cada prompt funcionar sozinho.
+> **v2, reescrito em 18/ago/2026** depois da análise frame a frame de 4 vídeos reais da referência. O que mudou da v1: peça contínua sem cortes secos, fundo aurora claro no lugar do fundo preto, tipografia contida em sentence case no lugar de display caps gigante, UI clara flutuando como card, grafo de nós para os critérios, CTA discreto com URL digitada. A gramática completa está no `CLAUDE.md`, seção "Gramática de motion".
 
----
+Cada bloco é autocontido. Executar na ordem. **O fundo é o mesmo em todas as cenas**, é ele que costura a peça: os estados se transformam um no outro, nunca cortam.
 
-## CENA 1, gancho (0:00 a 0:03)
-
-```
-Motion graphic vertical, 1080x1920, 30fps, duração 3 segundos.
-
-FUNDO: #07060B sólido. Vinheta radial sutil violeta rgba(107,60,184,0.14) no canto superior direito.
-
-CENA: um quadro kanban visto de cima, levemente inclinado em perspectiva (rotateX 12 graus).
-Três colunas verticais, superfície #15101F, cantos 16px, borda 1px rgba(255,255,255,0.06).
-Cabeçalhos das colunas em Sora 20px, cor #7B7589: "NOVO LEAD", "EM CONVERSA", "PRONTO PRA FECHAR".
-Na primeira coluna, quatro cards empilhados (#1B1428, cantos 12px). Cada card tem uma linha
-de nome em barra cinza e uma bolinha de avatar. Os cards estão DESSATURADOS, opacidade 0.5.
-
-ANIMAÇÃO:
-0.0s a 0.6s: o quadro entra com fade e leve subida (translateY 40px para 0), easing cubic-bezier(0.16,1,0.3,1).
-0.4s: um selo de tempo aparece sobre o card do topo, Inter Tight 16px, cor #7B7589: "parado há 6 dias".
-0.8s a 1.2s: o selo troca para "parado há 9 dias", depois "parado há 14 dias", em cortes secos de 0.2s.
-   A cada troca, o card pulsa 1 vez em vermelho muito sutil rgba(226,85,160,0.15).
-1.4s: TEXTO PRINCIPAL entra, sobreposto e centralizado na metade superior segura da tela.
-   Archivo Black, 108px, caixa alta, branco, line-height 0.95, alinhado à esquerda com margem 80px:
-   "SEU FUNIL
-    ESTÁ DESATUALIZADO
-    AGORA"
-   A palavra "AGORA" em rosa #E255A0.
-   Entrada por linha, 3 linhas em cascata de 0.08s, cada uma com clip-path revelando de baixo para cima.
-2.6s a 3.0s: tudo mantém, apenas o quadro ao fundo continua o drift lento (2px).
-
-SEM narração, sem legenda. Sem travessão em nenhum texto.
-```
+**Sistema fixo (vale para as 5 cenas):**
+- Canvas 1080x1920, 30fps.
+- Fundo: base clara `#F2EFF7` com duas manchas aurora enormes e MUITO desfocadas (blur 120px+) em drift lento e contínuo: uma rosa `#E255A0` para `#D86AA8` no terço superior direito, uma violeta `#6B3CB8` bem sutil no canto inferior esquerdo. Grão de filme sutil por cima (2 a 3% de opacidade). O fundo nunca para de se mover, mas quase não se percebe.
+- Tinta do texto: `#15101F`. Texto secundário: `#4F4858`. Palavra-chave: rosa `#E255A0`.
+- Fonte: **Sora** (Google Fonts) em tudo. Micro rótulos: Inter Tight. **Nada de caixa alta, nada de bold gigante.** Sentence case, uma linha curta por vez.
+- Superfícies de UI: branco `#FFFFFF`, cantos 16 a 20px, sombra suave difusa rgba(21,16,31,0.10) grande e baixa.
+- Easing: cubic-bezier(0.16, 1, 0.3, 1) em tudo. Movimentos lentos e confiantes. Cada estado segura 2 a 3 segundos.
+- Área segura: nada de conteúdo nos 220px do topo nem nos 420px de baixo.
+- Nunca usar travessão em nenhum texto de tela.
 
 ---
 
-## CENA 2, a dor (0:03 a 0:09)
+## CENA 1, gancho (0:00 a 0:05)
 
 ```
-Motion graphic vertical, 1080x1920, 30fps, duração 6 segundos. Continuação direta da cena anterior.
+Motion graphic vertical 1080x1920, 30fps, 5 segundos, estilo clean tipo ElevenLabs.
 
-FUNDO: #07060B. Mesmo quadro kanban de três colunas, agora ocupando a tela inteira, sem o texto da cena 1.
+FUNDO: base #F2EFF7 com duas auroras muito desfocadas (blur 120px) em drift lento:
+rosa #E255A0/#D86AA8 no terço superior direito, violeta #6B3CB8 sutil no inferior esquerdo.
+Grão de filme a 2% por cima. O fundo se move o vídeo inteiro, quase imperceptível.
 
-ANIMAÇÃO:
-0.0s a 1.2s: um cursor de mouse branco entra pela direita, agarra o card do topo da coluna 1
-   e o arrasta lentamente até a coluna 2. O movimento é deliberadamente TRABALHOSO:
-   o card acompanha com atraso, treme levemente, e o cursor faz uma micro correção antes de soltar.
-   Ao soltar, um clique sutil de escala (0.98 para 1.0).
-1.2s a 1.6s: o cursor volta para a coluna 1. Repete o arrasto com o segundo card, agora mais rápido.
-1.6s a 2.6s: a repetição ACELERA e MULTIPLICA. O quadro faz zoom out revelando 6 colunas e
-   dezenas de cards. Múltiplos cursores fantasma (opacidade 0.4) arrastam cards em paralelo,
-   cada vez mais rápido, sobrepostos, caóticos.
-2.6s a 3.4s: os cursores começam a FALHAR. Cards são soltos no meio do caminho e ficam
-   flutuando fora de coluna, tortos, com opacidade 0.35. Uma pilha se acumula na base da tela.
-   O ritmo desacelera até parar. Silêncio visual.
-3.6s: TEXTO entra na metade inferior segura, Sora SemiBold 64px, branco, alinhado à esquerda,
-   margem 80px, line-height 1.15:
-   "Alguém precisa arrastar
-    cada card.
-    Toda vez."
-   "Toda vez." em #E255A0.
-   Entrada por linha em cascata de 0.1s, fade mais translateY 24px.
-5.0s a 6.0s: sob o texto, uma linha fina em Inter Tight 28px, cor #B6B0C5, com fade lento:
-   "acompanhamento e nutrição dos contatos manual"
-   Essa linha tem um colchete rosa fino à esquerda, como citação.
+0.0s a 0.8s: no centro-topo da área segura, o wordmark "Profissio.ai" entra em fade,
+   Sora SemiBold 40px, cor #15101F, pequeno e discreto. Segura lá o resto da cena.
+1.0s a 3.2s: TEXTO CENTRAL, Sora Medium 62px, sentence case, centralizado, line-height 1.2,
+   máximo 2 linhas: "Seu funil está desatualizado agora."
+   REVELAÇÃO PALAVRA A PALAVRA: cada palavra já está no lugar em cinza #B6B0C5 e vai
+   escurecendo até #15101F, uma por vez, 0.25s por palavra, na ordem de leitura.
+   A palavra "agora." termina em rosa #E255A0 em vez de escuro.
+3.6s a 5.0s: o texto sobe 60px suavemente e encolhe para 70% do tamanho, abrindo espaço.
+   No centro da tela, um CARD BRANCO minúsculo (60x40px, cantos 12px, sombra suave)
+   aparece com fade e leve escala 0.8 para 1.0. É a semente da próxima cena.
 
-SEM narração. Sem travessão.
+SEM cortes. SEM caixa alta. SEM travessão. Tudo respirando devagar.
 ```
 
 ---
 
-## CENA 3, a virada (0:09 a 0:17)
+## CENA 2, a dor (0:05 a 0:11)
 
 ```
-Motion graphic vertical, 1080x1920, 30fps, duração 8 segundos. É o clímax da peça.
+Motion graphic vertical 1080x1920, 30fps, 6 segundos, continuação direta: mesmo fundo
+aurora claro #F2EFF7 (auroras rosa #E255A0 e violeta #6B3CB8 desfocadas, drift lento).
 
-FUNDO: #07060B.
+0.0s a 1.0s: o card branco minúsculo do centro CRESCE até virar um painel de app real:
+   860x1100px, branco #FFFFFF, cantos 20px, sombra difusa grande rgba(21,16,31,0.10).
+   Dentro, uma UI de kanban CLARA e limpa estilo SaaS: 3 colunas com cabeçalhos em
+   Sora 24px #4F4858: "Novo lead", "Em conversa", "Pronto pra fechar".
+   Na coluna 1, quatro cards de lead (fundo #F7F4FB, cantos 12px, avatar redondo,
+   barra de nome cinza). Tudo em escala de UI real, não ilustração.
+0.8s: um selo pequeno em Inter Tight 20px, #7B7589, aparece no card do topo:
+   "parado há 6 dias".
+1.2s a 2.6s: um CURSOR de mouse preto entra pela direita, agarra o card do topo e o
+   ARRASTA da coluna 1 para a coluna 2. O gesto é trabalhoso: o card resiste com atraso,
+   o cursor corrige o caminho, solta com um mini snap de escala.
+2.6s a 3.6s: o cursor repete com o segundo card, um pouco mais rápido. Enquanto isso os
+   selos dos cards restantes trocam em cortes secos: "parado há 9 dias", "parado há 14 dias".
+3.8s a 6.0s: TEXTO abaixo do painel, dentro da área segura, Sora Medium 46px, #15101F,
+   centralizado, 2 linhas: "Alguém precisa arrastar cada card." e na linha de baixo,
+   0.4s depois: "Toda vez." com "Toda vez." em rosa #E255A0.
+   Revelação palavra a palavra igual à cena 1 (cinza #B6B0C5 escurecendo).
 
-ANIMAÇÃO:
-0.0s a 0.5s: os cursores da cena anterior DESAPARECEM, um a um, com um fade rápido e um leve
-   colapso de escala. A tela respira. Os cards tortos se reorganizam sozinhos nas colunas,
-   voltando a saturação plena e opacidade 1.0.
-0.6s a 1.4s: a câmera aproxima em UM card específico na coluna "EM CONVERSA".
-   Ao lado dele, abre um balão de conversa de WhatsApp, superfície #15101F, cantos 18px,
-   largura 520px. Dentro, uma mensagem em Sora 30px, branco:
+SEM cortes: o painel continua em cena o tempo todo. SEM caixa alta. SEM travessão.
+```
+
+---
+
+## CENA 3, a virada (0:11 a 0:19)
+
+```
+Motion graphic vertical 1080x1920, 30fps, 8 segundos. Clímax. Continuação direta: mesmo
+fundo aurora claro, mesmo painel kanban branco central da cena anterior.
+
+0.0s a 0.8s: o CURSOR desaparece com fade suave. Meio segundo de calma total, só o
+   fundo respirando. Essa pausa é intencional e importante.
+1.0s a 2.2s: um CHIP DE MENSAGEM desliza de baixo para o lado esquerdo do painel:
+   pílula branca 620px de largura, cantos 24px, sombra suave, com avatar redondo à
+   esquerda e texto em Sora 30px #15101F:
    "beleza, e quanto fica pra fechar os 3?"
-   As mensagens entram com o comportamento real de chat: aparece indicador de digitando
-   (três pontos pulsando) por 0.4s antes do balão.
-1.6s a 2.4s: dentro da mensagem, DUAS expressões acendem em rosa #E255A0, uma após a outra,
-   com um sublinhado que se desenha da esquerda para a direita:
-   "quanto fica" e "pra fechar".
-   Sobre cada uma, um chip minúsculo em Inter Tight 18px sobe e some:
-   "intenção: preço" e "intenção: fechamento".
-2.6s a 3.4s: um PULSO de luz rosa viaja do balão até o card, por uma linha fina curva.
-   Ao chegar, o card acende na borda com glow rosa rgba(226,85,160,0.45).
-3.6s a 4.6s: o card SE MOVE SOZINHO da coluna "EM CONVERSA" para "PRONTO PRA FECHAR".
-   Movimento suave, confiante, com trilha de rastro rosa que se dissipa. Nenhum cursor em cena.
-   Ao assentar, a coluna de destino pulsa uma vez.
-4.8s a 6.0s: a câmera afasta. Agora DEZENAS de cards fazem o mesmo, em cascata escalonada,
-   cada um com seu micro pulso e seu deslocamento. O quadro inteiro fica vivo. Nenhum cursor.
-   Sensação: uma orquestra se afinando sozinha.
-6.2s: TEXTO entra por cima, Archivo Black 92px, caixa alta, branco, margem 80px, line-height 1.0:
-   "O FUNIL LÊ A CONVERSA
-    E MOVE O LEAD
-    SOZINHO"
-   "SOZINHO" em #E255A0, com uma leve expansão de letter spacing na entrada.
-7.4s a 8.0s: mantém, quadro seguindo vivo ao fundo, texto estável.
+   Entra como notificação de WhatsApp: sobe 40px com fade e um leve settle.
+2.4s a 3.6s: KARAOKÊ DE INTENÇÃO: dentro da mensagem, as expressões "quanto fica" e
+   "pra fechar" acendem em rosa #E255A0 uma depois da outra, cada uma com um sublinhado
+   fino que se desenha da esquerda para a direita. Sobre cada expressão, um micro rótulo
+   em Inter Tight 18px #7B7589 sobe e some: "intenção: preço", depois "intenção: fechamento".
+3.8s a 4.8s: uma LINHA de 1px cor #D86AA8 se desenha do chip de mensagem até um card
+   específico da coluna "Em conversa", com um PONTINHO rosa viajando por ela.
+   Ao chegar, a borda do card acende num glow rosa suave rgba(226,85,160,0.35).
+5.0s a 6.0s: o card DESLIZA SOZINHO da coluna "Em conversa" para "Pronto pra fechar".
+   Movimento calmo e confiante, sem cursor nenhum em cena. Ao assentar, a coluna de
+   destino pulsa uma vez, sutil. O selo do card troca para "atualizado agora" em rosa.
+6.2s a 7.0s: mais dois cards fazem o mesmo em cascata escalonada de 0.3s, cada um com
+   sua micro linha e seu pontinho. O painel fica vivo, se organizando sozinho.
+7.0s a 8.0s: TEXTO abaixo do painel, Sora Medium 46px, #15101F, revelação palavra a
+   palavra: "O Funil lê a conversa e move o lead sozinho."
+   A palavra "sozinho." em rosa #E255A0.
 
-SEM narração. Sem travessão.
+SEM cortes. SEM caixa alta. SEM travessão. O contraste com a cena 2 é a ausência do cursor.
 ```
 
 ---
 
-## CENA 4, aprofundamento (0:17 a 0:25)
+## CENA 4, aprofundamento (0:19 a 0:26)
 
 ```
-Motion graphic vertical, 1080x1920, 30fps, duração 8 segundos.
+Motion graphic vertical 1080x1920, 30fps, 7 segundos. Continuação direta: mesmo fundo
+aurora claro. O painel kanban da cena anterior ENCOLHE e sobe para o terço superior
+da área segura (fica a 55% da largura, ainda vivo, cards se movendo devagar).
 
-FUNDO: #07060B. O quadro kanban recua para o fundo, desfocado (blur 12px) e com opacidade 0.25,
-seguindo vivo, com cards se movendo devagar. Ele vira textura, não protagonista.
+0.6s a 3.4s: GRAFO DE NÓS no espaço central liberado: três chips brancos pequenos
+   (pílulas de cantos 20px, sombra suave, Sora 26px #15101F, ícone simples à esquerda)
+   entram um a um, escalonados 0.4s, dispostos em arco:
+   "conteúdo das mensagens" · "tipo de interação" · "palavras-chave e intenções"
+   De cada chip, uma LINHA de 1px #D86AA8 se desenha até um nó central vazio,
+   com um pontinho rosa viajando por cada linha assim que ela completa.
+3.6s a 4.6s: quando os três pontinhos chegam, o nó central acende e vira uma pílula
+   rosa #E255A0 com texto em Sora SemiBold 28px branco: "estágio atualizado".
+   Ela pulsa uma vez e ENVIA um pontinho por uma linha curva até o painel kanban
+   lá em cima; no impacto, os números dos cabeçalhos das colunas sobem em contador
+   (3 vira 5, 8 vira 11, 2 vira 4), Inter Tight 24px #4F4858.
+5.0s a 7.0s: TEXTO central abaixo do grafo, Sora Medium 50px, #15101F, 2 linhas,
+   revelação palavra a palavra: "Classificado por intenção," e depois
+   "não por formulário." com "intenção" em rosa #E255A0.
 
-ANIMAÇÃO:
-0.0s a 0.4s: TÍTULO entra no terço superior seguro, Sora SemiBold 58px, branco, margem 80px:
-   "Ela classifica por intenção,
-    não por formulário."
-   "não por formulário." em #B6B0C5.
+SEM cortes. SEM caixa alta. SEM travessão.
+```
 
-0.8s a 3.2s: três CARTÕES DE CRITÉRIO entram em sequência vertical, escalonados 0.35s.
-   Cada cartão: superfície #15101F, cantos 20px, borda 1px rgba(226,85,160,0.22),
-   altura 200px, largura 880px, centralizado. Entrada por translateX 60px mais fade.
-   Cada um tem, à esquerda, um micro visual animado em 120x120px, e à direita o rótulo
-   em Sora Medium 38px branco.
+---
 
-   Cartão 1, rótulo "o conteúdo das mensagens":
-     micro visual = três linhas de texto que se escrevem sozinhas e depois acendem em rosa.
-   Cartão 2, rótulo "o tipo de interação":
-     micro visual = três ícones alternando em loop, ponto de interrogação, balão, coração.
-   Cartão 3, rótulo "palavras-chave e intenções":
-     micro visual = uma nuvem de 6 palavrinhas onde 2 delas destacam em rosa e sobem.
+## CENA 5, CTA (0:26 a 0:31)
 
-3.6s a 5.0s: os três cartões se COMPRIMEM em uma única linha horizontal de três chips pequenos,
-   que então convergem para um ponto central e viram um único selo:
-   pílula rosa #E255A0, texto em Sora Bold 34px, cor #07060B: "estágio atualizado".
-   O selo dá um pulso único.
+```
+Motion graphic vertical 1080x1920, 30fps, 5 segundos. Fecho. Continuação direta: mesmo
+fundo aurora claro #F2EFF7, que agora fica um pouco mais quente (a aurora rosa cresce
+10% e sobe devagar em direção ao centro).
 
-5.4s a 6.6s: o fundo desfocado volta ao foco por 1 segundo, mostrando o quadro completo com
-   todos os cards já distribuídos corretamente pelas colunas. Números sobem em contador
-   em cada cabeçalho de coluna (0 até 12, 0 até 27, 0 até 8), Inter Tight 32px, #B6B0C5.
-
-6.8s a 8.0s: TEXTO DE FECHO da seção, Sora SemiBold 52px, branco, centralizado:
+0.0s a 0.8s: painel, grafo e textos anteriores se dissolvem em fade suave e leve subida.
+   Tela limpa, só o fundo aurora.
+1.0s a 2.2s: TEXTO central, Sora Medium 56px, #15101F, revelação palavra a palavra:
    "Seu time chega antes."
-   Entrada por fade e leve escala de 0.96 para 1.0.
-
-SEM narração. Sem travessão.
-```
-
----
-
-## CENA 5, CTA (0:25 a 0:30)
-
-```
-Motion graphic vertical, 1080x1920, 30fps, duração 5 segundos.
-
-FUNDO: #07060B. O quadro kanban se dissolve em partículas rosa que sobem e somem (0.0s a 0.8s).
-Entra um bloom radial rosa rgba(226,85,160,0.34) partindo do centro baixo, respirando devagar.
-
-ANIMAÇÃO:
-0.6s a 1.4s: LOGO Profissio.ai entra no centro, branco, com fade e leve escala de 0.94 para 1.0.
-   Abaixo, a assinatura em Sora Regular 34px, cor #B6B0C5:
-   "IA à prova do dia-a-dia do seu negócio."
-   Entrada 0.2s depois do logo.
-
-2.0s a 2.8s: BOTÃO DE CTA entra abaixo, subindo com translateY 40px mais fade.
-   Pílula de 760x120px, preenchimento em gradiente de #E255A0 para #BE3F84,
-   cantos totalmente arredondados, sombra rosa rgba(226,85,160,0.40) difusa.
-   Dentro, ícone do WhatsApp em branco 48px, e ao lado o texto em Sora Bold 40px, branco:
+2.4s a 3.0s: esse texto sobe 80px e encolhe levemente. Entra abaixo o wordmark
+   "Profissio.ai" em Sora SemiBold 44px #15101F, com a tagline em Sora Regular 26px
+   #4F4858 logo abaixo: "IA à prova do dia-a-dia do seu negócio."
+3.2s a 4.4s: CTA DISCRETO estilo ElevenLabs: abaixo do lockup, uma linha em Sora
+   Medium 34px #15101F sendo DIGITADA caractere a caractere com cursor | piscando:
    "Fale com a Agente Profissio.ai"
-   O botão tem um brilho que atravessa da esquerda para a direita a cada 1.2s, sutil.
+   E logo abaixo, em Inter Tight 26px #7B7589, também digitada, a URL:
+   "wa.me/SEUNUMERO|"  (o cursor continua piscando até o fim)
+4.4s a 5.0s: tudo estável. Último frame limpo, bom para thumbnail e para o loop.
 
-3.2s a 3.6s: abaixo do botão, linha em Inter Tight 30px, cor #7B7589:
-   "no WhatsApp, agora"
-
-4.0s a 5.0s: tudo mantém. O bloom rosa pulsa uma vez, lento. Último frame limpo e estável,
-   bom para thumbnail e para o loop do Reels.
-
-SEM narração. Sem travessão.
+SEM botão chamativo, SEM caixa alta, SEM travessão. O CTA é quieto e confiante.
 ```
 
 ---
 
-## Locução opcional (para a etapa de sonorização)
+## PENDENTE antes de publicar
 
-Se decidirmos colocar voz na pós, este é o texto, cronometrado para caber:
+- **Número/link real do WhatsApp** para substituir `wa.me/SEUNUMERO` na cena 5. O site usa `wa.me` mas o número não aparece nos assets extraídos. Perguntar à equipe.
+- Logo oficial: usar o wordmark real da pasta "Logo" do Drive (`1KPPS3GK9G21G0wLefLlE3mb-loBAVJD0`) na hora da pós, se o Claude Design não reproduzir fielmente.
+
+## Locução opcional (cronometrada, para a sonorização)
 
 | Cena | Locução |
 |---|---|
 | 1 | "Seu funil de vendas está desatualizado agora." |
 | 2 | "Porque alguém precisa arrastar cada card. Toda vez." |
-| 3 | "O funil da Profissio.ai lê a conversa e move o lead sozinho." |
-| 4 | "Ela classifica por intenção, não por formulário. Seu time chega antes." |
+| 3 | "O Funil da Profissio.ai lê a conversa e move o lead sozinho." |
+| 4 | "Classificado por intenção, não por formulário." |
 | 5 | "Fale com a Agente Profissio.ai no WhatsApp." |
 
-Voz da marca ainda **PENDENTE** de definição. Sem isso, a v1 sai sem locução, só com trilha e SFX.
+Voz da marca **PENDENTE**. Referência: 3 dos 4 vídeos da ElevenLabs não têm locução, então a v1 sem voz está dentro da gramática.
 
-## Sonorização prevista (etapa seguinte, ElevenLabs sound-generation)
+## Sonorização (etapa seguinte, ElevenLabs sound-generation)
 
-- Trilha: bed eletrônico contido, tensão crescente nas cenas 1 e 2, resolução na 3.
-- SFX cena 2: cliques de mouse secos, cada vez mais frequentes, virando ruído.
-- SFX cena 3: um "silêncio" marcado quando os cursores somem, depois um sweep suave no pulso rosa, e um tick macio a cada card que se move.
-- SFX cena 4: três ticks curtos, um por cartão de critério.
-- SFX cena 5: um swell curto no bloom.
-- Master final: -14 LUFS.
+Referências medidas: mean volume entre -15 e -17 dB, trilha ambiente comedida, sem SFX espalhafatoso.
+
+- Trilha: bed ambiente minimalista e claro (não dark techno), com leve pulso; tensão sutil nas cenas 1 e 2, abertura na 3.
+- SFX: cliques discretos de cursor na cena 2; um tick macio por card que se move na cena 3; três ticks curtos nos chips da cena 4; teclas de digitação bem baixas no CTA da cena 5.
+- Sem riser dramático, sem impact pesado: a gramática da referência é contida.
+- Master final: **-14 LUFS**.

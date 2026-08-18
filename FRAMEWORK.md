@@ -40,7 +40,21 @@ Derivados das fontes primárias. **Validar desempenho antes de fixar proporção
 
 **Termos do produto a usar com consistência** (vocabulário próprio, extraído da Central de Ajuda): COP, Agente, App Profissio, Conversas, Funil, Análises, Contatos, Ativações, Assumir conversa, Janela de 24 horas, Aguardando Atendente, Atendente Gerenciando, IA Gerenciando, Modelos de Mensagem, Tags/Etiquetas, Templates, Meta Business, Tempo economizado, Taxa de retorno.
 
-## Assinaturas de edição
+## Assinaturas de motion (validadas em 18/ago/2026 contra 4 vídeos reais do @elevenlabsio)
+
+Para peças de motion graphic (pilares B, C e D), a gramática é a da referência, adaptada à paleta da Profissio.ai. Análise completa no `CLAUDE.md`, seção "Gramática de motion". Resumo operacional:
+
+- **Peça contínua, sem cortes secos**: estados se transformam um no outro; cada estado segura 2 a 3 segundos.
+- **Fundo aurora claro**: base `#F2EFF7`, manchas desfocadas rosa `#E255A0`/`#D86AA8` e violeta `#6B3CB8` em drift lento, grão sutil. Muito espaço negativo.
+- **Tipografia contida**: Sora, sentence case, 1 linha curta por vez, revelação palavra a palavra (cinza `#B6B0C5` escurecendo para `#15101F`) ou máquina de escrever com cursor. **Sem display caps gigante em motion.**
+- **UI real como card flutuante branco** com sombra suave; cursor navega; transições por escala.
+- **Grafo de nós** (chips + linhas 1px + pontinhos viajando) para critérios, canais e orquestração.
+- **CTA discreto**: texto + URL digitada com cursor piscando. Sem botão chamativo.
+- Palavra-chave pontual em rosa `#E255A0`. Trilha ambiente comedida. Master **-14 LUFS**.
+
+As assinaturas abaixo (lettering caps com sombra dura, cortes secos, punch-ins) valem para **vídeo filmado** (pilar A com gravações reais, cortes de falas), não para motion.
+
+## Assinaturas de edição (vídeo filmado)
 
 Herdadas dos estúdios irmãos (validadas nos testes 01 e 02 do `ana-conteudo` e na leva @luxosobrerodas). São craft técnico, aplicáveis a qualquer marca:
 

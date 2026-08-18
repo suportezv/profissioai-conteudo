@@ -102,6 +102,38 @@ Instalação do App no iOS (Safari, compartilhar, "Adicionar a tela de início")
 
 > Cada artigo tem vídeo de passo a passo e prints. **Isso é matéria-prima direta**: os vídeos existentes viram cortes verticais, e cada dúvida frequente vira um reel curto.
 
+## Ativos da marca no Drive (lidos em 18/ago/2026 pelo conector)
+
+**Pasta principal: "Identidade visual e marca Profissio.ai"**, id `1V6L7a7ZGWjcDjuw0zM_jotJAFGhf2GWc`, dona `clesio.souza@profissio.ai`. **Não é pública** (anônimo cai em login do Google): acessar sempre pelo conector do Drive. Subpastas: Apresentação da marca, Selo, **Fontes**, **Logo** / Logo App / Logo e Padrão PNG / Logo P fundos variados, Favicon, ID, Avatares, **Fundos da marca**, Fundos para reunião, Imagens, Fotos sócios. Documentos: **"Ficha de Marketing - Profissio.ai"** (`12s_b00icQxgqTUlsdhgyu3IbqqClLE0C7Gkvgrlx3V4`) e "Cultura Profissio.ai" (`14QphT4MEj-wpwk98HaVh65DULuOp49gNRqqBCReWuDE`, ainda não lido).
+
+**Segunda pasta indicada pelo usuário**, id `1urqOeVWixXPKKR3R-A4nZm8_GxEXJGba` (link `u/3`): **inacessível pelo conector** ("not found"). Está compartilhada com outra conta Google do usuário, não com a conta conectada. **PENDENTE: compartilhar com a conta do conector ou dizer o que contém.**
+
+### Ficha de Marketing (tom oficial, usar este vocabulário)
+
+- **USP**: "resolve problemas reais de negócios com IA, integrando vendas, atendimento e experiência do cliente em todos os canais, com consistência, personalização e performance."
+- **"A primeira plataforma de agentes inteligentes e conectados (COP) do mundo."**
+- Verbos do agente: "conversar, ouvir, analisar, resolver, vender, acompanhar, escalar para humanos e criar experiências memoráveis."
+- "Cada agente é treinado com o que a sua empresa tem de melhor: seus catálogos, manuais, scripts, cultura e propósito."
+- "Você não só automatiza, você potencializa resultados, reduz custos e encanta seus clientes, sem perder a alma da sua marca."
+- Diferencial: "não cria apenas bots, cria agentes profissionais de IA integrados entre si, com memória, empatia e inteligência de negócio", "custo menor que o de um analista humano".
+
+## Gramática de motion da referência @elevenlabsio (validada em 18/ago/2026, 4 vídeos reais)
+
+Analisados frame a frame 4 vídeos enviados pelo usuário (28s e 30s verticais, 42s quadrado, 58s horizontal). A gramática é consistente e **é o padrão de qualidade a replicar** nos motions da Profissio.ai:
+
+1. **Peça contínua, quase sem cortes.** 3 dos 4 vídeos têm 0 ou 1 corte de cena. Estados se encadeiam por transformação: elemento entra, segura 2 a 3 segundos, vira o próximo. Um vídeo de 28s tem ~8 estados.
+2. **Fundo com muito espaço negativo**, em 3 famílias: gradiente aurora claro desfocado (rosa/laranja), off-white/creme chapado, ou preto com acento teal. Nunca fundo cheio.
+3. **Tipografia contida, nunca display gigante.** Sans neutra, sentence case, 1 linha curta por vez, centralizada. Revelações: palavra a palavra (cinza vira preto), máquina de escrever com cursor `|` visível, blur-in. Palavra-chave pontual em cor ou cinza.
+4. **A UI real do produto é a protagonista**: card branco de cantos arredondados com sombra suave flutuando pequeno contra o fundo enorme; cursor navega de verdade; o card cresce até quase fullscreen e volta a encolher. Transição por escala, não por corte.
+5. **Grafos de nós**: chips conectados por linhas de 1px com pontinhos viajando; ramificações (ex.: Meta/Google/LinkedIn Ads). É o device para "critérios", "canais", "orquestração".
+6. **Pills de rótulo**: pílula branca pequena com avatar redondo + nome, na base da mídia (ex.: "Will - Poetical & Measured").
+7. **Karaokê sincronizado**: em cards de citação, as palavras acendem uma a uma conforme o áudio lê.
+8. **Grid de variantes**: o mesmo asset multiplicado em idiomas/cores preenchendo a tela (device de escala/localização).
+9. **CTA discreto**: sem botão chamativo. Texto curto + URL digitada com cursor piscando (`elevenlabs.io/app/voice-library|`) em fundo claro. Lockup da marca pequeno e central.
+10. **Áudio presente e comedido** (mean volume -15 a -17 dB nas referências): trilha ambiente, sem locução em 3 dos 4.
+
+**Tradução para a Profissio.ai**: fundo aurora com a paleta da marca (base clara `#F2EFF7` com auroras `#E255A0`/`#D86AA8`/`#6B3CB8` desfocadas, tinta `#15101F`), UI clara do App Profissio como card flutuante, Sora como sans, rosa `#E255A0` como palavra-chave e glow. O estilo dark do site fica para peças sem UI (a UI do app é clara).
+
 ## Regras que valem em qualquer resposta pública
 
 - Nunca usar travessão em texto público (caption, lettering, legenda): reescrever a frase.
@@ -171,3 +203,4 @@ O bloqueio de `raw.githubusercontent.com` **não** afeta o truque de mídia púb
 - **18/ago/2026**: domínios liberados pelo usuário. Site e Central de Ajuda **lidos integralmente** (Notion via API pública `loadPageChunk`, 28 artigos). Marca, tagline, COP, quatro eixos, processo de 5 etapas, CTAs oficiais, paleta e vocabulário do produto gravados aqui e no `FRAMEWORK.md`. Persona definida: quem fala é a **Agente Profissio.ai** (feminino), sem credencial de criadora.
 - **18/ago/2026**: descoberto que `pypi`/`npm` estavam em `no_proxy` e por isso falhavam mesmo na allowlist; contorno pelo agent proxy embutido no `setup.sh`. pillow, numpy, librosa e deps do video-use instalados. Falta liberar `raw.githubusercontent.com` para o hyperframes.
 - **18/ago/2026**: `raw.githubusercontent.com` resolvido **sem** mexer no environment. As skills do hyperframes passaram a ser registradas a partir do clone local; `validate.sh` fica 100% verde. Nenhum domínio adicional é necessário para operar.
+- **18/ago/2026**: usuário enviou 4 vídeos reais do `@elevenlabsio` (contorno definitivo do login wall do Instagram) e os links das pastas de marca no Drive. Gramática de motion extraída e gravada; Ficha de Marketing lida pelo conector; roteiro do projeto 01 reescrito nessa gramática. Segunda pasta do Drive inacessível (conta `u/3`).
