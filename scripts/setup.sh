@@ -24,25 +24,30 @@ echo "== 1/5 ffmpeg =="
 # No cloud com network Custom o apt fica bloqueado (403 no archive.ubuntu.com), então
 # o caminho confiável é o build estático do BtbN via GitHub Releases, que o proxy libera.
 # O build "gpl" traz libass (subtitles) e zimg (zscale), ambos obrigatórios aqui.
+# IMPORTANTE: este script roda como setup de TODO container novo do environment.
+# Nenhum passo pode derrubar o boot: falhas viram AVISO e a sessão nasce mesmo assim.
 if ! command -v ffmpeg >/dev/null; then
   if ! (apt-get update -qq && apt-get install -y -qq ffmpeg fonts-liberation) 2>/dev/null; then
     echo "apt indisponível; instalando build estático do GitHub Releases"
-    TMP="$(mktemp -d)"
-    curl -sL --max-time 300 -o "$TMP/ff.tar.xz" \
-      https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-linux64-gpl.tar.xz
-    tar -xf "$TMP/ff.tar.xz" -C "$TMP"
-    FFDIR="$(find "$TMP" -maxdepth 1 -type d -name 'ffmpeg-master-*' | head -1)"
-    install -m755 "$FFDIR/bin/ffmpeg" "$FFDIR/bin/ffprobe" /usr/local/bin/
-    rm -rf "$TMP"
+    if TMP="$(mktemp -d)" \
+      && curl -sL --max-time 300 -o "$TMP/ff.tar.xz" \
+        https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-linux64-gpl.tar.xz \
+      && tar -xf "$TMP/ff.tar.xz" -C "$TMP" \
+      && FFDIR="$(find "$TMP" -maxdepth 1 -type d -name 'ffmpeg-master-*' | head -1)" \
+      && install -m755 "$FFDIR/bin/ffmpeg" "$FFDIR/bin/ffprobe" /usr/local/bin/; then
+      rm -rf "$TMP"
+    else
+      echo "AVISO: ffmpeg não instalado (download/extração falhou). Edição de vídeo indisponível até rodar setup de novo."
+    fi
   fi
 fi
-ffmpeg -version | head -1
+ffmpeg -version 2>/dev/null | head -1 || true
 
 echo "== 2/5 video-use =="
 if [ ! -d "$VIDEO_USE/.git" ]; then
-  GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 https://github.com/browser-use/video-use "$VIDEO_USE"
+  GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 https://github.com/browser-use/video-use "$VIDEO_USE" || { echo "AVISO: clone do video-use falhou"; }
 fi
-if git -C "$VIDEO_USE" apply --check "$REPO_ROOT/patches/video-use-is-portrait-source.patch" 2>/dev/null; then
+if [ -d "$VIDEO_USE/.git" ] && git -C "$VIDEO_USE" apply --check "$REPO_ROOT/patches/video-use-is-portrait-source.patch" 2>/dev/null; then
   git -C "$VIDEO_USE" apply "$REPO_ROOT/patches/video-use-is-portrait-source.patch"
   echo "patch is_portrait_source aplicado"
 else
@@ -56,7 +61,7 @@ ln -sfn "$VIDEO_USE" ~/.claude/skills/video-use
 
 echo "== 3/5 hyperframes + media-use =="
 if [ ! -d "$HYPERFRAMES/.git" ]; then
-  GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 https://github.com/heygen-com/hyperframes "$HYPERFRAMES"
+  GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 https://github.com/heygen-com/hyperframes "$HYPERFRAMES" || { echo "AVISO: clone do hyperframes falhou"; }
 fi
 # O `skills update` do hyperframes confere atualizacao contra um manifesto em
 # raw.githubusercontent.com. Esse host costuma estar fora da allowlist do
