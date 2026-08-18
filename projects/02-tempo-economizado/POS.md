@@ -16,3 +16,13 @@ Só locução: 6 gerações TTS (~280 caracteres, ~280 créditos) + 2 verificaç
 ## Status
 
 - Preview enviado na conversa, **aguardando aprovação** antes de caption e agendamento.
+
+## Mix v2 (feedback do usuário, 18/ago/2026)
+
+- **Shimmer removido de todas as ocorrências** (soava como chimbal). Palavras rosa ficam sem acento sonoro; a locução cobre.
+- **Tique-taque de relógio real** (`ticktock.mp3`, novo na biblioteca) sincronizado ao surgimento do ícone do relógio (4.2s, com fade antes de o painel crescer). Substitui o pop genérico.
+- **Swell movido de 31.6s para 29.75s**, com o pico casando com o surgimento do lockup da Profissio.ai (~30.2 a 30.6s). O pop da logo saiu.
+- **Trilha nova composta no Eleven Music** (a conta tem a permissão `music`, descoberta neste ajuste): 33s sob medida, acordes quentes com progressão, groove leve de percussão, ~95 bpm, intro suave, build no meio, resolução no fim. Salva na biblioteca como `trilha-tech-warm-33s.mp3`. Volume 0.28 com ducking pelo VO. Substitui o bed do sound-generation, que era estático demais para o ritmo do vídeo.
+- Master v2: -14.01 LUFS, TP -1.0.
+
+Aprendizado: para trilha musical, usar o **Eleven Music** (`POST /v1/music`, `music_length_ms` até 600000) em vez do sound-generation; o sound-generation fica para SFX.
