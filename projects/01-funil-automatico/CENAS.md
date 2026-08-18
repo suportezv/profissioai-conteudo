@@ -137,8 +137,8 @@ SEM cortes. SEM caixa alta. SEM travessão.
 
 ```
 Motion graphic vertical 1080x1920, 30fps, 5 segundos. Fecho. Continuação direta: mesmo
-fundo aurora claro #F2EFF7, que agora fica um pouco mais quente (a aurora rosa cresce
-10% e sobe devagar em direção ao centro).
+fundo aurora oficial da marca, que agora fica um pouco mais quente (a mancha rosa #FDA4F5
+cresce 10% e sobe devagar em direção ao centro).
 
 0.0s a 0.8s: painel, grafo e textos anteriores se dissolvem em fade suave e leve subida.
    Tela limpa, só o fundo aurora.
