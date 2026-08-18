@@ -4,7 +4,7 @@
 **Feature**: Aba Funil, classificação automática de leads.
 **Formato**: motion graphic vertical, sem locução na v1. Áudio e pós na etapa seguinte.
 **Duração alvo**: ~31s. **Canvas**: 1080x1920 (9:16), 30fps.
-**Execução**: Claude Design, cena a cena.
+**Execução**: Claude Design, cena a cena. Roteiro v2 na gramática validada do `@elevenlabsio` (ver `CENAS.md`).
 
 ## Por que esta feature
 
@@ -23,13 +23,13 @@ Vice-campeãs, guardadas para os próximos: **Assumir conversa** (a passagem de 
 
 ## Roteiro
 
-| Cena | Tempo | Função | Texto em tela |
+| Cena | Tempo | Função | Texto em tela (v2, sentence case) |
 |---|---|---|---|
-| 1 | 0:00–0:03 | Gancho | SEU FUNIL ESTÁ DESATUALIZADO AGORA |
-| 2 | 0:03–0:09 | Dor | Alguém precisa arrastar cada card. Toda vez. |
-| 3 | 0:09–0:17 | Virada | O funil da Profissio.ai lê a conversa e move o lead sozinho |
-| 4 | 0:17–0:25 | Aprofundamento | Ela classifica por intenção, não por formulário |
-| 5 | 0:25–0:30 | CTA | Fale com a Agente Profissio.ai no WhatsApp |
+| 1 | 0:00–0:05 | Gancho | Seu funil está desatualizado agora. |
+| 2 | 0:05–0:11 | Dor | Alguém precisa arrastar cada card. Toda vez. |
+| 3 | 0:11–0:19 | Virada | O Funil lê a conversa e move o lead sozinho. |
+| 4 | 0:19–0:26 | Aprofundamento | Classificado por intenção, não por formulário. |
+| 5 | 0:26–0:31 | CTA | Seu time chega antes. + Fale com a Agente Profissio.ai (wa.me digitado) |
 
 ## Sistema visual (v2, fixo em todas as cenas)
 
