@@ -23,9 +23,10 @@ Cada bloco é autocontido. Executar na ordem. **O fundo é o mesmo em todas as c
 ```
 Motion graphic vertical 1080x1920, 30fps, 5 segundos, estilo clean tipo ElevenLabs.
 
-FUNDO: base #F2EFF7 com duas auroras muito desfocadas (blur 120px) em drift lento:
-rosa #E255A0/#D86AA8 no terço superior direito, violeta #6B3CB8 sutil no inferior esquerdo.
-Grão de filme a 2% por cima. O fundo se move o vídeo inteiro, quase imperceptível.
+FUNDO (aurora oficial da marca): base clara quase branca com manchas enormes e muito
+desfocadas (blur 120px+) em drift lento: rosa/magenta #FDA4F5 no topo esquerdo, um toque
+quente #FACD7C no topo direito, azul periwinkle #A5C2FE a #A289F2 na base. Grão de filme
+a 2% por cima. O fundo se move o vídeo inteiro, quase imperceptível.
 
 0.0s a 0.8s: no centro-topo da área segura, o logo oficial da Profissio.ai entra em fade (wordmark "profissio.ai" minúsculo em sans arredondada; usar Logo-Preto.png da pasta "Logo e Padrão PNG" do Drive na pós, ou aproximar com Sora SemiBold 40px #15101F), pequeno e discreto. Segura lá o resto da cena.
 1.0s a 3.2s: TEXTO CENTRAL, Sora Medium 62px, sentence case, centralizado, line-height 1.2,
@@ -46,7 +47,7 @@ SEM cortes. SEM caixa alta. SEM travessão. Tudo respirando devagar.
 
 ```
 Motion graphic vertical 1080x1920, 30fps, 6 segundos, continuação direta: mesmo fundo
-aurora claro #F2EFF7 (auroras rosa #E255A0 e violeta #6B3CB8 desfocadas, drift lento).
+aurora oficial da marca (base clara, manchas desfocadas #FDA4F5, #FACD7C e #A5C2FE em drift lento).
 
 0.0s a 1.0s: o card branco minúsculo do centro CRESCE até virar um painel de app real:
    860x1100px, branco #FFFFFF, cantos 20px, sombra difusa grande rgba(21,16,31,0.10).
