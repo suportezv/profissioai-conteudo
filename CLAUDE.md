@@ -102,11 +102,19 @@ Instalação do App no iOS (Safari, compartilhar, "Adicionar a tela de início")
 
 > Cada artigo tem vídeo de passo a passo e prints. **Isso é matéria-prima direta**: os vídeos existentes viram cortes verticais, e cada dúvida frequente vira um reel curto.
 
-## Ativos da marca no Drive (lidos em 18/ago/2026 pelo conector)
+## Ativos da marca no Drive (lidos em 18/ago/2026; usuário tornou as pastas públicas)
 
-**Pasta principal: "Identidade visual e marca Profissio.ai"**, id `1V6L7a7ZGWjcDjuw0zM_jotJAFGhf2GWc`, dona `clesio.souza@profissio.ai`. **Não é pública** (anônimo cai em login do Google): acessar sempre pelo conector do Drive. Subpastas: Apresentação da marca, Selo, **Fontes**, **Logo** / Logo App / Logo e Padrão PNG / Logo P fundos variados, Favicon, ID, Avatares, **Fundos da marca**, Fundos para reunião, Imagens, Fotos sócios. Documentos: **"Ficha de Marketing - Profissio.ai"** (`12s_b00icQxgqTUlsdhgyu3IbqqClLE0C7Gkvgrlx3V4`) e "Cultura Profissio.ai" (`14QphT4MEj-wpwk98HaVh65DULuOp49gNRqqBCReWuDE`, ainda não lido).
+**Pasta 1: "Identidade visual e marca Profissio.ai"**, id `1V6L7a7ZGWjcDjuw0zM_jotJAFGhf2GWc`. Subpastas: Apresentação da marca, Selo, Fontes, Logo (`1KPPS3GK9G21G0wLefLlE3mb-loBAVJD0`), Logo App, **Logo e Padrão PNG** (`16oTqnSsbuiU4knleUvC-rGHrb-fkgLgj`: Logo-Branco/Preto em 3 variações cada, Padrão-Branco/Preto, PSD), Favicon, ID, Avatares, **Fundos da marca** (`1mI63IlVy-j4UokoRG5LskE20ICQdA12x`, 14 PNGs 1080x1080), Fundos para reunião, Imagens, Fotos sócios.
+- **Os "Fundos da marca" são gradientes aurora claros e desfocados** (rosa/magenta, violeta, azul/ciano, toques de amarelo; hexes medidos no fundo 1: `#FDA4F5`, `#FACD7C`, `#A5C2FE`; no fundo 6: `#81C3F0`, `#A289F2`, `#4081CA`). **É o mesmo sistema visual dos vídeos do @elevenlabsio**: a gramática de motion aurora é literalmente o padrão da marca.
+- **Logo**: wordmark "profissio.ai" minúsculo em sans arredondada + símbolo de balão-P com nós de circuito. O arquivo `Logo-Branco.png` traz embutida a tagline **"Seu funcionário movido à inteligência artificial"** (tagline antiga/alternativa; a do site é "IA à prova do dia-a-dia do seu negócio"). Em fundo claro usar `Logo-Preto*.png`.
+- **"Ficha de Marketing"** (`12s_b00icQxgqTUlsdhgyu3IbqqClLE0C7Gkvgrlx3V4`): tom oficial, resumida abaixo. "Cultura Profissio.ai" (`14QphT4MEj-wpwk98HaVh65DULuOp49gNRqqBCReWuDE`) ainda não lido.
 
-**Segunda pasta indicada pelo usuário**, id `1urqOeVWixXPKKR3R-A4nZm8_GxEXJGba` (link `u/3`): **inacessível pelo conector** ("not found"). Está compartilhada com outra conta Google do usuário, não com a conta conectada. **PENDENTE: compartilhar com a conta do conector ou dizer o que contém.**
+**Pasta 2: "Profissio.ai"** (produção de conteúdo da agência), id `1urqOeVWixXPKKR3R-A4nZm8_GxEXJGba`:
+- **Pautas** (`1rgrxlnyItymFA70YulvVDq4BDgqvCJSd`): ~13 pautas registradas, com subpastas "Em Producao" e "FEITOS". **As pautas da casa listam como referências oficiais `@elevenlabsio` e `@openai`**, confirmando a direção do estúdio. Formato de pauta: título + objetivo + links úteis + referências + roteiro por cards. A pauta **"Você ainda atualiza CRM?" (`1xKd11AOe3hDgfeDPhcNCQjnZbZe2-8atcbB40AFRUhM`) está registrada como carrossel (editoria Diferenciais), sem desenvolvimento**: o projeto 01 (motion do Funil) executa esse território e pode gerar o carrossel como desdobramento.
+- **Briefing** (`1p8r7ZnBHeypVdIYpEW5yh_0bjbnPqn0U`): briefings de vídeos/animações já feitos ("Com e Sem Profissio", "Não Alucina", "Agente Vendedor", "Hero FinAI/Profecia" etc.). Estilo da casa: cena a cena, referências no Pinterest, narração incluída, CTA final `www.profissio.ai`.
+- **Gravações Base** (`1QYP64ElG7q0_4Hzgjgm0R_g-24n-hkd1`): 8 vídeos brutos "Profissio Video 01..07". **Vídeos Clésio** (`1PAqafhFxGKD-qvFpaGQu5_N7mXntFWy8`): 12+ brutos C32xx.MP4. São os brutos para o pilar de vídeo filmado.
+- **Planilha "Profissio.ai | Planejamento de Conteúdo"** (`1t6ClSNpeXSqQUN47agOmKBazeTYnjJVhaoAAGIQQH-U`): calendário editorial da agência (template Zavi.ag). **Editorias em uso: Branding, Trendings/News, Educação, Aplicabilidade, Cases, Diferenciais, Agentes.** Colunas: Data, Posicionamento, Formato, Editoria, Pauta, OK Pauta, Legenda, OK Legenda, Link do criativo, Agendado. Muita coisa planejada em jan/2026 ainda sem execução. Contém também um Apresentação Profissio (Slides: `1OyUUzZPwBHikHuy7sUDfHTLC4uQvIGAG1I9Y-nx5yug`, não lida).
+- Outras: Conteúdo (2025/2026, Captações, Polishop, Soldiers), Viva (white label), Mapeamento_Institucional_Profissio_ai.pdf (lido, ver abaixo).
 
 ### Ficha de Marketing (tom oficial, usar este vocabulário)
 
@@ -116,6 +124,12 @@ Instalação do App no iOS (Safari, compartilhar, "Adicionar a tela de início")
 - "Cada agente é treinado com o que a sua empresa tem de melhor: seus catálogos, manuais, scripts, cultura e propósito."
 - "Você não só automatiza, você potencializa resultados, reduz custos e encanta seus clientes, sem perder a alma da sua marca."
 - Diferencial: "não cria apenas bots, cria agentes profissionais de IA integrados entre si, com memória, empatia e inteligência de negócio", "custo menor que o de um analista humano".
+
+### Mapeamento Institucional (PDF, jul/2026): acréscimos ao site
+
+- Tecnologia **"100% proprietária e livre de frameworks limitantes"**.
+- Vendas, problemas: capacidade de atendimento limitada; demora; **"argumentação comercial frágil ou fora do script"**; desorganização no acompanhamento/reativação. Soluções: atendimento 24/7; **"atualização do funil de vendas"** (capacidade nomeada!); IA treinada com o catálogo completo; parceria com a equipe humana.
+- Diferenciais extras: **catálogos com mais de 30 mil itens** (busca e envio de imagens de produtos); "milhões de interações simultâneas"; equipe = Engenheiros de IA + Customer Success; "teste em três instâncias" (IA testadora, engenharia, cliente).
 
 ## Gramática de motion da referência @elevenlabsio (validada em 18/ago/2026, 4 vídeos reais)
 
@@ -204,3 +218,4 @@ O bloqueio de `raw.githubusercontent.com` **não** afeta o truque de mídia púb
 - **18/ago/2026**: descoberto que `pypi`/`npm` estavam em `no_proxy` e por isso falhavam mesmo na allowlist; contorno pelo agent proxy embutido no `setup.sh`. pillow, numpy, librosa e deps do video-use instalados. Falta liberar `raw.githubusercontent.com` para o hyperframes.
 - **18/ago/2026**: `raw.githubusercontent.com` resolvido **sem** mexer no environment. As skills do hyperframes passaram a ser registradas a partir do clone local; `validate.sh` fica 100% verde. Nenhum domínio adicional é necessário para operar.
 - **18/ago/2026**: usuário enviou 4 vídeos reais do `@elevenlabsio` (contorno definitivo do login wall do Instagram) e os links das pastas de marca no Drive. Gramática de motion extraída e gravada; Ficha de Marketing lida pelo conector; roteiro do projeto 01 reescrito nessa gramática. Segunda pasta do Drive inacessível (conta `u/3`).
+- **18/ago/2026**: pastas do Drive tornadas públicas e analisadas por completo. Fundos da marca são auroras claras (mesmo sistema do @elevenlabsio); pautas da casa já listam @elevenlabsio e @openai como referência; pauta "Você ainda atualiza CRM?" registrada sem desenvolvimento e coberta pelo projeto 01; Mapeamento Institucional lido (funil como capacidade nomeada, catálogos 30k+, três instâncias de teste). Roteiro v2.1 calibrado com os hexes reais dos fundos e logo oficial.

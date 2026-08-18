@@ -1,4 +1,6 @@
-# Prompts por cena para o Claude Design (v2, gramática @elevenlabsio)
+# Prompts por cena para o Claude Design (v2.1, gramática @elevenlabsio + fundos oficiais da marca)
+
+> **v2.1 (18/ago/2026)**: pastas do Drive analisadas. Os "Fundos da marca" oficiais são auroras claras idênticas ao sistema da referência, então o fundo abaixo usa os hexes reais medidos neles. As pautas da casa já listam @elevenlabsio e @openai como referência, e a pauta "Você ainda atualiza CRM?" (carrossel, sem desenvolvimento) é o mesmo território deste vídeo: ele a executa em motion e pode desdobrar no carrossel.
 
 > **v2, reescrito em 18/ago/2026** depois da análise frame a frame de 4 vídeos reais da referência. O que mudou da v1: peça contínua sem cortes secos, fundo aurora claro no lugar do fundo preto, tipografia contida em sentence case no lugar de display caps gigante, UI clara flutuando como card, grafo de nós para os critérios, CTA discreto com URL digitada. A gramática completa está no `CLAUDE.md`, seção "Gramática de motion".
 
@@ -6,7 +8,7 @@ Cada bloco é autocontido. Executar na ordem. **O fundo é o mesmo em todas as c
 
 **Sistema fixo (vale para as 5 cenas):**
 - Canvas 1080x1920, 30fps.
-- Fundo: base clara `#F2EFF7` com duas manchas aurora enormes e MUITO desfocadas (blur 120px+) em drift lento e contínuo: uma rosa `#E255A0` para `#D86AA8` no terço superior direito, uma violeta `#6B3CB8` bem sutil no canto inferior esquerdo. Grão de filme sutil por cima (2 a 3% de opacidade). O fundo nunca para de se mover, mas quase não se percebe.
+- Fundo: **aurora oficial da marca** (pasta "Fundos da marca" do Drive, 14 PNGs; o motion recria o mesmo sistema em movimento). Base clara com manchas enormes e MUITO desfocadas (blur 120px+) em drift lento e contínuo: rosa/magenta `#FDA4F5` no topo esquerdo, um toque quente `#FACD7C` no topo direito, azul/periwinkle `#A5C2FE` a `#A289F2` na base. Acento da marca continua `#E255A0`. Grão de filme sutil por cima (2 a 3%). O fundo nunca para de se mover, mas quase não se percebe. Alternativa: usar o próprio `1.png` da pasta como base estática e animar só um véu de luz por cima.
 - Tinta do texto: `#15101F`. Texto secundário: `#4F4858`. Palavra-chave: rosa `#E255A0`.
 - Fonte: **Sora** (Google Fonts) em tudo. Micro rótulos: Inter Tight. **Nada de caixa alta, nada de bold gigante.** Sentence case, uma linha curta por vez.
 - Superfícies de UI: branco `#FFFFFF`, cantos 16 a 20px, sombra suave difusa rgba(21,16,31,0.10) grande e baixa.
@@ -25,8 +27,7 @@ FUNDO: base #F2EFF7 com duas auroras muito desfocadas (blur 120px) em drift lent
 rosa #E255A0/#D86AA8 no terço superior direito, violeta #6B3CB8 sutil no inferior esquerdo.
 Grão de filme a 2% por cima. O fundo se move o vídeo inteiro, quase imperceptível.
 
-0.0s a 0.8s: no centro-topo da área segura, o wordmark "Profissio.ai" entra em fade,
-   Sora SemiBold 40px, cor #15101F, pequeno e discreto. Segura lá o resto da cena.
+0.0s a 0.8s: no centro-topo da área segura, o logo oficial da Profissio.ai entra em fade (wordmark "profissio.ai" minúsculo em sans arredondada; usar Logo-Preto.png da pasta "Logo e Padrão PNG" do Drive na pós, ou aproximar com Sora SemiBold 40px #15101F), pequeno e discreto. Segura lá o resto da cena.
 1.0s a 3.2s: TEXTO CENTRAL, Sora Medium 62px, sentence case, centralizado, line-height 1.2,
    máximo 2 linhas: "Seu funil está desatualizado agora."
    REVELAÇÃO PALAVRA A PALAVRA: cada palavra já está no lugar em cinza #B6B0C5 e vai
@@ -142,8 +143,7 @@ fundo aurora claro #F2EFF7, que agora fica um pouco mais quente (a aurora rosa c
    Tela limpa, só o fundo aurora.
 1.0s a 2.2s: TEXTO central, Sora Medium 56px, #15101F, revelação palavra a palavra:
    "Seu time chega antes."
-2.4s a 3.0s: esse texto sobe 80px e encolhe levemente. Entra abaixo o wordmark
-   "Profissio.ai" em Sora SemiBold 44px #15101F, com a tagline em Sora Regular 26px
+2.4s a 3.0s: esse texto sobe 80px e encolhe levemente. Entra abaixo o logo oficial (Logo-Preto; aproximação: wordmark "profissio.ai" em Sora SemiBold 44px #15101F), com a tagline em Sora Regular 26px
    #4F4858 logo abaixo: "IA à prova do dia-a-dia do seu negócio."
 3.2s a 4.4s: CTA DISCRETO estilo ElevenLabs: abaixo do lockup, uma linha em Sora
    Medium 34px #15101F sendo DIGITADA caractere a caractere com cursor | piscando:
@@ -159,7 +159,7 @@ SEM botão chamativo, SEM caixa alta, SEM travessão. O CTA é quieto e confiant
 
 ## PENDENTE antes de publicar
 
-- **Número/link real do WhatsApp** para substituir `wa.me/SEUNUMERO` na cena 5. O site usa `wa.me` mas o número não aparece nos assets extraídos. Perguntar à equipe.
+- **Número/link real do WhatsApp** para substituir `wa.me/SEUNUMERO` na cena 5. O site usa `wa.me` mas o número não aparece nos assets extraídos. Perguntar à equipe. Fallback validado pelo briefing da casa ("Com e Sem Profissio"): fechar com `profissio.ai` digitado, mantendo a frase do WhatsApp por cima.
 - Logo oficial: usar o wordmark real da pasta "Logo" do Drive (`1KPPS3GK9G21G0wLefLlE3mb-loBAVJD0`) na hora da pós, se o Claude Design não reproduzir fielmente.
 
 ## Locução opcional (cronometrada, para a sonorização)
