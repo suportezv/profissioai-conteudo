@@ -58,8 +58,22 @@ echo "== 3/5 hyperframes + media-use =="
 if [ ! -d "$HYPERFRAMES/.git" ]; then
   GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 https://github.com/heygen-com/hyperframes "$HYPERFRAMES"
 fi
-npx --yes hyperframes skills update || \
-  echo "AVISO: hyperframes skills update falhou (registry.npmjs.org bloqueado?)."
+# O `skills update` do hyperframes confere atualizacao contra um manifesto em
+# raw.githubusercontent.com. Esse host costuma estar fora da allowlist do
+# environment, e ai o comando recusa reportar sucesso mesmo com o npm liberado.
+# O clone ja traz todas as skills em skills/<nome>/SKILL.md, entao o fallback e
+# registra-las direto, sem depender da rede.
+if ! npx --yes hyperframes skills update 2>/dev/null; then
+  echo "hyperframes skills update indisponivel; registrando do clone local"
+  mkdir -p ~/.claude/skills
+  n=0
+  for d in "$HYPERFRAMES"/skills/*/; do
+    [ -f "$d/SKILL.md" ] || continue
+    ln -sfn "${d%/}" ~/.claude/skills/"$(basename "$d")"
+    n=$((n+1))
+  done
+  echo "$n skills do hyperframes registradas a partir de $HYPERFRAMES/skills"
+fi
 
 echo "== 4/5 Python (PIL para overlays, numpy para batidas) =="
 python3 -c 'import PIL' 2>/dev/null || pip3 install pillow || echo "AVISO: pillow não instalado (pypi bloqueado). Lettering/overlays indisponíveis."

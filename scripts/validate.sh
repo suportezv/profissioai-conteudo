@@ -40,7 +40,8 @@ done
 
 echo "== 5. Skills registradas =="
 [ -e ~/.claude/skills/video-use/SKILL.md ] && echo "OK video-use" || echo "PENDENTE video-use"
-ls ~/.claude/skills 2>/dev/null | grep -q hyperframes && echo "OK hyperframes" || echo "verifique skills do hyperframes (npx hyperframes skills update)"
+HF=$(ls -d ~/.claude/skills/*/ 2>/dev/null | while read -r d; do [ -f "$d/SKILL.md" ] && basename "$d"; done | grep -cE 'hyperframes|media-use|motion-graphics|embedded-captions')
+if [ "${HF:-0}" -ge 4 ]; then echo "OK hyperframes ($HF skills com SKILL.md)"; else echo "PENDENTE hyperframes (rode scripts/setup.sh)"; fi
 
 echo "== 6. Na sessão do Claude, validar ainda: =="
 echo " - Metricool: getBrandSettings lista a marca Profissio.ai com blog_id 6736175"

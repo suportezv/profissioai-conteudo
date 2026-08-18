@@ -138,7 +138,7 @@ Diagnóstico rápido de qualquer host: comparar `curl <host>` com `curl --noprox
 |---|---|---|
 | `pypi.org`, `files.pythonhosted.org` | OK **pelo proxy** | pillow, numpy, librosa e deps do video-use instalam |
 | `registry.npmjs.org` | OK **pelo proxy** | `npx` baixa pacote |
-| `raw.githubusercontent.com` | **000, bloqueado** | trava `npx hyperframes skills update`, que busca o manifesto de skills ali. **Adicionar à allowlist** para o hyperframes funcionar |
+| `raw.githubusercontent.com` | **403 no CONNECT do proxy, bloqueado** | é onde o `npx hyperframes skills update` busca o manifesto de freshness. **Não precisa liberar**: o clone do hyperframes já traz as skills, e o `setup.sh` as registra direto (ver gotcha abaixo) |
 | `archive.ubuntu.com`, `security.ubuntu.com` | 403 | `apt-get` indisponível (contornado com ffmpeg estático do GitHub Releases) |
 | `api.github.com`, GitHub Releases | OK | clone e download de release funcionam |
 | WebFetch (ferramenta) | bloqueado para estes domínios | tem rota de egresso própria, que não acompanhou a allowlist. **Usar `curl` do container**, que funciona |
@@ -157,6 +157,7 @@ O bloqueio de `raw.githubusercontent.com` **não** afeta o truque de mídia púb
 - Cloud, mídia pública para o Metricool: commit temporário do render na branch (repo público, `raw.githubusercontent.com` passa no proxy), agendar e remover o arquivo em seguida. Exige `git add -f` (o `.gitignore` barra mídia) com autorização do usuário. **Por isso este repo deve ser público.**
 - Cloud: env var de environment antigo pode conter um key ID (64 hex) em vez da chave; a chave real da ElevenLabs é `sk_...` de 51 caracteres.
 - Trilhas/SFX: ElevenLabs `sound-generation` (`/v1/sound-generation`, máx ~22s, `duration_seconds` entre 0.5 e 30) gera beds e SFX ótimos; para trilha maior, gerar build+drop e costurar com `acrossfade`. Detecção de BPM/batidas: script próprio com numpy (fluxo de energia + autocorrelação), ver `ana-conteudo/projects/teste-02-interlagos/edit/beats.py`.
+- **Skills do hyperframes sem rede**: `npx hyperframes skills update` falha quando `raw.githubusercontent.com` está fora da allowlist, porque confere um manifesto de atualização lá. Não é preciso liberar o domínio: o clone em `/workspace/heygen-com/hyperframes/skills/<nome>/SKILL.md` já traz as 20 skills (hyperframes, media-use, motion-graphics, embedded-captions, talking-head-recut, music-to-video, faceless-explainer, slideshow e outras). Basta linkar cada pasta em `~/.claude/skills/`. O `scripts/setup.sh` faz isso automaticamente quando o `npx` falha.
 - Testar escopo de chave da ElevenLabs sem gastar crédito: chamar o endpoint com parâmetro inválido. `401 missing_permissions` = escopo ausente; `400`/`404` de validação = escopo presente.
 
 ## Histórico de decisões
@@ -166,3 +167,4 @@ O bloqueio de `raw.githubusercontent.com` **não** afeta o truque de mídia púb
 - **17/ago/2026**: Kairogen mantido no plano FREE sem créditos por decisão do usuário (B-roll por IA segue indisponível). Chave antiga da ElevenLabs mantida ativa por ora.
 - **18/ago/2026**: domínios liberados pelo usuário. Site e Central de Ajuda **lidos integralmente** (Notion via API pública `loadPageChunk`, 28 artigos). Marca, tagline, COP, quatro eixos, processo de 5 etapas, CTAs oficiais, paleta e vocabulário do produto gravados aqui e no `FRAMEWORK.md`. Persona definida: quem fala é a **Agente Profissio.ai** (feminino), sem credencial de criadora.
 - **18/ago/2026**: descoberto que `pypi`/`npm` estavam em `no_proxy` e por isso falhavam mesmo na allowlist; contorno pelo agent proxy embutido no `setup.sh`. pillow, numpy, librosa e deps do video-use instalados. Falta liberar `raw.githubusercontent.com` para o hyperframes.
+- **18/ago/2026**: `raw.githubusercontent.com` resolvido **sem** mexer no environment. As skills do hyperframes passaram a ser registradas a partir do clone local; `validate.sh` fica 100% verde. Nenhum domínio adicional é necessário para operar.
