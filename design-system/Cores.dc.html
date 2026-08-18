@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #BE3F84; } a:hover { color: #E255A0; }
+  </style>
+</helmet>
+<div style="width: 1000px; box-sizing: border-box; background: #FFFFFF; font-family: 'Sora', 'Segoe UI', system-ui, sans-serif; color: #15101F; padding: 44px 48px 48px 48px; display: flex; flex-direction: column; gap: 30px;">
+  <div style="display: flex; flex-direction: column; gap: 6px;">
+    <div style="font-family: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #7B7589;">01 · Cores</div>
+    <div style="font-size: 26px; font-weight: 600;">Tokens de cor</div>
+    <div style="font-size: 14px; color: #4F4858;">Extraídos do CSS do site oficial e dos fundos de marca do Drive. Nomes iguais aos do site.</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-size: 15px; font-weight: 600;">Acento principal, o rosa da marca</div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px;">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="height: 84px; border-radius: 12px; background: #E255A0;"></div>
+        <div style="font-size: 13px; font-weight: 600;">rose-bright · #E255A0</div>
+        <div style="font-size: 12px; color: #7B7589;">Palavra-chave, glow, seleção. O acento padrão.</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="height: 84px; border-radius: 12px; background: #BE3F84;"></div>
+        <div style="font-size: 13px; font-weight: 600;">rose · #BE3F84</div>
+        <div style="font-size: 12px; color: #7B7589;">Hover, gradiente de botão, links.</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="height: 84px; border-radius: 12px; background: #D86AA8;"></div>
+        <div style="font-size: 13px; font-weight: 600;">rose-soft · #D86AA8</div>
+        <div style="font-size: 12px; color: #7B7589;">Linhas de grafo, rastros, apoios suaves.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-size: 15px; font-weight: 600;">Secundárias</div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px;">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="height: 64px; border-radius: 12px; background: #6B3CB8;"></div>
+        <div style="font-size: 12px; font-weight: 600;">violet · #6B3CB8</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="height: 64px; border-radius: 12px; background: #3DBFF2;"></div>
+        <div style="font-size: 12px; font-weight: 600;">cyber · #3DBFF2</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="height: 64px; border-radius: 12px; background: #57E3F2;"></div>
+        <div style="font-size: 12px; font-weight: 600;">neoblue · #57E3F2</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="height: 64px; border-radius: 12px; background: #2F4073;"></div>
+        <div style="font-size: 12px; font-weight: 600;">quantum · #2F4073</div>
+      </div>
+    </div>
+    <div style="font-size: 12px; color: #7B7589;">Uso pontual: nunca competem com o rosa. Violeta e ciano entram em auroras e detalhes.</div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px;">
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="font-size: 15px; font-weight: 600;">Superfícies claras (motion e app)</div>
+      <div style="display: flex; flex-direction: column; gap: 8px; border: 1px solid #E8E3F0; border-radius: 14px; padding: 14px; background: #F2EFF7;">
+        <div style="display: flex; gap: 10px; align-items: center;"><div style="width: 34px; height: 26px; border-radius: 7px; background: #F2EFF7; border: 1px solid #E8E3F0;"></div><div style="font-size: 12px;">bg · #F2EFF7</div></div>
+        <div style="display: flex; gap: 10px; align-items: center;"><div style="width: 34px; height: 26px; border-radius: 7px; background: #E8E3F0;"></div><div style="font-size: 12px;">bg-2 · #E8E3F0</div></div>
+        <div style="display: flex; gap: 10px; align-items: center;"><div style="width: 34px; height: 26px; border-radius: 7px; background: #FFFFFF; border: 1px solid #E8E3F0;"></div><div style="font-size: 12px;">surface · #FFFFFF (painéis de UI)</div></div>
+        <div style="display: flex; gap: 10px; align-items: center;"><div style="width: 34px; height: 26px; border-radius: 7px; background: #F7F4FB;"></div><div style="font-size: 12px;">surface-2 · #F7F4FB (cards internos)</div></div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="font-size: 15px; font-weight: 600;">Superfícies escuras (site, peças sem UI)</div>
+      <div style="display: flex; flex-direction: column; gap: 8px; border-radius: 14px; padding: 14px; background: #07060B;">
+        <div style="display: flex; gap: 10px; align-items: center;"><div style="width: 34px; height: 26px; border-radius: 7px; background: #07060B; border: 1px solid #1B1428;"></div><div style="font-size: 12px; color: #FFFFFF;">bg · #07060B</div></div>
+        <div style="display: flex; gap: 10px; align-items: center;"><div style="width: 34px; height: 26px; border-radius: 7px; background: #0E0B16;"></div><div style="font-size: 12px; color: #FFFFFF;">bg-2 · #0E0B16</div></div>
+        <div style="display: flex; gap: 10px; align-items: center;"><div style="width: 34px; height: 26px; border-radius: 7px; background: #15101F; border: 1px solid #1B1428;"></div><div style="font-size: 12px; color: #FFFFFF;">surface · #15101F</div></div>
+        <div style="display: flex; gap: 10px; align-items: center;"><div style="width: 34px; height: 26px; border-radius: 7px; background: #1B1428;"></div><div style="font-size: 12px; color: #FFFFFF;">surface-2 · #1B1428</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-size: 15px; font-weight: 600;">Texto</div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; font-size: 12px;">
+      <div style="display: flex; gap: 10px; align-items: center;"><div style="width: 30px; height: 30px; border-radius: 8px; background: #15101F;"></div><div>tinta · #15101F</div></div>
+      <div style="display: flex; gap: 10px; align-items: center;"><div style="width: 30px; height: 30px; border-radius: 8px; background: #4F4858;"></div><div>secundário · #4F4858</div></div>
+      <div style="display: flex; gap: 10px; align-items: center;"><div style="width: 30px; height: 30px; border-radius: 8px; background: #7B7589;"></div><div>mute · #7B7589</div></div>
+      <div style="display: flex; gap: 10px; align-items: center;"><div style="width: 30px; height: 30px; border-radius: 8px; background: #B6B0C5;"></div><div>dim · #B6B0C5 (estado inicial da revelação)</div></div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-size: 15px; font-weight: 600;">Aurora, medidas dos fundos oficiais do Drive</div>
+    <div style="display: flex; gap: 10px;">
+      <div style="flex: 1; height: 52px; border-radius: 10px; background: #FDA4F5;"></div>
+      <div style="flex: 1; height: 52px; border-radius: 10px; background: #FACD7C;"></div>
+      <div style="flex: 1; height: 52px; border-radius: 10px; background: #A5C2FE;"></div>
+      <div style="flex: 1; height: 52px; border-radius: 10px; background: #A289F2;"></div>
+      <div style="flex: 1; height: 52px; border-radius: 10px; background: #81C3F0;"></div>
+      <div style="flex: 1; height: 52px; border-radius: 10px; background: #4081CA;"></div>
+    </div>
+    <div style="display: flex; gap: 10px; font-family: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif; font-size: 11px; color: #7B7589;">
+      <div style="flex: 1; text-align: center;">#FDA4F5</div>
+      <div style="flex: 1; text-align: center;">#FACD7C</div>
+      <div style="flex: 1; text-align: center;">#A5C2FE</div>
+      <div style="flex: 1; text-align: center;">#A289F2</div>
+      <div style="flex: 1; text-align: center;">#81C3F0</div>
+      <div style="flex: 1; text-align: center;">#4081CA</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

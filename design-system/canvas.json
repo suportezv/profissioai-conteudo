@@ -1,0 +1,14 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 900, "h": 620 },
+    { "file": "Cores.dc.html", "x": 960, "y": 0, "w": 1000, "h": 980 },
+    { "file": "Tipografia.dc.html", "x": 2020, "y": 0, "w": 940, "h": 900 },
+    { "file": "Fundos.dc.html", "x": 0, "y": 700, "w": 980, "h": 660 },
+    { "file": "Componentes.dc.html", "x": 2020, "y": 960, "w": 1060, "h": 900 },
+    { "file": "Motion.dc.html", "x": 960, "y": 1040, "w": 940, "h": 820 }
+  ],
+  "annotations": [
+    { "id": "fontes-da-verdade", "x": 0, "y": -150, "w": 420, "text": "Fontes da verdade: CSS do site oficial (paleta e fontes), 14 fundos de marca do Drive (hexes aurora medidos), gramática de motion validada em 4 vídeos reais do @elevenlabsio.\nMemória completa: CLAUDE.md e FRAMEWORK.md do repo profissioai-conteudo." }
+  ],
+  "launch": { "view": "canvas" }
+}

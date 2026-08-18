@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Inter+Tight:wght@400;600&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #BE3F84; } a:hover { color: #E255A0; }
+    .w { color: #B6B0C5; animation: word-in 4.8s ease-out infinite; }
+    .w:nth-child(1) { animation-delay: 0.2s; } .w:nth-child(2) { animation-delay: 0.5s; }
+    .w:nth-child(3) { animation-delay: 0.8s; } .w:nth-child(4) { animation-delay: 1.1s; }
+    @keyframes word-in { 0% { color: #B6B0C5; } 9%, 78% { color: #15101F; } 92%, 100% { color: #B6B0C5; } }
+    .w-rose { color: #B6B0C5; animation: word-in-rose 4.8s ease-out infinite; animation-delay: 1.4s; }
+    @keyframes word-in-rose { 0% { color: #B6B0C5; } 9%, 78% { color: #E255A0; } 92%, 100% { color: #B6B0C5; } }
+    @keyframes type-reveal { 0%, 6% { width: 0; } 62%, 86% { width: 168px; } 96%, 100% { width: 0; } }
+    @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+  </style>
+</helmet>
+<div style="width: 940px; box-sizing: border-box; background: #FFFFFF; font-family: 'Sora', 'Segoe UI', system-ui, sans-serif; color: #15101F; padding: 44px 48px 48px 48px; display: flex; flex-direction: column; gap: 26px;">
+  <div style="display: flex; flex-direction: column; gap: 6px;">
+    <div style="font-family: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #7B7589;">05 · Motion</div>
+    <div style="font-size: 26px; font-weight: 600;">A gramática do movimento</div>
+    <div style="font-size: 14px; color: #4F4858;">Validada frame a frame contra 4 vídeos reais do @elevenlabsio, a referência oficial das pautas da casa.</div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;">
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-size: 14px; font-weight: 600;">Revelação palavra a palavra</div>
+      <div style="background: #F7F4FB; border-radius: 16px; padding: 26px 22px; font-size: 22px; font-weight: 500;">
+        <span class="w">Seu</span> <span class="w">funil</span> <span class="w">está</span> <span class="w">desatualizado</span> <span class="w-rose">agora.</span>
+      </div>
+      <div style="font-size: 12px; color: #7B7589;">A palavra já está no lugar em dim #B6B0C5 e escurece até a tinta, 0.25s por palavra. A palavra-chave termina em rosa.</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-size: 14px; font-weight: 600;">Máquina de escrever com cursor</div>
+      <div style="background: #F7F4FB; border-radius: 16px; padding: 30px 22px; display: flex; align-items: center;">
+        <div style="font-family: 'Inter Tight', Arial, sans-serif; font-size: 19px; color: #15101F; white-space: nowrap; overflow: hidden; animation: type-reveal 5.2s steps(14) infinite;">profissio.ai</div>
+        <div style="width: 2px; height: 22px; background: #15101F; animation: blink 1.1s step-start infinite;"></div>
+      </div>
+      <div style="font-size: 12px; color: #7B7589;">URLs e CTAs entram digitados, com o cursor | piscando até o fim da peça.</div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px;">
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="font-size: 14px; font-weight: 600;">As sete leis</div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;">
+        <div style="border-radius: 12px; background: #F7F4FB; padding: 13px 15px; font-size: 12.5px; line-height: 1.45;"><span style="font-weight: 600;">Peça contínua.</span> Estados se transformam, nunca cortam. Cada estado segura 2 a 3s.</div>
+        <div style="border-radius: 12px; background: #F7F4FB; padding: 13px 15px; font-size: 12.5px; line-height: 1.45;"><span style="font-weight: 600;">Transição por escala.</span> O card pequeno cresce até quase fullscreen e volta. Sem corte seco.</div>
+        <div style="border-radius: 12px; background: #F7F4FB; padding: 13px 15px; font-size: 12.5px; line-height: 1.45;"><span style="font-weight: 600;">Easing único.</span> cubic-bezier(0.16, 1, 0.3, 1) em tudo. Sem bounce, sem elástico.</div>
+        <div style="border-radius: 12px; background: #F7F4FB; padding: 13px 15px; font-size: 12.5px; line-height: 1.45;"><span style="font-weight: 600;">UI real como protagonista.</span> Cursor navega de verdade. O produto é a animação.</div>
+        <div style="border-radius: 12px; background: #F7F4FB; padding: 13px 15px; font-size: 12.5px; line-height: 1.45;"><span style="font-weight: 600;">Uma ideia por estado.</span> Uma linha de texto, um elemento. O resto espera a vez.</div>
+        <div style="border-radius: 12px; background: #F7F4FB; padding: 13px 15px; font-size: 12.5px; line-height: 1.45;"><span style="font-weight: 600;">A pausa é ferramenta.</span> Meio segundo de calma antes da virada vale mais que um riser.</div>
+        <div style="border-radius: 12px; background: #F7F4FB; padding: 13px 15px; font-size: 12.5px; line-height: 1.45;"><span style="font-weight: 600;">Áudio comedido.</span> Trilha ambiente, ticks suaves nos movimentos. Master -14 LUFS.</div>
+        <div style="border-radius: 12px; background: #FDECF5; padding: 13px 15px; font-size: 12.5px; line-height: 1.45;"><span style="font-weight: 600; color: #BE3F84;">Nunca travessão.</span> Em nenhum texto público. Palavrão bipa, não corta.</div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="font-size: 14px; font-weight: 600;">Área segura 1080x1920</div>
+      <div style="display: flex; justify-content: center;">
+        <div style="width: 150px; height: 267px; border-radius: 14px; background: #F2EFF7; border: 1px solid #E8E3F0; overflow: hidden; display: flex; flex-direction: column;">
+          <div style="height: 31px; background: repeating-linear-gradient(-45deg, #FDECF5, #FDECF5 4px, #F9D9EA 4px, #F9D9EA 8px); display: flex; align-items: center; justify-content: center; font-family: 'Inter Tight', Arial, sans-serif; font-size: 9px; color: #BE3F84;">220px</div>
+          <div style="flex: 1; display: flex; align-items: center; justify-content: center; font-family: 'Inter Tight', Arial, sans-serif; font-size: 10px; color: #7B7589;">conteúdo</div>
+          <div style="height: 58px; background: repeating-linear-gradient(-45deg, #FDECF5, #FDECF5 4px, #F9D9EA 4px, #F9D9EA 8px); display: flex; align-items: center; justify-content: center; font-family: 'Inter Tight', Arial, sans-serif; font-size: 9px; color: #BE3F84;">420px</div>
+        </div>
+      </div>
+      <div style="font-size: 12px; color: #7B7589;">Nada de texto nos 220px do topo nem nos 420px da base: é onde a UI do Instagram cobre. Duração alvo 20 a 60s, 30fps.</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

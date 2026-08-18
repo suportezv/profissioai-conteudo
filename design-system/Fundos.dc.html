@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Inter+Tight:wght@400;600&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #BE3F84; } a:hover { color: #E255A0; }
+    @keyframes drift-a { 0% { transform: translate(0, 0); } 50% { transform: translate(26px, 14px); } 100% { transform: translate(0, 0); } }
+    @keyframes drift-b { 0% { transform: translate(0, 0); } 50% { transform: translate(-20px, -12px); } 100% { transform: translate(0, 0); } }
+  </style>
+</helmet>
+<div style="width: 980px; box-sizing: border-box; background: #FFFFFF; font-family: 'Sora', 'Segoe UI', system-ui, sans-serif; color: #15101F; padding: 44px 48px 48px 48px; display: flex; flex-direction: column; gap: 26px;">
+  <div style="display: flex; flex-direction: column; gap: 6px;">
+    <div style="font-family: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #7B7589;">03 · Fundos</div>
+    <div style="font-size: 26px; font-weight: 600;">Aurora, o palco de tudo</div>
+    <div style="font-size: 14px; color: #4F4858;">Recriação em CSS dos 14 fundos oficiais do Drive. Manchas enormes, blur alto, drift lento, muito espaço negativo.</div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;">
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="position: relative; height: 240px; border-radius: 16px; overflow: hidden; background: #F7F3F5;">
+        <div style="position: absolute; top: -70px; left: -60px; width: 260px; height: 220px; border-radius: 50%; background: radial-gradient(circle, #FDA4F5 0%, rgba(253,164,245,0) 70%); filter: blur(34px); animation: drift-a 9s ease-in-out infinite;"></div>
+        <div style="position: absolute; top: -60px; right: -70px; width: 240px; height: 210px; border-radius: 50%; background: radial-gradient(circle, #FACD7C 0%, rgba(250,205,124,0) 70%); filter: blur(38px); animation: drift-b 11s ease-in-out infinite;"></div>
+        <div style="position: absolute; bottom: -90px; left: 40px; width: 300px; height: 230px; border-radius: 50%; background: radial-gradient(circle, #A5C2FE 0%, rgba(165,194,254,0) 70%); filter: blur(38px); animation: drift-a 13s ease-in-out infinite;"></div>
+      </div>
+      <div style="font-size: 13px; font-weight: 600;">Aurora quente</div>
+      <div style="font-size: 12px; color: #7B7589;">#FDA4F5 + #FACD7C + #A5C2FE. Padrão para motion com UI clara.</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="position: relative; height: 240px; border-radius: 16px; overflow: hidden; background: #EEF2F8;">
+        <div style="position: absolute; top: -70px; right: -60px; width: 260px; height: 220px; border-radius: 50%; background: radial-gradient(circle, #81C3F0 0%, rgba(129,195,240,0) 70%); filter: blur(34px); animation: drift-b 10s ease-in-out infinite;"></div>
+        <div style="position: absolute; bottom: -80px; left: -50px; width: 260px; height: 230px; border-radius: 50%; background: radial-gradient(circle, #A289F2 0%, rgba(162,137,242,0) 70%); filter: blur(36px); animation: drift-a 12s ease-in-out infinite;"></div>
+        <div style="position: absolute; top: 20px; left: -70px; width: 190px; height: 170px; border-radius: 50%; background: radial-gradient(circle, #FACD7C 0%, rgba(250,205,124,0) 70%); filter: blur(36px); opacity: 0.7; animation: drift-b 14s ease-in-out infinite;"></div>
+      </div>
+      <div style="font-size: 13px; font-weight: 600;">Aurora fria</div>
+      <div style="font-size: 12px; color: #7B7589;">#81C3F0 + #A289F2 + toque #FACD7C. Variação para alternar entre posts.</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="position: relative; height: 240px; border-radius: 16px; overflow: hidden; background: #07060B;">
+        <div style="position: absolute; top: -60px; right: -60px; width: 250px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(190,63,132,0.5) 0%, rgba(190,63,132,0) 70%); filter: blur(30px); animation: drift-a 11s ease-in-out infinite;"></div>
+        <div style="position: absolute; bottom: -80px; left: -50px; width: 260px; height: 230px; border-radius: 50%; background: radial-gradient(circle, rgba(107,60,184,0.42) 0%, rgba(107,60,184,0) 70%); filter: blur(32px); animation: drift-b 13s ease-in-out infinite;"></div>
+        <div style="position: absolute; top: 60px; left: 90px; width: 170px; height: 150px; border-radius: 50%; background: radial-gradient(circle, rgba(61,191,242,0.22) 0%, rgba(61,191,242,0) 70%); filter: blur(30px); animation: drift-a 15s ease-in-out infinite;"></div>
+      </div>
+      <div style="font-size: 13px; font-weight: 600;">Dark com glow</div>
+      <div style="font-size: 12px; color: #7B7589;">#07060B com glows do site. Para peças sem UI (a UI do app é clara).</div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px;">
+    <div style="border-radius: 12px; background: #F7F4FB; padding: 16px; display: flex; flex-direction: column; gap: 6px;">
+      <div style="font-size: 13px; font-weight: 600;">Blur 120px ou mais</div>
+      <div style="font-size: 12px; color: #4F4858;">A mancha nunca vira forma. Se dá para desenhar o contorno, falta blur.</div>
+    </div>
+    <div style="border-radius: 12px; background: #F7F4FB; padding: 16px; display: flex; flex-direction: column; gap: 6px;">
+      <div style="font-size: 13px; font-weight: 600;">Drift contínuo e lento</div>
+      <div style="font-size: 12px; color: #4F4858;">O fundo respira o vídeo inteiro, quase imperceptível. Nunca para.</div>
+    </div>
+    <div style="border-radius: 12px; background: #F7F4FB; padding: 16px; display: flex; flex-direction: column; gap: 6px;">
+      <div style="font-size: 13px; font-weight: 600;">Grão 2 a 3%</div>
+      <div style="font-size: 12px; color: #4F4858;">Textura de filme sutil por cima, tira o aspecto de gradiente digital.</div>
+    </div>
+    <div style="border-radius: 12px; background: #F7F4FB; padding: 16px; display: flex; flex-direction: column; gap: 6px;">
+      <div style="font-size: 13px; font-weight: 600;">Espaço negativo</div>
+      <div style="font-size: 12px; color: #4F4858;">O fundo é palco, não protagonista. Um elemento por vez sobre ele.</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

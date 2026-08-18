@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #BE3F84; } a:hover { color: #E255A0; }
+    @keyframes dot-travel { 0% { offset-distance: 0%; opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
+    @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+  </style>
+</helmet>
+<div style="width: 1060px; box-sizing: border-box; background: #F2EFF7; font-family: 'Sora', 'Segoe UI', system-ui, sans-serif; color: #15101F; padding: 44px 48px 48px 48px; display: flex; flex-direction: column; gap: 26px;">
+  <div style="display: flex; flex-direction: column; gap: 6px;">
+    <div style="font-family: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #7B7589;">04 · Componentes</div>
+    <div style="font-size: 26px; font-weight: 600;">Peças de conteúdo</div>
+    <div style="font-size: 14px; color: #4F4858;">Os blocos que aparecem nos motions e carrosséis. Sombra padrão: rgba(21,16,31,0.10), grande e baixa.</div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;">
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-size: 14px; font-weight: 600;">Painel de UI (protagonista)</div>
+      <div style="background: #FFFFFF; border-radius: 20px; box-shadow: 0 18px 44px rgba(21,16,31,0.10); padding: 18px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 12px; color: #4F4858; display: flex; justify-content: space-between;"><span>Novo lead</span><span style="font-family: 'Inter Tight', Arial, sans-serif; color: #7B7589;">12</span></div>
+            <div style="background: #F7F4FB; border-radius: 12px; padding: 10px; display: flex; gap: 8px; align-items: center;">
+              <div style="width: 22px; height: 22px; border-radius: 50%; background: #D86AA8;"></div>
+              <div style="flex: 1; height: 8px; border-radius: 4px; background: #E8E3F0;"></div>
+            </div>
+            <div style="background: #F7F4FB; border-radius: 12px; padding: 10px; display: flex; gap: 8px; align-items: center;">
+              <div style="width: 22px; height: 22px; border-radius: 50%; background: #A289F2;"></div>
+              <div style="flex: 1; height: 8px; border-radius: 4px; background: #E8E3F0;"></div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 12px; color: #4F4858; display: flex; justify-content: space-between;"><span>Em conversa</span><span style="font-family: 'Inter Tight', Arial, sans-serif; color: #7B7589;">27</span></div>
+            <div style="background: #F7F4FB; border-radius: 12px; padding: 10px; display: flex; gap: 8px; align-items: center; box-shadow: 0 0 0 2px rgba(226,85,160,0.35);">
+              <div style="width: 22px; height: 22px; border-radius: 50%; background: #81C3F0;"></div>
+              <div style="flex: 1; height: 8px; border-radius: 4px; background: #E8E3F0;"></div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 12px; color: #4F4858; display: flex; justify-content: space-between;"><span>Pronto pra fechar</span><span style="font-family: 'Inter Tight', Arial, sans-serif; color: #7B7589;">8</span></div>
+            <div style="background: #F7F4FB; border-radius: 12px; padding: 10px; display: flex; gap: 8px; align-items: center;">
+              <div style="width: 22px; height: 22px; border-radius: 50%; background: #FACD7C;"></div>
+              <div style="flex: 1; height: 8px; border-radius: 4px; background: #E8E3F0;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size: 12px; color: #7B7589;">Branco #FFFFFF, cantos 20px, flutuando pequeno contra o fundo. Cards internos #F7F4FB, cantos 12px. Glow rosa marca o card ativo.</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-size: 14px; font-weight: 600;">Chip de mensagem + karaokê de intenção</div>
+      <div style="background: #FFFFFF; border-radius: 24px; box-shadow: 0 18px 44px rgba(21,16,31,0.10); padding: 16px 20px; display: flex; gap: 12px; align-items: center;">
+        <div style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #A5C2FE, #A289F2); flex-shrink: 0;"></div>
+        <div style="font-size: 16px; line-height: 1.45;">beleza, e <span style="color: #E255A0; border-bottom: 2px solid #E255A0;">quanto fica</span> <span style="color: #E255A0; border-bottom: 2px solid #E255A0;">pra fechar</span> os 3?</div>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <div style="font-family: 'Inter Tight', Arial, sans-serif; font-size: 12px; color: #7B7589; background: #FFFFFF; border-radius: 999px; padding: 5px 12px; box-shadow: 0 6px 18px rgba(21,16,31,0.08);">intenção: preço</div>
+        <div style="font-family: 'Inter Tight', Arial, sans-serif; font-size: 12px; color: #7B7589; background: #FFFFFF; border-radius: 999px; padding: 5px 12px; box-shadow: 0 6px 18px rgba(21,16,31,0.08);">intenção: fechamento</div>
+      </div>
+      <div style="font-size: 12px; color: #7B7589;">A expressão acende em rosa com sublinhado que se desenha. O micro rótulo sobe e some.</div>
+
+      <div style="font-size: 14px; font-weight: 600; margin-top: 8px;">Pill de rótulo e selo</div>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <div style="background: #FFFFFF; border-radius: 999px; padding: 7px 14px 7px 7px; display: flex; gap: 8px; align-items: center; box-shadow: 0 6px 18px rgba(21,16,31,0.08);">
+          <div style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, #FDA4F5, #A289F2);"></div>
+          <div style="font-size: 13px; font-weight: 500;">Agente Profissio.ai</div>
+        </div>
+        <div style="background: #E255A0; color: #FFFFFF; border-radius: 999px; padding: 8px 16px; font-size: 13px; font-weight: 600;">estágio atualizado</div>
+      </div>
+      <div style="font-size: 12px; color: #7B7589;">Pill branca com avatar identifica quem fala. Selo rosa marca o resultado de uma ação da IA.</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-size: 14px; font-weight: 600;">Grafo de nós</div>
+      <div style="background: #FFFFFF; border-radius: 20px; box-shadow: 0 18px 44px rgba(21,16,31,0.10); padding: 22px; position: relative; height: 210px; box-sizing: border-box;">
+        <svg width="100%" height="100%" viewBox="0 0 440 166" style="position: absolute; inset: 22px; width: calc(100% - 44px); height: calc(100% - 44px);">
+          <path d="M 108 22 C 190 22, 210 76, 288 80" fill="none" stroke="#D86AA8" stroke-width="1"></path>
+          <path d="M 108 80 L 288 82" fill="none" stroke="#D86AA8" stroke-width="1"></path>
+          <path d="M 108 140 C 190 140, 210 90, 288 84" fill="none" stroke="#D86AA8" stroke-width="1"></path>
+          <circle r="3.5" fill="#E255A0" style="offset-path: path('M 108 22 C 190 22, 210 76, 288 80'); animation: dot-travel 2.6s linear infinite;"></circle>
+          <circle r="3.5" fill="#E255A0" style="offset-path: path('M 108 80 L 288 82'); animation: dot-travel 2.6s linear infinite 0.6s;"></circle>
+          <circle r="3.5" fill="#E255A0" style="offset-path: path('M 108 140 C 190 140, 210 90, 288 84'); animation: dot-travel 2.6s linear infinite 1.2s;"></circle>
+        </svg>
+        <div style="position: relative; display: flex; justify-content: space-between; align-items: center; height: 100%;">
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="font-size: 12px; background: #FFFFFF; border: 1px solid #E8E3F0; border-radius: 999px; padding: 7px 13px; box-shadow: 0 4px 12px rgba(21,16,31,0.06); width: fit-content;">conteúdo das mensagens</div>
+            <div style="font-size: 12px; background: #FFFFFF; border: 1px solid #E8E3F0; border-radius: 999px; padding: 7px 13px; box-shadow: 0 4px 12px rgba(21,16,31,0.06); width: fit-content;">tipo de interação</div>
+            <div style="font-size: 12px; background: #FFFFFF; border: 1px solid #E8E3F0; border-radius: 999px; padding: 7px 13px; box-shadow: 0 4px 12px rgba(21,16,31,0.06); width: fit-content;">palavras-chave e intenções</div>
+          </div>
+          <div style="background: #E255A0; color: #FFFFFF; border-radius: 999px; padding: 9px 16px; font-size: 13px; font-weight: 600; box-shadow: 0 8px 22px rgba(226,85,160,0.40);">estágio atualizado</div>
+        </div>
+      </div>
+      <div style="font-size: 12px; color: #7B7589;">Linhas de 1px em rose-soft, pontinhos rosa viajando. O device para critérios, canais e orquestração.</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-size: 14px; font-weight: 600;">CTA discreto</div>
+      <div style="background: #FFFFFF; border-radius: 20px; box-shadow: 0 18px 44px rgba(21,16,31,0.10); padding: 34px 22px; display: flex; flex-direction: column; gap: 10px; align-items: center;">
+        <div style="font-size: 20px; font-weight: 600;">profissio.ai</div>
+        <div style="font-size: 13px; color: #4F4858;">IA à prova do dia-a-dia do seu negócio.</div>
+        <div style="font-size: 16px; font-weight: 500; margin-top: 8px;">Fale com a Agente Profissio.ai</div>
+        <div style="font-family: 'Inter Tight', Arial, sans-serif; font-size: 14px; color: #7B7589;">wa.me/profissioai<span style="display: inline-block; width: 2px; height: 15px; background: #15101F; margin-left: 2px; vertical-align: text-bottom; animation: blink 1.1s step-start infinite;"></span></div>
+      </div>
+      <div style="font-size: 12px; color: #7B7589;">Sem botão chamativo: texto curto e URL digitada com cursor piscando. Lockup pequeno e central. CTAs oficiais no CLAUDE.md.</div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
