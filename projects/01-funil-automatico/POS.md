@@ -13,7 +13,7 @@ O zip do Claude Design traz a composição (`Reel Funil Profissio.dc.html` + `an
 
 **v2 (escolha do usuário, 18/ago/2026): voice_id `LetL52AJ3xLLkD3x88iE`**, eleven_multilingual_v2. Histórico: v1 usou Ana Alice (`ORgG8rwdAiMYRug8RJwR`); a entonação de "Seu time chega antes." saiu estranha isolada, corrigir dando contexto prosódico via `previous_text`.
 
-- **Pronúncia oficial da marca: "profício ei ai"** (o ".ai" em inglês, sem falar "ponto"). Em TTS escrever "Profício ei ai" e validar com STT. A grafia v1 "Profissio ponto A I" está descontinuada.
+- **Pronúncia oficial da marca: "profício ei ai"** (o ".ai" em inglês, sem falar "ponto"). Em TTS escrever "Profício ei ái" (refinamento do usuário: mais intensidade no "ái" final; vale dos próximos vídeos em diante) e validar com STT. A grafia v1 "Profissio ponto A I" está descontinuada.
 - **"com a Agente" soa como "com a gente"**: evitar essa sequência. CTA final virou "A Agente Profissio.ai te espera no WhatsApp", que desfaz a ambiguidade.
 - Conferir pronúncia sem ouvir: gerar TTS e passar no Scribe (STT). Barato e pega erro.
 

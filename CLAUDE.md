@@ -150,7 +150,7 @@ Analisados frame a frame 4 vídeos enviados pelo usuário (28s e 30s verticais, 
 
 ## Regras que valem em qualquer resposta pública
 
-- **Pronúncia oficial da marca: "profício ei ai"** (confirmada pelo usuário em 18/ago/2026). O ".ai" é dito em inglês ("ei ai"), sem falar "ponto". Em TTS, escrever foneticamente "Profício ei ai" e validar com STT. Nunca "ponto a i".
+- **Pronúncia oficial da marca: "profício ei ái"** (confirmada e refinada pelo usuário em 18/ago/2026). O ".ai" é dito em inglês ("ei ái"), sem falar "ponto", **com um pouco mais de intensidade na última sílaba ("ái" tônico)**. Em TTS, escrever foneticamente "Profício ei ái" (o acento agudo puxa a ênfase) e validar com STT. Nunca "ponto a i". Vale a partir do projeto 02; o vídeo 01 foi aprovado com "ei ai" neutro.
 - Nunca usar travessão em texto público (caption, lettering, legenda): reescrever a frase.
 - Palavrão em vídeo **bipa**, não corta.
 - Loudness final: **-14 LUFS**.
