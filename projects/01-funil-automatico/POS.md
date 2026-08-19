@@ -37,5 +37,6 @@ Master: loudnorm 2 passes para **-14 LUFS** / TP -1.0. Medido final: -13.84 LUFS
 ## Agendamento (18/ago/2026)
 
 - **Post Metricool ID 363698438**, Instagram Reel, marca Profissio.ai (blog_id 6736175), **rascunho** agendado para **20/08/2026 às 20:00** (America/Sao_Paulo; horário sugerido pelo getBestTimeToPostByNetwork). Legenda: versão enxuta do CAPTION.md.
+- **19/ago/2026, 09:13**: a pedido do usuário, antecipado para **hoje 19/08/2026 às 20:00**. O update trocou o id: **id atual 363972411** (uuid 1580058375277004388), segue rascunho com a mesma legenda e mídia. Feito direto desta conversa: o conector do Metricool voltou a estar habilitado aqui.
 - Executado por sessão filha no environment Default (o conector do Metricool estava desabilitado nesta conversa e o setup script do environment do estúdio falha no boot de sessões novas; diagnóstico pendente na configuração do environment).
 - Mídia temporária removida do repo após o Metricool copiar para o CDN dele.
