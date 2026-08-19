@@ -33,3 +33,9 @@ Aprendizado: para trilha musical, usar o **Eleven Music** (`POST /v1/music`, `mu
 - Legenda final sem a linha de abertura (ajuste do usuário): direto na frase de valor.
 - Correção feita na própria sessão executora via trigger com `persistent_session_id` + `fire_trigger`: a sessão manteve contexto (id do post) e o conector, rota validada para follow-ups em sessões filhas.
 - Mídia temporária removida do repo após o Metricool copiar para o CDN.
+
+## Reagendamento (18/ago/2026, ~21h)
+
+- Um post externo (agendado por fora do Metricool) entrou no feed em 18/08; a pedido do usuário, este Reel foi **adiado de 19/08 para sexta 21/08/2026 às 20:00** (America/Sao_Paulo), seguindo **rascunho**, com legenda e mídia intactas. O Funil (id 363698438) segue inalterado como rascunho para 20/08 20:00. Ordem final da semana: Funil na quinta, Tempo Economizado na sexta.
+- **O id mudou de novo com o update** (gotcha padrão), e o número novo não pôde ser trazido para cá: o `post_turn_summary` da sessão filha comprime a resposta e engole números, mesmo pedindo a resposta em formato fixo. O id exato está no contexto da sessão executora (`session_01KZBTGvUfPwzfkUUtwsAcRS`, environment Default) e se recupera listando os posts agendados da marca num próximo follow-up.
+- **Gotchas novos da rota de sessão filha**: (1) `fire_trigger` **com `text`** ignora o `persistent_session_id` e cria uma sessão nova no environment do trigger (que era o do estúdio, cujo setup mata o boot); disparar **sem `text`**, com todo o contexto no prompt do trigger. (2) Sessão filha arquivada não aceita trigger novo: `unarchive_session` primeiro. (3) Não contar com o `post_turn_summary` para transportar valores exatos; se um dado precisa voltar, pedir que a sessão filha o publique num canal durável (ex.: commit num repo acessível).
