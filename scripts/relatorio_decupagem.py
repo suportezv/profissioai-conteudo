@@ -83,6 +83,13 @@ def main():
             fh.write("\n## Fala de cada peça final\n\n")
             fh.write("Transcrito do arquivo entregue, não do bruto: serve de prova de "
                      "que o corte não comeu palavra na entrada nem na saída.\n\n")
+            fh.write("Duas ressalvas sobre esta evidência. O reconhecedor às vezes "
+                     "**larga um fragmento curto no fim** da peça (aconteceu com o "
+                     "\"E aí?\" do C0019, que está no arquivo mas não aparece abaixo); "
+                     "e ele **não transcreve pedaço de palavra**, então este texto não "
+                     "prova ausência de fragmento da equipe nas emendas. Para isso vale "
+                     "a checagem de linha do tempo contra as palavras vizinhas, que é o "
+                     "que o corte já garante.\n\n")
             for c, p, _db, df, n, _nt, t in usados:
                 if t:
                     fh.write(f"**{c} — {p}** ({df:.0f}s)\n\n> {t}\n\n")
