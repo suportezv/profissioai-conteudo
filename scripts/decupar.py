@@ -19,6 +19,7 @@ import unicodedata
 
 CABECA = 0.20   # respiro antes da primeira palavra
 RABO = 0.45     # respiro depois da ultima palavra
+MARGEM = 0.06   # distancia que se mantem da palavra vizinha
 
 
 def normaliza(txt):
@@ -73,11 +74,26 @@ def resolve(w, trechos, clipe):
         b = acha(seq, normaliza(t["ate"]), a[0])
         if b is None:
             raise SystemExit(f"{clipe}: ancora final nao encontrada: {t['ate']!r}")
-        # "cabeca"/"rabo" no trecho sobrescrevem o respiro padrao. Serve
-        # quando a equipe fala em cima do fim do take: nesses casos a folga
-        # e de centesimos e o respiro padrao invadiria a fala seguinte.
-        ini = w[dono[a[0]]]["start"] - float(t.get("cabeca", CABECA))
-        fim = w[dono[b[1] - 1]]["end"] + float(t.get("rabo", RABO))
+        # "cabeca"/"rabo" no trecho sobrescrevem o respiro padrao.
+        i_pri, i_ult = dono[a[0]], dono[b[1] - 1]
+        ini = w[i_pri]["start"] - float(t.get("cabeca", CABECA))
+        fim = w[i_ult]["end"] + float(t.get("rabo", RABO))
+
+        # O respiro nunca pode cruzar a palavra vizinha. Nestes brutos a
+        # equipe fala colada no take ("Excelente", "Perfeito", "Então"), as
+        # vezes a centesimos de segundo do fim da fala, e um respiro fixo
+        # arrastaria essa palavra para dentro da peca entregue.
+        #
+        # Quando a folga ate a vizinha e menor que a margem, o corte vai para
+        # o meio da folga: e o unico ponto que nao come a nossa ultima silaba
+        # nem deixa entrar a primeira da outra. Nao ha respiro a ter quando
+        # nao ha silencio, e forcar um minimo aqui reintroduziria a invasao.
+        if i_pri > 0:
+            folga = w[i_pri]["start"] - w[i_pri - 1]["end"]
+            ini = max(ini, w[i_pri]["start"] - min(MARGEM, folga / 2))
+        if i_ult + 1 < len(w):
+            folga = w[i_ult + 1]["start"] - w[i_ult]["end"]
+            fim = min(fim, w[i_ult]["end"] + min(MARGEM, folga / 2))
         tempos.append((max(0.0, ini), fim))
         cursor = b[1]
     return tempos
