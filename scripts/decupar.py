@@ -73,8 +73,11 @@ def resolve(w, trechos, clipe):
         b = acha(seq, normaliza(t["ate"]), a[0])
         if b is None:
             raise SystemExit(f"{clipe}: ancora final nao encontrada: {t['ate']!r}")
-        ini = w[dono[a[0]]]["start"] - CABECA
-        fim = w[dono[b[1] - 1]]["end"] + RABO
+        # "cabeca"/"rabo" no trecho sobrescrevem o respiro padrao. Serve
+        # quando a equipe fala em cima do fim do take: nesses casos a folga
+        # e de centesimos e o respiro padrao invadiria a fala seguinte.
+        ini = w[dono[a[0]]]["start"] - float(t.get("cabeca", CABECA))
+        fim = w[dono[b[1] - 1]]["end"] + float(t.get("rabo", RABO))
         tempos.append((max(0.0, ini), fim))
         cursor = b[1]
     return tempos

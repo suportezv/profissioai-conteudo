@@ -1,88 +1,300 @@
 {
-  "C0001": {"pessoa": "Gordelas", "arquivo": "C0001-gordelas.mp4", "trechos": [
-    {"de": "Oi, eu sou o Gordelas", "ate": "Bora"}]},
-
-  "C0002": {"pessoa": "Seu Bolinha", "arquivo": "C0002-seu-bolinha.mp4", "trechos": [
-    {"de": "Fala, Major, muito obrigado", "ate": "junto comigo"}]},
-
-  "C0003": {"pessoa": "Pietra", "trechos": [], "nota": "take 1, tem tropeco no meio; substituido pelo C0004"},
-
-  "C0004": {"pessoa": "Pietra", "arquivo": "C0004-pietra.mp4", "trechos": [
-    {"de": "Oi, tudo bem? Aqui é a Pietra", "ate": "esteja juntos"}]},
-
-  "C0005": {"pessoa": "Mateus Veiga", "arquivo": "C0005-mateus-veiga.mp4", "trechos": [
-    {"de": "E aí, como é que você tá? Mateus Veiga aqui", "ate": "E aí, vamo"}]},
-
-  "C0006": {"pessoa": "Vitor Manato", "trechos": [], "nota": "so ensaio e direcao; substituido pelo C0008"},
-  "C0007": {"pessoa": "Vitor Manato", "trechos": [], "nota": "take incompleto, para no meio; substituido pelo C0008"},
-
-  "C0008": {"pessoa": "Vitor Manato", "arquivo": "C0008-vitor-manato.mp4", "trechos": [
-    {"de": "Então você acabou de fazer uma compra", "ate": "clica que topa"}]},
-
-  "C0009": {"pessoa": "Everaldo", "arquivo": "C0009-everaldo.mp4", "trechos": [
-    {"de": "Oi, eu sou Everaldo, muito obrigado por ter comprado no meu cupom", "ate": "por 90 dias"},
-    {"de": "Tudo que você precisar, treino, dieta, suplementação", "ate": "pra te ajudar"},
-    {"de": "Você topa", "ate": "Você topa"}]},
-
-  "C0010": {"pessoa": "Rafael Jarra", "arquivo": "C0010-rafael-jarra.mp4", "trechos": [
-    {"de": "Oi, eu sou o Rafael Jarra", "ate": "você topa"}]},
-
-  "C0011": {"pessoa": "Rafaela", "arquivo": "C0011-rafaela.mp4", "trechos": [
-    {"de": "Como você já sabe, eu sou a Rafaela", "ate": "E aí, topa"}]},
-
-  "C0012": {"pessoa": "Rafaela", "trechos": [], "nota": "take falhado, ela para no meio; a boa esta no C0011"},
-  "C0013": {"pessoa": "influenciadora (C0013-C0018)", "trechos": [], "nota": "falso comeco, ela desiste"},
-  "C0014": {"pessoa": "influenciadora (C0013-C0018)", "trechos": [], "nota": "take limpo, mas a redacao ainda muda depois; vale o C0018"},
-  "C0015": {"pessoa": "influenciadora (C0013-C0018)", "trechos": [], "nota": "erro de concordancia, ela mesma interrompe"},
-  "C0016": {"pessoa": "influenciadora (C0013-C0018)", "trechos": [], "nota": "erro no meio da frase"},
-  "C0017": {"pessoa": "influenciadora (C0013-C0018)", "trechos": [], "nota": "take interrompido, ajuste de texto"},
-
-  "C0018": {"pessoa": "influenciadora (C0013-C0018)", "arquivo": "C0018-influenciadora.mp4", "trechos": [
-    {"de": "Primeiramente, obrigada por usar meu cupom", "ate": "E aí, topa"}]},
-
-  "C0019": {"pessoa": "influenciador C0019", "arquivo": "C0019.mp4", "trechos": [
-    {"de": "Obrigado por comprar no meu cupom", "ate": "por 90 dias"},
-    {"de": "E aí", "ate": "E aí"}]},
-
-  "C0020": {"pessoa": "influenciador C0020", "trechos": [], "nota": "take embolado, ele se perde no final"},
-
-  "C0021": {"pessoa": "influenciadora C0021", "arquivo": "C0021.mp4", "trechos": [
-    {"de": "Oi! Muito obrigada por ter comprado com o meu cupom", "ate": "Você topa"}]},
-
-  "C0022": {"pessoa": "influenciadora C0022", "arquivo": "C0022.mp4", "trechos": [
-    {"de": "Oi, muito obrigada por ter comprado no meu cupom", "ate": "treino, dieta e suplementação"},
-    {"apos": "Acho que funciona", "de": "E aí, você topa", "ate": "E aí, você topa"}]},
-
-  "C0023": {"pessoa": "influenciadora C0023-C0024", "trechos": [], "nota": "a equipe pediu para refazer na hora; vale o C0024"},
-
-  "C0024": {"pessoa": "influenciadora C0023-C0024", "arquivo": "C0024.mp4", "trechos": [
-    {"de": "Oi, muito obrigado por ter usado o meu cupom e a partir de hoje", "ate": "Você topa"}]},
-
-  "C0025": {"pessoa": "influenciadora C0025", "trechos": [], "nota": "take falhado, com palavrao"},
-
-  "C0026": {"pessoa": "influenciadora C0026", "arquivo": "C0026.mp4", "trechos": [
-    {"de": "Oi, muito obrigada por usar o meu cupom", "ate": "Você topa"}]},
-
-  "C0027": {"pessoa": "influenciador C0027", "arquivo": "C0027.mp4", "trechos": [
-    {"de": "Muito obrigado por usar o meu cupom", "ate": "Você topa"}]},
-
-  "C0028": {"pessoa": "influenciador C0028", "arquivo": "C0028.mp4", "trechos": [
-    {"de": "Boa, minha família! Aí, maior satisfação por ter usado meu cupom", "ate": "cê fecha comigo"}]},
-
-  "C0029": {"pessoa": "influenciador C0029-C0030", "arquivo": "C0029-versao-curta.mp4", "trechos": [
-    {"de": "Seja muito bem-vindo ao Modo Soldiers", "ate": "você topa"}]},
-
-  "C0030": {"pessoa": "influenciador C0029-C0030", "arquivo": "C0030.mp4", "trechos": [
-    {"de": "Seja muito bem-vindo à inteligência artificial Modo Soldiers", "ate": "os melhores suplementos da Soldiers"},
-    {"de": "Você tá pronto pra testar essa inteligência artificial que vai cuidar da sua dieta", "ate": "topa ou não topa"}]},
-
-  "C0031": {"pessoa": "Renan Forfit", "trechos": [], "nota": "so conversa sobre como abordar; nenhum take gravado"},
-
-  "C0032": {"pessoa": "Renan Forfit", "arquivo": "C0032-renan-forfit-cupom.mp4", "trechos": [
-    {"de": "Oi, Renan For Fit na área", "ate": "lembretes diários"},
-    {"de": "Então você topa receber as minhas mensagens", "ate": "Então você topa receber as minhas mensagens"}]},
-
-  "C0033": {"pessoa": "Renan Forfit", "arquivo": "C0033-renan-forfit-site.mp4", "trechos": [
-    {"de": "Oi, Renan Forfit na área", "ate": "Gratuito, porque você fez essa compra"},
-    {"de": "então responde aí", "ate": "receber nossas mensagens"}]}
+  "C0001": {
+    "pessoa": "Gordelas",
+    "arquivo": "C0001-gordelas.mp4",
+    "trechos": [
+      {
+        "de": "Oi, eu sou o Gordelas",
+        "ate": "Bora"
+      }
+    ]
+  },
+  "C0002": {
+    "pessoa": "Seu Bolinha",
+    "arquivo": "C0002-seu-bolinha.mp4",
+    "trechos": [
+      {
+        "de": "Fala, Major, muito obrigado",
+        "ate": "junto comigo"
+      }
+    ]
+  },
+  "C0003": {
+    "pessoa": "Pietra",
+    "trechos": [],
+    "nota": "take 1, tem tropeco no meio; substituido pelo C0004"
+  },
+  "C0004": {
+    "pessoa": "Pietra",
+    "arquivo": "C0004-pietra.mp4",
+    "trechos": [
+      {
+        "de": "Oi, tudo bem? Aqui é a Pietra",
+        "ate": "esteja juntos"
+      }
+    ]
+  },
+  "C0005": {
+    "pessoa": "Mateus Veiga",
+    "arquivo": "C0005-mateus-veiga.mp4",
+    "trechos": [
+      {
+        "de": "E aí, como é que você tá? Mateus Veiga aqui",
+        "ate": "E aí, vamo"
+      }
+    ]
+  },
+  "C0006": {
+    "pessoa": "Vitor Manato",
+    "trechos": [],
+    "nota": "so ensaio e direcao; substituido pelo C0008"
+  },
+  "C0007": {
+    "pessoa": "Vitor Manato",
+    "trechos": [],
+    "nota": "take incompleto, para no meio; substituido pelo C0008"
+  },
+  "C0008": {
+    "pessoa": "Vitor Manato",
+    "arquivo": "C0008-vitor-manato.mp4",
+    "trechos": [
+      {
+        "de": "Então você acabou de fazer uma compra",
+        "ate": "clica que topa"
+      }
+    ]
+  },
+  "C0009": {
+    "pessoa": "Everaldo",
+    "arquivo": "C0009-everaldo.mp4",
+    "trechos": [
+      {
+        "de": "Oi, eu sou Everaldo, muito obrigado por ter comprado no meu cupom",
+        "ate": "por 90 dias"
+      },
+      {
+        "de": "Tudo que você precisar, treino, dieta, suplementação",
+        "ate": "pra te ajudar"
+      },
+      {
+        "de": "Você topa",
+        "ate": "Você topa",
+        "rabo": 0.03,
+        "nota": "a equipe elogia 0,04s depois do fim da fala"
+      }
+    ]
+  },
+  "C0010": {
+    "pessoa": "Rafael Jarra",
+    "arquivo": "C0010-rafael-jarra.mp4",
+    "trechos": [
+      {
+        "de": "Oi, eu sou o Rafael Jarra",
+        "ate": "você topa"
+      }
+    ]
+  },
+  "C0011": {
+    "pessoa": "Rafaela",
+    "arquivo": "C0011-rafaela.mp4",
+    "trechos": [
+      {
+        "de": "Como você já sabe, eu sou a Rafaela",
+        "ate": "E aí, topa"
+      }
+    ]
+  },
+  "C0012": {
+    "pessoa": "Rafaela",
+    "trechos": [],
+    "nota": "take falhado, ela para no meio; a boa esta no C0011"
+  },
+  "C0013": {
+    "pessoa": "influenciadora (C0013-C0018)",
+    "trechos": [],
+    "nota": "falso comeco, ela desiste"
+  },
+  "C0014": {
+    "pessoa": "influenciadora (C0013-C0018)",
+    "trechos": [],
+    "nota": "take limpo, mas a redacao ainda muda depois; vale o C0018"
+  },
+  "C0015": {
+    "pessoa": "influenciadora (C0013-C0018)",
+    "trechos": [],
+    "nota": "erro de concordancia, ela mesma interrompe"
+  },
+  "C0016": {
+    "pessoa": "influenciadora (C0013-C0018)",
+    "trechos": [],
+    "nota": "erro no meio da frase"
+  },
+  "C0017": {
+    "pessoa": "influenciadora (C0013-C0018)",
+    "trechos": [],
+    "nota": "take interrompido, ajuste de texto"
+  },
+  "C0018": {
+    "pessoa": "influenciadora (C0013-C0018)",
+    "arquivo": "C0018-influenciadora.mp4",
+    "trechos": [
+      {
+        "de": "Primeiramente, obrigada por usar meu cupom",
+        "ate": "E aí, topa"
+      }
+    ]
+  },
+  "C0019": {
+    "pessoa": "influenciador C0019",
+    "arquivo": "C0019.mp4",
+    "trechos": [
+      {
+        "de": "Obrigado por comprar no meu cupom",
+        "ate": "por 90 dias"
+      },
+      {
+        "de": "E aí",
+        "ate": "E aí"
+      }
+    ]
+  },
+  "C0020": {
+    "pessoa": "influenciador C0020",
+    "trechos": [],
+    "nota": "take embolado, ele se perde no final"
+  },
+  "C0021": {
+    "pessoa": "influenciadora C0021",
+    "arquivo": "C0021.mp4",
+    "trechos": [
+      {
+        "de": "Oi! Muito obrigada por ter comprado com o meu cupom",
+        "ate": "Você topa"
+      }
+    ]
+  },
+  "C0022": {
+    "pessoa": "influenciadora C0022",
+    "arquivo": "C0022.mp4",
+    "trechos": [
+      {
+        "de": "Oi, muito obrigada por ter comprado no meu cupom",
+        "ate": "treino, dieta e suplementação"
+      },
+      {
+        "apos": "Acho que funciona",
+        "de": "E aí, você topa",
+        "ate": "E aí, você topa"
+      }
+    ]
+  },
+  "C0023": {
+    "pessoa": "influenciadora C0023-C0024",
+    "trechos": [],
+    "nota": "a equipe pediu para refazer na hora; vale o C0024"
+  },
+  "C0024": {
+    "pessoa": "influenciadora C0023-C0024",
+    "arquivo": "C0024.mp4",
+    "trechos": [
+      {
+        "de": "Oi, muito obrigado por ter usado o meu cupom e a partir de hoje",
+        "ate": "Você topa"
+      }
+    ]
+  },
+  "C0025": {
+    "pessoa": "influenciadora C0025",
+    "trechos": [],
+    "nota": "take falhado, com palavrao"
+  },
+  "C0026": {
+    "pessoa": "influenciadora C0026",
+    "arquivo": "C0026.mp4",
+    "trechos": [
+      {
+        "de": "Oi, muito obrigada por usar o meu cupom",
+        "ate": "Você topa"
+      }
+    ]
+  },
+  "C0027": {
+    "pessoa": "influenciador C0027",
+    "arquivo": "C0027.mp4",
+    "trechos": [
+      {
+        "de": "Muito obrigado por usar o meu cupom",
+        "ate": "Você topa"
+      }
+    ]
+  },
+  "C0028": {
+    "pessoa": "influenciador C0028",
+    "arquivo": "C0028.mp4",
+    "trechos": [
+      {
+        "de": "Boa, minha família! Aí, maior satisfação por ter usado meu cupom",
+        "ate": "cê fecha comigo"
+      }
+    ]
+  },
+  "C0029": {
+    "pessoa": "influenciador C0029-C0030",
+    "arquivo": "C0029-versao-curta.mp4",
+    "trechos": [
+      {
+        "de": "Seja muito bem-vindo ao Modo Soldiers",
+        "ate": "você topa"
+      }
+    ]
+  },
+  "C0030": {
+    "pessoa": "influenciador C0029-C0030",
+    "arquivo": "C0030.mp4",
+    "trechos": [
+      {
+        "de": "Seja muito bem-vindo à inteligência artificial Modo Soldiers",
+        "ate": "os melhores suplementos da Soldiers"
+      },
+      {
+        "de": "Você tá pronto pra testar essa inteligência artificial que vai cuidar da sua dieta",
+        "ate": "topa ou não topa"
+      }
+    ]
+  },
+  "C0031": {
+    "pessoa": "Renan Forfit",
+    "trechos": [],
+    "nota": "so conversa sobre como abordar; nenhum take gravado"
+  },
+  "C0032": {
+    "pessoa": "Renan Forfit",
+    "arquivo": "C0032-renan-forfit-cupom.mp4",
+    "trechos": [
+      {
+        "de": "Oi, Renan For Fit na área",
+        "ate": "lembretes diários"
+      },
+      {
+        "de": "Então você topa receber as minhas mensagens",
+        "ate": "Então você topa receber as minhas mensagens",
+        "rabo": 0.03,
+        "nota": "a equipe elogia 0,04s depois do fim da fala"
+      }
+    ]
+  },
+  "C0033": {
+    "pessoa": "Renan Forfit",
+    "arquivo": "C0033-renan-forfit-site.mp4",
+    "trechos": [
+      {
+        "de": "Oi, Renan Forfit na área",
+        "ate": "Gratuito, porque você fez essa compra"
+      },
+      {
+        "de": "então responde aí",
+        "ate": "receber nossas mensagens"
+      }
+    ]
+  }
 }
