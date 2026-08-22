@@ -39,3 +39,11 @@ Aprendizado: para trilha musical, usar o **Eleven Music** (`POST /v1/music`, `mu
 - Um post externo (agendado por fora do Metricool) entrou no feed em 18/08; a pedido do usuário, este Reel foi **adiado de 19/08 para sexta 21/08/2026 às 20:00** (America/Sao_Paulo), seguindo **rascunho**, com legenda e mídia intactas. O Funil (id 363698438) segue inalterado como rascunho para 20/08 20:00. Ordem final da semana: Funil na quinta, Tempo Economizado na sexta.
 - **O id mudou de novo com o update** (gotcha padrão): **id atual 363788567** (uuid 9207788284339765471), recuperado em 19/08 via `getScheduledPosts` quando o conector do Metricool voltou a esta conversa. (Na noite anterior o número não tinha vindo: o `post_turn_summary` da sessão filha comprime a resposta e engole números, mesmo pedindo formato fixo.)
 - **Gotchas novos da rota de sessão filha**: (1) `fire_trigger` **com `text`** ignora o `persistent_session_id` e cria uma sessão nova no environment do trigger (que era o do estúdio, cujo setup mata o boot); disparar **sem `text`**, com todo o contexto no prompt do trigger. (2) Sessão filha arquivada não aceita trigger novo: `unarchive_session` primeiro. (3) Não contar com o `post_turn_summary` para transportar valores exatos; se um dado precisa voltar, pedir que a sessão filha o publique num canal durável (ex.: commit num repo acessível).
+
+## Publicação automática e reagendamento (22/ago/2026)
+
+- **Mesmo caso do Funil**: a data de sexta 21/08 venceu com o post ainda em rascunho, e ele não publicou. Em 22/08 o `getScheduledPosts` ainda devolvia `draft: true` apontando para o passado.
+- A pedido do usuário, reagendado para **quarta 26/08/2026 às 20:00** (America/Sao_Paulo), com **`draft: false`, `autoPublish: true`** e `instagramData` REEL / `showReelOnFeed: true`. Legenda e mídia intactas.
+- **Id novo após o update: `365135892`**. Uuid inalterado: `9207788284339765471`.
+- Confirmado por `getScheduledPosts`: `draft: false`, `2026-08-26T20:00:00`, provider instagram `PENDING`.
+- Ordem da semana refeita: **Funil na segunda 24/08, Tempo Economizado na quarta 26/08**, mantendo o intervalo de dois dias e o horário das 20:00.
