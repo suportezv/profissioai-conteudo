@@ -1,6 +1,6 @@
 # Hero do site: "Cada conversa move o seu negócio"
 
-Composição `HeroSite` em `remotion/src/Hero.tsx`. 1920x1080, 30 fps, 22 s.
+Composição `HeroSite` em `remotion/src/Hero.tsx`. 1920x1080, 30 fps, **24 s**.
 
 ## O conceito
 
@@ -13,9 +13,23 @@ ao atravessar, move o negócio.
 |---|---|---|
 | 01 · Uma conversa chega | **Agentes de IA** | Mensagem entra, o Agente responde. Chip: `IA Gerenciando` |
 | 02 · A equipe assume | **Atendimento** | O chip vira `Humano Gerenciando`, entra o avatar do atendente e a IA pausa |
-| 03 · O negócio se move | **CRM e Ativação** | A conversa vira ficha e caminha pelos quatro estágios do funil |
+| 03 · O negócio se move | **CRM e Ativação** | **Dois tempos**, porque a frente tem duas metades |
 
-Fecho: a frase da marca com **conversa** em azul, e o CTA único.
+O ato 3 é o único com duas batidas, e isso é deliberado: "CRM e Ativação" são
+duas coisas, e a primeira versão da peça só mostrou a primeira.
+
+| Batida | Aba do app | O que aparece |
+|---|---|---|
+| 3a · CRM | **Contatos** e **Funil** | A conversa vira registro (nome, telefone, estágio, mensagens, última conversa) e a ficha caminha sozinha pelos quatro estágios |
+| 3b · Ativação | **Ativações** | O contato entra numa lista segmentada por filtros, num template aprovado pela Meta, e a campanha dispara com progresso de envio |
+
+No ato 3 o painel da conversa **não sai de cena**: ele recua, encolhe e fica
+pequeno no alto à direita. Tudo que aparece depois descende visivelmente dele,
+que é a ideia da peça.
+
+Fecho: a frase da marca com **conversa** em azul, o CTA único, e as três
+frentes voltando juntas à direita. O resumo final não é enfeite: é o que a
+peça acabou de mostrar, nomeado.
 
 ## Por que os rótulos são esses
 
@@ -26,7 +40,14 @@ Profissio SDR:
   "Atendente" como diz a Central de Ajuda).
 - Estágios do funil: `Conversas básicas → Com objeções → Interessado →
   Reunião marcada`.
-- Rodapé do painel: `Informações coletadas`, com as etiquetas reais.
+- Filtros de lista em Ativações: `Estágio`, `Última conversa`, `Etiqueta` —
+  o produto **exige pelo menos um filtro**, para impedir disparo sem
+  segmentação, e a peça mostra três.
+- Colunas de Contatos: nome, telefone, estágio, mensagens, última conversa.
+
+O telefone aparece **mascarado** (`+55 11 9••••-••••`) e o número de
+destinatários é ilustrativo: é uma maquete de interface, não um dado de
+operação nem alegação de resultado.
 
 As **mensagens são fictícias**, escritas para a peça. Nenhuma conversa de
 cliente real foi usada, nem podia ser.

@@ -12,21 +12,27 @@ import "./fonte";
 import { marca } from "./marca";
 
 /**
- * Hero do site: uma conversa que nunca sai de cena e se transforma tres vezes.
+ * Hero do site: uma conversa que nunca sai de cena e se transforma.
  *
- * Ato 1  a conversa chega e a IA responde       (Agentes de IA)
- * Ato 2  a equipe assume, a IA pausa            (Atendimento)
- * Ato 3  a conversa vira contato e anda no funil (CRM e Ativacao)
+ * Ato 1  a conversa chega e a IA responde              (Agentes de IA)
+ * Ato 2  a equipe assume, a IA pausa                   (Atendimento)
+ * Ato 3  duas batidas, porque a frente tem duas metades (CRM e Ativacao)
+ *          3a  a conversa vira contato e anda no funil   -> CRM
+ *          3b  o contato entra numa lista e numa campanha -> Ativacao
  *
- * Peca continua, sem corte: os estados se encadeiam por transformacao, cada um
- * segurando 2 a 3 segundos. Os rotulos sao os do App Profissio de verdade,
- * inclusive os estagios do funil da conta Profissio SDR.
+ * Peca continua, sem corte: os estados se encadeiam por transformacao. No ato 3
+ * o painel da conversa nao some, ele recua e fica pequeno no alto: tudo que
+ * aparece depois descende dele, que e a ideia da peca.
+ *
+ * Todo rotulo saiu do App Profissio de verdade (conta Profissio SDR): os status
+ * de conversa, os quatro estagios do funil e os filtros de lista de Ativacoes.
+ * As mensagens sao ficticias, escritas para a peca.
  */
 
 const SUAVE = Easing.bezier(0.16, 1, 0.3, 1);
 
 /**
- * Opacidade com entrada e saida, em frames locais.
+ * Opacidade com entrada e saida, em frames.
  *
  * Monta a faixa sem ponto repetido: com fade de saida zero, [ini, ini+ent,
  * fim, fim] nao e estritamente crescente e o interpolate do Remotion recusa.
@@ -58,12 +64,20 @@ const passo = (f: number, ini: number, fim: number) =>
   });
 
 const ATOS = [
-  { ini: 20, fim: 195, eyebrow: "Agentes de IA", titulo: ["Uma conversa", "chega."] },
-  { ini: 195, fim: 360, eyebrow: "Atendimento", titulo: ["A equipe", "assume."] },
-  { ini: 360, fim: 530, eyebrow: "CRM e Ativação", titulo: ["O negócio", "se move."] },
+  { ini: 20, fim: 175, eyebrow: "Agentes de IA", titulo: ["Uma conversa", "chega."] },
+  { ini: 175, fim: 320, eyebrow: "Atendimento", titulo: ["A equipe", "assume."] },
+  { ini: 320, fim: 580, eyebrow: "CRM e Ativação", titulo: ["O negócio", "se move."] },
 ];
 
+const CRM_INI = 334;
+const CRM_FIM = 452;
+const ATIV_INI = 452;
+const ATIV_FIM = 578;
+const FECHO_INI = 580;
+
 const ESTAGIOS = ["Conversas básicas", "Com objeções", "Interessado", "Reunião marcada"];
+
+const LARG_PAINEL = 860;
 
 /* ---------------------------------------------------------------- palco --- */
 
@@ -73,7 +87,6 @@ const Palco: React.FC = () => {
   const t = f / durationInFrames;
   return (
     <AbsoluteFill style={{ backgroundColor: marca.tinta }}>
-      {/* profundidade: um halo azul que deriva devagar, quase imperceptivel */}
       <AbsoluteFill
         style={{
           background: `radial-gradient(1100px 760px at ${68 + Math.sin(t * Math.PI * 2) * 3}% ${
@@ -111,44 +124,41 @@ const Trilho: React.FC = () => {
             background: marca.azul,
           }}
         />
-        {ATOS.map((a, i) => {
-          const x = (larg / 3) * i + larg / 6;
-          const aceso = f >= a.ini;
-          return (
-            <div
-              key={i}
-              style={{
-                position: "absolute",
-                left: x - 4,
-                top: -3,
-                width: 8,
-                height: 8,
-                borderRadius: 4,
-                background: aceso ? marca.azul : "rgba(255,255,255,0.25)",
-                transform: `scale(${aceso ? 1 : 0.7})`,
-                transition: "none",
-              }}
-            />
-          );
-        })}
-      </div>
-      <div style={{ display: "flex", width: larg }}>
         {ATOS.map((a, i) => (
           <div
             key={i}
             style={{
-              flex: 1,
-              textAlign: "center",
-              fontSize: 15,
-              fontWeight: 500,
-              letterSpacing: marca.tracking,
-              color: f >= a.ini && f < a.fim ? marca.branco : marca.apoioEscuro,
-              opacity: f >= a.ini && f < a.fim ? 1 : 0.5,
+              position: "absolute",
+              left: (larg / 3) * i + larg / 6 - 4,
+              top: -3,
+              width: 8,
+              height: 8,
+              borderRadius: 4,
+              background: f >= a.ini ? marca.azul : "rgba(255,255,255,0.25)",
             }}
-          >
-            {a.eyebrow}
-          </div>
+          />
         ))}
+      </div>
+      <div style={{ display: "flex", width: larg }}>
+        {ATOS.map((a, i) => {
+          const dentro = f >= a.ini && f < a.fim;
+          return (
+            <div
+              key={i}
+              style={{
+                flex: 1,
+                textAlign: "center",
+                fontSize: 15,
+                fontWeight: 500,
+                letterSpacing: marca.tracking,
+                color: dentro ? marca.branco : marca.apoioEscuro,
+                opacity: dentro ? 1 : 0.5,
+              }}
+            >
+              {a.eyebrow}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -180,27 +190,40 @@ const Chip: React.FC<{ texto: string; cor: string; pontoPulsa?: boolean }> = ({
         whiteSpace: "nowrap",
       }}
     >
-      <span
-        style={{
-          width: 7,
-          height: 7,
-          borderRadius: 4,
-          background: cor,
-          opacity: pulso,
-        }}
-      />
+      <span style={{ width: 7, height: 7, borderRadius: 4, background: cor, opacity: pulso }} />
       {texto}
     </div>
   );
 };
 
+/** Pilula pequena de filtro ou etiqueta, sobre o painel claro. */
+const Pilula: React.FC<{ children: React.ReactNode; forte?: boolean }> = ({ children, forte }) => (
+  <span
+    style={{
+      display: "inline-flex",
+      alignItems: "center",
+      padding: "6px 12px",
+      borderRadius: 8,
+      whiteSpace: "nowrap",
+      background: forte ? `${marca.azul}14` : marca.branco,
+      border: `1px solid ${forte ? `${marca.azul}55` : marca.linha}`,
+      fontSize: 15,
+      fontWeight: 500,
+      letterSpacing: marca.tracking,
+      color: forte ? marca.azul : marca.tinta,
+    }}
+  >
+    {children}
+  </span>
+);
+
 /* ---------------------------------------------------------- mensagens ----- */
 
-const Balao: React.FC<{
-  de: "cliente" | "agente";
-  texto: string;
-  entra: number;
-}> = ({ de, texto, entra }) => {
+const Balao: React.FC<{ de: "cliente" | "agente"; texto: string; entra: number }> = ({
+  de,
+  texto,
+  entra,
+}) => {
   const f = useCurrentFrame();
   const p = passo(f, entra, entra + 18);
   const doCliente = de === "cliente";
@@ -228,28 +251,20 @@ const Balao: React.FC<{
   );
 };
 
-/* ------------------------------------------------------------- painel ----- */
+/* ------------------------------------------------------ painel conversa --- */
 
-const Painel: React.FC = () => {
+const PainelConversa: React.FC = () => {
   const f = useCurrentFrame();
-
-  // o painel encolhe de leve no ato 3, quando a conversa vira ficha no funil
-  const recuo = passo(f, 372, 420);
-  const escala = interpolate(recuo, [0, 1], [1, 0.965]);
-
   return (
     <div
       style={{
-        width: 860,
+        width: LARG_PAINEL,
         background: marca.branco,
         borderRadius: 20,
         boxShadow: "0 40px 90px rgba(0,0,0,0.42)",
         overflow: "hidden",
-        transform: `scale(${escala})`,
-        transformOrigin: "center",
       }}
     >
-      {/* cabecalho do painel: status da conversa */}
       <div
         style={{
           display: "flex",
@@ -292,44 +307,33 @@ const Painel: React.FC = () => {
             </div>
           </div>
         </div>
-
-        {/* o chip troca de estado: e a virada do ato 2 */}
         <div style={{ position: "relative", height: 40, minWidth: 268 }}>
-          <div style={{ position: "absolute", right: 0, opacity: janela(f, 46, 214, 14, 14) }}>
+          <div style={{ position: "absolute", right: 0, opacity: janela(f, 46, 194, 14, 14) }}>
             <Chip texto="IA Gerenciando" cor={marca.azul} pontoPulsa />
           </div>
-          <div style={{ position: "absolute", right: 0, opacity: janela(f, 214, 600, 16, 0) }}>
+          <div style={{ position: "absolute", right: 0, opacity: janela(f, 194, 720, 16, 0) }}>
             <Chip texto="Humano Gerenciando" cor="#1F9D55" />
           </div>
         </div>
       </div>
 
-      {/* corpo: a conversa */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 14,
-          padding: "26px 26px 22px",
-        }}
-      >
+      <div style={{ display: "flex", flexDirection: "column", gap: 14, padding: "26px 26px 22px" }}>
         <Balao de="cliente" texto="Oi! Vocês atendem por WhatsApp e integram com o meu CRM?" entra={54} />
         <Balao
           de="agente"
           texto="Atendemos, sim. A conversa vira contato e estágio no funil automaticamente."
-          entra={106}
+          entra={104}
         />
-        <Balao de="cliente" texto="Consigo ver uma demonstração essa semana?" entra={168} />
+        <Balao de="cliente" texto="Consigo ver uma demonstração essa semana?" entra={152} />
 
-        {/* ato 2: a pessoa entra em cena */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             gap: 12,
             marginTop: 6,
-            opacity: janela(f, 232, 600, 16, 0),
-            transform: `translateY(${interpolate(passo(f, 232, 256), [0, 1], [10, 0])}px)`,
+            opacity: janela(f, 212, 720, 16, 0),
+            transform: `translateY(${interpolate(passo(f, 212, 236), [0, 1], [10, 0])}px)`,
           }}
         >
           <div
@@ -361,74 +365,93 @@ const Painel: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* rodape do painel: sinais coletados, aparece no ato 3 */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
-          padding: "16px 26px",
-          borderTop: `1px solid ${marca.linha}`,
-          background: marca.superficie,
-          opacity: janela(f, 392, 600, 18, 0),
-        }}
-      >
-        <span
-          style={{
-            fontSize: 14,
-            fontWeight: 500,
-            letterSpacing: marca.tracking,
-            color: marca.apoio,
-          }}
-        >
-          Informações coletadas
-        </span>
-        {["Interessado", "Reunião marcada"].map((t, i) => (
-          <span
-            key={t}
-            style={{
-              padding: "5px 11px",
-              borderRadius: 8,
-              background: marca.branco,
-              border: `1px solid ${marca.linha}`,
-              fontSize: 14,
-              fontWeight: 500,
-              letterSpacing: marca.tracking,
-              color: marca.tinta,
-              opacity: janela(f, 400 + i * 22, 600, 14, 0),
-            }}
-          >
-            {t}
-          </span>
-        ))}
-      </div>
     </div>
   );
 };
 
-/* -------------------------------------------------------------- funil ----- */
+/* ------------------------------------------------------ 3a: CRM ----------- */
 
-const Funil: React.FC = () => {
+const BlocoCRM: React.FC = () => {
   const f = useCurrentFrame();
-  const aparece = janela(f, 402, 600, 20, 0);
+  const vis = janela(f, CRM_INI, CRM_FIM + 16, 22, 20);
   // a ficha caminha pelos quatro estagios
-  const pos = interpolate(f, [418, 446, 470, 494], [0, 1, 2, 3], {
+  const pos = interpolate(f, [372, 396, 416, 436], [0, 1, 2, 3], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: SUAVE,
   });
-  const colL = 196;
+  const colL = 200;
   const gap = 14;
 
   return (
     <div
       style={{
         width: colL * 4 + gap * 3,
-        opacity: aparece,
-        transform: `translateY(${interpolate(passo(f, 402, 430), [0, 1], [24, 0])}px)`,
+        opacity: vis,
+        transform: `translateY(${interpolate(passo(f, CRM_INI, CRM_INI + 28), [0, 1], [26, 0])}px)`,
+        display: "flex",
+        flexDirection: "column",
+        gap: 20,
       }}
     >
+      {/* a conversa virou registro: a aba Contatos */}
+      <div
+        style={{
+          background: marca.branco,
+          borderRadius: 16,
+          padding: "16px 20px",
+          boxShadow: "0 24px 60px rgba(0,0,0,0.38)",
+        }}
+      >
+        <div
+          style={{
+            fontSize: 13,
+            fontWeight: 500,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: marca.apoio,
+            marginBottom: 12,
+          }}
+        >
+          Contatos · cadastro automático
+        </div>
+        <div style={{ display: "flex", gap: 26, alignItems: "flex-end" }}>
+          {[
+            ["Nome", "Contato via WhatsApp"],
+            ["Telefone", "+55 11 9••••-••••"],
+            ["Estágio", "Interessado"],
+            ["Mensagens", "6"],
+            ["Última conversa", "agora"],
+          ].map(([rot, val], i) => (
+            <div key={rot} style={{ opacity: janela(f, CRM_INI + 14 + i * 7, 720, 12, 0) }}>
+              <div
+                style={{
+                  fontSize: 13,
+                  fontWeight: 400,
+                  letterSpacing: marca.tracking,
+                  color: marca.apoio,
+                  marginBottom: 4,
+                }}
+              >
+                {rot}
+              </div>
+              <div
+                style={{
+                  fontSize: 17,
+                  fontWeight: 500,
+                  letterSpacing: marca.tracking,
+                  color: rot === "Estágio" ? marca.azul : marca.tinta,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {val}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* e anda no funil sozinha */}
       <div style={{ display: "flex", gap, position: "relative" }}>
         {ESTAGIOS.map((e, i) => {
           const ativo = pos >= i - 0.35;
@@ -449,6 +472,7 @@ const Funil: React.FC = () => {
                   fontWeight: 500,
                   letterSpacing: marca.tracking,
                   color: ativo ? marca.branco : marca.apoioEscuro,
+                  whiteSpace: "nowrap",
                 }}
               >
                 {e}
@@ -456,12 +480,10 @@ const Funil: React.FC = () => {
             </div>
           );
         })}
-
-        {/* a ficha: e a mesma conversa, agora como contato */}
         <div
           style={{
             position: "absolute",
-            top: 46,
+            top: 48,
             left: pos * (colL + gap) + 14,
             width: colL - 28,
             padding: "11px 13px",
@@ -497,6 +519,243 @@ const Funil: React.FC = () => {
   );
 };
 
+/* -------------------------------------------------- 3b: Ativacao ---------- */
+
+const BlocoAtivacao: React.FC = () => {
+  const f = useCurrentFrame();
+  const vis = janela(f, ATIV_INI, ATIV_FIM + 22, 22, 22);
+  const envio = passo(f, 516, 566);
+
+  return (
+    <div
+      style={{
+        width: 856,
+        opacity: vis,
+        transform: `translateY(${interpolate(passo(f, ATIV_INI, ATIV_INI + 28), [0, 1], [26, 0])}px)`,
+        background: marca.branco,
+        borderRadius: 20,
+        padding: "24px 26px 26px",
+        boxShadow: "0 40px 90px rgba(0,0,0,0.42)",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: 20,
+        }}
+      >
+        <div
+          style={{
+            fontSize: 13,
+            fontWeight: 500,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: marca.apoio,
+          }}
+        >
+          Ativações · nova campanha
+        </div>
+        <Chip texto="Agendada" cor={marca.azul} />
+      </div>
+
+      {/* a lista nasce de filtros: o produto exige pelo menos um */}
+      <div
+        style={{
+          fontSize: 15,
+          fontWeight: 400,
+          letterSpacing: marca.tracking,
+          color: marca.apoio,
+          marginBottom: 10,
+        }}
+      >
+        Lista segmentada
+      </div>
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 22 }}>
+        {["Estágio: Reunião marcada", "Última conversa: 30 dias", "Etiqueta: Interessado"].map(
+          (t, i) => (
+            <span key={t} style={{ opacity: janela(f, ATIV_INI + 16 + i * 10, 720, 12, 0) }}>
+              <Pilula forte>{t}</Pilula>
+            </span>
+          ),
+        )}
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "18px 20px",
+          borderRadius: 16,
+          background: marca.superficie,
+          border: `1px solid ${marca.linha}`,
+        }}
+      >
+        <div>
+          <div
+            style={{
+              fontSize: 13,
+              fontWeight: 400,
+              letterSpacing: marca.tracking,
+              color: marca.apoio,
+              marginBottom: 6,
+            }}
+          >
+            Template aprovado pela Meta
+          </div>
+          <div
+            style={{
+              fontSize: 19,
+              fontWeight: 500,
+              letterSpacing: marca.tracking,
+              color: marca.tinta,
+            }}
+          >
+            profissio_retomada_demo
+          </div>
+        </div>
+        <div style={{ textAlign: "right" }}>
+          <div
+            style={{
+              fontSize: 13,
+              fontWeight: 400,
+              letterSpacing: marca.tracking,
+              color: marca.apoio,
+              marginBottom: 6,
+            }}
+          >
+            Destinatários
+          </div>
+          <div
+            style={{
+              fontSize: 19,
+              fontWeight: 500,
+              letterSpacing: marca.tracking,
+              color: marca.tinta,
+              fontVariantNumeric: "tabular-nums",
+            }}
+          >
+            248 contatos
+          </div>
+        </div>
+      </div>
+
+      {/* progresso de envio: o painel acompanha a campanha depois do disparo */}
+      <div style={{ marginTop: 20, opacity: janela(f, 508, 720, 14, 0) }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            fontSize: 14,
+            fontWeight: 500,
+            letterSpacing: marca.tracking,
+            color: marca.apoio,
+            marginBottom: 8,
+          }}
+        >
+          <span>Progresso de envio</span>
+          <span style={{ color: marca.tinta, fontVariantNumeric: "tabular-nums" }}>
+            {Math.round(envio * 248)} / 248
+          </span>
+        </div>
+        <div
+          style={{
+            height: 8,
+            borderRadius: 8,
+            background: marca.linha,
+            overflow: "hidden",
+          }}
+        >
+          <div style={{ width: `${envio * 100}%`, height: 8, background: marca.azul }} />
+        </div>
+        <div
+          style={{
+            marginTop: 12,
+            fontSize: 15,
+            fontWeight: 400,
+            letterSpacing: marca.tracking,
+            color: marca.apoio,
+          }}
+        >
+          A oportunidade volta para a conversa.
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ------------------------------------------------- resumo das frentes ----- */
+
+/** No fecho as tres frentes voltam juntas: e o que a peca acabou de mostrar. */
+const ResumoFrentes: React.FC = () => {
+  const f = useCurrentFrame();
+  const linhas = [
+    ["Agentes de IA", "Entendem o contexto e respondem."],
+    ["Atendimento", "Sua equipe assume quando importa."],
+    ["CRM e Ativação", "Contato, estágio e retomada."],
+  ];
+  return (
+    <div style={{ width: 560, opacity: janela(f, FECHO_INI + 40, 720, 20, 0) }}>
+      {linhas.map(([nome, linha], i) => {
+        const p = passo(f, FECHO_INI + 46 + i * 14, FECHO_INI + 74 + i * 14);
+        return (
+          <div
+            key={nome}
+            style={{
+              display: "flex",
+              gap: 20,
+              alignItems: "baseline",
+              padding: "22px 0",
+              borderTop: i === 0 ? "none" : "1px solid rgba(255,255,255,0.12)",
+              opacity: p,
+              transform: `translateY(${interpolate(p, [0, 1], [12, 0])}px)`,
+            }}
+          >
+            <span
+              style={{
+                fontSize: 15,
+                fontWeight: 500,
+                letterSpacing: marca.tracking,
+                color: marca.azul,
+                fontVariantNumeric: "tabular-nums",
+              }}
+            >
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span style={{ flex: 1 }}>
+              <span
+                style={{
+                  display: "block",
+                  fontSize: 26,
+                  fontWeight: 500,
+                  letterSpacing: marca.tracking,
+                  color: marca.branco,
+                }}
+              >
+                {nome}
+              </span>
+              <span
+                style={{
+                  display: "block",
+                  marginTop: 6,
+                  fontSize: 17,
+                  fontWeight: 400,
+                  letterSpacing: marca.tracking,
+                  color: marca.apoioEscuro,
+                }}
+              >
+                {linha}
+              </span>
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 /* -------------------------------------------------------------- fecho ----- */
 
 const Fecho: React.FC = () => {
@@ -508,7 +767,7 @@ const Fecho: React.FC = () => {
         display: "flex",
         flexDirection: "column",
         gap: 34,
-        opacity: janela(f, 530, 640, 18, 0),
+        opacity: janela(f, FECHO_INI, 720, 18, 0),
       }}
     >
       <div
@@ -524,7 +783,7 @@ const Fecho: React.FC = () => {
         }}
       >
         {palavras.map((p, i) => {
-          const pp = passo(f, 540 + i * 6, 560 + i * 6);
+          const pp = passo(f, FECHO_INI + 10 + i * 6, FECHO_INI + 30 + i * 6);
           return (
             <span
               key={i}
@@ -545,7 +804,7 @@ const Fecho: React.FC = () => {
           display: "flex",
           alignItems: "center",
           gap: 16,
-          opacity: janela(f, 592, 640, 14, 0),
+          opacity: janela(f, FECHO_INI + 62, 720, 14, 0),
         }}
       >
         <div
@@ -582,20 +841,25 @@ const Fecho: React.FC = () => {
 
 export const Hero: React.FC = () => {
   const f = useCurrentFrame();
-  const atoAtual = ATOS.findIndex((a) => f >= a.ini && f < a.fim);
-  const ato = atoAtual === -1 ? (f < ATOS[0].ini ? 0 : ATOS.length - 1) : atoAtual;
-  const naCena = f < 528;
+  const idx = ATOS.findIndex((a) => f >= a.ini && f < a.fim);
+  const ato = idx === -1 ? (f < ATOS[0].ini ? 0 : ATOS.length - 1) : idx;
+  const naCena = f < FECHO_INI - 2;
+
+  // no ato 3 o painel da conversa recua: encolhe, sobe e perde peso, virando a
+  // origem visivel de tudo que vem depois em vez de sumir de cena
+  const recuo = passo(f, ATOS[2].ini, ATOS[2].ini + 46);
+  const escalaPainel = interpolate(recuo, [0, 1], [1, 0.5]);
+  const opacPainel = interpolate(recuo, [0, 1], [1, 0.34]);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: marca.branco }}>
       <Palco />
 
-      {/* assinatura, fixa */}
-      <div style={{ position: "absolute", left: 120, top: 84, opacity: janela(f, 0, 640, 18, 0) }}>
+      <div style={{ position: "absolute", left: 120, top: 84, opacity: janela(f, 0, 720, 18, 0) }}>
         <Img src={staticFile("logo-branco.svg")} style={{ width: 232 }} />
       </div>
 
-      {/* coluna da esquerda: a frase do ato, ou o fecho */}
+      {/* coluna da esquerda: a frase do ato, depois o fecho */}
       <div style={{ position: "absolute", left: 120, top: 330, width: 780 }}>
         {naCena
           ? ATOS.map((a, i) => (
@@ -645,38 +909,44 @@ export const Hero: React.FC = () => {
         </div>
       </div>
 
-      {/* trilho de progresso, discreto */}
-      <div style={{ position: "absolute", left: 120, bottom: 96, opacity: janela(f, 24, 528, 20, 18) }}>
+      <div
+        style={{ position: "absolute", left: 120, bottom: 96, opacity: janela(f, 24, FECHO_INI, 20, 18) }}
+      >
         <Trilho />
       </div>
 
-      {/* direita: o painel, que atravessa os tres atos */}
+      {/* direita, alto: a conversa. atravessa a peca inteira e recua no ato 3 */}
       <div
         style={{
           position: "absolute",
           right: 120,
-          top: 200,
-          opacity: janela(f, 30, 528, 22, 22),
-          transform: `translateY(${interpolate(passo(f, 30, 66), [0, 1], [28, 0])}px)`,
+          top: 172,
+          width: LARG_PAINEL,
+          transformOrigin: "top right",
+          transform: `scale(${escalaPainel}) translateY(${interpolate(
+            passo(f, 30, 66),
+            [0, 1],
+            [28, 0],
+          )}px)`,
+          opacity: janela(f, 30, FECHO_INI, 22, 22) * opacPainel,
         }}
       >
-        <Painel />
+        <PainelConversa />
       </div>
 
-      {/* o funil entra sob o painel no ato 3 e sobe no fecho, para nao deixar
-          a direita vazia quando o painel sai de cena */}
-      <div
-        style={{
-          position: "absolute",
-          right: 120,
-          bottom: 118,
-          transform: `translateY(${interpolate(passo(f, 528, 586), [0, 1], [0, -250])}px)`,
-        }}
-      >
-        <Funil />
+      {/* direita, baixo: as duas metades do ato 3 */}
+      <div style={{ position: "absolute", right: 120, top: 470 }}>
+        <BlocoCRM />
+      </div>
+      <div style={{ position: "absolute", right: 120, top: 470 }}>
+        <BlocoAtivacao />
       </div>
 
-      {/* marca d'agua do ato, canto inferior direito */}
+      {/* no fecho, as tres frentes voltam juntas na direita */}
+      <div style={{ position: "absolute", right: 120, top: 356 }}>
+        <ResumoFrentes />
+      </div>
+
       <div
         style={{
           position: "absolute",
@@ -686,7 +956,7 @@ export const Hero: React.FC = () => {
           fontWeight: 400,
           letterSpacing: marca.tracking,
           color: marca.apoioEscuro,
-          opacity: janela(f, 24, 528, 20, 18),
+          opacity: janela(f, 24, FECHO_INI, 20, 18),
         }}
       >
         {String(ato + 1).padStart(2, "0")} / 03
