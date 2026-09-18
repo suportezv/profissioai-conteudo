@@ -146,7 +146,7 @@ Se um passo do `setup.sh` avisar, ele **não** derruba o boot — é intencional
 > **Armadilha do campo de setup do environment.** Configure-o com **caminho absoluto**, nunca relativo. O comando de boot roda com o diretório de trabalho no **pai** do repo, então `bash scripts/setup.sh` falha com `No such file or directory` e **exit 127**, e a sessão nasce sem `/workspace` e sem skills. Use `bash /home/user/<nome-do-repo>/scripts/setup.sh`, ou a versão que não depende do nome:
 >
 > ```bash
-> s=$(find /home/user -maxdepth 3 -type f -path "*/scripts/setup.sh" | head -1); [ -n "$s" ] && bash "$s"
+> for p in ./scripts/setup.sh ./*/scripts/setup.sh; do [ -f "$p" ] && exec bash "$p"; done; p=$(find /home /workspace /repo /app /src -maxdepth 4 -type f -path "*/scripts/setup.sh" 2>/dev/null | head -1); [ -n "$p" ] && exec bash "$p"; echo "setup.sh nao encontrado no repo"; exit 1
 > ```
 >
 > O script deriva o próprio `REPO_ROOT` do `BASH_SOURCE`, então roda de qualquer diretório desde que seja invocado pelo caminho certo. O gatilho de boot do environment não roda o `setup.sh` de forma confiável; rodar à mão resolve.
