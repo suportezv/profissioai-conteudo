@@ -1,6 +1,6 @@
 # Levar as ferramentas deste estúdio para os outros
 
-Guia para replicar o cinto de ferramentas do Profissio.ai Conteúdo Studio nos estúdios irmãos (`ana-conteudo`, `eita-conteudo`, `normalyze.conteudo`, `profecia-conteudo`) ou em um estúdio novo.
+Guia para replicar o cinto de ferramentas do Profissio.ai Conteúdo Studio nos estúdios irmãos (`ana-conteudo`, `eita-conteudo`, `normalyze.conteudo`, `profecia-conteudo`, e os seis da conta Zavi: `konjac`, `porcinia`, `drajulianaromano`, `drfelipechiota`, `drjulianofratezi`, `drvictorferigato`) ou em um estúdio novo.
 
 A regra que organiza tudo: **ferramenta é genérica, marca não é.** Os scripts foram escritos sem nenhuma referência à Profissio.ai justamente para atravessarem estúdios sem edição. O que carrega marca está isolado em poucos arquivos, nomeados abaixo.
 
@@ -149,7 +149,7 @@ Se um passo do `setup.sh` avisar, ele **não** derruba o boot — é intencional
 > for p in ./scripts/setup.sh ./*/scripts/setup.sh; do [ -f "$p" ] && exec bash "$p"; done; p=$(find /home /workspace /repo /app /src -maxdepth 4 -type f -path "*/scripts/setup.sh" 2>/dev/null | head -1); [ -n "$p" ] && exec bash "$p"; echo "setup.sh nao encontrado no repo"; exit 1
 > ```
 >
-> O script deriva o próprio `REPO_ROOT` do `BASH_SOURCE`, então roda de qualquer diretório desde que seja invocado pelo caminho certo. O gatilho de boot do environment não roda o `setup.sh` de forma confiável; rodar à mão resolve.
+> O script deriva o próprio `REPO_ROOT` do `BASH_SOURCE`, então roda de qualquer diretório desde que seja invocado pelo caminho certo. **A causa é o caminho relativo, não um gatilho instável**: o gatilho roda, e falha porque não acha o arquivo. Enquanto o campo não for corrigido, rodar o script à mão resolve a sessão atual.
 
 ---
 
