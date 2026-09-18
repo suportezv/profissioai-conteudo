@@ -18,7 +18,8 @@ const fonte = new FontFace(
 fonte
   .load()
   .then(() => {
-    document.fonts.add(fonte);
+    // o lib.dom do TS ainda nao declara add() em FontFaceSet
+    (document.fonts as unknown as { add: (f: FontFace) => void }).add(fonte);
     continueRender(espera);
   })
   .catch((e) => {
