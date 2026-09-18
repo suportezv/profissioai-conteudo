@@ -160,6 +160,7 @@ Analisados frame a frame 4 vídeos enviados pelo usuário (28s e 30s verticais, 
 
 - Estúdio: este repo (symlink `~/profissioai-conteudo` aponta para cá). Projetos em `projects/<nome>/`.
 - Ferramentas: `video-use` e `hyperframes` clonados em `/workspace/browser-use/` e `/workspace/heygen-com/` (Linux/cloud) ou `~/video-editor/` (Mac). Skills registradas em `~/.claude/skills/`.
+- **Remotion**: composições versionadas em `remotion/` neste repo (React/TS); `node_modules` fora do git, instalado pelo `setup.sh`. `npm run studio` abre o editor, `npx remotion render src/index.ts <Composicao> saida.mp4` renderiza. Componentes já prontos: `Aurora` (fundo da marca) e `CartaoTitulo`, com `marca.ts` guardando a paleta.
 - Ambiente novo (container limpo): rode `bash scripts/setup.sh` e depois `bash scripts/validate.sh`.
 
 ## IDs e contas (verificados em 17/ago/2026)
@@ -188,6 +189,9 @@ Diagnóstico rápido de qualquer host: comparar `curl <host>` com `curl --noprox
 | `raw.githubusercontent.com` | **403 no CONNECT do proxy, bloqueado** | é onde o `npx hyperframes skills update` busca o manifesto de freshness. **Não precisa liberar**: o clone do hyperframes já traz as skills, e o `setup.sh` as registra direto (ver gotcha abaixo) |
 | `archive.ubuntu.com`, `security.ubuntu.com` | 403 | `apt-get` indisponível (contornado com ffmpeg estático do GitHub Releases) |
 | `api.github.com`, GitHub Releases | OK | clone e download de release funcionam |
+| `api.openai.com` | **403 no CONNECT, bloqueado** | necessário para geração de imagem com GPT |
+| `generativelanguage.googleapis.com` | **403 no CONNECT, bloqueado** | API do Gemini. Liberar `www.googleapis.com` **não** cobre este subdomínio |
+| `www.googleapis.com` | OK (liberado em ago/2026) | upload para o Drive; não serve para o Gemini |
 | WebFetch (ferramenta) | bloqueado para estes domínios | tem rota de egresso própria, que não acompanhou a allowlist. **Usar `curl` do container**, que funciona |
 
 O bloqueio de `raw.githubusercontent.com` **não** afeta o truque de mídia pública para o Metricool: quem baixa a URL é o servidor do Metricool, não este container.
@@ -200,6 +204,12 @@ O bloqueio de `raw.githubusercontent.com` **não** afeta o truque de mídia púb
 - **Decupagem por âncora de texto, não por timecode.** `scripts/decupar.py` recebe um `edl.json` onde cada trecho é "de tal frase até tal frase"; ele casa as âncoras contra a transcrição com timestamp por palavra do Scribe e resolve os tempos. Revisar um corte vira editar uma frase. O campo `apos` empurra o cursor quando a mesma frase aparece antes, dita pela equipe fora de cena.
 - **Upload de vídeo para o Drive não é possível deste container.** `www.googleapis.com` responde 403 no CONNECT do proxy (fora da allowlist) e o conector MCP do Drive só aceita conteúdo via `base64Content` dentro da própria chamada, inviável para arquivo de vídeo. **Criar pasta funciona** (não tem conteúdo). Entrega de vídeo sai por commit na branch ou pelo envio direto do arquivo na conversa.
 - **Processo em background com `nohup`/`setsid` é recolhido quando a tool call retorna.** O ingest e o render morreram no meio duas vezes assim, e uma delas dois loops escreveram o mesmo arquivo ao mesmo tempo e o corromperam. Usar `run_in_background: true` da própria ferramenta Bash, que o harness rastreia, ou deixar estourar o timeout do primeiro plano (o harness move para background e o processo sobrevive). Em lote longo, `flock` num arquivo de lock evita a corrida.
+- **Remotion renderiza com o `headless_shell`, não com o Chromium do Playwright.** O `chromium-1194` removeu o headless antigo que o Remotion pede e o launch morre com "Old Headless mode has been removed". O binário certo é `/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell`, fixado em `remotion/remotion.config.ts`. Baixar o browser próprio do Remotion não é opção: está fora da allowlist.
+- **Remotion e HyperFrames resolvem o mesmo problema.** O HyperFrames se declara "default output framework" e só oferece caminho de mão única `remotion-to-hyperframes` (portar Remotion para HF); não existe o inverso. Manter os dois é escolha deliberada do estúdio, não redundância acidental: HyperFrames para o fluxo com skills (brief, storyboard, registry de blocos, render em nuvem), Remotion para composição React feita à mão. Ao começar peça nova, escolher um e dizer qual.
+- **Licença do Remotion não é MIT.** `LICENSE.md` do pacote: grátis para indivíduo, organização sem fins lucrativos, empresa **de até 3 funcionários** e avaliação; acima disso exige Company License paga (remotion.pro). A Profissio.ai é Ltda, então **confirmar o enquadramento antes de usar em produção**.
+- **Sem rede de fontes no render.** Sora não carrega no Remotion headless (Google Fonts fora da allowlist) e cai para a sans do sistema. Para usar a fonte da marca, embutir o arquivo da pasta "Fontes" do Drive como asset local.
+- **`setup.sh` funciona à mão, mas não roda no boot.** Em 18/set/2026 o container nasceu sem `/workspace` nenhum e sem as skills; `bash scripts/setup.sh` montou tudo e saiu com código 0. Ou seja, o script está são e o que falha é o gatilho de boot do environment. Em sessão nova, **conferir `ls /workspace` antes de contar com video-use ou hyperframes**.
+- **O patch `video-use-is-portrait-source` foi aposentado (18/set/2026).** O upstream reescreveu `is_portrait_source` para ler também o `rotation` do side data, o que cobre mais casos que o nosso patch cobria. O `validate.sh` agora testa **comportamento** (retrato, paisagem e paisagem com matriz de rotação 90) em vez de procurar o patch no código, porque o que importa é a função acertar.
 - Legendas SEMPRE por último no filter chain; overlays via PIL em PNG sequence + qtrle (ou PNG estático com fade de alpha).
 - Zoom animado com `zoompan`, não `crop` (crop não aceita `t` em w/h).
 - video-use precisa do patch `patches/video-use-is-portrait-source.patch` (senão vertical vira paisagem).
