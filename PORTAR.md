@@ -96,7 +96,7 @@ Para cada estúdio, cadastrar **nas variáveis de ambiente do environment** (nã
 Três armadilhas já pagas com tempo:
 
 1. **Variável de ambiente entra na criação do container.** Cadastrar no environment com uma sessão já aberta não faz a sessão enxergar: é preciso sessão nova. Conferir com `printenv | grep -c API_KEY` antes de acusar o script.
-2. **Chave válida não significa quota.** No Gemini, listar modelos funciona no tier gratuito, mas gerar imagem devolve `429` com `limit: 0`. Se o erro cita `quotaId: ...-FreeTier`, o projeto da chave **não** está no faturamento — adicionar meio de pagamento na conta não basta, ele tem que estar vinculado **ao projeto daquela chave**.
+2. **Chave válida não significa quota.** No Gemini, listar modelos funciona no tier gratuito, mas gerar imagem devolve `429` com `limit: 0`. Se o erro cita `quotaId: ...-FreeTier`, o projeto da chave **não** está no faturamento — adicionar meio de pagamento na conta não basta, ele tem que estar vinculado **ao projeto daquela chave**. Foi exatamente o que travou o Profissio.ai por horas, e o que destravou foi vincular o faturamento ao projeto certo. **Leia o campo `details` do erro, não só a mensagem**: é ele que nomeia a cota violada.
 3. **Nem toda chave da ElevenLabs tem todos os escopos.** A do Profissio.ai não tem `user_read`, então não dá para checar saldo antes de gerar lote. Verificar antes de planejar um lote grande.
 
 ---
