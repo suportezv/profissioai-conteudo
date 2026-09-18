@@ -1,5 +1,8 @@
 # Prompts por cena para o Claude Design (v2.1, gramática @elevenlabsio + fundos oficiais da marca)
 
+> ⚠️ **Escrito na identidade anterior (rosa `#E255A0` + fundos aurora), aposentada em 17/set/2026 pela revisão 3 da marca.** Antes de produzir, reconverter para os tokens novos: acento **azul `#2458F5`**, superfície chapada num dos três modos (escuro `#101218`, claro `#F4F6F9`, azul `#2458F5`), tinta `#101218`, Sora peso 500 e tracking -3,5%. Ver `CLAUDE.md`, seção "Identidade visual, revisão 3".
+
+
 > **v2.1 (18/ago/2026)**: pastas do Drive analisadas. Os "Fundos da marca" oficiais são auroras claras idênticas ao sistema da referência, então o fundo abaixo usa os hexes reais medidos neles. As pautas da casa já listam @elevenlabsio e @openai como referência, e a pauta "Você ainda atualiza CRM?" (carrossel, sem desenvolvimento) é o mesmo território deste vídeo: ele a executa em motion e pode desdobrar no carrossel.
 
 > **v2, reescrito em 18/ago/2026** depois da análise frame a frame de 4 vídeos reais da referência. O que mudou da v1: peça contínua sem cortes secos, fundo aurora claro no lugar do fundo preto, tipografia contida em sentence case no lugar de display caps gigante, UI clara flutuando como card, grafo de nós para os critérios, CTA discreto com URL digitada. A gramática completa está no `CLAUDE.md`, seção "Gramática de motion".

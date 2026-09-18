@@ -10,7 +10,9 @@ Este repositório é o **Profissio.ai Conteúdo Studio**: edição e agendamento
 
 **Empresa**: Profissio.ai Tecnologia Ltda, São Paulo (CNPJ 59.095.658/0001-77). Contato: `suporte@profissio.ai`.
 
-**Tagline oficial (pt-BR)**: **"IA à prova do dia-a-dia do seu negócio."** Variante usada em seção: "Soluções à prova do dia-a-dia do seu negócio". Descritor curto: "Tecnologia humana, poderosa, acessível e totalmente funcional".
+**Proposta central (revisão 3, 17/set/2026)**: **"Cada conversa move o seu negócio."** Subtítulo oficial: "Agentes de IA sob medida, atendimento com sua equipe e CRM na mesma plataforma. Qualifique demandas, acompanhe cada contato e retome oportunidades com o contexto das conversas." A ideia de colaboração **"IA e pessoas, em sintonia"** permanece.
+
+> A tagline anterior, "IA à prova do dia-a-dia do seu negócio", foi **substituída**. Não usar mais, nem a variante "Soluções à prova do dia-a-dia".
 
 **Descrição one-liner**: "A Profissio.ai cria agentes de IA sob medida que vendem, atendem e escalam 24/7 em todos os canais: WhatsApp, Instagram, site e e-mail."
 
@@ -43,22 +45,54 @@ Este repositório é o **Profissio.ai Conteúdo Studio**: edição e agendamento
 - **Consistência de Marca**: "Sua inteligência em todos os canais da marca, mantendo o mesmo tom de voz e a mesma excelência."
 - **Escalabilidade modular**: "Amplie sua operação e ative módulos conforme as necessidades do negócio crescem."
 
-### CTAs reais do site (usar estes, não inventar)
+### CTA (revisão 3): um só, sem variação
 
-"Conheça a plataforma" · "Quero conhecer a COP" · "Teste agora a diferença" · **"Falar com o Profissio.ai Agent"** · "Converse agora com a Agente Profissio.ai" · "Comece agora mesmo com a Agente Profissio.ai."
+**"Agendar demonstração".** É o texto de **todos** os botões de conversão, sem exceção. Destino: o WhatsApp oficial `551152868053`.
 
-> Nota de gênero: o site trata o assistente como **"a Agente Profissio.ai"** (feminino) e também como "o Profissio.ai Agent". Manter a forma feminina em pt-BR.
+> A lista antiga de CTAs ("Conheça a plataforma", "Quero conhecer a COP", "Teste agora a diferença", "Falar com o Profissio.ai Agent", "Converse agora com a Agente Profissio.ai") foi **aposentada** pela revisão 3. Não usar.
+
+**Instagram**: nome do perfil **"Profissio | IA, Atendimento e CRM"**; destaques Plataforma · Agentes · Atendimento · CRM · Casos · Implantação.
+
+**Arquitetura da oferta**, três frentes: **Agentes de IA** (configuração para vendas, atendimento, operação e experiência), **Atendimento** (conversas, histórico e responsabilidade por atendente) e **CRM e Ativação** (contatos, estágios, segmentação e campanhas). Não apresentar as três como planos contratáveis separados sem confirmar, e não prometer substituição integral do CRM do cliente.
 
 ### Demo oficial do site (modelo pronto para o pilar A)
 
 O site roda uma simulação com cliente fictício **Hit&Fit** (varejo de moda, online e loja física). O roteiro: a Agente se apresenta, pergunta empresa e maior dificuldade, encontra o site e o Instagram do cliente, analisa "catálogo, tom de voz e fluxos", e então simula um atendimento de ponta a ponta até o botão de compra com desconto. **Esse é o formato de demo que a marca já usa, replicar em vídeo.**
 
-### Identidade visual (extraída do CSS do site)
+### Identidade visual, revisão 3 (17/set/2026)
 
-- **Rosa/magenta** (cor de acento principal): `--rose-bright #E255A0`, `--rose #BE3F84`, `--rose-soft #D86AA8`
-- **Violeta**: `--violet #6B3CB8` · **Azul ciano**: `--cyber #3DBFF2`, `--neoblue #57E3F2` · **Azul profundo**: `--quantum #2F4073`
-- **Fundos escuros**: `--bg #07060B`, `--bg-2 #0E0B16`, `--surface #15101F`
-- **Fontes do site**: Sora (texto), Archivo Black e Bebas Neue (display), Inter Tight, DM Serif Display, Cairo (árabe)
+Kit oficial no Drive: pasta **`1O0FiCHulaMfQi8e5Hxl5jMlrH8Oa8AmW`**, com `LEIA-ME.md` na raiz. Subpastas: `01_Logos`, `02_Fontes`, `03_Aplicacoes`, `04_Social`, `05_Diretrizes`, `06_Fundos`, `07_Relatorios`, `08_Favicon`, `09_Avatares_Grupos_WhatsApp`, `99_Versoes_Anteriores`. **Baixa sem autenticação** por `drive.usercontent.google.com`.
+
+> **A identidade anterior foi aposentada por inteiro.** Acento rosa `#E255A0`, violeta `#6B3CB8`, fundos aurora rosa/violeta e a base clara `#F2EFF7` **não valem mais**. Não reintroduzir nem "por herança".
+
+**Tokens oficiais** (cópia literal de `05_Diretrizes/profissio-tokens.json`, que também existe como `.css`):
+
+| Token | Hex | Papel |
+|---|---|---|
+| `blue` | `#2458F5` | **Acento.** Ênfase, superfície inteira, botão |
+| `ink` | `#101218` | Tinta e fundo escuro. Nunca preto puro |
+| `surface` | `#F4F6F9` | Fundo claro padrão |
+| `white` | `#FFFFFF` | Painel e cartão sobre a superfície |
+| `line` | `#DFE3EB` | Régua, borda, divisor, sempre 1px |
+| `muted` | `#59616E` | Apoio sobre fundo claro |
+| `cyan` | `#57E3F2` | Secundária: dado, gráfico, realce |
+| `rose` | `#BE3F84` | Secundária, herdada, agora rara |
+
+Apoios que o `tokens.json` **não** lista e que foram medidos nos SVGs de `04_Social`: **`#AAB3C4`** (apoio sobre escuro), **`#E1E9FF`** (apoio sobre azul) e **`#C5D5FF`** (numeração sobre azul).
+
+**Os três modos de superfície.** Toda peça nasce em um deles, com fundo, tinta e apoio já pareados: **escuro** (`#101218` / `#FFFFFF` / `#AAB3C4`), **claro** (`#F4F6F9` / `#101218` / `#59616E`) e **azul** (`#2458F5` / `#FFFFFF` / `#E1E9FF`).
+
+**Tipografia**: **Sora**, pesos 400/500/600/700, arquivo variável em `02_Fontes/Sora-Variable.ttf` com licença OFL. **Peso de título é 500, não 700**: as peças oficiais nunca usam bold. Regra derivada e sem exceção: o **`letter-spacing` é sempre -3,5% do corpo** (92px → -3,22; 29px → -1,015; 17px → -0,595).
+
+**Grade da peça** (canvas 1080x1350, medida nos SVGs oficiais): margem **72px**; assinatura **300px** no canto superior esquerdo em (72,72); sobrelinha em caixa alta na base **y=220**; título começando em **y≈370-385** com entrelinha **1,18**; rodapé em **y=1256**, com o CTA à esquerda e o número da peça em **x=915**. **Raios**: controle 8, painel 20, arte 32. **Escala de espaçamento**: 4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96.
+
+**Logo**: o **P refinado virou a primeira letra de Profissio**. Os cinco terminais de circuito caíram de 88 para 68 unidades de diâmetro (-22,7%) e os pontos centrais de 48 para 36. SVG é o arquivo mestre, em curvas, sem depender de fonte. Quatro cores: escuro `#101218` e preto em fundo claro, branco em fundo escuro ou azul, azul `#2458F5` em fundo claro. O **P isolado** serve avatar, favicon e ícone do app. Área livre mínima: a altura do corpo da letra **r**. Identidades de canais e da Meta são de terceiros e **nunca** recebem o P. Cópia local dos mestres em `marca/` neste repo.
+
+**Fundos de cena**: `06_Fundos` traz **dez** PNGs 1672x941, que são uma biblioteca de cenas e não um sistema de gradiente. Dominantes medidas: 01 Obsidiana `#0C0C0C`, 02 Aurora `#000820` (azul-marinho, apesar do nome), 03 Vidro Prismático `#F4F1EC`, 04 Papel Escultural `#A28F7A`, 05 Cobalto Arquitetônico `#0846C1`, 06 Seda Coral `#82201F`, 07 Horizonte Menta `#69876F`, 08 Luz Lenticular `#0A0314`, 09 Órbitas Gráficas `#E29E6E`, 10 Topografia Pérola `#EFEFEF`. Usar em capa e abertura, não sob texto longo.
+
+**Selo Meta Tech Provider** e os canais do site devem ser mantidos nas peças, conforme o `Uso_da_Marca.md`.
+
+**Limites de comunicação** (do `Comunicacao_Profissio.md`, valem para qualquer caption): não publicar porcentagem de resultado sem contexto, base e método; resultado de concorrente nunca aparece como resultado da Profissio; venda atribuída a conversa não comprova receita incremental; propriedade permanente de carteira e geração completa de funil por IA ainda pedem demonstração.
 
 ## A Central de Ajuda (Notion): fonte principal de conteúdo
 
@@ -146,7 +180,9 @@ Analisados frame a frame 4 vídeos enviados pelo usuário (28s e 30s verticais, 
 9. **CTA discreto**: sem botão chamativo. Texto curto + URL digitada com cursor piscando (`elevenlabs.io/app/voice-library|`) em fundo claro. Lockup da marca pequeno e central.
 10. **Áudio presente e comedido** (mean volume -15 a -17 dB nas referências): trilha ambiente, sem locução em 3 dos 4.
 
-**Tradução para a Profissio.ai**: fundo aurora com a paleta da marca (base clara `#F2EFF7` com auroras `#E255A0`/`#D86AA8`/`#6B3CB8` desfocadas, tinta `#15101F`), UI clara do App Profissio como card flutuante, Sora como sans, rosa `#E255A0` como palavra-chave e glow. O estilo dark do site fica para peças sem UI (a UI do app é clara).
+**Tradução para a Profissio.ai, revisão 3**: a gramática segue valendo, **vestida na paleta nova**. Superfície chapada num dos três modos (escuro `#101218`, claro `#F4F6F9`, azul `#2458F5`), UI clara do App Profissio como card flutuante branco, Sora peso 500 com tracking -3,5%, **azul `#2458F5` como palavra-chave**, e o cartão ativo marcado por borda azul em vez de glow colorido. Alinhamento à **esquerda**, não centralizado.
+
+> Aposentado com a revisão 3: fundo aurora em drift, glow rosa e palavra-chave em `#E255A0`. O componente `Aurora` do Remotion foi removido e substituído por `Superficie`.
 
 ## Regras que valem em qualquer resposta pública
 
@@ -158,7 +194,7 @@ Analisados frame a frame 4 vídeos enviados pelo usuário (28s e 30s verticais, 
 
 ## Working dirs
 
-- Estúdio: este repo (symlink `~/profissioai-conteudo` aponta para cá). Projetos em `projects/<nome>/`.
+- Estúdio: este repo (symlink `~/profissioai-conteudo` aponta para cá). Projetos em `projects/<nome>/`. Mestres da marca em `marca/` (SVG em curvas) e a Sora em `remotion/public/Sora-Variable.ttf`.
 - Ferramentas: `video-use` e `hyperframes` clonados em `/workspace/browser-use/` e `/workspace/heygen-com/` (Linux/cloud) ou `~/video-editor/` (Mac). Skills registradas em `~/.claude/skills/`.
 - **Remotion**: composições versionadas em `remotion/` neste repo (React/TS); `node_modules` fora do git, instalado pelo `setup.sh`. `npm run studio` abre o editor, `npx remotion render src/index.ts <Composicao> saida.mp4` renderiza. Componentes já prontos: `Aurora` (fundo da marca) e `CartaoTitulo`, com `marca.ts` guardando a paleta.
 - Ambiente novo (container limpo): rode `bash scripts/setup.sh` e depois `bash scripts/validate.sh`.
@@ -248,7 +284,12 @@ O bloqueio de `raw.githubusercontent.com` **não** afeta o truque de mídia púb
 - **18/ago/2026**: `raw.githubusercontent.com` resolvido **sem** mexer no environment. As skills do hyperframes passaram a ser registradas a partir do clone local; `validate.sh` fica 100% verde. Nenhum domínio adicional é necessário para operar.
 - **18/ago/2026**: usuário enviou 4 vídeos reais do `@elevenlabsio` (contorno definitivo do login wall do Instagram) e os links das pastas de marca no Drive. Gramática de motion extraída e gravada; Ficha de Marketing lida pelo conector; roteiro do projeto 01 reescrito nessa gramática. Segunda pasta do Drive inacessível (conta `u/3`).
 - **18/ago/2026**: pastas do Drive tornadas públicas e analisadas por completo. Fundos da marca são auroras claras (mesmo sistema do @elevenlabsio); pautas da casa já listam @elevenlabsio e @openai como referência; pauta "Você ainda atualiza CRM?" registrada sem desenvolvimento e coberta pelo projeto 01; Mapeamento Institucional lido (funil como capacidade nomeada, catálogos 30k+, três instâncias de teste). Roteiro v2.1 calibrado com os hexes reais dos fundos e logo oficial.
-- **18/ago/2026**: **Design system v1 criado e publicado** como canvas do Claude Design (artefato `https://claude.ai/code/artifact/75a14499-37fe-4000-83e6-801312944021`). Fonte dos artboards versionada em `design-system/` neste repo (6 artboards: capa, cores, tipografia, fundos aurora, componentes, motion). Consolida site + fundos do Drive + gramática @elevenlabsio. Para editar: alterar os `.dc.html` e republicar no mesmo artefato.
+- **18/ago/2026**: **Design system v1 criado e publicado** como canvas do Claude Design. O artefato tem **duas formas de URL para o mesmo objeto**: `https://claude.ai/artifact/FXUcE4qXaAoN8T9BV9ojeg` (a que a listagem mostra) e `https://claude.ai/code/artifact/75a14499-37fe-4000-83e6-801312944021` (o id interno). Não são dois artefatos. Fonte dos artboards versionada em `design-system/` neste repo (6 artboards: capa, cores, tipografia, fundos aurora, componentes, motion). Consolida site + fundos do Drive + gramática @elevenlabsio. Para editar: alterar os `.dc.html` e republicar no mesmo artefato.
+- **18/set/2026**: **identidade visual da revisão 3 importada e o design system refeito.** O usuário apontou o kit de marca novo no Drive (`1O0FiCHulaMfQi8e5Hxl5jMlrH8Oa8AmW`). A mudança é de fundo, não de verniz: **o acento passou de rosa `#E255A0` para azul `#2458F5`**, o sistema de gradiente aurora acabou e deu lugar a três superfícies chapadas, a tagline virou "Cada conversa move o seu negócio" e o CTA passou a ser um só, "Agendar demonstração". O kit trouxe o que faltava para fechar o ciclo: **tokens em `.json` e `.css`** (não mais hexes lidos de imagem) e o **`Sora-Variable.ttf`**, que resolve o gotcha do render headless sem Google Fonts.
+  - Os seis artboards foram reescritos e republicados no **mesmo artefato** (versão 2). No Remotion, `Aurora.tsx` foi removido e virou `Superficie.tsx` com os três modos; `marca.ts` agora é cópia literal do `tokens.json`; `CartaoTitulo` passou a alinhar à esquerda, peso 500, tracking -3,5%. Provado renderizando um frame de cada composição e **conferindo o pixel do fundo contra o token** (`#101218`, `#F4F6F9`, `#2458F5`): bate nos três.
+  - **Regra derivada que vale para qualquer peça**: o `letter-spacing` é sempre **-3,5% do corpo**. Saiu de medir os SVGs oficiais, não de gosto.
+  - Três apoios usados nas peças **não estão no `tokens.json`** e só apareceram lendo o código dos SVGs: `#AAB3C4`, `#E1E9FF` e `#C5D5FF`. Ler o SVG de referência vale mais que ler só o arquivo de tokens.
+
 - **18/set/2026**: **varredura de `setup.sh` fechada nos dez estúdios da frota.** Os quatro primeiros (`eita`, `ana`, `normalyze`, `profecia`) já haviam recebido PR; os **seis da conta Zavi** (`konjac`, `porcinia`, `drajulianaromano`, `drfelipechiota`, `drjulianofratezi`, `drvictorferigato`) foram conferidos por blob SHA e vieram **todos idênticos** (`426fa0a`), na variante antiga e **agnóstica de marca** (symlink por `basename` do `REPO_ROOT`). Por serem agnósticos, um único arquivo serviu aos seis, e o diff contra o script já validado aqui é só o comentário do cabeçalho e o bloco do symlink. PR `claude/conserta-setup-ffmpeg` aberto e **mergeado** em cada um no mesmo dia, fechando os dez estudios da frota. Conferido depois do merge que a branch padrao de cada um carrega o blob corrigido (`1e47f4d`) e nenhuma ficou com o antigo: o aviso de merge diz que o PR fechou, so o blob prova que o arquivo chegou. **O `drajulianaromano-conteudo` não tem branch `main`** (padrão é `claude/studio-infrastructure-validation-m50y7w`), mesmo caso do `ana-conteudo`: conferir a branch padrão antes de abrir PR é regra, não exceção. Lembrete que vale para todos: **merge não conserta a sessão**, o script só roda no boot de container novo.
 
 - **18/ago/2026**: **estúdio irmão do Profecia criado**: `suportezv/profecia-conteudo` (branch `main`), semeado a partir deste repo com infra, biblioteca de SFX e memória com PENDENTES de marca. O seed local foi removido após a migração. Pendências do Profecia: liberar `profec.ia.br` + `*.profec.ia.br` no environment (ou criar environment próprio), conectar a marca no Metricool, definir identidade/persona/voz.

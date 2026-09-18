@@ -1,17 +1,53 @@
-/** Paleta e tokens da Profissio.ai, espelhando o CSS do site e o design system. */
+/**
+ * Tokens da Profissio.ai, revisao 3 (17/09/2026).
+ *
+ * Fonte da verdade: 05_Diretrizes/profissio-tokens.json do kit de marca no
+ * Drive. Os valores abaixo sao copia literal daquele arquivo, mais os apoios
+ * que so aparecem nas pecas sociais de referencia (04_Social) e que o
+ * tokens.json nao lista.
+ *
+ * A identidade anterior (acento rosa #E255A0, fundos aurora rosa/violeta) foi
+ * APOSENTADA nesta revisao. Nao reintroduzir.
+ */
 export const marca = {
-  rosaVivo: "#E255A0",
+  // --- tokens oficiais (profissio-tokens.json) ---
+  tinta: "#101218",
+  branco: "#FFFFFF",
+  superficie: "#F4F6F9",
+  linha: "#DFE3EB",
+  apoio: "#59616E",
+  azul: "#2458F5",
+  ciano: "#57E3F2",
   rosa: "#BE3F84",
-  rosaSuave: "#D86AA8",
-  violeta: "#6B3CB8",
-  ciano: "#3DBFF2",
-  azulNeon: "#57E3F2",
-  azulProfundo: "#2F4073",
-  fundoEscuro: "#07060B",
-  superficie: "#15101F",
-  /** Base clara dos fundos aurora, medida nos PNGs da pasta de marca. */
-  auroraBase: "#F2EFF7",
-  tinta: "#15101F",
-  /** Sora e a fonte do site; sem rede no render, cai para a sans do sistema. */
-  fonte: '"Sora", "Inter Tight", system-ui, -apple-system, sans-serif',
+
+  // --- apoios medidos nas pecas de referencia ---
+  /** Texto de apoio sobre o fundo escuro. */
+  apoioEscuro: "#AAB3C4",
+  /** Texto de apoio sobre o fundo azul. */
+  apoioAzul: "#E1E9FF",
+  /** Numeracao e marcadores sobre o fundo azul. */
+  numeroAzul: "#C5D5FF",
+
+  fonte: '"Sora", Arial, sans-serif',
+
+  /**
+   * Tracking da marca: -3,5% do corpo, em qualquer tamanho.
+   * Derivado das pecas oficiais (92px -> -3.22, 29px -> -1.015, 17px -> -0.595).
+   */
+  tracking: "-0.035em",
+
+  /** Escala de espacamento oficial. */
+  espaco: [4, 8, 12, 16, 24, 32, 48, 64, 96],
+
+  /** Raios oficiais. */
+  raio: { controle: 8, painel: 20, arte: 32 },
 } as const;
+
+/** Os tres modos de superficie da marca, cada um com sua tinta e seu apoio. */
+export const modos = {
+  escuro: { fundo: marca.tinta, tinta: marca.branco, apoio: marca.apoioEscuro },
+  claro: { fundo: marca.superficie, tinta: marca.tinta, apoio: marca.apoio },
+  azul: { fundo: marca.azul, tinta: marca.branco, apoio: marca.apoioAzul },
+} as const;
+
+export type Modo = keyof typeof modos;

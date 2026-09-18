@@ -10,15 +10,15 @@ Estúdio de edição e agendamento para as redes da **Profissio.ai**. Espelha a 
 
 **Quem fala**: a **Agente Profissio.ai**, tratada no feminino em pt-BR (o site também usa "o Profissio.ai Agent" em inglês). A marca fala pelo produto funcionando, não por um rosto humano de autoridade. Não há credencial de criadora a citar, e a regra do estúdio EITA não se aplica aqui.
 
-**Tom**: direto, competente e concreto. O site vende "tecnologia humana, poderosa, acessível e totalmente funcional" e "IA que não falha". Então nada de promessa vaga nem de hype de IA: mostrar o agente resolvendo, com número quando houver.
+**Tom**: direto, competente e concreto. A proposta central é **"Cada conversa move o seu negócio"**: nada de promessa vaga nem de hype de IA, mostrar o agente resolvendo. **Número só com contexto, base e método** — é regra explícita do `Comunicacao_Profissio.md`, não preferência de estilo. Resultado de concorrente nunca aparece como resultado da Profissio.
 
 **Público: B2B.** Dono de negócio, head de vendas, head de CX, gerente de suporte, operação. O conteúdo mostra trabalho sendo resolvido, não autoajuda.
 
 **Referência de estilo**: `@elevenlabsio`. Marca de produto de IA que comunica por demo do produto funcionando, corte curto e limpo, sem influencer falando para a câmera. Referência de **formato e ritmo**, não de posicionamento.
 
-**CTAs oficiais** (usar estes, não inventar): "Conheça a plataforma" · "Quero conhecer a COP" · "Teste agora a diferença" · "Falar com o Profissio.ai Agent" · "Converse agora com a Agente Profissio.ai".
+**CTA**: **"Agendar demonstração"**, em todos os botões de conversão, sem variação. A lista antiga de CTAs foi aposentada pela revisão 3 da marca.
 
-Ainda **PENDENTE**: definir com a equipe se há rosto humano recorrente (fundador, especialista) e qual CTA vira padrão para Instagram.
+Ainda **PENDENTE**: definir com a equipe se há rosto humano recorrente (fundador, especialista).
 
 ### REGRAS INEGOCIÁVEIS
 
@@ -45,12 +45,12 @@ Derivados das fontes primárias. **Validar desempenho antes de fixar proporção
 Para peças de motion graphic (pilares B, C e D), a gramática é a da referência, adaptada à paleta da Profissio.ai. Análise completa no `CLAUDE.md`, seção "Gramática de motion". Resumo operacional:
 
 - **Peça contínua, sem cortes secos**: estados se transformam um no outro; cada estado segura 2 a 3 segundos.
-- **Fundo aurora claro**: base `#F2EFF7`, manchas desfocadas rosa `#E255A0`/`#D86AA8` e violeta `#6B3CB8` em drift lento, grão sutil. Muito espaço negativo.
-- **Tipografia contida**: Sora, sentence case, 1 linha curta por vez, revelação palavra a palavra (cinza `#B6B0C5` escurecendo para `#15101F`) ou máquina de escrever com cursor. **Sem display caps gigante em motion.**
+- **Superfície chapada**, num dos três modos: escuro `#101218`, claro `#F4F6F9` ou azul `#2458F5`. **Sem gradiente**: a aurora foi aposentada na revisão 3. Muito espaço negativo.
+- **Tipografia contida**: Sora **peso 500**, sentence case, alinhada à **esquerda**, 1 linha curta por vez, revelação palavra a palavra (apoio do modo acendendo para a tinta) ou máquina de escrever com cursor. **`letter-spacing` sempre -3,5% do corpo.** Sem display caps gigante em motion.
 - **UI real como card flutuante branco** com sombra suave; cursor navega; transições por escala.
 - **Grafo de nós** (chips + linhas 1px + pontinhos viajando) para critérios, canais e orquestração.
 - **CTA discreto**: texto + URL digitada com cursor piscando. Sem botão chamativo.
-- Palavra-chave pontual em rosa `#E255A0`. Trilha ambiente comedida. Master **-14 LUFS**.
+- Palavra-chave pontual em **azul `#2458F5`** (no modo azul, o fundo já é o acento: destacar ali some, então usar branco). Cartão ativo marcado por **borda azul**, não por glow. Trilha ambiente comedida. Master **-14 LUFS**.
 
 As assinaturas abaixo (lettering caps com sombra dura, cortes secos, punch-ins) valem para **vídeo filmado** (pilar A com gravações reais, cortes de falas), não para motion.
 
@@ -77,7 +77,7 @@ Herdadas dos estúdios irmãos (validadas nos testes 01 e 02 do `ana-conteudo` e
 
 - Hook verbal ou visual + título na tela nos **2 primeiros segundos**.
 - Lettering condensado caps branco com sombra dura (fonte: Helvetica Neue Condensed Black no Mac; Liberation Sans Bold como fallback Linux).
-  - Cor de acento nas ênfases: **rosa `#E255A0`** (`--rose-bright` do site). Apoio: violeta `#6B3CB8` e ciano `#3DBFF2`. Fundo escuro da marca: `#07060B`. O amarelo `#FFE234` é do ecossistema EITA, não usar aqui.
+  - Cor de acento nas ênfases: **azul `#2458F5`**. Apoio: ciano `#57E3F2`. Tinta e fundo escuro: `#101218` (nunca preto puro). O amarelo `#FFE234` é do ecossistema EITA, não usar aqui. O rosa `#E255A0` era da identidade anterior e **não vale mais**.
 - Legendas frase a frase em branco (não karaokê), terço inferior, **SEMPRE por último no filter chain**.
 - Cortes secos; punch-ins de zoom 1.10 a 1.22x; freeze frames P&B com card para punchlines; cutaways como payoff de piada.
 - Palavrão não corta: **bipa**.
@@ -90,7 +90,7 @@ Estrutura herdada; o conteúdo de cada bloco depende do posicionamento **PENDENT
 
 1. Hook em 1 linha (dor ou cena concreta, sem travessão)
 2. 2 a 3 parágrafos curtos
-3. CTA oficial (ver lista na seção Persona; para Instagram, "Falar com o Profissio.ai Agent" ou "Conheça a plataforma")
+3. CTA: **"Agendar demonstração"**
 4. Pergunta de engajamento
 
 ## Fluxo por vídeo
