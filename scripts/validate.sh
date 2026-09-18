@@ -19,11 +19,34 @@ if (cd "$VIDEO_USE" && { [ -d .venv ] && .venv/bin/python helpers/timeline_view.
 else
   echo "FALHOU (helpers não rodam em $VIDEO_USE)"
 fi
-if grep -q 'if f\]' "$VIDEO_USE/helpers/render.py" 2>/dev/null; then
-  echo "OK (patch is_portrait_source presente)"
+# Testa o comportamento, nao a presenca de um patch: gera tres arquivos
+# sinteticos (retrato, paisagem e paisagem com matriz de rotacao 90, que e o
+# caso da camera que grava em pe) e confere as tres respostas.
+_tmp="$(mktemp -d)"
+ffmpeg -hide_banner -v error -f lavfi -i testsrc=size=540x960:duration=1:rate=10 \
+  -c:v libx264 -pix_fmt yuv420p -y "$_tmp/retrato.mp4" 2>/dev/null
+ffmpeg -hide_banner -v error -f lavfi -i testsrc=size=960x540:duration=1:rate=10 \
+  -c:v libx264 -pix_fmt yuv420p -y "$_tmp/paisagem.mp4" 2>/dev/null
+ffmpeg -hide_banner -v error -display_rotation 90 -i "$_tmp/paisagem.mp4" \
+  -c copy -y "$_tmp/girado.mp4" 2>/dev/null
+if python3 - "$VIDEO_USE" "$_tmp" <<'PYEOF'
+import sys
+from pathlib import Path
+sys.path.insert(0, sys.argv[1])
+from helpers import render
+tmp = Path(sys.argv[2])
+casos = [("retrato.mp4", True), ("paisagem.mp4", False), ("girado.mp4", True)]
+ruins = [n for n, esperado in casos if render.is_portrait_source(tmp / n) != esperado]
+if ruins:
+    print("falhou em: " + ", ".join(ruins))
+    sys.exit(1)
+PYEOF
+then
+  echo "OK (is_portrait_source acerta retrato, paisagem e girado)"
 else
-  echo "PENDENTE: patch is_portrait_source não aplicado"
+  echo "FALHA: is_portrait_source erra a orientação; vertical vai sair em paisagem"
 fi
+rm -rf "$_tmp"
 
 echo "== 3. ElevenLabs =="
 if grep -q '^ELEVENLABS_API_KEY=sk_' "$VIDEO_USE/.env" 2>/dev/null; then
@@ -38,11 +61,33 @@ for D in https://drive.google.com/ https://drive.usercontent.google.com/ https:/
   if [ "$C" = "000" ]; then echo "FALHOU $D (000: domínio não liberado)"; else echo "OK $D (HTTP $C)"; fi
 done
 
-echo "== 5. Skills registradas =="
+echo "== 5. Remotion =="
+REMOTION="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/remotion"
+if [ ! -d "$REMOTION/node_modules/remotion" ]; then
+  echo "PENDENTE: deps do Remotion não instaladas (rode scripts/setup.sh)"
+else
+  _shell="/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell"
+  if [ ! -x "$_shell" ]; then
+    echo "AVISO: headless_shell do Playwright ausente; o render do Remotion vai falhar"
+  else
+    # Prova real: renderiza 1 frame. O Chromium normal do Playwright nao serve
+    # (removeu o headless antigo), por isso o config aponta para o headless_shell.
+    _png="$(mktemp -d)/frame.png"
+    if (cd "$REMOTION" && npx --no-install remotion still src/index.ts \
+        CartaoTituloVertical "$_png" --frame=90 >/dev/null 2>&1) && [ -s "$_png" ]; then
+      echo "OK (render de 1 frame funciona: $(node -p "require('$REMOTION/package.json').dependencies.remotion"))"
+    else
+      echo "FALHA: Remotion não renderizou; ver remotion/remotion.config.ts"
+    fi
+    rm -rf "$(dirname "$_png")"
+  fi
+fi
+
+echo "== 6. Skills registradas =="
 [ -e ~/.claude/skills/video-use/SKILL.md ] && echo "OK video-use" || echo "PENDENTE video-use"
 HF=$(ls -d ~/.claude/skills/*/ 2>/dev/null | while read -r d; do [ -f "$d/SKILL.md" ] && basename "$d"; done | grep -cE 'hyperframes|media-use|motion-graphics|embedded-captions')
 if [ "${HF:-0}" -ge 4 ]; then echo "OK hyperframes ($HF skills com SKILL.md)"; else echo "PENDENTE hyperframes (rode scripts/setup.sh)"; fi
 
-echo "== 6. Na sessão do Claude, validar ainda: =="
+echo "== 7. Na sessão do Claude, validar ainda: =="
 echo " - Metricool: getBrandSettings lista a marca Profissio.ai com blog_id 6736175"
 echo " - Kairogen: get_me_context mostra plano e créditos (conta atual: FREE, 0 créditos)"

@@ -54,6 +54,23 @@ Para peças de motion graphic (pilares B, C e D), a gramática é a da referênc
 
 As assinaturas abaixo (lettering caps com sombra dura, cortes secos, punch-ins) valem para **vídeo filmado** (pilar A com gravações reais, cortes de falas), não para motion.
 
+## Escolha do framework de motion: HyperFrames ou Remotion
+
+O estúdio mantém os dois, e a escolha **não é preferência do momento**: cada peça declara o seu no `BRIEFING.md`, na primeira linha. Sem isso, quem pegar o projeto depois não sabe onde mexer.
+
+**O que decide**: a ponte entre os dois só existe num sentido. Há a skill `remotion-to-hyperframes`; **não existe o inverso**. Então peça feita em HyperFrames é definitiva, e peça feita em Remotion ainda pode migrar. Na dúvida, Remotion é a aposta reversível.
+
+| Use **HyperFrames** quando | Use **Remotion** quando |
+|---|---|
+| É peça da série recorrente, na gramática já documentada | A peça é exceção, fora do padrão da série |
+| Você quer o fluxo pronto: brief, storyboard, registry de ~400 blocos, legendas, áudio, render em nuvem | A composição precisa de lógica de programação, dados ou parametrização |
+| O visual pedido já existe no registry (scanlines, glitch, gráfico, janela de terminal) | Você vai gerar **N variações** da mesma peça mudando nome, cupom, idioma ou número |
+| Ninguém vai reprocessar a peça em outro framework | Há chance real de a peça mudar de destino depois |
+
+**Padrão declarado: HyperFrames.** Ele é o que está integrado ao fluxo do estúdio e o que tem as 20 skills. O Remotion entra por decisão consciente, não por inércia.
+
+**Custo de manter os dois, para vigiar**: dois `node_modules`, dois caminhos de render e dois lugares onde a paleta pode divergir. O terceiro está mitigado — os tokens do Remotion vivem em `remotion/src/marca.ts` — mas **se a paleta da marca mudar, atualizar os dois lados**. Se em alguns meses o Remotion não tiver sido usado em nada, ele vira peso morto e se corta; o inverso não vale, porque o HyperFrames é o que sustenta o fluxo.
+
 ## Assinaturas de edição (vídeo filmado)
 
 Herdadas dos estúdios irmãos (validadas nos testes 01 e 02 do `ana-conteudo` e na leva @luxosobrerodas). São craft técnico, aplicáveis a qualquer marca:
@@ -78,7 +95,7 @@ Estrutura herdada; o conteúdo de cada bloco depende do posicionamento **PENDENT
 
 ## Fluxo por vídeo
 
-1. Bruto (Drive público ou anexo na conversa) + briefing (pilar, mensagem central, duração, data)
+1. Bruto (Drive público ou anexo na conversa) + briefing (pilar, mensagem central, duração, data). **Se a peça for motion, declarar HyperFrames ou Remotion já aqui** (ver a seção de escolha do framework)
 2. Proxy SDR (se HLG) + transcrição Scribe (timestamps por palavra)
 3. Decupagem/cortes (mapear falas de impacto e picos de áudio)
 4. Cor
