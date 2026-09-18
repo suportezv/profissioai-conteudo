@@ -172,6 +172,8 @@ Analisados frame a frame 4 vídeos enviados pelo usuário (28s e 30s verticais, 
 - **ElevenLabs**: chave `sk_...` (51 chars) na env var `ELEVENLABS_API_KEY` do cloud environment e no `.env` do video-use. Escopos confirmados: `text_to_speech`, `speech_to_text`, `sound_generation`, `voices_read`. **Ausentes**: `user_read` e `models_read` (sem `user_read` não dá para checar saldo de créditos antes de gerar lote).
   - Voz da Profissio.ai: **PENDENTE** (definir voice_id, modelo e parâmetros. Não usar a voz clonada da Anaclaudia `XsU4z9JE7JPZzkVPg4GW`, que pertence ao ecossistema EITA).
 - **Kairogen** (B-roll por IA): conta **suporte@profissio.ai**, plano **FREE**, **0 créditos**, 1 geração concorrente. **B-roll por IA indisponível até haver créditos.** Estúdios irmãos usam a conta `suporte@zavi.ag` no plano Essential (`veo3-1-lite`); decidir se esta conta faz upgrade ou se o estúdio usa a conta da agência.
+- **OpenAI (imagem)**: chave em `OPENAI_API_KEY` (`sk-proj...`). **Funcionando e validado em 18/set/2026** com `gpt-image-2` em 1024x1536. Modelos de imagem que a conta enxerga: `gpt-image-1`, `gpt-image-1-mini`, `gpt-image-1.5`, `gpt-image-2`, `gpt-image-2.5-flare`, `gpt-image-2.5-sunburst`, `chatgpt-image-latest`. Usar `scripts/gera_imagem.py`.
+- **Gemini (imagem)**: chave em `GEMINI_API_KEY`. **Texto funciona, imagem não**: todo modelo de imagem devolve **429 quota exceeded**, inclusive o `gemini-2.5-flash-image`. O diagnóstico está fechado, não é chave nem rede: `gemini-3.6-flash` responde texto normalmente com a mesma chave. Falta **habilitar faturamento** no projeto do Google Cloud por trás da chave, porque os modelos de imagem não entram no tier gratuito. Atenção: `gemini-2.5-flash` foi descontinuado para contas novas; o modelo de texto atual é `gemini-3.6-flash`.
 - **Google Drive** (brutos): conector oficial conectado. Pasta de brutos da Profissio.ai: **PENDENTE: criar/apontar** (padrão: pasta com "qualquer pessoa com o link: leitor" para download direto).
 
 ## Rede do environment (verificado em 18/ago/2026)
@@ -189,8 +191,8 @@ Diagnóstico rápido de qualquer host: comparar `curl <host>` com `curl --noprox
 | `raw.githubusercontent.com` | **403 no CONNECT do proxy, bloqueado** | é onde o `npx hyperframes skills update` busca o manifesto de freshness. **Não precisa liberar**: o clone do hyperframes já traz as skills, e o `setup.sh` as registra direto (ver gotcha abaixo) |
 | `archive.ubuntu.com`, `security.ubuntu.com` | 403 | `apt-get` indisponível (contornado com ffmpeg estático do GitHub Releases) |
 | `api.github.com`, GitHub Releases | OK | clone e download de release funcionam |
-| `api.openai.com` | **403 no CONNECT, bloqueado** | necessário para geração de imagem com GPT |
-| `generativelanguage.googleapis.com` | **403 no CONNECT, bloqueado** | API do Gemini. Liberar `www.googleapis.com` **não** cobre este subdomínio |
+| `api.openai.com` | OK (liberado em 18/set/2026) | geração de imagem com GPT, funcionando |
+| `generativelanguage.googleapis.com` | OK (liberado em 18/set/2026) | API do Gemini. Liberar `www.googleapis.com` **não** cobre este subdomínio |
 | `www.googleapis.com` | OK (liberado em ago/2026) | upload para o Drive; não serve para o Gemini |
 | WebFetch (ferramenta) | bloqueado para estes domínios | tem rota de egresso própria, que não acompanhou a allowlist. **Usar `curl` do container**, que funciona |
 
@@ -212,7 +214,6 @@ O bloqueio de `raw.githubusercontent.com` **não** afeta o truque de mídia púb
 - **O patch `video-use-is-portrait-source` foi aposentado (18/set/2026).** O upstream reescreveu `is_portrait_source` para ler também o `rotation` do side data, o que cobre mais casos que o nosso patch cobria. O `validate.sh` agora testa **comportamento** (retrato, paisagem e paisagem com matriz de rotação 90) em vez de procurar o patch no código, porque o que importa é a função acertar.
 - Legendas SEMPRE por último no filter chain; overlays via PIL em PNG sequence + qtrle (ou PNG estático com fade de alpha).
 - Zoom animado com `zoompan`, não `crop` (crop não aceita `t` em w/h).
-- video-use precisa do patch `patches/video-use-is-portrait-source.patch` (senão vertical vira paisagem).
 - Metricool MCP: sem delete (cancelar = update `draft:true`; update devolve id novo); mídia por URL pública (o Metricool copia para o CDN dele na hora).
 - **Metricool, rascunho com data vencida não publica e não avisa.** Um post `draft:true` cuja data passa continua no calendário, aparecendo em `getScheduledPosts` como se estivesse agendado, mas nunca dispara. Aconteceu com os dois primeiros Reels (19/08 e 21/08, descobertos parados em 22/08). Regra: **quem agenda tira do rascunho na mesma sessão e confirma com `getScheduledPosts`**; nunca deixar o flip de `draft` para uma sessão seguinte. Tirar do rascunho com a data no passado também não resolve, é preciso data nova.
 - **Ler o índice de um ZIP gigante no Drive sem baixar o arquivo.** `drive.usercontent.google.com` aceita `Range`, então dá para pegar os últimos ~64 KB, achar o EOCD (`PK\x05\x06`) e, em arquivo >4 GB, o ZIP64 EOCD via locator `PK\x06\x07`, ler o central directory e listar tudo. Se as entradas estiverem com `method=0` (stored), como nos exports do OneDrive com MP4, cada arquivo pode ser extraído sozinho por outro `Range` no offset do local header, sem descompactar. Evita baixar 11 GB para pegar um vídeo de 90 MB. Script de referência: `scripts/zip_index_remoto.py`.
