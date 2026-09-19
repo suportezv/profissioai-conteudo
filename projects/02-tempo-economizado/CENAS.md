@@ -1,5 +1,8 @@
 # Prompts por cena para o Claude Design (Tempo economizado)
 
+> ⚠️ **Escrito na identidade anterior (rosa `#E255A0` + fundos aurora), aposentada em 17/set/2026 pela revisão 3 da marca.** Antes de produzir, reconverter para os tokens novos: acento **azul `#2458F5`**, superfície chapada num dos três modos (escuro `#101218`, claro `#F4F6F9`, azul `#2458F5`), tinta `#101218`, Sora peso 500 e tracking -3,5%. Ver `CLAUDE.md`, seção "Identidade visual, revisão 3".
+
+
 Mesma gramática validada do projeto 01 (@elevenlabsio + fundos oficiais da marca). Cada bloco é autocontido; o fundo é o mesmo em todas as cenas e costura a peça: estados se transformam, nunca cortam. Se preferir montar como composição única com timeline de cenas (como no projeto 01), use as durações como seções.
 
 **Sistema fixo (vale para as 5 cenas):**

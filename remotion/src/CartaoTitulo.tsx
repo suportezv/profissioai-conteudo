@@ -1,51 +1,79 @@
 import React from "react";
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
-import { Aurora } from "./Aurora";
-import { marca } from "./marca";
+import "./fonte";
+import { Superficie } from "./Superficie";
+import { marca, modos, type Modo } from "./marca";
 
 export type PropsCartao = {
+  /** Sobrelinha em caixa alta, como "AGENTES DE IA · ATENDIMENTO · CRM". */
+  sobrelinha?: string;
   titulo: string;
-  /** Palavra do titulo que recebe o rosa da marca. Opcional. */
+  /** Uma palavra do titulo em destaque. So tem efeito nos modos escuro e claro. */
   destaque?: string;
   rodape?: string;
+  modo?: Modo;
 };
 
 /**
- * Cartao de titulo na gramatica do estudio: fundo aurora com muito espaco
- * negativo, uma linha curta de tipografia contida (nunca display gigante) e
- * revelacao palavra a palavra, como nas referencias do @elevenlabsio.
+ * Cartao de titulo na diagramacao das pecas oficiais: margem generosa a
+ * esquerda, tipografia alinhada a esquerda (nunca centralizada), peso 500,
+ * tracking de -3,5% e revelacao palavra a palavra.
  */
-export const CartaoTitulo: React.FC<PropsCartao> = ({ titulo, destaque, rodape }) => {
+export const CartaoTitulo: React.FC<PropsCartao> = ({
+  sobrelinha,
+  titulo,
+  destaque,
+  rodape,
+  modo = "escuro",
+}) => {
   const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
+  const { fps, durationInFrames, width } = useVideoConfig();
+  const m = modos[modo];
   const palavras = titulo.split(" ");
 
+  // A margem oficial e 72px num canvas de 1080: 6,67% da largura.
+  const margem = width * 0.0667;
+
   return (
-    <AbsoluteFill>
-      <Aurora />
+    <AbsoluteFill style={{ fontFamily: marca.fonte }}>
+      <Superficie modo={modo} />
       <AbsoluteFill
         style={{
           justifyContent: "center",
-          alignItems: "center",
-          padding: "0 10%",
-          fontFamily: marca.fonte,
+          alignItems: "flex-start",
+          padding: `0 ${margem}px`,
         }}
       >
+        {sobrelinha ? (
+          <div
+            style={{
+              fontSize: width * 0.0185,
+              fontWeight: 500,
+              letterSpacing: marca.tracking,
+              color: m.apoio,
+              marginBottom: width * 0.04,
+              opacity: interpolate(frame, [0, 12], [0, 1], {
+                extrapolateLeft: "clamp",
+                extrapolateRight: "clamp",
+              }),
+            }}
+          >
+            {sobrelinha.toUpperCase()}
+          </div>
+        ) : null}
+
         <div
           style={{
             display: "flex",
             flexWrap: "wrap",
-            justifyContent: "center",
-            gap: "0.28em",
-            fontSize: 74,
-            fontWeight: 600,
-            letterSpacing: "-0.02em",
+            gap: "0.26em",
+            fontSize: width * 0.082,
+            fontWeight: 500,
+            letterSpacing: marca.tracking,
             lineHeight: 1.18,
-            textAlign: "center",
           }}
         >
           {palavras.map((p, i) => {
-            // cada palavra entra um pouco depois da anterior
             const entrada = spring({
               frame: frame - 6 - i * 4,
               fps,
@@ -58,7 +86,8 @@ export const CartaoTitulo: React.FC<PropsCartao> = ({ titulo, destaque, rodape }
               <span
                 key={i}
                 style={{
-                  color: ehDestaque ? marca.rosaVivo : marca.tinta,
+                  // no modo azul o fundo ja e o acento; destacar em azul sumiria
+                  color: ehDestaque && modo !== "azul" ? marca.azul : m.tinta,
                   opacity: entrada,
                   transform: `translateY(${interpolate(entrada, [0, 1], [14, 0])}px)`,
                   display: "inline-block",
@@ -73,19 +102,20 @@ export const CartaoTitulo: React.FC<PropsCartao> = ({ titulo, destaque, rodape }
         {rodape ? (
           <div
             style={{
-              marginTop: 34,
-              fontSize: 25,
-              color: marca.tinta,
-              // o rodape so aparece depois que o titulo assentou
+              marginTop: width * 0.055,
+              fontSize: width * 0.0157,
+              fontWeight: 500,
+              letterSpacing: marca.tracking,
+              color: m.apoio,
               opacity: interpolate(
                 frame,
                 [durationInFrames - fps * 2.2, durationInFrames - fps * 1.6],
-                [0, 0.62],
+                [0, 1],
                 { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
               ),
             }}
           >
-            {rodape}
+            {rodape.toUpperCase()}
           </div>
         ) : null}
       </AbsoluteFill>

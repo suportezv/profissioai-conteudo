@@ -15,3 +15,6 @@ projects/**/*.aac
 # Remotion
 remotion/node_modules/
 remotion/out/
+
+# fundos de cena do kit de marca (baixar do Drive quando precisar)
+marca/fundos/
