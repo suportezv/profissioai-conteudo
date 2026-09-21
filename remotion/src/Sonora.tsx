@@ -30,9 +30,18 @@ export const Sonora: React.FC<{
   gcEm?: number;
   /** Quanto tempo o GC fica, em segundos. */
   gcDura?: number;
-}> = ({ arquivo, nome, papel, gcEm = 2.4, gcDura = 3.4 }) => {
+  /**
+   * Sobrelinha no alto do quadro, dizendo do que a pessoa esta falando.
+   *
+   * Existe porque uma sonora cortada no meio de uma narracao perde o assunto:
+   * quem ouve entrou agora e nao sabe a pergunta que foi feita. Duas palavras
+   * no alto devolvem o contexto sem roubar a frase.
+   */
+  rotulo?: string;
+}> = ({ arquivo, nome, papel, gcEm = 2.4, gcDura = 3.4, rotulo }) => {
   const f = useCurrentFrame();
   const gc = janela(f, s(gcEm), s(gcEm + gcDura), 14, 14);
+  const rot = janela(f, s(0.3), s(3.6), 14, 12);
 
   return (
     <AbsoluteFill style={{ backgroundColor: marca.tinta }}>
@@ -40,6 +49,32 @@ export const Sonora: React.FC<{
         src={staticFile("broll/" + arquivo)}
         style={{ width: "100%", height: "100%", objectFit: "cover" }}
       />
+
+      {rotulo && rot > 0.001 ? (
+        <AbsoluteFill style={{ opacity: rot, fontFamily: marca.fonte }}>
+          <AbsoluteFill
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(16,18,24,0.55) 0%, rgba(16,18,24,0) 34%)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              left: 120,
+              top: 120,
+              fontSize: 24,
+              fontWeight: 500,
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              color: marca.branco,
+              ...entra(rot, 14),
+            }}
+          >
+            {rotulo}
+          </div>
+        </AbsoluteFill>
+      ) : null}
 
       {gc > 0.001 ? (
         <AbsoluteFill

@@ -14,16 +14,23 @@ import { Sfx } from "./Sfx";
 /**
  * Cena 06 do case: as tres escolhas.
  *
- * 16,5 s, narracao de 14,86 s. Um cartao aceso por vez, com borda azul no
+ * 17,4 s, narracao de 16,39 s. Um cartao aceso por vez, com borda azul no
  * ativo e o resto apagado no cinza de apoio. Sem glow: a revisao 3 marca
  * estado por borda, nao por brilho.
+ *
+ * A abertura mudou para "Tres escolhas contraintuitivas foram determinantes
+ * para o sucesso do produto", e a locucao ficou 1,5 s mais longa que a
+ * anterior. **Os tempos de cada cartao foram remedidos no arquivo novo**
+ * (silencios em 5,74 / 7,43 / 11,98 s), nao empurrados proporcionalmente:
+ * cartao que acende no meio da frase errada nao parece atrasado, parece
+ * aleatorio.
  *
  * Os tres "nao" entram no fim, discretos, e ficam ate o corte. Nao e
  * disclaimer juridico enfiado no rodape: e o limite do produto, e o roteiro
  * exige tempo de tela para ele.
  */
 
-export const CENA06_FRAMES = s(16.5);
+export const CENA06_FRAMES = s(17.4);
 const AUDIO_EM = s(0.5);
 const MARGEM = 120;
 const m = modos.claro;
@@ -33,19 +40,19 @@ const ESCOLHAS = [
     n: "01",
     titulo: "Autolimitação",
     texto: "Percebe uso excessivo e reduz o próprio acesso.",
-    acende: s(4.2),
+    acende: s(6.3),
   },
   {
     n: "02",
     titulo: "Sinalização de risco",
     texto: "Um segundo modelo lê o risco e aciona especialistas.",
-    acende: s(7.6),
+    acende: s(8.0),
   },
   {
     n: "03",
     titulo: "Memória contínua",
     texto: "Quem sofre não deveria se explicar de novo.",
-    acende: s(11.4),
+    acende: s(12.5),
   },
 ];
 

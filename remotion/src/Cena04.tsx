@@ -15,43 +15,53 @@ import { IconeBalao } from "./Icones";
 /**
  * Cena 04 do case: o desafio tecnico, dito pela Profissio.
  *
- * 17,5 s, narracao de 15,84 s que comeca em 0,6 s. Os tempos abaixo saem dos
- * silencios medidos no arquivo de locucao (1,96 / 11,48 / 14,24 / 15,53 s),
- * somados ao atraso de 0,6 s.
+ * **A cena e um bloco de tres partes, nao uma cena so.** A narracao quebra em
+ * "...quando enfrentam os seus desafios", entra a sonora do Clesio respondendo
+ * qual foi o maior desafio, e so entao volta o "isso tudo no canal mais popular
+ * do Brasil: o WhatsApp". Por isso o arquivo exporta `Cena04A` e `Cena04B`, e a
+ * montagem poe a sonora entre as duas.
+ *
+ * O motivo da quebra e de sentido: solta depois da cena, a fala do Clesio ficava
+ * desconexa, porque ela responde uma pergunta que ninguem tinha feito em voz
+ * alta. Encaixada na frase que enuncia o desafio, ela vira resposta. A
+ * sobrelinha "O maior desafio" no alto do plano dele fecha isso, porque quem
+ * ouve entrou agora e precisa saber a pergunta.
+ *
+ * Os tempos saem dos silencios medidos nos arquivos de locucao, nunca de uma
+ * grade: a `cena-04a` quebra em 1,96 s e termina em 11,48 s; a `cena-04b` tem
+ * uma pausa em 2,58 s e o "o WhatsApp" comeca em 3,06 s.
  *
  * ## Por que esta cena nao tem imagem filmada
  *
- * A primeira versao usava b-roll gerado: alguem desenhando num quadro de
- * vidro, uma dupla na frente de um laptop, maos num teclado. Todos legiveis
- * como banco de imagem, **e nenhum deles dizia nada que a narracao ja nao
- * dissesse**. Pior: eram pessoas genericas num filme sobre um produto
- * brasileiro, o que tira credibilidade em vez de dar.
+ * A primeira versao usava b-roll gerado: alguem desenhando num quadro de vidro,
+ * uma dupla na frente de um laptop, maos num teclado. Todos legiveis como banco
+ * de imagem, **e nenhum deles dizia nada que a narracao ja nao dissesse**.
  *
  * A troca nao e de plano, e de criterio: **a tela de uma cena tecnica tem que
- * carregar informacao que a fala nao carrega.** E a gramatica das empresas de
- * IA que servem de referencia ao estudio, e tambem a da marca (o grafo de nos
- * do @elevenlabsio). Entao a cena mostra duas coisas que nao estao na
- * narracao: **o que um chatbot e** (o menu numerado que todo mundo reconhece,
- * e que e justo o que eles NAO fizeram) e **com o que a EITA foi treinada**
- * (as quatro fontes, num grafo que converge).
- *
- * Efeito colateral que vale registrar: a cena passou a custar zero em API.
+ * carregar informacao que a fala nao carrega.** Entao a cena mostra duas coisas
+ * que nao estao na narracao: **o que um chatbot e** (o menu numerado que todo
+ * mundo reconhece, e que e justo o que eles NAO fizeram) e **com o que a EITA
+ * foi treinada** (as quatro fontes, num grafo que converge).
  *
  * ## O fecho
  *
- * A ultima frase nomeia o WhatsApp, e o cartao vai no **verde do canal**, nao
- * no azul da marca: aqui quem fala e o lugar onde a EITA mora, e o azul
- * confundia o canal com a Profissio. Continua sem logo de terceiro, so a cor,
- * a palavra e um balao generico.
+ * A ultima frase nomeia o WhatsApp, e o cartao vai no **verde do canal**, nao no
+ * azul da marca: aqui quem fala e o lugar onde a EITA mora, e o azul confundia o
+ * canal com a Profissio. Continua sem logo de terceiro, so a cor, a palavra e um
+ * balao generico.
  */
 
-export const CENA04_FRAMES = s(17.5);
-const AUDIO_EM = s(0.6);
 const MARGEM = 120;
 const m = modos.claro;
 
 /** O verde do canal. So aparece no cartao de fecho, nunca como cor da marca. */
 const VERDE_CANAL = "#25D366";
+
+// ---------------------------------------------------------------- parte A --
+
+/** 0,6 s de respiro + 11,62 s de locucao + meio segundo de cauda. */
+export const CENA04A_FRAMES = s(12.7);
+const AUDIO_A_EM = s(0.6);
 
 /** O menu que todo bot de atendimento tem, e que a EITA nao e. */
 const MENU = [
@@ -68,11 +78,7 @@ const FONTES = [
   { texto: "o que nunca se responde", em: s(8.8) },
 ];
 
-const CONVERGE = s(10.6);
-const FECHO_EM = s(14.9);
-const ICONE_EM = FECHO_EM + s(0.4);
-/** A palavra so entra quando a locucao a diz: 15,53 s + 0,6 s de atraso. */
-const PALAVRA_EM = s(15.4);
+const CONVERGE = s(10.4);
 
 /** Uma fonte de treino: filete azul, texto, e a linha que corre para o centro. */
 const Fonte: React.FC<{ texto: string; o: number; puxa: number }> = ({
@@ -80,14 +86,7 @@ const Fonte: React.FC<{ texto: string; o: number; puxa: number }> = ({
   o,
   puxa,
 }) => (
-  <div
-    style={{
-      display: "flex",
-      alignItems: "center",
-      gap: 20,
-      ...entra(o, 14),
-    }}
-  >
+  <div style={{ display: "flex", alignItems: "center", gap: 20, ...entra(o, 14) }}>
     <div
       style={{
         width: 3,
@@ -121,7 +120,7 @@ const Fonte: React.FC<{ texto: string; o: number; puxa: number }> = ({
   </div>
 );
 
-export const Cena04: React.FC = () => {
+export const Cena04A: React.FC = () => {
   const f = useCurrentFrame();
 
   const rotulo = janela(f, s(0.6), s(3.2), 14, 12);
@@ -129,38 +128,33 @@ export const Cena04: React.FC = () => {
   // o menu apaga antes de sair: ele e o contraexemplo, nao a resposta
   const morre = passo(f, s(2.2), s(3.0));
 
-  const rotulo2 = janela(f, s(3.0), s(14.6), 14, 12);
-  const puxa = passo(f, CONVERGE, CONVERGE + s(1.1));
-  const convergiu = janela(f, CONVERGE + s(0.5), s(14.6), 16, 12);
-
-  const fecho = passo(f, FECHO_EM, FECHO_EM + s(0.5));
-  const icone = janela(f, ICONE_EM, CENA04_FRAMES, 12, 0);
-  const sobre = janela(f, ICONE_EM + s(0.2), CENA04_FRAMES, 14, 0);
-  const palavra = janela(f, PALAVRA_EM, CENA04_FRAMES, 12, 0);
+  const rotulo2 = janela(f, s(3.0), CENA04A_FRAMES, 14, 10);
+  const puxa = passo(f, CONVERGE, CONVERGE + s(1.0));
+  const convergiu = janela(f, CONVERGE + s(0.4), CENA04A_FRAMES, 16, 10);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
       <Superficie modo="claro" />
 
-      <Sequence from={AUDIO_EM}>
-        <Audio src={staticFile("locucao/cena-04.mp3")} />
+      <Sequence from={AUDIO_A_EM}>
+        <Audio src={staticFile("locucao/cena-04a.mp3")} />
       </Sequence>
 
-      {/* --- beat 1: o que eles NAO fizeram --- */}
+      {/* --- o que eles NAO fizeram --- */}
       {menu > 0.001 ? (
         <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
-          <div style={{ opacity: rotulo, marginBottom: 40 }}>
-            <div
-              style={{
-                fontSize: 24,
-                fontWeight: 500,
-                letterSpacing: "2px",
-                textTransform: "uppercase",
-                color: m.apoio,
-              }}
-            >
-              Um chatbot faz isto
-            </div>
+          <div
+            style={{
+              fontSize: 24,
+              fontWeight: 500,
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              color: m.apoio,
+              opacity: rotulo,
+              marginBottom: 40,
+            }}
+          >
+            Um chatbot faz isto
           </div>
           <div
             style={{
@@ -193,7 +187,7 @@ export const Cena04: React.FC = () => {
         </AbsoluteFill>
       ) : null}
 
-      {/* --- beat 2: com o que a EITA foi treinada --- */}
+      {/* --- com o que a EITA foi treinada --- */}
       {rotulo2 > 0.001 ? (
         <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
           <div
@@ -222,7 +216,7 @@ export const Cena04: React.FC = () => {
               <Fonte
                 key={fo.texto}
                 texto={fo.texto}
-                o={janela(f, fo.em, s(14.6), 14, 12)}
+                o={janela(f, fo.em, CENA04A_FRAMES, 14, 10)}
                 puxa={puxa}
               />
             ))}
@@ -256,50 +250,69 @@ export const Cena04: React.FC = () => {
         </AbsoluteFill>
       ) : null}
 
-      {/* --- beat 3: o canal --- */}
-      {fecho > 0.001 ? (
-        <AbsoluteFill style={{ opacity: fecho }}>
-          <AbsoluteFill style={{ backgroundColor: VERDE_CANAL }} />
-          <AbsoluteFill
-            style={{ padding: MARGEM, justifyContent: "center", gap: 28 }}
-          >
-            <div style={entra(icone, 18)}>
-              <IconeBalao cor={m.tinta} tam={132} />
-            </div>
-            <div
-              style={{
-                fontSize: 40,
-                fontWeight: 500,
-                letterSpacing: "-1.4px",
-                color: m.tinta,
-                opacity: sobre * 0.72,
-              }}
-            >
-              o canal mais popular do Brasil
-            </div>
-            <div
-              style={{
-                fontSize: 148,
-                fontWeight: 500,
-                letterSpacing: "-5.18px",
-                lineHeight: 1,
-                color: m.tinta,
-                marginTop: -16,
-                ...entra(palavra, 26),
-              }}
-            >
-              WhatsApp
-            </div>
-          </AbsoluteFill>
-        </AbsoluteFill>
-      ) : null}
-
       <Sfx som="marca" em={s(2.2)} volume={0.18} />
       {FONTES.map((fo) => (
         <Sfx key={fo.texto} som="pop" em={fo.em} volume={0.16} />
       ))}
       <Sfx som="surge" em={CONVERGE} volume={0.2} />
-      <Sfx som="surge" em={FECHO_EM} volume={0.2} />
+    </AbsoluteFill>
+  );
+};
+
+// ---------------------------------------------------------------- parte B --
+
+/** 0,2 s + 4,18 s de locucao + meio segundo de cauda. */
+export const CENA04B_FRAMES = s(4.9);
+const AUDIO_B_EM = s(0.2);
+const ICONE_EM = s(0.35);
+/** A palavra so entra quando a locucao a diz: 3,06 s + 0,2 s de atraso. */
+const PALAVRA_EM = s(3.26);
+
+export const Cena04B: React.FC = () => {
+  const f = useCurrentFrame();
+  const icone = janela(f, ICONE_EM, CENA04B_FRAMES, 12, 0);
+  const sobre = janela(f, ICONE_EM + s(0.2), CENA04B_FRAMES, 14, 0);
+  const palavra = janela(f, PALAVRA_EM, CENA04B_FRAMES, 12, 0);
+
+  return (
+    <AbsoluteFill style={{ fontFamily: marca.fonte }}>
+      <AbsoluteFill style={{ backgroundColor: VERDE_CANAL }} />
+
+      <Sequence from={AUDIO_B_EM}>
+        <Audio src={staticFile("locucao/cena-04b.mp3")} />
+      </Sequence>
+
+      <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center", gap: 28 }}>
+        <div style={entra(icone, 18)}>
+          <IconeBalao cor={m.tinta} tam={132} />
+        </div>
+        <div
+          style={{
+            fontSize: 40,
+            fontWeight: 500,
+            letterSpacing: "-1.4px",
+            color: m.tinta,
+            opacity: sobre * 0.72,
+          }}
+        >
+          o canal mais popular do Brasil
+        </div>
+        <div
+          style={{
+            fontSize: 148,
+            fontWeight: 500,
+            letterSpacing: "-5.18px",
+            lineHeight: 1,
+            color: m.tinta,
+            marginTop: -16,
+            ...entra(palavra, 26),
+          }}
+        >
+          WhatsApp
+        </div>
+      </AbsoluteFill>
+
+      <Sfx som="surge" em={0} volume={0.2} />
       <Sfx som="pop" em={ICONE_EM} volume={0.22} />
       <Sfx som="marca" em={PALAVRA_EM} volume={0.24} />
     </AbsoluteFill>

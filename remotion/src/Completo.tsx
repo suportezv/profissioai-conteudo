@@ -10,7 +10,12 @@ import {
 import { s } from "./anim";
 import { Cena01, CENA01_FRAMES } from "./Cena01";
 import { Cena03, CENA03_FRAMES } from "./Cena03";
-import { Cena04, CENA04_FRAMES } from "./Cena04";
+import {
+  Cena04A,
+  Cena04B,
+  CENA04A_FRAMES,
+  CENA04B_FRAMES,
+} from "./Cena04";
 import { Cena06, CENA06_FRAMES } from "./Cena06";
 import { Cena08, CENA08_FRAMES } from "./Cena08";
 import { Cena09, CENA09_FRAMES } from "./Cena09";
@@ -50,11 +55,16 @@ const LACUNA_02 = s(13);
 /**
  * As sonoras reais, ja cortadas no silencio do proprio arquivo.
  *
- * A da Anaclaudia comeca em "Entao, mas ce sabia": o "Fala tambem" que vinha
- * antes era conversa de set, nao a fala. Cortar no primeiro som da pessoa
- * parece cuidado e e o contrario: entrega meia palavra antes do assunto.
+ * Cada uma comeca na primeira palavra, nao no primeiro frame do bruto. O
+ * Clesio tinha 1,92 s de cabeca morta antes de "Foi construir", e a Anaclaudia
+ * abria com "Fala tambem", que era conversa de set. **Cabeca de sonora nao e
+ * respiro, e atraso**: o respiro quem da e o corte que vem antes.
+ *
+ * A do Clesio nao esta mais solta na cena 05: ela entra dentro do bloco da
+ * cena 04, entre as duas metades da narracao. Solta, ela respondia uma
+ * pergunta que ninguem tinha feito.
  */
-const SONORA_05 = s(8.37);
+const SONORA_05 = s(6.6);
 const SONORA_07 = s(6.9);
 
 /**
@@ -77,8 +87,9 @@ export const COMPLETO_FRAMES =
   CENA01_FRAMES +
   LACUNA_02 +
   CENA03_FRAMES +
-  CENA04_FRAMES +
+  CENA04A_FRAMES +
   SONORA_05 +
+  CENA04B_FRAMES +
   CENA06_FRAMES +
   SONORA_07 +
   CENA08_FRAMES +
@@ -147,8 +158,10 @@ export const Completo: React.FC = () => (
         <Cena03 />
       </Series.Sequence>
 
-      <Series.Sequence durationInFrames={CENA04_FRAMES}>
-        <Cena04 />
+      {/* o bloco da cena 04: a narracao enuncia o desafio, o Clesio responde
+          qual foi o maior, e so entao a narracao nomeia o canal */}
+      <Series.Sequence durationInFrames={CENA04A_FRAMES}>
+        <Cena04A />
       </Series.Sequence>
 
       <Series.Sequence durationInFrames={SONORA_05}>
@@ -156,9 +169,14 @@ export const Completo: React.FC = () => (
           arquivo="clesio-sonora.mp4"
           nome="Clésio Souza"
           papel="Profissio.ai"
-          gcEm={2.2}
-          gcDura={3.4}
+          rotulo="O maior desafio"
+          gcEm={1.6}
+          gcDura={3.2}
         />
+      </Series.Sequence>
+
+      <Series.Sequence durationInFrames={CENA04B_FRAMES}>
+        <Cena04B />
       </Series.Sequence>
 
       <Series.Sequence durationInFrames={CENA06_FRAMES}>

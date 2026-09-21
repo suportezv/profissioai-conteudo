@@ -4,7 +4,12 @@ import { CartaoTitulo } from "./CartaoTitulo";
 import { Hero } from "./Hero";
 import { Cena01, CENA01_FRAMES } from "./Cena01";
 import { Cena03, CENA03_FRAMES } from "./Cena03";
-import { Cena04, CENA04_FRAMES } from "./Cena04";
+import {
+  Cena04A,
+  Cena04B,
+  CENA04A_FRAMES,
+  CENA04B_FRAMES,
+} from "./Cena04";
 import { Sonora } from "./Sonora";
 import { Cena06, CENA06_FRAMES } from "./Cena06";
 import { Cena07, CENA07_FRAMES } from "./Cena07";
@@ -46,9 +51,17 @@ export const RemotionRoot: React.FC = () => (
       height={1080}
     />
     <Composition
-      id="CaseEitaCena04"
-      component={Cena04}
-      durationInFrames={CENA04_FRAMES}
+      id="CaseEitaCena04A"
+      component={Cena04A}
+      durationInFrames={CENA04A_FRAMES}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="CaseEitaCena04B"
+      component={Cena04B}
+      durationInFrames={CENA04B_FRAMES}
       fps={30}
       width={1920}
       height={1080}

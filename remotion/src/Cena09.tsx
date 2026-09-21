@@ -38,8 +38,26 @@ import { Sfx } from "./Sfx";
  * Profissio e dona do produto.
  */
 
-/** O trecho real: 22,1 s, de 1:12 a 1:34 do bruto da Anaclaudia. */
-export const TRECHO_FRAMES = s(22.13);
+/**
+ * O trecho real, 22,1 s, de 1:12 a 1:34 do bruto da Anaclaudia.
+ *
+ * Tres consertos entraram neste corte e todos vieram de ouvir, nao de ler o
+ * roteiro:
+ *
+ *  - **A trilha do video original saiu.** Ela brigava com a trilha do case,
+ *    duas musicas diferentes no mesmo trecho. Resolvido com a isolacao de voz
+ *    da ElevenLabs (`/v1/audio-isolation`), que devolve so a fala. Efeito
+ *    colateral util: com a musica fora, o `silencedetect` passou a achar os
+ *    silencios de verdade, que a musica mascarava.
+ *  - **A pausa entre "ta bom?" e "Pode deixar" foi cortada.** Eram 0,82 s de
+ *    ar no meio da virada mais importante do trecho, a pessoa perguntando e o
+ *    produto respondendo. Ficaram 0,12 s. O corte de 0,6 s vale para imagem e
+ *    som, com um fade de 0,2 s para o salto nao pular.
+ *  - **A ultima palavra estava sendo comida.** O corte terminava em 94,0 s do
+ *    bruto e a frase e "organizar as emocoes", que so fecha em 94,45 s. Vai
+ *    ate 94,9 s, que ainda e antes do "Se quiser" seguinte.
+ */
+export const TRECHO_FRAMES = s(22.1);
 /** A assinatura, depois do trecho. */
 export const ASSINA_FRAMES = s(5);
 export const CENA09_FRAMES = TRECHO_FRAMES + ASSINA_FRAMES;

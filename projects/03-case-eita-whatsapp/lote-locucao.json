@@ -1,0 +1,16 @@
+{
+  "voz": "4r3G9XKliGgVZLKMgjik",
+  "ajustes": {
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.55,
+    "similaridade": 0.75,
+    "estilo": 0.0,
+    "speaker_boost": true
+  },
+  "falas": [
+    {
+      "nome": "cena-06",
+      "texto": "Três escolhas contraintuitivas foram determinantes para o sucesso do produto. A autolimitação. Um segundo modelo que lê risco e aciona um time de especialistas. E memória contínua, porque quem sofre não deveria se explicar de novo."
+    }
+  ]
+}

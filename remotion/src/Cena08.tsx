@@ -14,7 +14,11 @@ import { Sfx } from "./Sfx";
 /**
  * Cena 08 do case: o que aconteceu, em numero.
  *
- * 11,5 s, narracao de 9,85 s. Um numero por vez, e **cada um com a sua base e
+ * 10,8 s, narracao de 9,85 s. **O primeiro numero entra quase junto com a
+ * fala**, nao um segundo depois: a versao anterior abria com 1,1 s de
+ * superficie clara vazia logo depois de uma sonora, e aquele branco parado
+ * quebrava o ritmo do corte. Cena que comeca em cartao cheio nao precisa de
+ * respiro; quem da o respiro e a sonora que veio antes. Um numero por vez, e **cada um com a sua base e
  * o seu periodo colados nele**. Nao e escrupulo de rodape: o
  * `Comunicacao_Profissio.md` proibe porcentagem sem contexto, base e metodo, e
  * o juri confere o video contra o formulario escrito.
@@ -24,8 +28,8 @@ import { Sfx } from "./Sfx";
  * duvida, entao as duas aparecem.
  */
 
-export const CENA08_FRAMES = s(11.5);
-const AUDIO_EM = s(0.5);
+export const CENA08_FRAMES = s(10.8);
+const AUDIO_EM = s(0.15);
 const MARGEM = 120;
 const m = modos.claro;
 
@@ -42,8 +46,8 @@ type Dado = {
 
 const DADOS: Dado[] = [
   {
-    entra: s(1.1),
-    sai: s(4.0),
+    entra: s(0.45),
+    sai: s(3.35),
     alvo: 35,
     casas: 0,
     sufixo: " mil",
@@ -51,8 +55,8 @@ const DADOS: Dado[] = [
     base: "jun/2025 a set/2026",
   },
   {
-    entra: s(4.0),
-    sai: s(6.6),
+    entra: s(3.35),
+    sai: s(5.95),
     alvo: 2.3,
     casas: 1,
     sufixo: " mi",
@@ -60,8 +64,8 @@ const DADOS: Dado[] = [
     base: "no mesmo período",
   },
   {
-    entra: s(6.6),
-    sai: s(8.4),
+    entra: s(5.95),
+    sai: s(7.75),
     alvo: 19,
     casas: 0,
     sufixo: "%",
@@ -69,7 +73,7 @@ const DADOS: Dado[] = [
     base: "390 mil mensagens",
   },
   {
-    entra: s(8.4),
+    entra: s(7.75),
     sai: CENA08_FRAMES,
     alvo: 75.7,
     casas: 1,
