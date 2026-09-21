@@ -74,8 +74,11 @@ export const Balao3D: React.FC<Props> = ({
           transform: [
             `translate(-50%, -50%)`,
             `translateY(${e(0, -210) - deriva * 26}px)`,
-            `rotateZ(${e(-9, -2)}deg)`,
-            `rotateX(${e(64, 6)}deg)`,
+            // o estado final e **reto**: a inclinacao residual de -2 e 6 graus
+            // lia como lettering torto, nao como perspectiva. O 3D esta na
+            // saida do plano da tela, nao em deixar a peca de banda.
+            `rotateZ(${e(-9, 0)}deg)`,
+            `rotateX(${e(64, 0)}deg)`,
             `translateZ(${e(0, 190)}px)`,
             `scale(${e(0.58, 1) * (1 + deriva * 0.06)})`,
           ].join(" "),

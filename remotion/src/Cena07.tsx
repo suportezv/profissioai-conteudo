@@ -175,11 +175,15 @@ export const Cena07: React.FC = () => {
         }}
       />
 
-      {/* a mensagem da cena 01, agora entregue e lida */}
+      {/* A mensagem da cena 01, agora entregue e lida.
+          A ancora recua 40px em vez de avancar 150: o balao tem ~894 px e,
+          centrado em 1492, encostava na borda direita do quadro de 1920. O
+          corte so aparecia no canto, e foi achado medindo com
+          `scripts/confere_margem.py`, nao a olho. */}
       <div style={{ opacity: 1 - recuo * 0.38 }}>
         <Balao3D
           levanta={levanta}
-          ancora={{ x: ANCORA.x + 150, y: ANCORA.y - recuo * 150 }}
+          ancora={{ x: ANCORA.x - 40, y: ANCORA.y - recuo * 150 }}
           deriva={deriva}
           opacidade={passo(f, 0, 8)}
         >
@@ -191,7 +195,7 @@ export const Cena07: React.FC = () => {
       {audio > 0.001 ? (
         <Balao3D
           levanta={audio}
-          ancora={{ x: ANCORA.x - 120, y: ANCORA.y + 130 }}
+          ancora={{ x: ANCORA.x - 230, y: ANCORA.y + 130 }}
           deriva={deriva}
           opacidade={passo(f, AUDIO_CHEGA, AUDIO_CHEGA + 8)}
         >
