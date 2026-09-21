@@ -18,11 +18,13 @@
 
 | Voz | Papel | Quanto |
 |---|---|---|
-| **Narração Profissio** | conduz o documentário, em primeira pessoa do plural | 167 palavras, 73 s de fala |
-| **Sonora Anaclaudia Zani** | a origem clínica: por que existe, o que não podia acontecer | 2 entradas, 29 s |
-| **Sonora Profissio** (Clésio Souza) | a decisão de engenharia difícil, o bastidor técnico | 1 entrada, 14 s |
+| **Narração Profissio** | conduz o documentário, em primeira pessoa do plural | 176 palavras, 77 s de fala |
+| **Sonora Anaclaudia Zani** | a origem clínica: por que existe | 2 entradas, 20 s |
+| **Sonora Profissio** (Clésio Souza) | a decisão de engenharia difícil | 1 entrada, 12 s |
 
-**As sonoras não estão escritas aqui de propósito.** Colocar fala na boca de pessoa real é ficção, não documentário. O que está abaixo é **a pergunta que puxa aquela resposta** e o território que a edição precisa cobrir. O texto final sai da entrevista.
+**As sonoras das cenas 02 e 05 vieram do cliente**, já na forma em que devem ser ditas. Elas estão escritas na tabela porque foram entregues assim, não porque foram inventadas aqui. Na captação, a pessoa diz com as próprias palavras; se a entrevista render uma versão melhor, ela ganha da escrita. **A sonora da cena 07 continua sem texto**: ela é reação, não fala preparada, e escrever reação é ficção.
+
+**O que é técnico não vai para a boca de ninguém.** Número de psicólogos, preço de sessão e índice de burnout são GC, não fala. Quem está em cena conta o que viveu; o dado entra por lettering, com base e período.
 
 ---
 
@@ -30,20 +32,20 @@
 
 | # | Tempo | Vídeo | Quem fala | Conteúdo |
 |---|---|---|---|---|
-| **01** | 0:00 a 0:11 | Close da tela no escuro. 23:47. Alguém digita **não tô bem**, envia. Fica com **um check**. Nada acontece. | ninguém, depois narração entra baixa | *(4 s de silêncio: só o teclado e o envio)*<br><br>**Narração:** Todo dia, milhares de brasileiros escrevem uma mensagem assim. E a maioria nunca manda pra ninguém. |
-| **02** | 0:11 a 0:26 | Corte seco para a Anaclaudia, consultório, luz natural. Plano médio. Sem lettering em cima dela nos primeiros 3 s. | **Sonora Anaclaudia** | **Pergunta:** *Por que você quis levar sua metodologia para fora do consultório?*<br><br>Território: 547 mil psicólogos no Brasil, sessão de R$ 200 a R$ 2.000, e as mulheres que ela atendia sabendo que nunca teriam acesso. O que ela via na clínica. |
-| **03** | 0:26 a 0:40 | Tela antiga do app de 2017 em arquivo. Depois, os números sobem em motion sobre fundo escuro Profissio. | **Narração Profissio** | Ela já tinha tentado em 2017, antes da IA generativa existir. Um app que dependia de psicólogos catalogando sentimentos à mão. Não sobreviveu à pandemia. Em 2025 ela voltou, com outra conversa. |
-| **04** | 0:40 a 0:57 | Bastidor: tela de código, o painel do agente sendo configurado, pessoas da Profissio trabalhando. Ritmo seco, sem música épica. | **Narração Profissio** | O pedido não era um assistente que responde bem. Era o contrário: uma IA que **não** aceita o que a pessoa diz e segue. Que pergunta. Isso não se resolve com prompt, se resolve com metodologia clínica no produto. |
-| **05** | 0:57 a 1:11 | Clésio, ambiente de trabalho da Profissio, plano médio. Mesma linguagem visual da sonora da Anaclaudia. | **Sonora Profissio** | **Pergunta:** *Qual foi a decisão mais difícil desse projeto, e por que ela vai contra o que o mercado faz?*<br><br>Território: a autolimitação. Construir um produto que, ao perceber uso excessivo, **reduz o próprio acesso**. Vai contra toda a lógica de engajamento. Por que aceitaram. |
-| **06** | 1:11 a 1:29 | Três cartões em motion sobre prints recriados de conversa. Tokens Profissio: superfície `#101218`, Sora 500, azul `#2458F5` no número. | **Narração Profissio** | Três escolhas entraram no produto, e nenhuma veio de boa prática de mercado. A autolimitação. Um segundo modelo que lê risco e aciona um time de especialistas. E memória contínua, porque quem sofre não deveria se explicar de novo. |
+| **01** | 0:00 a 0:11 | Close da tela no escuro. 23:47. Alguém digita **não tô bem**, envia. Fica com **um check**. Nada acontece. | ninguém, depois narração entra baixa | *(4 s de silêncio: só o teclado e o envio)*<br><br>**Narração:** Todo dia, milhões de brasileiros escrevem uma mensagem assim. E a maioria nunca manda pra ninguém. |
+| **02** | 0:11 a 0:24 | Corte seco para a Anaclaudia, consultório, luz natural. Plano médio. Sem lettering em cima dela nos primeiros 3 s. | **Sonora Anaclaudia** | Eu percebi que a conta não fechava e precisava levar o que aprendi nesses 20 anos de consultório para o máximo de pessoas possível.<br><br>*(o dado que sustenta a frase entra em GC, não na fala)* |
+| **03** | 0:24 a 0:40 | Tela antiga do app de 2017 em arquivo. Depois, os números sobem em motion sobre fundo escuro Profissio. | **Narração Profissio** | Ela já tinha tentado em 2017, antes da IA generativa existir. Um app que dependia de psicólogos catalogando sentimentos à mão. Não sobreviveu à pandemia. Em 2025 ela voltou. |
+| **04** | 0:40 a 1:00 | Bastidor: tela de código, o painel do agente sendo configurado, pessoas da Profissio trabalhando. Ritmo seco, sem música épica. Fecha no ícone do WhatsApp na última frase. | **Narração Profissio** | O desafio não era fazer um chatbot. Era construir uma inteligência artificial capaz de fazer as pessoas abrirem suas emoções e ser o porto-seguro que elas precisam quando enfrentam os seus desafios, isso tudo no canal mais popular do Brasil: o WhatsApp. |
+| **05** | 1:00 a 1:12 | Clésio, ambiente de trabalho da Profissio, plano médio. Mesma linguagem visual da sonora da Anaclaudia. | **Sonora Profissio** | Foi construir uma IA que não fale para o usuário o que ele quer ouvir, mas sim o que a Anaclaudia falaria para ele. |
+| **06** | 1:12 a 1:29 | Três cartões em motion sobre prints recriados de conversa. Tokens Profissio: superfície `#101218`, Sora 500, azul `#2458F5` no número. | **Narração Profissio** | Três escolhas entraram no produto, e nenhuma veio de boa prática de mercado. A autolimitação. Um segundo modelo que lê risco e aciona um time de especialistas. E memória contínua, porque quem sofre não deveria se explicar de novo. |
 | **07** | 1:29 a 1:43 | Volta o celular da cena 01. Agora **dois checks**. Chega um áudio. Play. A forma de onda anda. Corta para a Anaclaudia ouvindo a própria voz. | **áudio do produto**, depois **Sonora Anaclaudia** | O áudio toca na voz clonada dela. *(usar áudio real do produto, aprovado)*<br><br>**Pergunta:** *O que você sentiu ao ouvir sua própria voz respondendo alguém que você nunca vai conhecer?* |
 | **08** | 1:43 a 1:53 | Números em motion, um por vez, sobre grade de conversas desfocada. Base e período sempre no lettering. | **Narração Profissio** | Em quinze meses: dois milhões e trezentas mil mensagens. Uma em cada cinco, por áudio. Três de cada quatro voltaram na semana seguinte. |
 | **09** | 1:53 a 2:00 | Fade para os lockups, EITA e Profissio lado a lado, tokens da revisão 3. | **Narração Profissio** | A barreira nunca foi falta de interesse. É dar o primeiro passo. E ele cabe numa mensagem. |
 
 **Lettering por cena**, sempre em Sora 500, tracking -3,5%:
 
-- **02**: `Anaclaudia Zani · neurocientista e psicóloga · 20 anos de clínica`
-- **03**: `547 mil psicólogos no Brasil` · `R$ 200 a R$ 2.000 por sessão` · `30% dos trabalhadores com sintomas de burnout`
+- **02**: `Anaclaudia Zani · neurocientista e psicóloga · 20 anos de clínica` e, entrando depois da frase dela, o dado que a sustenta: `547 mil psicólogos no Brasil` · `R$ 200 a R$ 2.000 por sessão`
+- **03**: `30% dos trabalhadores com sintomas de burnout` · `app descontinuado em 2020`
 - **05**: `Clésio Souza · Profissio`
 - **06**: `01 Autolimitação` · `02 Sinalização de risco` · `03 Memória contínua` · e, discreto: `não diagnostica · não prescreve · não substitui terapia`
 - **08**: `2,3 mi de mensagens · jun/2025 a set/2026` · `19% em áudio (390 mil)` · `75,7% de retorno semanal · 473 de 625 pessoas, ago/2026` · `4.922 assinaturas · LTV 15,3 meses` · `64,6% mulheres`
@@ -55,7 +57,7 @@
 
 O documentário alterna **origem clínica** e **decisão técnica**, porque é essa alternância que prova a coautoria. Se só a Anaclaudia falasse, seria um filme sobre a EITA. Se só a Profissio falasse, seria um portfólio. As duas sonoras em cenas 02 e 05, uma de cada lado, é o que mostra que o produto nasceu do encontro.
 
-A cena 04 é o coração do case para o júri: **o pedido era difícil e contraintuitivo**. Uma IA que não concorda, que pergunta, que devolve a pessoa à racionalidade. Isso responde "originalidade" e "uso inovador" antes mesmo de a cena 06 listar as três escolhas.
+As cenas 04 e 05 são o coração do case para o júri, e funcionam em par. A **04 enuncia o desafio** na voz da Profissio: não um chatbot, mas uma inteligência que faz a pessoa se abrir, no canal que o brasileiro já tem aberto. A **05 revela o que isso custou em engenharia** na voz de quem construiu: uma IA que não diz o que o usuário quer ouvir, e sim o que a Anaclaudia diria. É a 05 que carrega o contraintuitivo, e ela ganha força justamente por vir depois da 04, como resposta.
 
 A cena 07 não é truque de narração, é registro: a voz clonada é uma capacidade do produto, e a reação da Anaclaudia ao ouvi-la é documentário puro.
 
@@ -63,9 +65,9 @@ A cena 07 não é truque de narração, é registro: a voz clonada é uma capaci
 
 | Critério | Cena | Como |
 |---|---|---|
-| Originalidade | 04, 05, 06 | O pedido contraintuitivo, dito pela cliente e pelo construtor, e a autolimitação explicada por quem decidiu |
+| Originalidade | 04, 05, 06 | O desafio enunciado na 04 e o contraintuitivo dito pelo construtor na 05: uma IA que não agrada, que responde como a especialista responderia |
 | Uso inovador da plataforma | 01, 07 | Áudio nativo como acessibilidade para quem está em crise e para quem tem dificuldade de leitura |
-| Potencial de inspirar | 04, 09 | A tese é transferível: reduzir a fricção entre a dor e a conversa |
+| Potencial de inspirar | 04, 09 | A tese é transferível: levar método especialista para o canal que a pessoa já usa, reduzindo a fricção entre a dor e a conversa |
 | Impacto | 08 | Números com base e período, retorno explicado em pessoas |
 
 ## Soluções oficiais do WhatsApp Business
@@ -78,7 +80,7 @@ Para a versão da inscrição, um **cartão de 3 s** depois da cena 09 listando 
 
 ## Cuidados que não são opcionais
 
-**Não escrever fala para pessoa real.** As sonoras saem da entrevista. Se na edição faltar uma frase, ela vira narração da Profissio, nunca legenda atribuída a quem não disse.
+**Fala escrita só vale quando vem de quem fala.** As sonoras das cenas 02 e 05 estão na tabela porque o cliente as entregou assim. Nada além disso é escrito para pessoa real: se na edição faltar uma frase, ela vira narração da Profissio, nunca legenda atribuída a quem não disse. E o que é dado técnico não entra na boca de ninguém, entra em GC.
 
 **Saúde mental é o assunto.** Os três "não" aparecem em lettering com tempo de tela na cena 06. A sinalização de risco é dita em uma frase, sem dramatizar: sem sirene, sem tela vermelha, sem a palavra "suicídio" no lettering. O formulário escrito já a nomeia para o júri.
 
@@ -116,7 +118,7 @@ Para a versão da inscrição, um **cartão de 3 s** depois da cena 09 listando 
 
 **Narração**: voz da Profissio, tom seco e baixo. Nada de locução publicitária. Master a **-14 LUFS**. Trilha ambiente mínima, saindo completamente embaixo das sonoras.
 
-**Ritmo medido, não estimado**: 167 palavras de narração em 73 s de fala, nenhuma cena acima de **2,45 palavras por segundo**, conferido por script sobre esta tabela. As sonoras ocupam 43 s e o silêncio de abertura ocupa 4 s. Na cena 01 a narração entra só depois do silêncio, então os 11 s de tela valem 7 s de fala.
+**Ritmo medido, não estimado**: 176 palavras de narração em 77 s de fala, nenhuma cena acima de **2,45 palavras por segundo**, conferido por `scripts/mede_ritmo.py` sobre esta tabela, com os números expandidos para a forma que a locução diz (“2017” vale quatro palavras, não uma). As sonoras ocupam 39 s (25 s nas cenas 02 e 05, mais os 14 s da cena 07 entre o áudio do produto e a reação) e o silêncio de abertura ocupa 4 s. Na cena 01 a narração entra só depois do silêncio, então os 11 s de tela valem 7 s de fala. As cenas 02 e 05 ficaram folgadas de propósito, a 1,9 e 2,0 palavra por segundo: sonora precisa de ar antes e depois, senão soa lida.
 
 ---
 
@@ -140,6 +142,6 @@ Para a versão da inscrição, um **cartão de 3 s** depois da cena 09 listando 
 
 ## O que este roteiro não decide
 
-- **Quem dá a sonora da Profissio.** Escrevi Clésio Souza porque é quem já aparece como face do estúdio no Drive e na operação. Se for outra pessoa, o roteiro não muda, só o lettering da cena 05.
+- **Quem dá a sonora da Profissio.** A fala da cena 05 veio pronta, mas o roteiro assume Clésio Souza em cena porque é quem já aparece como face do estúdio no Drive e na operação. Se for outra pessoa, o roteiro não muda, só o lettering da cena 05.
 - **Se a cena 04 usa bastidor real ou recriado.** Bastidor real é muito mais forte para o júri. Se não houver material, a cena vira motion de produto e perde um pouco.
 - **Se o cartão de soluções entra.** Recomendo só na versão da inscrição.

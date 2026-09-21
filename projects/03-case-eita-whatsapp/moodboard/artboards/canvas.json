@@ -1,0 +1,35 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-09-21T15:15:00Z" },
+  "title": "Moodboard · Case EITA no WhatsApp",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "designSystems": [],
+  "boards": {
+    "Main.dc.html":       { "x": 0,    "y": 0,    "w": 1440, "h": 900,  "title": "Capa" },
+    "Paleta.dc.html":     { "x": 1520, "y": 0,    "w": 1280, "h": 900,  "title": "Cor e superfície" },
+    "Lettering.dc.html":  { "x": 0,    "y": 1020, "w": 1440, "h": 1000, "title": "Lettering" },
+    "Fotografia.dc.html": { "x": 1520, "y": 1020, "w": 1280, "h": 1000, "title": "Fotografia" },
+    "Graficos.dc.html":   { "x": 0,    "y": 2140, "w": 1440, "h": 900,  "title": "Gráficos e UI" },
+    "Locucao.dc.html":    { "x": 1520, "y": 2140, "w": 1280, "h": 900,  "title": "Locução", "is_interactive": true },
+    "Motion.dc.html":     { "x": 0,    "y": 3160, "w": 2800, "h": 720,  "title": "Ritmo e linha do tempo" }
+  },
+  "order": [
+    "Main.dc.html",
+    "Paleta.dc.html",
+    "Lettering.dc.html",
+    "Fotografia.dc.html",
+    "Graficos.dc.html",
+    "Locucao.dc.html",
+    "Motion.dc.html"
+  ],
+  "notes": {
+    "titulo": {
+      "x": 0,
+      "y": -300,
+      "text": "Case EITA no WhatsApp · direção de arte",
+      "kind": "title1",
+      "maxW": 2800
+    }
+  }
+}

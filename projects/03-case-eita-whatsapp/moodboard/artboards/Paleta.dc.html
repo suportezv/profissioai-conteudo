@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Paleta e superfícies</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Sora';src:url('/_blob/bb11a3a02c9f3739315d3395de977277') format('truetype');font-weight:100 800;font-style:normal;font-display:swap}
+body{margin:0;font-family:'Sora',Arial,sans-serif;background:#101218}
+a{color:#2458F5}a:hover{color:#E1E9FF}
+</style>
+</helmet>
+<div style="width: 1280px; height: 900px; box-sizing: border-box; padding: 64px; background: #101218; color: #FFFFFF; display: flex; flex-direction: column; gap: 36px;">
+
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+    <div style="font-size: 15px; font-weight: 500; letter-spacing: 1.8px; text-transform: uppercase; color: #2458F5;">01 · Cor</div>
+    <h2 style="margin: 0; font-size: 44px; font-weight: 500; letter-spacing: -1.54px; line-height: 1.18;">O filme vive no escuro</h2>
+    <p style="margin: 0; max-width: 660px; font-size: 17px; line-height: 1.6; letter-spacing: -0.595px; color: #AAB3C4;">Superfície tinta em todo o filme. O azul não decora: ele só marca número, ênfase e o estado ativo. Cada cena tem no máximo um ponto de azul aceso.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;">
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="height: 96px; border-radius: 8px; background: #101218; border: 1px solid rgba(223,227,235,0.22);"></div>
+      <div style="font-size: 16px; font-weight: 500; letter-spacing: -0.56px;">ink</div>
+      <div style="font-size: 14px; color: #59616E;">#101218 · fundo do filme</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="height: 96px; border-radius: 8px; background: #2458F5;"></div>
+      <div style="font-size: 16px; font-weight: 500; letter-spacing: -0.56px;">blue</div>
+      <div style="font-size: 14px; color: #59616E;">#2458F5 · número e ênfase</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="height: 96px; border-radius: 8px; background: #57E3F2;"></div>
+      <div style="font-size: 16px; font-weight: 500; letter-spacing: -0.56px;">cyan</div>
+      <div style="font-size: 14px; color: #59616E;">#57E3F2 · dado e gráfico</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="height: 96px; border-radius: 8px; background: #AAB3C4;"></div>
+      <div style="font-size: 16px; font-weight: 500; letter-spacing: -0.56px;">apoio sobre escuro</div>
+      <div style="font-size: 14px; color: #59616E;">#AAB3C4 · lettering secundário</div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 16px;">
+    <div style="font-size: 15px; font-weight: 500; letter-spacing: 1.8px; text-transform: uppercase; color: #2458F5;">Os três modos de superfície</div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;">
+      <div style="background: #101218; border: 1px solid rgba(223,227,235,0.22); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 8px; min-height: 150px;">
+        <div style="font-size: 26px; font-weight: 500; letter-spacing: -0.91px; color: #FFFFFF;">Escuro</div>
+        <div style="font-size: 15px; color: #AAB3C4; line-height: 1.55;">Todo o documentário. Cenas 01, 03, 04, 06, 08, 09.</div>
+      </div>
+      <div style="background: #F4F6F9; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 8px; min-height: 150px;">
+        <div style="font-size: 26px; font-weight: 500; letter-spacing: -0.91px; color: #101218;">Claro</div>
+        <div style="font-size: 15px; color: #59616E; line-height: 1.55;">Só a UI do produto, quando ela aparece como é.</div>
+      </div>
+      <div style="background: #2458F5; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 8px; min-height: 150px;">
+        <div style="font-size: 26px; font-weight: 500; letter-spacing: -0.91px; color: #FFFFFF;">Azul</div>
+        <div style="font-size: 15px; color: #E1E9FF; line-height: 1.55;">Um único quadro, no fecho da cena 09. Não repetir.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: auto; border-top: 1px solid rgba(223,227,235,0.16); padding-top: 20px; display: flex; gap: 48px;">
+    <div style="flex-grow: 1;">
+      <div style="font-size: 13px; letter-spacing: 1.4px; text-transform: uppercase; color: #59616E; margin-bottom: 8px;">Aposentado na revisão 3</div>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <span style="width: 22px; height: 22px; border-radius: 4px; background: #E255A0; opacity: 0.45;"></span>
+        <span style="width: 22px; height: 22px; border-radius: 4px; background: #6B3CB8; opacity: 0.45;"></span>
+        <span style="font-size: 15px; color: #59616E;">rosa, violeta e o gradiente aurora não entram nesta peça</span>
+      </div>
+    </div>
+    <div style="width: 300px;">
+      <div style="font-size: 13px; letter-spacing: 1.4px; text-transform: uppercase; color: #59616E; margin-bottom: 8px;">Grade</div>
+      <div style="font-size: 15px; color: #AAB3C4; line-height: 1.55;">Margem 72px · raio 8 / 20 / 32 · régua sempre 1px</div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
