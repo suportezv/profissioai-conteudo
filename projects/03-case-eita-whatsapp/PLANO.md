@@ -76,6 +76,42 @@ já com a faixa de cor corrigida.
 faixa cheia; player e editor esperam faixa de TV. `scripts/corrige_faixa.sh`
 converte e **confere o resultado**, em vez de confiar no comando.
 
+### Corte de montagem, com lacunas — **feito**
+
+`CaseEitaCompleto` no Remotion junta tudo que existe e **ocupa com cartão de
+lacuna o que falta**, no tempo que a cena vai ter. Serve para julgar o filme
+antes da captação: se o ritmo não funciona aqui, não vai funcionar depois.
+
+| Entra em | Trecho | Duração | Estado |
+|---|---|---|---|
+| 0:00 | 01 · o campo digitando, nunca enviado | 8,0 s | **pronto** |
+| 0:08 | 02 · sonora Anaclaudia | 13,0 s | lacuna |
+| 0:21 | 03 · a tentativa de 2017 | 14,0 s | **pronto** |
+| 0:35 | 04 · o desafio | 17,5 s | lacuna de imagem, **locução pronta e tocando** |
+| 0:52 | 05 · sonora Clésio | 12,0 s | lacuna |
+| 1:04 | 06 · as três escolhas | 16,5 s | **pronto** |
+| 1:21 | 07 · dois checks e o áudio | 8,0 s | **pronto** |
+| 1:29 | 07 · sonora, a reação | 5,0 s | lacuna |
+| 1:34 | 08 · os números | 11,5 s | **pronto** |
+| 1:45 | 09 · a tese e a assinatura | 7,5 s | **pronto** |
+| | **total** | **1:53** | |
+
+**O corte dá 1:53, não 2:00, e a diferença é real, não arredondamento.** Duas
+causas: a locução saiu 17% mais curta que a estimativa do roteiro, e a cena 01
+tem os **8 s do clipe do Veo**, não os 11 s da tabela (o modelo não passa de 8 s
+por clipe). Os 7 s que faltam vão aparecer sozinhos quando as sonoras reais
+entrarem, porque gente falando raramente cabe no tempo que alguém previu. Se
+sobrar, o lugar de gastar é respiro antes e depois de cada sonora, não cena
+nova.
+
+**Se for preciso fechar 2:00 sem as sonoras**, o caminho barato é a cena 01: o
+plano pode rodar a 0,73x e virar 11 s sem tocar no motion, que é independente
+do vídeo. Fica mais lento, o que ajuda a cena. Não fiz porque a 01 está
+aprovada como está.
+
+**O corte não tem trilha nem mixagem.** Só a locução, no volume em que saiu. O
+master a -14 LUFS é o último passo, depois das sonoras.
+
 ### Bloco 3 · Pedidos externos, disparados em paralelo com o bloco 2
 
 Não bloqueiam nada dos blocos 1 e 2, mas têm o prazo mais longo, então saem no
