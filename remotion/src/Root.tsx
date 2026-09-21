@@ -5,6 +5,7 @@ import { Hero } from "./Hero";
 import { Cena01, CENA01_FRAMES } from "./Cena01";
 import { Cena03, CENA03_FRAMES } from "./Cena03";
 import { Cena04, CENA04_FRAMES } from "./Cena04";
+import { Sonora } from "./Sonora";
 import { Cena06, CENA06_FRAMES } from "./Cena06";
 import { Cena07, CENA07_FRAMES } from "./Cena07";
 import { Cena08, CENA08_FRAMES } from "./Cena08";
@@ -51,6 +52,23 @@ export const RemotionRoot: React.FC = () => (
       fps={30}
       width={1920}
       height={1080}
+    />
+    {/* a sonora existe como composicao propria so para conferir o GC sobre o
+        plano sem renderizar o filme inteiro */}
+    <Composition
+      id="CaseEitaSonora07"
+      component={Sonora}
+      durationInFrames={234}
+      fps={30}
+      width={1920}
+      height={1080}
+      defaultProps={{
+        arquivo: "ana-ouvindo.mp4",
+        nome: "Anaclaudia Zani",
+        papel: "psicóloga · criadora da EITA",
+        gcEm: 2.8,
+        gcDura: 3.6,
+      }}
     />
     <Composition
       id="CaseEitaCena06"

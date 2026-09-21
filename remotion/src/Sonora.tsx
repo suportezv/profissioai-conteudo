@@ -13,6 +13,14 @@ import { janela, entra, s } from "./anim";
  * O filete e azul porque na peca a marca e quem apresenta quem fala. Sobre
  * imagem filmada o texto e branco com sombra curta, nunca caixa cheia: caixa
  * preta sobre rosto e legenda de telejornal, e o filme nao e isso.
+ *
+ * **Mas sombra sozinha nao garante leitura.** A linha de apoio, no cinza
+ * #AAB3C4, sumiu sobre uma janela clara no fundo do plano: cinza claro sobre
+ * claro nao le, por mais sombra que tenha. Entrou um veu no canto inferior
+ * esquerdo, que aparece e some junto com o GC. Ele fica aqui, no componente, e
+ * nao na cena, porque as sonoras que ainda vao ser captadas vao usar este
+ * mesmo GC sobre planos que ninguem viu: a legibilidade tem que ser do
+ * componente, nao da sorte do enquadramento.
  */
 export const Sonora: React.FC<{
   arquivo: string;
@@ -32,6 +40,16 @@ export const Sonora: React.FC<{
         src={staticFile("broll/" + arquivo)}
         style={{ width: "100%", height: "100%", objectFit: "cover" }}
       />
+
+      {gc > 0.001 ? (
+        <AbsoluteFill
+          style={{
+            opacity: gc,
+            background:
+              "linear-gradient(to top right, rgba(16,18,24,0.62) 0%, rgba(16,18,24,0.28) 26%, rgba(16,18,24,0) 52%)",
+          }}
+        />
+      ) : null}
 
       {gc > 0.001 ? (
         <div
