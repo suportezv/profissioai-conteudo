@@ -13,8 +13,9 @@ import { janela, passo, s } from "./anim";
 /**
  * Cena 07 do case: a mesma conversa, agora respondida.
  *
- * 8 s de motion sobre plano filmado. Os 5 s restantes da cena sao a sonora da
- * Anaclaudia ouvindo a propria voz, que e material captado e entra na montagem.
+ * 8 s de motion sobre plano filmado, no mesmo quarto escuro da cena 01. Os 5 s
+ * restantes da cena sao a sonora da Anaclaudia ouvindo a propria voz, que e
+ * material captado e entra na montagem.
  *
  * A cena inteira existe para uma virada: na 01 a pessoa escreve, apaga, escreve
  * de novo e **nao envia**. Aqui o mesmo rascunho aparece enviado, com dois
@@ -35,7 +36,8 @@ export const CENA07_FRAMES = s(8);
  * mandou e foi respondida. Trocar esta string sem trocar a da 01 quebra isso.
  */
 const FRASE = "não sei mais o que fazer";
-const ANCORA: Ancora = { x: 1342, y: 830 };
+/** Ancora do plano do quarto escuro, medida no frame do clipe. */
+const ANCORA: Ancora = { x: 1060, y: 545 };
 
 // marcas de tempo, em frames
 const LEVANTA_INI = s(0.3);
@@ -164,14 +166,14 @@ export const Cena07: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: "#000" }}>
       <OffthreadVideo
-        src={staticFile("broll/mood-07-audio-maos.mp4")}
+        src={staticFile("broll/mood-01-abertura.mp4")}
         muted
         style={{ width: "100%", height: "100%", objectFit: "cover" }}
       />
       <AbsoluteFill
         style={{
           background:
-            "radial-gradient(1500px 1000px at 52% 52%, transparent 40%, rgba(0,0,0,0.70) 100%)",
+            "radial-gradient(1500px 1000px at 58% 54%, transparent 40%, rgba(0,0,0,0.72) 100%)",
         }}
       />
 
@@ -183,7 +185,7 @@ export const Cena07: React.FC = () => {
       <div style={{ opacity: 1 - recuo * 0.38 }}>
         <Balao3D
           levanta={levanta}
-          ancora={{ x: ANCORA.x - 40, y: ANCORA.y - recuo * 150 }}
+          ancora={{ x: ANCORA.x + 30, y: ANCORA.y - recuo * 150 }}
           deriva={deriva}
           opacidade={passo(f, 0, 8)}
         >
@@ -195,7 +197,7 @@ export const Cena07: React.FC = () => {
       {audio > 0.001 ? (
         <Balao3D
           levanta={audio}
-          ancora={{ x: ANCORA.x - 230, y: ANCORA.y + 130 }}
+          ancora={{ x: ANCORA.x - 150, y: ANCORA.y + 150 }}
           deriva={deriva}
           opacidade={passo(f, AUDIO_CHEGA, AUDIO_CHEGA + 8)}
         >

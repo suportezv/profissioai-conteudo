@@ -14,9 +14,10 @@ import { montaDigitacao, textoEm, type Rascunho } from "./digitacao";
 /**
  * Cena 01 do case: a mensagem que nunca e enviada.
  *
- * 8 s sobre plano filmado. Alguem na cama, no escuro, escreve um desabafo,
- * hesita, **apaga**, escreve outro, apaga, escreve um terceiro e para. O campo
- * fica ali com o cursor piscando. Nada e enviado, e ninguem responde.
+ * 8 s sobre plano filmado. Alguem com o celular na mao, luz de abajur, escreve
+ * um desabafo, hesita, **apaga**, escreve outro, apaga, escreve um terceiro e
+ * para. O campo fica ali com o cursor piscando. Nada e enviado, e ninguem
+ * responde.
  *
  * E uma troca de conceito, nao de acabamento. A versao anterior mandava a
  * mensagem e ela ficava com um check: dizia "escreveu e nao foi entregue".
@@ -32,8 +33,14 @@ import { montaDigitacao, textoEm, type Rascunho } from "./digitacao";
 
 export const CENA01_FRAMES = s(8);
 
-/** Onde o display esta no quadro, medido no frame do clipe. */
-const ANCORA: Ancora = { x: 1060, y: 545 };
+/**
+ * Onde o display esta no quadro, medido no frame do clipe.
+ *
+ * O celular deste plano fica embaixo e a direita. O x recua do centro do
+ * display (1342) para 1180 porque o campo tem ~1050 px: ancorado no display
+ * ele encostaria na borda direita. Conferido com `scripts/confere_margem.py`.
+ */
+const ANCORA: Ancora = { x: 1180, y: 830 };
 
 const LEVANTA_INI = s(0.1);
 const LEVANTA_FIM = s(0.9);
@@ -117,7 +124,7 @@ export const Cena01: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: "#000" }}>
       <OffthreadVideo
-        src={staticFile("broll/mood-01-abertura.mp4")}
+        src={staticFile("broll/mood-07-audio-maos.mp4")}
         muted
         style={{ width: "100%", height: "100%", objectFit: "cover" }}
       />
@@ -126,7 +133,7 @@ export const Cena01: React.FC = () => {
       <AbsoluteFill
         style={{
           background:
-            "radial-gradient(1500px 1000px at 58% 54%, transparent 40%, rgba(0,0,0,0.74) 100%)",
+            "radial-gradient(1500px 1000px at 52% 52%, transparent 40%, rgba(0,0,0,0.72) 100%)",
         }}
       />
 
