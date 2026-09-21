@@ -1,115 +1,138 @@
-# Roteiro · Case EITA para a premiação do WhatsApp
+# Roteiro · Case Profissio sobre a EITA · premiação do WhatsApp
 
-**Duração: 2:00.** Formato base 16:9 para a inscrição e para o site; cortes verticais para redes no fim deste documento.
+**Duração: 2:00.** 16:9 para a inscrição e para o site; cortes verticais no fim deste documento.
 
-**Categoria**: Uso Criativo de WhatsApp. **Anunciante**: EITA Mentora Virtual. **Coautoria**: Profissio.
+**Categoria**: Uso Criativo de WhatsApp. **Anunciante no formulário**: EITA Mentora Virtual. **Coautoria**: Profissio.
 
-**O que o júri avalia**: originalidade, uso inovador da plataforma, potencial de inspirar o mercado, impacto. O roteiro foi construído para que cada critério tenha uma cena que o responde, sem o vídeo virar checklist.
+**O que este vídeo é**: um **case documentário da Profissio** contando como construiu a EITA junto com a Anaclaudia Zani. Bastidor, não anúncio. Quem narra é a Profissio, em primeira pessoa, porque foi quem fez.
+
+**O que este vídeo não é**: uma peça de marca da EITA. A EITA é o assunto e a cliente, não a narradora.
 
 ---
 
-## A tese em uma frase
+## A tese
 
-> A barreira para o cuidado emocional no Brasil não é falta de interesse. É dar o primeiro passo. E o primeiro passo cabe numa mensagem.
+> A gente não foi contratado para fazer um chatbot. Foi para transformar vinte anos de consultório em algo que coubesse numa mensagem.
 
-Tudo no vídeo serve a isso. Ele abre com uma mensagem sem resposta e fecha com a mesma mensagem respondida.
+## Quem fala, e por quê
 
-## O dispositivo
+| Voz | Papel | Quanto |
+|---|---|---|
+| **Narração Profissio** | conduz o documentário, em primeira pessoa do plural | 167 palavras, 73 s de fala |
+| **Sonora Anaclaudia Zani** | a origem clínica: por que existe, o que não podia acontecer | 2 entradas, 29 s |
+| **Sonora Profissio** (Clésio Souza) | a decisão de engenharia difícil, o bastidor técnico | 1 entrada, 14 s |
 
-**A narração é a voz da Anaclaudia.** Não uma locutora falando sobre ela: a própria, ou o clone dela. E o vídeo só revela no minuto 1:27 que a voz que acompanhou o espectador desde o começo é a mesma que responde as usuárias no WhatsApp.
-
-É o case demonstrando a si mesmo. Para o júri, é a diferença entre *ouvir falar* da inovação e *senti-la*.
-
-> Isso exige aprovação da Anaclaudia e da EITA, e vale checar se a voz clonada pode ser usada em peça pública fora do produto. Se não puder: a Anaclaudia narra ao vivo e a cena 07 usa um áudio real do produto, com consentimento da usuária e anonimizado. O roteiro funciona nos dois casos.
+**As sonoras não estão escritas aqui de propósito.** Colocar fala na boca de pessoa real é ficção, não documentário. O que está abaixo é **a pergunta que puxa aquela resposta** e o território que a edição precisa cobrir. O texto final sai da entrevista.
 
 ---
 
 ## Roteiro cena a cena
 
-Tempo de fala calibrado para ritmo pausado: nenhuma cena passa de 2,5 palavras por segundo, medido. Narração total: 265 palavras.
-
-| # | Tempo | Vídeo | Lettering | Off |
+| # | Tempo | Vídeo | Quem fala | Conteúdo |
 |---|---|---|---|---|
-| **01** | 0:00 a 0:07 | Tela escura. Um celular acende. WhatsApp, 23:47. Alguém digita **não tô bem**. Envia. A mensagem fica lá, com um só check. | nenhum | *(silêncio: só o teclado e o som do envio)* |
-| **02** | 0:07 a 0:20 | Corte para fundo limpo. Três números sobem na tela, um por vez, enquanto a mensagem do celular fica pequena no canto, ainda sem resposta. | **547 mil** psicólogos no Brasil · **R$ 200 a R$ 2.000** por sessão · **30%** dos trabalhadores com sintomas de burnout | 547 mil psicólogos. Sessões de duzentos a dois mil reais. Trinta por cento dos trabalhadores com burnout. A maioria nunca busca ajuda. Falta acesso, e falta saber nomear o que se sente. |
-| **03** | 0:20 a 0:36 | Anaclaudia no consultório, olhando para a câmera, sem falar. Corta para uma tela antiga do app de 2017. Corta de volta para ela, hoje. | **Anaclaudia Zani** · neurocientista e psicóloga · 20 anos de clínica | Anaclaudia Zani via esse vazio de perto. Em 2017 tentou levar sua metodologia para fora do consultório: um app que dependia de psicólogos catalogando sentimentos à mão. Não sobreviveu à pandemia. Em 2025 ela voltou, cem por cento automatizada. |
-| **04** | 0:36 a 0:50 | Tela dividida. À esquerda, uma IA genérica recebe um desabafo e responde com um parágrafo de conselho. À direita, a EITA responde com **uma pergunta**. As duas conversas são recriadas, nunca reais. | **EITA** · Elevar a Inteligência a Treino de Autopercepção<br><br>Não diagnostica · Não prescreve · Não substitui terapia | A EITA não aceita o que você diz e segue. Ela pergunta. São as perguntas da metodologia clínica da Anaclaudia, que tiram a pessoa do piloto automático. Sem diagnosticar. Sem prescrever. Sem substituir a terapia. |
-| **05** | 0:50 a 1:05 | Mãos com o celular em lugares comuns: o ônibus, a pia da cozinha, o banheiro do trabalho. Numa delas, a pessoa segura o microfone e grava um áudio em vez de digitar. | Sem download · Sem cadastro · **Áudio nativo do WhatsApp** | Ela vive onde o brasileiro já está: no WhatsApp. Sem baixar nada, sem cadastro. E quando digitar é difícil, na crise, ou quando ler é a barreira, a pessoa grava um áudio. A resposta chega em segundos. |
-| **06** | 1:05 a 1:27 | Três cartões, um de cada vez, sobre prints recriados de conversa. Cada cartão nasce da conversa e volta para ela. | **01 Autolimitação**<br>quando percebe uso excessivo, reduz o próprio acesso<br><br>**02 Sinalização de risco**<br>um segundo modelo aciona um time de especialistas<br><br>**03 Memória contínua**<br>cada conversa retoma de onde parou | Três escolhas na contramão do mercado. Quando percebe uso excessivo, a EITA reduz o próprio acesso: o objetivo é autonomia, não dependência. Quando a conversa aponta risco, um segundo modelo aciona um time de especialistas. E cada conversa retoma de onde parou. Quem sofre não deveria ter que se explicar de novo. |
-| **07** | 1:27 a 1:35 | **A revelação.** Volta o celular da cena 01. A mensagem **não tô bem** agora tem dois checks. Chega um áudio. Play. A forma de onda anda. É a mesma voz que narrava. | A resposta chega na voz da própria Anaclaudia. | *(a voz clonada, saindo do celular)* Eu tô aqui. Vamos com calma. O que aconteceu hoje? |
-| **08** | 1:35 a 1:50 | Números em motion sobre uma grade de conversas desfocadas. Um número por vez, com a base embaixo, pequena. | **2,3 milhões** de mensagens desde jun/2025<br>**19%** em áudio (390 mil)<br>**75,7%** de retorno semanal (473 de 625 pessoas, ago/2026)<br>**4.922** assinaturas · LTV **15,3 meses**<br>**64,6%** mulheres<br>**R$ 1 milhão** captados em rodada anjo | Desde junho de 2025: dois milhões e trezentas mil mensagens. Uma em cada cinco, por áudio. Em agosto, de cada quatro pessoas que conversaram numa semana, três voltaram na seguinte. Quase cinco mil assinaturas. Dois terços, mulheres. |
-| **09** | 1:50 a 2:00 | O celular do início, agora com a conversa em andamento, rolando. Fade para os lockups: EITA Mentora Virtual e Profissio, lado a lado. | **EITA Mentora Virtual** · com **Profissio**<br>Agente de IA no WhatsApp Business | A barreira para o cuidado emocional não é falta de interesse. É dar o primeiro passo. E o primeiro passo cabe numa mensagem. |
+| **01** | 0:00 a 0:11 | Close da tela no escuro. 23:47. Alguém digita **não tô bem**, envia. Fica com **um check**. Nada acontece. | ninguém, depois narração entra baixa | *(4 s de silêncio: só o teclado e o envio)*<br><br>**Narração:** Todo dia, milhares de brasileiros escrevem uma mensagem assim. E a maioria nunca manda pra ninguém. |
+| **02** | 0:11 a 0:26 | Corte seco para a Anaclaudia, consultório, luz natural. Plano médio. Sem lettering em cima dela nos primeiros 3 s. | **Sonora Anaclaudia** | **Pergunta:** *Por que você quis levar sua metodologia para fora do consultório?*<br><br>Território: 547 mil psicólogos no Brasil, sessão de R$ 200 a R$ 2.000, e as mulheres que ela atendia sabendo que nunca teriam acesso. O que ela via na clínica. |
+| **03** | 0:26 a 0:40 | Tela antiga do app de 2017 em arquivo. Depois, os números sobem em motion sobre fundo escuro Profissio. | **Narração Profissio** | Ela já tinha tentado em 2017, antes da IA generativa existir. Um app que dependia de psicólogos catalogando sentimentos à mão. Não sobreviveu à pandemia. Em 2025 ela voltou, com outra conversa. |
+| **04** | 0:40 a 0:57 | Bastidor: tela de código, o painel do agente sendo configurado, pessoas da Profissio trabalhando. Ritmo seco, sem música épica. | **Narração Profissio** | O pedido não era um assistente que responde bem. Era o contrário: uma IA que **não** aceita o que a pessoa diz e segue. Que pergunta. Isso não se resolve com prompt, se resolve com metodologia clínica no produto. |
+| **05** | 0:57 a 1:11 | Clésio, ambiente de trabalho da Profissio, plano médio. Mesma linguagem visual da sonora da Anaclaudia. | **Sonora Profissio** | **Pergunta:** *Qual foi a decisão mais difícil desse projeto, e por que ela vai contra o que o mercado faz?*<br><br>Território: a autolimitação. Construir um produto que, ao perceber uso excessivo, **reduz o próprio acesso**. Vai contra toda a lógica de engajamento. Por que aceitaram. |
+| **06** | 1:11 a 1:29 | Três cartões em motion sobre prints recriados de conversa. Tokens Profissio: superfície `#101218`, Sora 500, azul `#2458F5` no número. | **Narração Profissio** | Três escolhas entraram no produto, e nenhuma veio de boa prática de mercado. A autolimitação. Um segundo modelo que lê risco e aciona um time de especialistas. E memória contínua, porque quem sofre não deveria se explicar de novo. |
+| **07** | 1:29 a 1:43 | Volta o celular da cena 01. Agora **dois checks**. Chega um áudio. Play. A forma de onda anda. Corta para a Anaclaudia ouvindo a própria voz. | **áudio do produto**, depois **Sonora Anaclaudia** | O áudio toca na voz clonada dela. *(usar áudio real do produto, aprovado)*<br><br>**Pergunta:** *O que você sentiu ao ouvir sua própria voz respondendo alguém que você nunca vai conhecer?* |
+| **08** | 1:43 a 1:53 | Números em motion, um por vez, sobre grade de conversas desfocada. Base e período sempre no lettering. | **Narração Profissio** | Em quinze meses: dois milhões e trezentas mil mensagens. Uma em cada cinco, por áudio. Três de cada quatro voltaram na semana seguinte. |
+| **09** | 1:53 a 2:00 | Fade para os lockups, EITA e Profissio lado a lado, tokens da revisão 3. | **Narração Profissio** | A barreira nunca foi falta de interesse. É dar o primeiro passo. E ele cabe numa mensagem. |
+
+**Lettering por cena**, sempre em Sora 500, tracking -3,5%:
+
+- **02**: `Anaclaudia Zani · neurocientista e psicóloga · 20 anos de clínica`
+- **03**: `547 mil psicólogos no Brasil` · `R$ 200 a R$ 2.000 por sessão` · `30% dos trabalhadores com sintomas de burnout`
+- **05**: `Clésio Souza · Profissio`
+- **06**: `01 Autolimitação` · `02 Sinalização de risco` · `03 Memória contínua` · e, discreto: `não diagnostica · não prescreve · não substitui terapia`
+- **08**: `2,3 mi de mensagens · jun/2025 a set/2026` · `19% em áudio (390 mil)` · `75,7% de retorno semanal · 473 de 625 pessoas, ago/2026` · `4.922 assinaturas · LTV 15,3 meses` · `64,6% mulheres`
+- **09**: `EITA Mentora Virtual` · `construído com Profissio` · `Agente de IA no WhatsApp Business`
 
 ---
+
+## Por que a estrutura é essa
+
+O documentário alterna **origem clínica** e **decisão técnica**, porque é essa alternância que prova a coautoria. Se só a Anaclaudia falasse, seria um filme sobre a EITA. Se só a Profissio falasse, seria um portfólio. As duas sonoras em cenas 02 e 05, uma de cada lado, é o que mostra que o produto nasceu do encontro.
+
+A cena 04 é o coração do case para o júri: **o pedido era difícil e contraintuitivo**. Uma IA que não concorda, que pergunta, que devolve a pessoa à racionalidade. Isso responde "originalidade" e "uso inovador" antes mesmo de a cena 06 listar as três escolhas.
+
+A cena 07 não é truque de narração, é registro: a voz clonada é uma capacidade do produto, e a reação da Anaclaudia ao ouvi-la é documentário puro.
 
 ## Onde cada critério do júri é respondido
 
 | Critério | Cena | Como |
 |---|---|---|
-| Originalidade | 06, 07 | A autolimitação é o argumento mais forte do case: um produto que se restringe de propósito. A revelação da voz é o que faz o júri lembrar do vídeo |
-| Uso inovador da plataforma | 05, 07 | Áudio nativo como acessibilidade, não como conveniência: para quem está em crise e para quem tem dificuldade de leitura |
-| Potencial de inspirar | 04, 09 | A tese final é transferível para qualquer negócio: reduzir a fricção entre a dor e a conversa |
-| Impacto | 08 | Números com base e período. O retorno semanal explicado em pessoas, não só em porcentagem |
+| Originalidade | 04, 05, 06 | O pedido contraintuitivo, dito pela cliente e pelo construtor, e a autolimitação explicada por quem decidiu |
+| Uso inovador da plataforma | 01, 07 | Áudio nativo como acessibilidade para quem está em crise e para quem tem dificuldade de leitura |
+| Potencial de inspirar | 04, 09 | A tese é transferível: reduzir a fricção entre a dor e a conversa |
+| Impacto | 08 | Números com base e período, retorno explicado em pessoas |
 
-## Soluções oficiais do WhatsApp Business, como aparecem
+## Soluções oficiais do WhatsApp Business
 
-O júri exige soluções oficiais. Elas aparecem no vídeo assim, sem virar lista:
+Aparecem no filme sem virar lista: **Agente de IA** (04, 06, 07), **áudio nativo** (01, 07), **template de utilidade** e **landing page como ponto de entrada** num quadro de 2 s dentro da cena 03, mostrando a jornada `landing page → plano → template abre a conversa → 21 dias de onboarding`. **CTWA e mensagens de marketing** ficam só no formulário escrito.
 
-- **Agente de IA**: a EITA inteira (cenas 04, 06, 07).
-- **Mensagens de utilidade, template**: é o que abre a conversa após o pagamento. Aparece como um quadro de 2 segundos dentro da cena 05, mostrando a jornada: landing page → plano → **template abre a conversa** → 21 dias de e-mails de onboarding.
-- **Áudio nativo**: cenas 05 e 07.
-- **Landing page como ponto de entrada**: o mesmo quadro da cena 05.
-- **CTWA e mensagens de marketing**: fora do vídeo, por tempo. Ficam no formulário escrito, onde já estão.
-
-Se a produção quiser reforçar isso para o júri, um **cartão final de 3 segundos** depois da cena 09, listando as cinco soluções, resolve sem pesar o filme. Recomendo só na versão da inscrição, não na do site.
+Para a versão da inscrição, um **cartão de 3 s** depois da cena 09 listando as cinco soluções. No site e nas redes, não entra.
 
 ---
 
 ## Cuidados que não são opcionais
 
-**Saúde mental é o assunto.** O vídeo nunca pode parecer que a EITA trata, cura ou substitui alguém. Por isso a cena 04 tem os três "não" em lettering, com tempo de tela, e não escondidos em nota de rodapé. A sinalização de risco na cena 06 é dita em uma frase, sem dramatizar: sem sirene, sem tela vermelha, sem a palavra "suicídio" no lettering. O case escrito já a nomeia para o júri; o vídeo não precisa.
+**Não escrever fala para pessoa real.** As sonoras saem da entrevista. Se na edição faltar uma frase, ela vira narração da Profissio, nunca legenda atribuída a quem não disse.
 
-**Nenhuma conversa real na tela.** Todas as mensagens são recriadas. As da cena 04 e 06 são ilustrativas; a da cena 01 e 07 (**não tô bem**) é a única frase que o espectador lê inteira, e é curta de propósito. A "grade de conversas" da cena 08 é desfocada a ponto de ser textura.
+**Saúde mental é o assunto.** Os três "não" aparecem em lettering com tempo de tela na cena 06. A sinalização de risco é dita em uma frase, sem dramatizar: sem sirene, sem tela vermelha, sem a palavra "suicídio" no lettering. O formulário escrito já a nomeia para o júri.
 
-**A fala do clone na cena 07 é texto sugerido.** Precisa de aprovação da Anaclaudia. Se preferirem usar um áudio real do produto, precisa de consentimento explícito da usuária e anonimização, e vale conferir isso com quem cuida de LGPD na EITA, que o case já cita.
+**Nenhuma conversa real na tela.** Todas recriadas em motion. A frase **não tô bem** é a única que o espectador lê inteira. A grade da cena 08 é desfocada a ponto de ser textura.
 
-**Os números são os do case, sem arredondar para cima.** No off eu aproximo para caber na fala ("três em cada quatro", "quase cinco mil"), mas o lettering traz o valor exato com base e período, que é o que o `Comunicacao_Profissio.md` exige e o que o júri vai conferir contra o formulário.
+**O áudio da cena 07 precisa de aprovação.** Se for áudio real do produto, exige consentimento e anonimização, e vale passar por quem cuida de LGPD na EITA, que o case já cita.
+
+**Números sem arredondar para cima.** A narração aproxima para caber na fala; o lettering traz o valor exato com base e período, que é o que o `Comunicacao_Profissio.md` exige e o que o júri confere contra o formulário.
+
+**Crédito na ordem certa.** No formulário a anunciante é a EITA. No vídeo, a Profissio narra como construtora e assina como coautora. Em nenhum momento a peça pode sugerir que a Profissio é a dona do produto.
 
 ---
 
 ## Identidade visual
 
-O corpo do vídeo é da **EITA**: é o case dela e ela é a anunciante. Este estúdio não tem o kit de identidade da EITA, e a memória proíbe inventar. **Pedir o kit à equipe da EITA antes de produzir.**
+**Do documentário: Profissio, revisão 3.** Superfície `#101218`, Sora peso 500, tracking -3,5%, azul `#2458F5` só em número e ênfase, alinhamento à esquerda. É a Profissio contando, então a gramática é dela.
 
-A **Profissio** entra na cena 09 e no cartão final, nos tokens da revisão 3: superfície `#101218`, Sora peso 500, azul `#2458F5` só no lockup. Nada de disputar protagonismo com a EITA no filme dela.
+**Do material mostrado: o que é.** A tela de WhatsApp é a tela de WhatsApp. O produto aparece como é, sem reestilizar. Não confundir a moldura do documentário com o conteúdo que ele documenta.
 
-## Produção: o que precisa existir
+**Logo da EITA**: só no lockup da cena 09 e onde o produto naturalmente o exibe. Pedir o arquivo à EITA.
 
-| Asset | Cena | Quem fornece |
+## Produção
+
+| Asset | Cena | Situação |
 |---|---|---|
-| Anaclaudia em consultório, olhar para câmera, 20 s de bruto | 03 | captação nova |
+| Sonora Anaclaudia, 2 entradas | 02, 07 | **captar** · entrevista, consultório, luz natural |
+| Sonora Clésio, 1 entrada | 05 | **captar** · pode reaproveitar o material de `Vídeos Clésio` no Drive, se o enquadramento servir |
+| Bastidor Profissio: código, painel do agente, equipe | 04 | **captar** · ou usar `Gravações Base` do Drive |
 | Print ou vídeo do app de 2017 | 03 | arquivo da EITA |
-| Áudio na voz clonada com a fala aprovada | 07 | EITA, via o próprio produto |
-| Mãos com celular em 3 ambientes | 05 | captação nova ou banco |
-| Conversas recriadas para prints | 01, 04, 06, 07 | montar em motion, nunca capturar do app |
-| Kit de identidade da EITA | tudo | EITA |
+| Áudio real do produto na voz clonada | 07 | EITA, com aprovação |
+| Tela de WhatsApp recriada | 01, 06, 07 | **pronta**: composição `CaseEitaCena01` no Remotion |
+| Cartões e números em motion | 03, 06, 08 | Remotion, tokens rev. 3 |
 | Lockup Profissio rev. 3 | 09 | `marca/` neste repo |
+| Logo EITA | 09 | pedir à EITA |
 
-Narração: se for a Anaclaudia ao vivo, gravar em estúdio com a fala pausada; as 265 palavras cabem em 1:53 de fala com folga para as pausas das cenas 01 e 07. Master a **-14 LUFS**. Trilha ambiente comedida, sem crescendo na cena 06.
+**Narração**: voz da Profissio, tom seco e baixo. Nada de locução publicitária. Master a **-14 LUFS**. Trilha ambiente mínima, saindo completamente embaixo das sonoras.
+
+**Ritmo medido, não estimado**: 167 palavras de narração em 73 s de fala, nenhuma cena acima de **2,45 palavras por segundo**, conferido por script sobre esta tabela. As sonoras ocupam 43 s e o silêncio de abertura ocupa 4 s. Na cena 01 a narração entra só depois do silêncio, então os 11 s de tela valem 7 s de fala.
 
 ---
 
 ## Versões para redes
 
-O roteiro base tem cortes naturais. Nenhuma versão curta precisa de gravação extra.
+**Vertical 60 s**: cenas 01, 05, 06, 07, 09. Abre no problema, vai direto para a decisão difícil dita pelo Clésio, as três escolhas, a voz, e fecha. É o corte que mais serve ao Instagram da Profissio, porque a sonora do construtor é o que diferencia de um vídeo de produto.
 
-**Vertical 60 s** (Reels, feed Profissio): cenas 01, 04, 06, 07, 09. Pula o contexto de mercado e a origem; vai direto de "não tô bem" para as três escolhas e a revelação. Fecha na tese.
+**Vertical 30 s**: cenas 01, 07, 09. A mensagem sem resposta, a voz que responde, a tese.
 
-**Vertical 30 s** (Stories, teaser): cenas 01, 07, 09. Uma mensagem sem resposta, a voz que responde, a frase final. É o gancho para o vídeo inteiro no site.
+**Legenda para a Profissio** (sem travessão):
 
-**Legenda para a Profissio** (Instagram, sem travessão):
-
-> Uma psicóloga com 20 anos de clínica queria levar sua metodologia a quem nunca chegaria ao consultório. A primeira tentativa, em 2017, não sobreviveu. A segunda vive no WhatsApp, responde na voz dela e faz uma coisa que quase nenhum produto de IA faz: quando percebe que a pessoa está usando demais, reduz o próprio acesso. Este é o case da EITA Mentora Virtual, construído com a Profissio. Agentes de IA sob medida, no canal que o seu cliente já tem aberto o dia inteiro.
+> Uma psicóloga com 20 anos de clínica nos procurou com um pedido difícil: construir uma IA que **não** concorda. Que pergunta em vez de aconselhar. E que, quando percebe que alguém está usando demais, reduz o próprio acesso.
+>
+> Isso vai contra tudo que o mercado de IA conversacional faz. Aceitamos porque o objetivo do produto era autonomia, não engajamento.
+>
+> Este é o bastidor da EITA Mentora Virtual, construída com a Profissio, no canal que o brasileiro já tem aberto o dia inteiro.
 >
 > Agendar demonstração.
 
@@ -117,6 +140,6 @@ O roteiro base tem cortes naturais. Nenhuma versão curta precisa de gravação 
 
 ## O que este roteiro não decide
 
-- Se a narração é a Anaclaudia ao vivo ou o clone. Recomendo o clone pelo dispositivo da cena 07, mas é decisão da EITA.
-- Se o cartão de soluções entra na versão da inscrição. Recomendo que sim.
-- Se a Profissio aparece antes da cena 09. Recomendo que não: no filme da EITA, a Profissio ganha mais aparecendo como quem construiu do que como quem estrela.
+- **Quem dá a sonora da Profissio.** Escrevi Clésio Souza porque é quem já aparece como face do estúdio no Drive e na operação. Se for outra pessoa, o roteiro não muda, só o lettering da cena 05.
+- **Se a cena 04 usa bastidor real ou recriado.** Bastidor real é muito mais forte para o júri. Se não houver material, a cena vira motion de produto e perde um pouco.
+- **Se o cartão de soluções entra.** Recomendo só na versão da inscrição.
