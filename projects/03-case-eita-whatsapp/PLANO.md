@@ -41,22 +41,40 @@ vai na grafia fonética (**Profício ei ái**) e a sigla IA vai soletrada, senã
 sintetizador lê "ia" como palavra. As seis faixas foram conferidas por
 transcrição automática e voltaram corretas.
 
-### Bloco 2 · Motion no Remotion — próximo, também sem dependência externa
+### Bloco 2 · Motion no Remotion — **feito**
 
-Seis composições. A 01 já existe (`CaseEitaCena01`), as outras saem do mesmo
-sistema de tokens, agora no modo claro.
+Seis composições registradas em `remotion/src/Root.tsx`, renderizadas e
+conferidas frame a frame. Duração tirada do mp3 de cada cena, não da tabela.
 
-| Cena | Composição | Estado |
-|---|---|---|
-| 01 | tela de WhatsApp, um check | **pronta** |
-| 03 | contexto em motion sobre a superfície clara | a fazer |
-| 06 | três cartões, um aceso por vez | a fazer |
-| 07 | mesma tela da 01, dois checks e o áudio chegando | a fazer |
-| 08 | números um por vez, com base e período | a fazer |
-| 09 | lockups EITA e Profissio | a fazer |
+| Cena | Composição | Duração | O que faz |
+|---|---|---|---|
+| 01 | `CaseEitaCena01` | 7,0 s | a mensagem com **um** check |
+| 03 | `CaseEitaCena03` | 14,0 s | linha do tempo 2017 · 2020 · 2025, com o dado em chip |
+| 06 | `CaseEitaCena06` | 16,5 s | três cartões, um aceso por vez, e os três "não" no fim |
+| 07 | `CaseEitaCena07` | 8,0 s | mesma tela, **dois** checks azuis, o áudio chegando e tocando |
+| 08 | `CaseEitaCena08` | 11,5 s | um número por vez, cada um com a sua base |
+| 09 | `CaseEitaCena09` | 7,5 s | a tese e a assinatura |
 
-Feitas contra os mp3 do bloco 1, não contra a tabela: o tempo de cada
-composição é a duração real do arquivo de locução daquela cena.
+Renders em `remotion/out/`, e a versão para montagem em `remotion/out/tv/`,
+já com a faixa de cor corrigida.
+
+**Três coisas que só apareceram olhando o render**, e que ficam de aviso:
+
+1. **A 07 perdeu o enquadramento por causa do teclado.** Sem ele a área de
+   conversa cresce, a mensagem desce e sai do quadro no corte fechado. O
+   teclado voltou (e é o que acontece de verdade: ninguém fecha o teclado para
+   esperar resposta), e virou `TecladoWhatsApp.tsx`, compartilhado com a 01.
+   As duas cenas precisam ser reconhecidamente a **mesma** conversa.
+2. **Layout centralizado num quadro de 1080p engana.** A 03 e a 06 nasceram com
+   a massa no terço de cima e um vazio embaixo que parecia bug. Resolvido com a
+   grade da marca: sobrelinha no alto, conteúdo no meio, apoio na base.
+3. **Contador tem que parar no número exato.** O de 75,7% foi conferido no
+   último frame: parar em 74,2% seria erro de dado na tela, não detalhe de
+   animação.
+
+**A faixa de cor precisa de um passo a mais.** O Remotion entrega `yuvj420p`,
+faixa cheia; player e editor esperam faixa de TV. `scripts/corrige_faixa.sh`
+converte e **confere o resultado**, em vez de confiar no comando.
 
 ### Bloco 3 · Pedidos externos, disparados em paralelo com o bloco 2
 
@@ -98,24 +116,40 @@ Além disso, **os quatro clipes já gerados são material final, não rascunho**
 
 ## Orçamento
 
-### Primeiro: medir o preço, não estimar
+**Teto: US$ 30 a partir de 21/set/2026.** O que foi gasto antes disso não conta,
+por decisão do usuário, e os créditos já foram repostos. Os quatro clipes já
+gerados continuam valendo como material final, então entram na montagem sem
+custo novo.
 
-`ai.google.dev` e a página de preços da Vertex estão fora da allowlist deste
-environment, e a API do Gemini não expõe consumo. **Não dá para confirmar o
-preço daqui.** Duas coisas a fazer no `ai.studio/projects` antes de gerar:
+### Com essa base, o modelo bom cabe
 
-1. **Ler quanto já foi gasto.** Foram 7 gerações cobráveis até aqui: 1 teste
-   em Fast, 2 sondagens de capacidade (1080p e 9:16) e os 4 clipes do lote.
-2. **Medir o preço por segundo**: gerar um clipe de 4 s e comparar o saldo
-   antes e depois. A divisão dá o número exato, sem depender de tabela.
+| | segundos | no modelo padrão | no Fast |
+|---|---|---|---|
+| Os 4 inserts, sem repetir nenhum | 16 s | ~US$ 6 | ~US$ 2 |
+| Com 1 repetição por clipe, que é o realista | 32 s | ~US$ 13 | ~US$ 5 |
+| Com 2 repetições, o pior caso | 48 s | ~US$ 19 | ~US$ 7 |
 
-Com esse número, `scripts/gera_video_veo.py` faz a aritmética sozinho e
+**Recomendação: usar `veo-3.1-generate-preview` (o padrão, não o Fast).** Com o
+teto recontado, até o pior caso deixa mais de US$ 10 de folga, e a diferença de
+qualidade aparece justo em plano curto com foco raso, que é o que estes inserts
+são. O Fast fica como plano B se a repetição passar do previsto.
+
+> Os valores acima usam um preço por segundo **não verificado**. `ai.google.dev`
+> e a página da Vertex seguem fora da allowlist, e a API não expõe consumo. Ver
+> "medir o preço" abaixo: são dois minutos e transforma a tabela em aritmética.
+
+### Medir o preço, não estimar
+
+No `ai.studio/projects`, gerar um clipe de 4 s e comparar o saldo antes e
+depois. A divisão dá o preço exato por segundo, sem depender de tabela
+publicada. Com esse número, `scripts/gera_video_veo.py` faz a conta sozinho e
 **recusa o lote** que passar do teto.
 
 ```
 python3 scripts/gera_video_veo.py \
   --lote projects/03-case-eita-whatsapp/lote-veo.json \
   --pasta projects/03-case-eita-whatsapp/broll \
+  --modelo veo-3.1-generate-preview \
   --teto-usd 30 --preco-seg <o numero medido> --simular
 ```
 
@@ -127,28 +161,21 @@ acumulado a cada geração. Sem preço informado ele **para** em vez de chutar.
 1. **Duração.** A cobrança é por segundo e o mínimo é 4 s. Um insert de 4 s
    custa metade de um de 8 s, e insert de documentário não precisa de 8 s.
    Todo o lote planejado usa 4 s.
-2. **Modelo.** O Fast custa uma fração do padrão. Insert de atmosfera, com
-   movimento lento e sem detalhe crítico, não distingue os dois. Usar Fast por
-   padrão e só subir para o padrão no clipe que falhar.
+2. **Modelo.** O Fast custa uma fração do padrão. Com o teto recontado não
+   precisamos dele, mas ele existe se a repetição passar do previsto.
 3. **Repetição.** É o custo que os planos esquecem: raramente o primeiro take
-   serve. Orçar **2 tentativas por clipe** e tratar isso como custo normal,
-   não como erro.
+   serve. Orçar 2 tentativas por clipe e tratar isso como custo normal.
 
-### Os dois cenários
+### Os dois cenários de bastidor
 
-**Cenário A, recomendado: bastidor da cena 04 filmado.**
-4 inserts de 4 s = 16 s. Com repetição de 2x, 32 s.
+**Cenário A, recomendado: bastidor da cena 04 filmado.** É o que o lote assume.
 
-**Cenário B: bastidor da cena 04 gerado.**
-Mais 3 clipes de 8 s = 40 s. Com repetição, 80 s. Além de custar mais, é pior
-para o júri: o roteiro já registra que bastidor real é mais forte, e um case
-documentário que mostra um bastidor que não aconteceu tem um problema que não
-é de orçamento.
+**Cenário B: bastidor da cena 04 gerado.** Mais 3 clipes de 8 s. Cabe no teto
+recontado, mas é pior para o júri: o roteiro já registra que bastidor real é
+mais forte, e um case documentário que mostra um bastidor que não aconteceu tem
+um problema que não é de orçamento.
 
-**A recomendação é o cenário A**, e ela não é só financeira.
+### Primeira coisa a testar
 
-### Primeira coisa a testar depois de repor o crédito
-
-**Se o Fast aceita `resolution: 1080p`.** Só foi testado em 720p. Se aceitar,
-é a maior economia disponível e o cenário B volta a caber no teto. Se não
-aceitar, os inserts em 720p ainda servem, porque entram desfocados e curtos.
+**Se o Fast aceita `resolution: 1080p`.** Só foi testado em 720p. Deixou de ser
+urgente com o teto recontado, mas continua sendo bom saber.

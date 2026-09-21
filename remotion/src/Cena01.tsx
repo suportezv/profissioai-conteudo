@@ -1,5 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
+import { wa, UI } from "./whatsapp";
+import { Teclado } from "./TecladoWhatsApp";
 
 /**
  * Cena 01 do case EITA: a mensagem que fica sem resposta.
@@ -22,19 +24,6 @@ export const CENA01_FRAMES = 7 * FPS;
 
 const SUAVE = Easing.bezier(0.16, 1, 0.3, 1);
 
-/** Paleta do WhatsApp em tema escuro, recriada. */
-const wa = {
-  fundoChat: "#0B141A",
-  barra: "#1F2C33",
-  balaoSaida: "#005C4B",
-  teclado: "#1B2429",
-  tecla: "#2A3942",
-  texto: "#E9EDEF",
-  apoio: "#8696A0",
-};
-
-const UI = '"Liberation Sans", Arial, Helvetica, sans-serif';
-
 const FRASE = "não tô bem";
 
 // marcas de tempo, em frames
@@ -51,106 +40,6 @@ const passo = (f: number, a: number, b: number) =>
     extrapolateRight: "clamp",
     easing: SUAVE,
   });
-
-/* ------------------------------------------------------------- teclado ---- */
-
-const LINHAS = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
-
-const Teclado: React.FC<{ larg: number; alt: number }> = ({ larg, alt }) => {
-  const padH = 5;
-  const alturaTecla = (alt - 22) / 4 - 8;
-  return (
-    <div
-      style={{
-        width: larg,
-        height: alt,
-        background: wa.teclado,
-        padding: "10px 4px 12px",
-        boxSizing: "border-box",
-        display: "flex",
-        flexDirection: "column",
-        gap: 8,
-      }}
-    >
-      {LINHAS.map((linha, i) => (
-        <div
-          key={i}
-          style={{
-            display: "flex",
-            gap: padH,
-            justifyContent: "center",
-            paddingLeft: i === 1 ? 18 : 0,
-            paddingRight: i === 1 ? 18 : 0,
-          }}
-        >
-          {i === 2 ? (
-            <div
-              style={{
-                width: 44,
-                height: alturaTecla,
-                borderRadius: 5,
-                background: wa.tecla,
-                opacity: 0.55,
-              }}
-            />
-          ) : null}
-          {linha.split("").map((c) => (
-            <div
-              key={c}
-              style={{
-                flex: 1,
-                height: alturaTecla,
-                borderRadius: 5,
-                background: wa.tecla,
-                color: wa.texto,
-                fontFamily: UI,
-                fontSize: 17,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              {c}
-            </div>
-          ))}
-          {i === 2 ? (
-            <div
-              style={{
-                width: 44,
-                height: alturaTecla,
-                borderRadius: 5,
-                background: wa.tecla,
-                opacity: 0.55,
-              }}
-            />
-          ) : null}
-        </div>
-      ))}
-      {/* barra de espaco */}
-      <div style={{ display: "flex", gap: padH, justifyContent: "center" }}>
-        <div
-          style={{
-            width: 52,
-            height: alturaTecla,
-            borderRadius: 5,
-            background: wa.tecla,
-            opacity: 0.55,
-          }}
-        />
-        <div style={{ flex: 1, height: alturaTecla, borderRadius: 5, background: wa.tecla }} />
-        <div
-          style={{
-            width: 52,
-            height: alturaTecla,
-            borderRadius: 5,
-            background: wa.tecla,
-            opacity: 0.55,
-          }}
-        />
-      </div>
-    </div>
-  );
-};
 
 /* --------------------------------------------------------------- check ---- */
 
@@ -353,7 +242,7 @@ export const Cena01: React.FC = () => {
                   <>
                     {digitado}
                     {digitando && cursorAceso ? (
-                      <span style={{ color: "#00A884", marginLeft: 1 }}>|</span>
+                      <span style={{ color: wa.verde, marginLeft: 1 }}>|</span>
                     ) : null}
                   </>
                 )}
@@ -363,7 +252,7 @@ export const Cena01: React.FC = () => {
                   width: 42,
                   height: 42,
                   borderRadius: 21,
-                  background: "#00A884",
+                  background: wa.verde,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
