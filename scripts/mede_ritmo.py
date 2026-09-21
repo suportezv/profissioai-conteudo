@@ -35,6 +35,10 @@ def por_extenso(n):
 def palavras_faladas(txt):
     txt = re.sub(r"\*\(.*?\)\*", " ", txt)        # rubrica entre parenteses
     txt = re.sub(r"<br\s*/?>", " ", txt)
+    # GC e lettering, nao e fala: tudo a partir dele sai da contagem, senao a
+    # cena aparece corrida so porque carrega dado na tela. O corte vem antes de
+    # tirar os asteriscos, senao o padrao nao casa mais.
+    txt = re.split(r"\*\*GC\b", txt)[0]
     txt = txt.replace("**Narração:**", " ").replace("**", "")
     txt = re.sub(r"\*Pergunta.*", " ", txt)
     total = 0

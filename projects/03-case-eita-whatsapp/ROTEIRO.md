@@ -18,7 +18,7 @@
 
 | Voz | Papel | Quanto |
 |---|---|---|
-| **Narração Profissio** | conduz o documentário, em primeira pessoa do plural | 176 palavras, 77 s de fala |
+| **Narração Profissio** | conduz o documentário, em primeira pessoa do plural | 181 palavras, 78 s de fala |
 | **Sonora Anaclaudia Zani** | a origem clínica: por que existe | 2 entradas, 20 s |
 | **Sonora Profissio** (Clésio Souza) | a decisão de engenharia difícil | 1 entrada, 12 s |
 
@@ -33,13 +33,13 @@
 | # | Tempo | Vídeo | Quem fala | Conteúdo |
 |---|---|---|---|---|
 | **01** | 0:00 a 0:11 | Close da tela no escuro. 23:47. Alguém digita **não tô bem**, envia. Fica com **um check**. Nada acontece. | ninguém, depois narração entra baixa | *(4 s de silêncio: só o teclado e o envio)*<br><br>**Narração:** Todo dia, milhões de brasileiros escrevem uma mensagem assim. E a maioria nunca manda pra ninguém. |
-| **02** | 0:11 a 0:24 | Corte seco para a Anaclaudia, consultório, luz natural. Plano médio. Sem lettering em cima dela nos primeiros 3 s. | **Sonora Anaclaudia** | Eu percebi que a conta não fechava e precisava levar o que aprendi nesses 20 anos de consultório para o máximo de pessoas possível.<br><br>*(o dado que sustenta a frase entra em GC, não na fala)* |
-| **03** | 0:24 a 0:40 | Tela antiga do app de 2017 em arquivo. Depois, os números sobem em motion sobre fundo escuro Profissio. | **Narração Profissio** | Ela já tinha tentado em 2017, antes da IA generativa existir. Um app que dependia de psicólogos catalogando sentimentos à mão. Não sobreviveu à pandemia. Em 2025 ela voltou. |
-| **04** | 0:40 a 1:00 | Bastidor: tela de código, o painel do agente sendo configurado, pessoas da Profissio trabalhando. Ritmo seco, sem música épica. Fecha no ícone do WhatsApp na última frase. | **Narração Profissio** | O desafio não era fazer um chatbot. Era construir uma inteligência artificial capaz de fazer as pessoas abrirem suas emoções e ser o porto-seguro que elas precisam quando enfrentam os seus desafios, isso tudo no canal mais popular do Brasil: o WhatsApp. |
-| **05** | 1:00 a 1:12 | Clésio, ambiente de trabalho da Profissio, plano médio. Mesma linguagem visual da sonora da Anaclaudia. | **Sonora Profissio** | Foi construir uma IA que não fale para o usuário o que ele quer ouvir, mas sim o que a Anaclaudia falaria para ele. |
-| **06** | 1:12 a 1:29 | Três cartões em motion sobre prints recriados de conversa. Tokens Profissio: superfície `#101218`, Sora 500, azul `#2458F5` no número. | **Narração Profissio** | Três escolhas entraram no produto, e nenhuma veio de boa prática de mercado. A autolimitação. Um segundo modelo que lê risco e aciona um time de especialistas. E memória contínua, porque quem sofre não deveria se explicar de novo. |
-| **07** | 1:29 a 1:43 | Volta o celular da cena 01. Agora **dois checks**. Chega um áudio. Play. A forma de onda anda. Corta para a Anaclaudia ouvindo a própria voz. | **áudio do produto**, depois **Sonora Anaclaudia** | O áudio toca na voz clonada dela. *(usar áudio real do produto, aprovado)*<br><br>**Pergunta:** *O que você sentiu ao ouvir sua própria voz respondendo alguém que você nunca vai conhecer?* |
-| **08** | 1:43 a 1:53 | Números em motion, um por vez, sobre grade de conversas desfocada. Base e período sempre no lettering. | **Narração Profissio** | Em quinze meses: dois milhões e trezentas mil mensagens. Uma em cada cinco, por áudio. Três de cada quatro voltaram na semana seguinte. |
+| **02** | 0:11 a 0:24 | Corte seco para a Anaclaudia, consultório, luz natural. Plano médio. Sem lettering em cima dela nos primeiros 3 s. | **Sonora Anaclaudia** | Eu percebi que a conta não fechava e precisava levar o que aprendi nesses 20 anos de consultório para o máximo de pessoas possível.<br><br>**GC, entrando depois da frase dela:** `547 mil psicólogos no Brasil` e `R$ 200 a R$ 2.000 por sessão` |
+| **03** | 0:24 a 0:40 | Tela antiga do app de 2017 em arquivo. Depois, os números sobem em motion sobre a superfície clara da Profissio. | **Narração Profissio** | Ela já tinha tentado em 2017, antes da IA generativa existir. Um app que dependia de psicólogos catalogando sentimentos à mão. Não sobreviveu à pandemia. Em 2025 ela voltou. |
+| **04** | 0:40 a 0:59 | Bastidor: tela de código, o painel do agente sendo configurado, pessoas da Profissio trabalhando. Ritmo seco, sem música épica. Fecha no ícone do WhatsApp na última frase. | **Narração Profissio** | O desafio não era fazer um chatbot. Era construir uma inteligência artificial capaz de fazer as pessoas abrirem suas emoções e ser o porto-seguro que elas precisam quando enfrentam os seus desafios, isso tudo no canal mais popular do Brasil: o WhatsApp. |
+| **05** | 0:59 a 1:11 | Clésio, ambiente de trabalho da Profissio, plano médio. Mesma linguagem visual da sonora da Anaclaudia. | **Sonora Profissio** | Foi construir uma IA que não fale para o usuário o que ele quer ouvir, mas sim o que a Anaclaudia falaria para ele. |
+| **06** | 1:11 a 1:28 | Três cartões em motion sobre prints recriados de conversa. Tokens Profissio: superfície clara `#F4F6F9`, cartão branco, Sora 500, azul `#2458F5` no número. | **Narração Profissio** | Três escolhas entraram no produto, e nenhuma veio de boa prática de mercado. A autolimitação. Um segundo modelo que lê risco e aciona um time de especialistas. E memória contínua, porque quem sofre não deveria se explicar de novo. |
+| **07** | 1:28 a 1:41 | Volta o celular da cena 01. Agora **dois checks**. Chega um áudio. Play. A forma de onda anda. Corta para a Anaclaudia ouvindo a própria voz. | **áudio do produto**, depois **Sonora Anaclaudia** | O áudio toca na voz clonada dela. *(usar áudio real do produto, aprovado)*<br><br>**Pergunta:** *O que você sentiu ao ouvir sua própria voz respondendo alguém que você nunca vai conhecer?* |
+| **08** | 1:41 a 1:53 | Números em motion, um por vez, sobre grade de conversas desfocada. Base e período sempre no lettering. | **Narração Profissio** | Em quinze meses: trinta e cinco mil pessoas. Dois milhões e trezentas mil mensagens. Uma em cada cinco, por áudio. Três de cada quatro voltaram na semana seguinte. |
 | **09** | 1:53 a 2:00 | Fade para os lockups, EITA e Profissio lado a lado, tokens da revisão 3. | **Narração Profissio** | A barreira nunca foi falta de interesse. É dar o primeiro passo. E ele cabe numa mensagem. |
 
 **Lettering por cena**, sempre em Sora 500, tracking -3,5%:
@@ -48,7 +48,8 @@
 - **03**: `30% dos trabalhadores com sintomas de burnout` · `app descontinuado em 2020`
 - **05**: `Clésio Souza · Profissio`
 - **06**: `01 Autolimitação` · `02 Sinalização de risco` · `03 Memória contínua` · e, discreto: `não diagnostica · não prescreve · não substitui terapia`
-- **08**: `2,3 mi de mensagens · jun/2025 a set/2026` · `19% em áudio (390 mil)` · `75,7% de retorno semanal · 473 de 625 pessoas, ago/2026` · `4.922 assinaturas · LTV 15,3 meses` · `64,6% mulheres`
+- **08**: `35 mil usuários · jun/2025 a set/2026` · `2,3 mi de mensagens` · `19% em áudio (390 mil)` · `75,7% de retorno semanal · 473 de 625 pessoas, ago/2026` · `4.922 assinaturas · LTV 15,3 meses` · `64,6% mulheres`
+  > Os 35 mil e os 625 têm bases diferentes de propósito: 35 mil é o total atendido no período, 625 é a coorte medida em agosto. O lettering diz as duas, porque o júri confere contra o formulário e número sem base vira dúvida.
 - **09**: `EITA Mentora Virtual` · `construído com Profissio` · `Agente de IA no WhatsApp Business`
 
 ---
@@ -96,7 +97,11 @@ Para a versão da inscrição, um **cartão de 3 s** depois da cena 09 listando 
 
 ## Identidade visual
 
-**Do documentário: Profissio, revisão 3.** Superfície `#101218`, Sora peso 500, tracking -3,5%, azul `#2458F5` só em número e ênfase, alinhamento à esquerda. É a Profissio contando, então a gramática é dela.
+**Do documentário: Profissio, revisão 3, no modo claro.** Superfície `#F4F6F9`, cartão e painel em branco, tinta `#101218`, apoio `#59616E`, régua `#DFE3EB` sempre 1px, Sora peso 500, tracking -3,5%, azul `#2458F5` só em número e ênfase, alinhamento à esquerda. É a Profissio contando, então a gramática é dela.
+
+**Por que claro e não escuro.** A revisão 3 tem três superfícies e a escura é a mais óbvia para tecnologia. Só que o assunto aqui não é tecnologia, é saúde mental: escuro empurra o filme para o registro de produto de engenharia, que é exatamente o que este case não é. A camada gráfica vive no claro, com ar e régua fina. **O escuro continua existindo, mas como fotografia, não como marca**: a cena 01 é um quarto às escuras porque a cena é isso, e a 04 tem luz de monitor porque o bastidor é assim. A diferença importa: o preto entra pela lente, nunca pelo fundo do lettering.
+
+**A cor humana do filme.** Onde for preciso separar a voz da Profissio da voz de quem foi filmado, a narração é azul `#2458F5` e a sonora é rosa `#BE3F84`, a secundária herdada do kit. O ciano `#57E3F2` fica só para gráfico de dado, que é onde ele não soa frio.
 
 **Do material mostrado: o que é.** A tela de WhatsApp é a tela de WhatsApp. O produto aparece como é, sem reestilizar. Não confundir a moldura do documentário com o conteúdo que ele documenta.
 
@@ -118,7 +123,7 @@ Para a versão da inscrição, um **cartão de 3 s** depois da cena 09 listando 
 
 **Narração**: voz da Profissio, tom seco e baixo. Nada de locução publicitária. Master a **-14 LUFS**. Trilha ambiente mínima, saindo completamente embaixo das sonoras.
 
-**Ritmo medido, não estimado**: 176 palavras de narração em 77 s de fala, nenhuma cena acima de **2,45 palavras por segundo**, conferido por `scripts/mede_ritmo.py` sobre esta tabela, com os números expandidos para a forma que a locução diz (“2017” vale quatro palavras, não uma). As sonoras ocupam 39 s (25 s nas cenas 02 e 05, mais os 14 s da cena 07 entre o áudio do produto e a reação) e o silêncio de abertura ocupa 4 s. Na cena 01 a narração entra só depois do silêncio, então os 11 s de tela valem 7 s de fala. As cenas 02 e 05 ficaram folgadas de propósito, a 1,9 e 2,0 palavra por segundo: sonora precisa de ar antes e depois, senão soa lida.
+**Ritmo medido, não estimado**: 181 palavras de narração em 78 s de fala, nenhuma cena acima de **2,45 palavras por segundo**, conferido por `scripts/mede_ritmo.py` sobre esta tabela, com os números expandidos para a forma que a locução diz (“2017” vale quatro palavras, não uma). As sonoras ocupam 38 s (25 s nas cenas 02 e 05, mais os 13 s da cena 07 entre o áudio do produto e a reação) e o silêncio de abertura ocupa 4 s. Na cena 01 a narração entra só depois do silêncio, então os 11 s de tela valem 7 s de fala. As cenas 02 e 05 ficaram folgadas de propósito, a 1,9 e 2,0 palavra por segundo: sonora precisa de ar antes e depois, senão soa lida.
 
 ---
 
