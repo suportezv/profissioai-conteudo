@@ -16,9 +16,10 @@ import { janela, passo, s } from "./anim";
  * 8 s de motion sobre plano filmado. Os 5 s restantes da cena sao a sonora da
  * Anaclaudia ouvindo a propria voz, que e material captado e entra na montagem.
  *
- * A cena inteira existe para uma diferenca de contagem: a 01 tinha **um**
- * check, aqui tem **dois**, e eles viram azul. Depois o audio chega e toca.
- * Por isso nada aqui pode ser gerado por IA: o significado esta na contagem.
+ * A cena inteira existe para uma virada: na 01 a pessoa escreve, apaga, escreve
+ * de novo e **nao envia**. Aqui o mesmo rascunho aparece enviado, com dois
+ * checks que viram azuis, e vem resposta em audio. Por isso nada disso pode ser
+ * gerado por IA: o significado esta na frase ser a mesma e nos checks existirem.
  *
  * O balao levanta do display com a mesma curva da 01, e e assim que o
  * espectador reconhece que e a mesma conversa. Se ele nao reconhecer, a cena
@@ -27,7 +28,13 @@ import { janela, passo, s } from "./anim";
 
 export const CENA07_FRAMES = s(8);
 
-const FRASE = "não tô bem";
+/**
+ * A frase e **o terceiro rascunho da cena 01**, o unico que nao foi apagado e
+ * ficou parado no campo sem ser enviado. Aqui ele aparece enviado, com dois
+ * checks. A continuidade e o arco do filme: na 01 ela nao manda, na 07 ela
+ * mandou e foi respondida. Trocar esta string sem trocar a da 01 quebra isso.
+ */
+const FRASE = "não sei mais o que fazer";
 const ANCORA: Ancora = { x: 1342, y: 830 };
 
 // marcas de tempo, em frames

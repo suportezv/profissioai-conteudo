@@ -82,7 +82,7 @@ export const Cena09: React.FC = () => {
       <AbsoluteFill
         style={{
           padding: MARGEM,
-          alignItems: "flex-start",
+          alignItems: "center",
           justifyContent: "center",
           ...entra(assina, 20),
         }}
@@ -97,21 +97,10 @@ export const Cena09: React.FC = () => {
             style={{ height: 290, width: "auto" }}
           />
           <div style={{ width: 1, height: 200, background: marca.linha }} />
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <Img
-              src={staticFile("marca/profissio-ai-escuro.svg")}
-              style={{ width: 500, height: "auto" }}
-            />
-            <div
-              style={{
-                fontSize: 26,
-                letterSpacing: "-0.91px",
-                color: m.apoio,
-              }}
-            >
-              construído com a Profissio
-            </div>
-          </div>
+          <Img
+            src={staticFile("marca/profissio-ai-escuro.svg")}
+            style={{ width: 500, height: "auto" }}
+          />
         </div>
       </AbsoluteFill>
     </AbsoluteFill>
