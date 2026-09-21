@@ -14,6 +14,17 @@ import { Sfx } from "./Sfx";
 /**
  * Cena 07 do case: a mesma conversa, agora respondida.
  *
+ * **FORA DO CORTE desde 21/set/2026.** O usuario pediu para cortar: no filme
+ * montado ela vinha logo depois da 06 e antes da sonora da Anaclaudia, e
+ * repetia a gramatica da abertura (mesmo quarto, mesmo balao levantando) sem
+ * acrescentar informacao, atrasando a unica cena em que o produto fala. A
+ * composicao fica registrada no `Root` e o arquivo fica aqui, porque a virada
+ * que ela guarda continua valendo se a montagem mudar de ideia.
+ *
+ * Enquanto ela estiver fora, o terceiro rascunho da cena 01 nao e retomado por
+ * ninguem: a 01 termina com a frase parada no campo, e o filme segue sem
+ * mostra-la enviada. O arco fecha na sonora, nao no motion.
+ *
  * 8 s de motion sobre plano filmado, no mesmo quarto escuro da cena 01. Os 5 s
  * restantes da cena sao a sonora da Anaclaudia ouvindo a propria voz, que e
  * material captado e entra na montagem.

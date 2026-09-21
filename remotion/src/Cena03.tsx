@@ -18,9 +18,13 @@ import {
  *
  * 14 s. A narracao dura 12,45 s e comeca depois de meio segundo de respiro.
  *
- * O device e uma linha do tempo de 1px com tres marcas, e **embaixo dela as
- * duas listas se trocam**: o que era em 2017 sai, o que e em 2025 entra. As
- * listas repetem o que a locucao diz naquele instante, item por item, em vez
+ * O device e uma linha do tempo de 1px com tres marcas, e **cada lista fica
+ * embaixo da sua marca**: a de 2017 alinhada a esquerda, sob 2017, e a de 2025
+ * alinhada a direita, sob 2025. Elas nao dividem mais a mesma caixa. Lista que
+ * troca no mesmo lugar parece correcao da anterior; lista embaixo do proprio
+ * ano diz que sao dois momentos, que e o que a cena conta.
+ *
+ * As listas repetem o que a locucao diz naquele instante, item por item, em vez
  * de trazer um dado solto: dado de contexto sem relacao com a fala e ruido, e
  * foi por isso que o chip de burnout saiu daqui.
  *
@@ -103,22 +107,32 @@ const Marca: React.FC<{
   </div>
 );
 
-/** As listas ocupam a mesma caixa: uma sai, a outra entra no mesmo lugar. */
+/**
+ * Uma lista ancorada embaixo da sua marca na linha do tempo.
+ *
+ * `x` e a mesma porcentagem da marca, e `lado` diz de que borda a lista se
+ * alinha. A de 2025 alinha a direita porque a marca dela esta em 88%: alinhada
+ * a esquerda, ela sairia do quadro.
+ */
 const Lista: React.FC<{
   itens: Item[];
   o: number;
   entraEm: number;
   f: number;
   ativa: boolean;
-}> = ({ itens, o, entraEm, f, ativa }) => (
+  x: number;
+  lado: "esquerda" | "direita";
+}> = ({ itens, o, entraEm, f, ativa, x, lado }) => (
   <div
     style={{
       position: "absolute",
-      left: 0,
-      right: 0,
       top: 0,
+      ...(lado === "esquerda"
+        ? { left: `${x}%`, marginLeft: -22 }
+        : { right: `${100 - x}%`, marginRight: -22 }),
       display: "flex",
       flexDirection: "column",
+      alignItems: lado === "esquerda" ? "flex-start" : "flex-end",
       gap: 26,
       opacity: o,
       pointerEvents: "none",
@@ -131,6 +145,7 @@ const Lista: React.FC<{
           key={it.texto}
           style={{
             display: "flex",
+            flexDirection: lado === "esquerda" ? "row" : "row-reverse",
             alignItems: "center",
             gap: 24,
             ...entra(vivo, 14),
@@ -143,6 +158,7 @@ const Lista: React.FC<{
               fontWeight: ativa ? 500 : 400,
               letterSpacing: "-1.19px",
               color: ativa ? m.tinta : m.apoio,
+              textAlign: lado === "esquerda" ? "left" : "right",
             }}
           >
             {it.texto}
@@ -215,11 +231,26 @@ export const Cena03: React.FC = () => {
           <Marca x={88} ano="2025" rotulo="a EITA no WhatsApp" o={a2025} ativa />
         </div>
 
-        {/* as duas listas dividem a mesma caixa, com altura fixa para nada
-            pular quando uma troca pela outra */}
+        {/* cada lista embaixo do proprio ano; altura fixa para nada pular */}
         <div style={{ position: "relative", height: 260 }}>
-          <Lista itens={LISTA_2017} o={lista2017} entraEm={s(3.6)} f={f} ativa={false} />
-          <Lista itens={LISTA_2025} o={lista2025} entraEm={s(10.6)} f={f} ativa />
+          <Lista
+            itens={LISTA_2017}
+            o={lista2017}
+            entraEm={s(3.6)}
+            f={f}
+            ativa={false}
+            x={12}
+            lado="esquerda"
+          />
+          <Lista
+            itens={LISTA_2025}
+            o={lista2025}
+            entraEm={s(10.6)}
+            f={f}
+            ativa
+            x={88}
+            lado="direita"
+          />
         </div>
       </AbsoluteFill>
 

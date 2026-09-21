@@ -12,7 +12,6 @@ import { Cena01, CENA01_FRAMES } from "./Cena01";
 import { Cena03, CENA03_FRAMES } from "./Cena03";
 import { Cena04, CENA04_FRAMES } from "./Cena04";
 import { Cena06, CENA06_FRAMES } from "./Cena06";
-import { Cena07, CENA07_FRAMES } from "./Cena07";
 import { Cena08, CENA08_FRAMES } from "./Cena08";
 import { Cena09, CENA09_FRAMES } from "./Cena09";
 import { Placeholder } from "./Placeholder";
@@ -47,10 +46,16 @@ const NARRACAO_01_EM = s(1.2);
 
 /** Tempo dos cartoes de lacuna, tirado do roteiro. */
 const LACUNA_02 = s(13);
-const LACUNA_05 = s(12);
 
-/** A sonora da 07 nao e mais lacuna: e o corte real, de 7,8 s. */
-const SONORA_07 = s(7.8);
+/**
+ * As sonoras reais, ja cortadas no silencio do proprio arquivo.
+ *
+ * A da Anaclaudia comeca em "Entao, mas ce sabia": o "Fala tambem" que vinha
+ * antes era conversa de set, nao a fala. Cortar no primeiro som da pessoa
+ * parece cuidado e e o contrario: entrega meia palavra antes do assunto.
+ */
+const SONORA_05 = s(8.37);
+const SONORA_07 = s(6.9);
 
 /**
  * A trilha.
@@ -73,9 +78,8 @@ export const COMPLETO_FRAMES =
   LACUNA_02 +
   CENA03_FRAMES +
   CENA04_FRAMES +
-  LACUNA_05 +
+  SONORA_05 +
   CENA06_FRAMES +
-  CENA07_FRAMES +
   SONORA_07 +
   CENA08_FRAMES +
   CENA09_FRAMES;
@@ -147,13 +151,13 @@ export const Completo: React.FC = () => (
         <Cena04 />
       </Series.Sequence>
 
-      <Series.Sequence durationInFrames={LACUNA_05}>
-        <Placeholder
-          cena="05"
-          rotulo="Sonora a captar"
-          titulo="Clésio Souza, na Profissio"
-          detalhe="“Foi construir uma IA que não fale para o usuário o que ele quer ouvir, mas sim o que a Anaclaudia falaria para ele.”"
-          origem="Captação: mesma gramática de luz da cena 02, para o corte entre as duas parecer o mesmo filme."
+      <Series.Sequence durationInFrames={SONORA_05}>
+        <Sonora
+          arquivo="clesio-sonora.mp4"
+          nome="Clésio Souza"
+          papel="Profissio.ai"
+          gcEm={2.2}
+          gcDura={3.4}
         />
       </Series.Sequence>
 
@@ -161,13 +165,9 @@ export const Completo: React.FC = () => (
         <Cena06 />
       </Series.Sequence>
 
-      <Series.Sequence durationInFrames={CENA07_FRAMES}>
-        <Cena07 />
-      </Series.Sequence>
-
-      {/* a sonora real: ela pergunta, e o produto responde na voz dela. O
-          corte fecha no fim da frase inteira ("criada e alimentada por voce"),
-          nao no meio dela: 7,8 s medidos no silencio do arquivo. */}
+      {/* a sonora real: ela pergunta, e o produto responde na voz dela. Entra
+          direto, sem o motion do balao que vinha antes: aquele plano repetia a
+          abertura e atrasava a unica cena em que o produto fala. */}
       <Series.Sequence durationInFrames={SONORA_07}>
         <Sonora
           arquivo="ana-ouvindo.mp4"

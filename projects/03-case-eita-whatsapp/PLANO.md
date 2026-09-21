@@ -85,25 +85,30 @@ antes da captação: se o ritmo não funciona aqui, não vai funcionar depois.
 | Entra em | Trecho | Duração | Estado |
 |---|---|---|---|
 | 0:00 | 01 · o campo digitando, nunca enviado | 8,0 s | **pronto** |
-| 0:08 | 02 · sonora Anaclaudia | 13,0 s | lacuna |
+| 0:08 | 02 · sonora Anaclaudia | 13,0 s | lacuna, única que falta |
 | 0:21 | 03 · a tentativa de 2017 | 14,0 s | **pronto** |
-| 0:35 | 04 · o desafio | 17,5 s | **pronto**, b-roll gerado |
-| 0:52 | 05 · sonora Clésio | 12,0 s | lacuna |
-| 1:04 | 06 · as três escolhas | 16,5 s | **pronto** |
-| 1:21 | 07 · dois checks e o áudio | 8,0 s | **pronto** |
-| 1:29 | 07 · sonora, a reação | 7,8 s | **pronto**, material real |
-| 1:37 | 08 · os números | 11,5 s | **pronto** |
-| 1:48 | 09 · a tese e a assinatura | 7,5 s | **pronto** |
-| | **total** | **1:56** | |
+| 0:35 | 04 · o desafio, em motion | 17,5 s | **pronto** |
+| 0:52 | 05 · sonora Clésio | 8,4 s | **pronto**, material real |
+| 1:01 | 06 · as três escolhas | 16,5 s | **pronto** |
+| 1:17 | 07 · sonora, a reação | 6,9 s | **pronto**, material real |
+| 1:24 | 08 · os números | 11,5 s | **pronto** |
+| 1:36 | 09 · a missão, nas duas vozes | 22,1 s | **pronto**, material real |
+| 1:58 | 09 · a assinatura | 5,0 s | **pronto** |
+| | **total** | **2:02** | |
 
-**O corte dá 1:56, não 2:00, e a diferença é real, não arredondamento.** Duas
-causas: a locução saiu 17% mais curta que a estimativa do roteiro, e a cena 01
-tem os **8 s do clipe do Veo**, não os 11 s da tabela (o modelo não passa de 8 s
-por clipe). Os 4 s que faltam vão aparecer sozinhos quando as duas sonoras
-reais entrarem, porque gente falando raramente cabe no tempo que alguém previu:
-a reação da Anaclaudia, que estava reservada em 5 s, já chegou com 7,8 s. Se
-sobrar, o lugar de gastar é respiro antes e depois de cada sonora, não cena
-nova.
+> **A cena 07 de motion saiu do corte** (os dois checks e o áudio chegando).
+> Ela repetia a gramática da abertura sem acrescentar informação e atrasava a
+> única cena em que o produto fala. O arquivo continua no repo e a composição
+> continua registrada; enquanto estiver fora, o terceiro rascunho da cena 01
+> não é retomado por ninguém, e o arco fecha na sonora em vez do motion.
+
+**O corte fechou em 2:02, e a previsão de que faltava tempo se inverteu.** A
+estimativa dizia 1:53 e o medo era não chegar aos dois minutos; o que aconteceu
+foi o contrário, assim que o material real entrou. **Gente falando não cabe no
+tempo que alguém previu, e erra para os dois lados**: a sonora do Clésio veio
+com 8,4 s onde havia 12 reservados, e o trecho de fecho da Anaclaudia trouxe
+22,1 s onde havia 7,5. Com a cena 02 ainda por captar, o filme tende a crescer
+mais, e aí o corte da cena 07 de motion passa a valer duas vezes.
 
 **Se for preciso fechar 2:00 sem as sonoras**, o caminho barato é a cena 01: o
 plano pode rodar a 0,73x e virar 11 s sem tocar no motion, que é independente

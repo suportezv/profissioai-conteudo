@@ -1,9 +1,9 @@
 import React from "react";
 import {
   AbsoluteFill,
-  Audio,
   Img,
-  Sequence,
+  OffthreadVideo,
+  Series,
   staticFile,
   useCurrentFrame,
 } from "remotion";
@@ -13,79 +13,53 @@ import { janela, entra, s } from "./anim";
 import { Sfx } from "./Sfx";
 
 /**
- * Cena 09 do case: a tese e os lockups.
+ * Cena 09 do case: a missao dita pelo proprio produto, e os lockups.
  *
- * 7,5 s, narracao de 5,48 s. A tese entra palavra a palavra, que e a
- * revelacao da gramatica da casa, e o ultimo verso segura sozinho antes de
- * virar assinatura.
+ * ## O que mudou, e por que a troca e boa
  *
- * Os dois lockups ficam lado a lado, e a ordem nao e decorativa: no formulario
- * da premiacao a anunciante e a EITA, e a Profissio assina como quem construiu.
- * A peca nao pode sugerir que a Profissio e dona do produto.
+ * Antes daqui saia uma tese escrita pela Profissio ("A barreira nunca foi
+ * falta de interesse"), narrada em off e revelada verso a verso. Saiu inteira.
+ * No lugar entra **a Anaclaudia dando a licenca e a EITA respondendo na voz
+ * dela**, do material real.
+ *
+ * A diferenca nao e de forma: a tese era a Profissio afirmando o que o produto
+ * significa, e isso num case de premiacao vale menos que o produto mostrando.
+ * O trecho fecha o arco do filme sozinho, porque e a criadora autorizando e a
+ * criatura assumindo a missao, nas duas vozes, sem locutor.
+ *
+ * **Consequencia que nao da para esquecer**: sem a tese, o filme nao tem mais
+ * narracao de fecho, e `locucao/cena-09.mp3` deixou de ser usado. O arquivo
+ * continua no repo caso a tese volte.
+ *
+ * ## Os lockups
+ *
+ * A ordem nao e decorativa: no formulario da premiacao a anunciante e a EITA,
+ * e a Profissio assina como quem construiu. A peca nao pode sugerir que a
+ * Profissio e dona do produto.
  */
 
-export const CENA09_FRAMES = s(7.5);
-const AUDIO_EM = s(0.4);
+/** O trecho real: 22,1 s, de 1:12 a 1:34 do bruto da Anaclaudia. */
+export const TRECHO_FRAMES = s(22.13);
+/** A assinatura, depois do trecho. */
+export const ASSINA_FRAMES = s(5);
+export const CENA09_FRAMES = TRECHO_FRAMES + ASSINA_FRAMES;
+
 const MARGEM = 120;
 const m = modos.claro;
 
-const TESE = [
-  "A barreira nunca foi",
-  "falta de interesse.",
-  "É dar o primeiro passo.",
-];
-const FECHO = "E ele cabe numa mensagem.";
-
-export const Cena09: React.FC = () => {
+const Assinatura: React.FC = () => {
   const f = useCurrentFrame();
-  const assina = janela(f, s(5.4), CENA09_FRAMES, 16, 0);
-  const tese = janela(f, s(0.5), s(5.4), 14, 10);
+  const o = janela(f, 0, ASSINA_FRAMES, 18, 0);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
       <Superficie modo="claro" />
-      <Sequence from={AUDIO_EM}>
-        <Audio src={staticFile("locucao/cena-09.mp3")} />
-      </Sequence>
-
-      <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
-        <div style={{ opacity: tese }}>
-          {TESE.map((linha, i) => (
-            <div
-              key={linha}
-              style={{
-                fontSize: 82,
-                fontWeight: 500,
-                letterSpacing: "-2.87px",
-                lineHeight: 1.18,
-                ...entra(janela(f, s(0.6) + i * s(1.1), CENA09_FRAMES, 14, 0), 16),
-              }}
-            >
-              {linha}
-            </div>
-          ))}
-          <div
-            style={{
-              fontSize: 82,
-              fontWeight: 500,
-              letterSpacing: "-2.87px",
-              lineHeight: 1.18,
-              color: marca.azul,
-              ...entra(janela(f, s(4.0), CENA09_FRAMES, 14, 0), 16),
-            }}
-          >
-            {FECHO}
-          </div>
-        </div>
-      </AbsoluteFill>
-
-      {/* assinatura: EITA como anunciante, Profissio como quem construiu */}
       <AbsoluteFill
         style={{
           padding: MARGEM,
           alignItems: "center",
           justifyContent: "center",
-          ...entra(assina, 20),
+          ...entra(o, 20),
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 88 }}>
@@ -104,9 +78,26 @@ export const Cena09: React.FC = () => {
           />
         </div>
       </AbsoluteFill>
-
-      {/* a assinatura entrando */}
-      <Sfx som="surge" em={s(5.4)} volume={0.2} />
+      <Sfx som="surge" em={0} volume={0.2} />
     </AbsoluteFill>
   );
 };
+
+export const Cena09: React.FC = () => (
+  <AbsoluteFill style={{ backgroundColor: marca.tinta }}>
+    <Series>
+      <Series.Sequence durationInFrames={TRECHO_FRAMES}>
+        <AbsoluteFill>
+          <OffthreadVideo
+            src={staticFile("broll/ana-missao.mp4")}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </AbsoluteFill>
+      </Series.Sequence>
+
+      <Series.Sequence durationInFrames={ASSINA_FRAMES}>
+        <Assinatura />
+      </Series.Sequence>
+    </Series>
+  </AbsoluteFill>
+);
