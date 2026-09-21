@@ -9,7 +9,8 @@ import {
 import { wa, UI } from "./whatsapp";
 import { Balao3D, type Ancora } from "./Balao3D";
 import { passo, s } from "./anim";
-import { montaDigitacao, textoEm, type Rascunho } from "./digitacao";
+import { montaDigitacao, textoEm, toques, type Rascunho } from "./digitacao";
+import { Sfx } from "./Sfx";
 
 /**
  * Cena 01 do case: a mensagem que nunca e enviada.
@@ -53,6 +54,9 @@ const RASCUNHOS: Rascunho[] = [
 ];
 
 const { trechos, total } = montaDigitacao(RASCUNHOS, 1.0);
+
+/** Os toques saem da mesma linha do tempo que desenha o texto. */
+const TOQUES = toques(trechos);
 
 /** O campo de digitacao do WhatsApp, recriado. Nenhuma tela real entra aqui. */
 const CampoDigitacao: React.FC<{ texto: string; cursor: boolean }> = ({
@@ -145,6 +149,19 @@ export const Cena01: React.FC = () => {
       >
         <CampoDigitacao texto={texto} cursor={cursorAceso} />
       </Balao3D>
+
+      {/* o campo saindo da tela */}
+      <Sfx som="surge" em={LEVANTA_INI} volume={0.22} />
+
+      {/* cada tecla, colada no caractere que aparece ou some */}
+      {TOQUES.map((t, i) => (
+        <Sfx
+          key={i}
+          som={t.apagando ? "apaga" : "tecla"}
+          em={t.seg * 30}
+          volume={t.apagando ? 0.16 : 0.2}
+        />
+      ))}
     </AbsoluteFill>
   );
 };

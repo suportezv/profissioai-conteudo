@@ -9,6 +9,7 @@ import {
 import { wa, UI } from "./whatsapp";
 import { Balao3D, BalaoSaida, type Ancora } from "./Balao3D";
 import { janela, passo, s } from "./anim";
+import { Sfx } from "./Sfx";
 
 /**
  * Cena 07 do case: a mesma conversa, agora respondida.
@@ -204,6 +205,12 @@ export const Cena07: React.FC = () => {
           <BalaoAudio tocando={f >= TOCA} progresso={progresso} />
         </Balao3D>
       ) : null}
+
+      {/* o balao levantando, o check virando lido, e a resposta chegando */}
+      <Sfx som="surge" em={LEVANTA_INI} volume={0.22} />
+      <Sfx som="marca" em={LIDO} volume={0.24} />
+      <Sfx som="recebido" em={AUDIO_CHEGA} volume={0.3} />
+      <Sfx som="pop" em={TOCA} volume={0.18} />
     </AbsoluteFill>
   );
 };

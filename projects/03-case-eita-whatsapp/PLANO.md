@@ -87,20 +87,21 @@ antes da captação: se o ritmo não funciona aqui, não vai funcionar depois.
 | 0:00 | 01 · o campo digitando, nunca enviado | 8,0 s | **pronto** |
 | 0:08 | 02 · sonora Anaclaudia | 13,0 s | lacuna |
 | 0:21 | 03 · a tentativa de 2017 | 14,0 s | **pronto** |
-| 0:35 | 04 · o desafio | 17,5 s | lacuna de imagem, **locução pronta e tocando** |
+| 0:35 | 04 · o desafio | 17,5 s | **pronto**, b-roll gerado |
 | 0:52 | 05 · sonora Clésio | 12,0 s | lacuna |
 | 1:04 | 06 · as três escolhas | 16,5 s | **pronto** |
 | 1:21 | 07 · dois checks e o áudio | 8,0 s | **pronto** |
-| 1:29 | 07 · sonora, a reação | 5,0 s | lacuna |
-| 1:34 | 08 · os números | 11,5 s | **pronto** |
-| 1:45 | 09 · a tese e a assinatura | 7,5 s | **pronto** |
-| | **total** | **1:53** | |
+| 1:29 | 07 · sonora, a reação | 7,8 s | **pronto**, material real |
+| 1:37 | 08 · os números | 11,5 s | **pronto** |
+| 1:48 | 09 · a tese e a assinatura | 7,5 s | **pronto** |
+| | **total** | **1:56** | |
 
-**O corte dá 1:53, não 2:00, e a diferença é real, não arredondamento.** Duas
+**O corte dá 1:56, não 2:00, e a diferença é real, não arredondamento.** Duas
 causas: a locução saiu 17% mais curta que a estimativa do roteiro, e a cena 01
 tem os **8 s do clipe do Veo**, não os 11 s da tabela (o modelo não passa de 8 s
-por clipe). Os 7 s que faltam vão aparecer sozinhos quando as sonoras reais
-entrarem, porque gente falando raramente cabe no tempo que alguém previu. Se
+por clipe). Os 4 s que faltam vão aparecer sozinhos quando as duas sonoras
+reais entrarem, porque gente falando raramente cabe no tempo que alguém previu:
+a reação da Anaclaudia, que estava reservada em 5 s, já chegou com 7,8 s. Se
 sobrar, o lugar de gastar é respiro antes e depois de cada sonora, não cena
 nova.
 
@@ -109,8 +110,21 @@ plano pode rodar a 0,73x e virar 11 s sem tocar no motion, que é independente
 do vídeo. Fica mais lento, o que ajuda a cena. Não fiz porque a 01 está
 aprovada como está.
 
-**O corte não tem trilha nem mixagem.** Só a locução, no volume em que saiu. O
-master a -14 LUFS é o último passo, depois das sonoras.
+**O corte já tem trilha e efeitos, mas não está mixado.** Cada elemento está no
+ganho em que foi colocado; o master a -14 LUFS é o último passo, depois das
+sonoras.
+
+- **Efeitos**: banco de seis sons gerados na ElevenLabs (`remotion/public/sfx/`),
+  colocados pelo componente `Sfx`. Os toques de tecla da cena 01 **saem da mesma
+  linha do tempo que desenha o texto** (`toques()` em `digitacao.ts`), então
+  imagem e som não podem divergir: não existe uma segunda tabela para manter em
+  dia. Um som por caractere vira zumbido a 19 caracteres por segundo, então o
+  passo é a cada 2 digitando e a cada 3 apagando.
+- **Trilha**: um leito só, do primeiro ao último frame, com a curva de volume
+  escrita em `Completo.tsx` (`volumeTrilha`). Entra de baixo, desce para o leito
+  quando a primeira narração começa, sai no fim. **Sem degrau por cena**: trilha
+  que sobe e desce a cada corte chama atenção para si, e o pedido era o
+  contrário.
 
 ### Bloco 3 · Pedidos externos, disparados em paralelo com o bloco 2
 
@@ -125,11 +139,43 @@ mesmo dia em que o bloco 2 começa.
 - **Decidir o bastidor da cena 04**: filmar a equipe real ou gerar. Ver o
   orçamento abaixo, porque essa é a única decisão que muda o custo de verdade.
 
-### Bloco 4 · B-roll no Veo — por último
+### Bloco 4 · B-roll no Veo — **feito para a cena 04**
 
 Só depois que a locução estiver cortada e o motion montado, porque aí se sabe
 exatamente quais segundos sobraram sem imagem. Gerar antes é comprar tinta
 antes de medir a parede.
+
+**Gasto: US$ 4,80 de US$ 30.** Três clipes de 4 s, `lote-veo-cena04.json`.
+
+**Os cortes da cena 04 saem das pausas da própria locução.** Os silêncios do
+arquivo foram medidos com `silencedetect` e caem em 1,96 / 11,48 / 14,24 /
+15,53 s; somado o atraso de 0,6 s, é neles que a imagem vira. Cortar em cima da
+respiração é o que faz um corte seco parecer intencional em vez de apressado.
+
+**O clipe de bastidor que já existia não podia carregar a cena sozinho.** Ele é
+o laboratório azul escuro de banco de imagem, e sozinho empurra um filme de
+saúde mental para thriller de tecnologia, que é exatamente a leitura recusada no
+moodboard. Ele continua na cena, mas **no meio e cercado de luz de dia**: alguém
+desenhando o fluxo num quadro, dupla conversando na frente do laptop, mãos no
+teclado com luz de janela. O arco vira gente → foco → gente, e o azul frio passa
+a ler como concentração em vez de cenário.
+
+Três coisas que a geração ensinou, e que custam dinheiro quando esquecidas:
+
+1. **Sem `--resolucao 1080p` a API entrega 720p**, e o padrão não avisa. Os três
+   primeiros clipes saíram pequenos e foram para `broll/720p-descartado/`; o
+   material em uso é o mesmo, reescalado com `lanczos`. Refazer em 1080p custaria
+   outros US$ 4,80 e **esbarrou na cota diária** (429 sem `QuotaFailure` nos
+   detalhes, que é limite de requisições e não falta de crédito — a falta de
+   crédito vem como 402 com "prepayment credits are depleted"). Fica como
+   pendência barata: regerar no dia seguinte com a flag certa.
+2. **Vídeo gerado traz marca de terceiro sem avisar.** O plano das mãos no
+   teclado tinha o logo de um fabricante no monitor ao fundo. Resolvido com
+   `crop` de 1,25x, que ainda melhorou o enquadramento. Conferir cada clipe
+   quadro a quadro antes de montar, não depois.
+3. **O preço por segundo continua não verificado.** O orçamento usa US$ 0,40/s,
+   que é o teto conservador: se o real for menor, sobra. Ver "medir o preço"
+   acima.
 
 ---
 

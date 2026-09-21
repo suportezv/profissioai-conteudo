@@ -3,24 +3,50 @@ import { AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame } from "remo
 import { marca, modos } from "./marca";
 import { Superficie } from "./Superficie";
 import { janela, entra, passo, s } from "./anim";
+import { Sfx } from "./Sfx";
+import {
+  IconeApp,
+  IconeFichas,
+  IconeTeto,
+  IconeBalao,
+  IconeFaisca,
+  IconeSubida,
+} from "./Icones";
 
 /**
- * Cena 03 do case: a tentativa de 2017.
+ * Cena 03 do case: a tentativa de 2017 e a volta em 2025.
  *
  * 14 s. A narracao dura 12,45 s e comeca depois de meio segundo de respiro.
- * A duracao da cena saiu do arquivo de audio, nao da tabela do roteiro: a
- * estimativa do roteiro errou 17% para mais no filme inteiro.
  *
- * O device e uma linha do tempo de 1px com tres marcas. Escolhido porque a
- * cena tem exatamente essa forma: uma tentativa que existiu, morreu e voltou.
- * Grafico nenhum diz isso melhor que a propria linha.
+ * O device e uma linha do tempo de 1px com tres marcas, e **embaixo dela as
+ * duas listas se trocam**: o que era em 2017 sai, o que e em 2025 entra. As
+ * listas repetem o que a locucao diz naquele instante, item por item, em vez
+ * de trazer um dado solto: dado de contexto sem relacao com a fala e ruido, e
+ * foi por isso que o chip de burnout saiu daqui.
+ *
+ * A lista de 2017 entra no cinza de apoio e a de 2025 na tinta cheia com
+ * icone azul. A cor conta o resultado antes do texto: uma nao sobreviveu, a
+ * outra e a que esta de pe.
  */
 
 export const CENA03_FRAMES = s(14);
 const AUDIO_EM = s(0.5);
-
 const MARGEM = 120;
 const m = modos.claro;
+
+type Item = { Icone: React.FC<{ cor: string; tam?: number }>; texto: string };
+
+const LISTA_2017: Item[] = [
+  { Icone: IconeApp, texto: "aplicativo" },
+  { Icone: IconeFichas, texto: "psicólogos categorizando conversas" },
+  { Icone: IconeTeto, texto: "dificuldade em escalar" },
+];
+
+const LISTA_2025: Item[] = [
+  { Icone: IconeBalao, texto: "WhatsApp" },
+  { Icone: IconeFaisca, texto: "IA treinada com o método dela" },
+  { Icone: IconeSubida, texto: "escalabilidade ilimitada" },
+];
 
 /** Uma marca na linha do tempo: risco, ano e rotulo. */
 const Marca: React.FC<{
@@ -39,14 +65,14 @@ const Marca: React.FC<{
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      gap: 18,
+      gap: 16,
       opacity: o,
     }}
   >
     <div
       style={{
         width: 2,
-        height: 44,
+        height: 38,
         background: ativa ? marca.azul : m.tinta,
         opacity: ativa ? 1 : 0.35,
         transformOrigin: "top",
@@ -55,9 +81,9 @@ const Marca: React.FC<{
     />
     <div
       style={{
-        fontSize: 52,
+        fontSize: 46,
         fontWeight: 500,
-        letterSpacing: "-1.82px",
+        letterSpacing: "-1.61px",
         color: ativa ? marca.azul : m.tinta,
         lineHeight: 1,
       }}
@@ -66,9 +92,8 @@ const Marca: React.FC<{
     </div>
     <div
       style={{
-        fontSize: 24,
-        fontWeight: 400,
-        letterSpacing: "-0.84px",
+        fontSize: 22,
+        letterSpacing: "-0.77px",
         color: m.apoio,
         whiteSpace: "nowrap",
       }}
@@ -78,14 +103,68 @@ const Marca: React.FC<{
   </div>
 );
 
+/** As listas ocupam a mesma caixa: uma sai, a outra entra no mesmo lugar. */
+const Lista: React.FC<{
+  itens: Item[];
+  o: number;
+  entraEm: number;
+  f: number;
+  ativa: boolean;
+}> = ({ itens, o, entraEm, f, ativa }) => (
+  <div
+    style={{
+      position: "absolute",
+      left: 0,
+      right: 0,
+      top: 0,
+      display: "flex",
+      flexDirection: "column",
+      gap: 26,
+      opacity: o,
+      pointerEvents: "none",
+    }}
+  >
+    {itens.map((it, i) => {
+      const vivo = janela(f, entraEm + i * 7, CENA03_FRAMES, 12, 0);
+      return (
+        <div
+          key={it.texto}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 24,
+            ...entra(vivo, 14),
+          }}
+        >
+          <it.Icone cor={ativa ? marca.azul : m.apoio} tam={40} />
+          <div
+            style={{
+              fontSize: 34,
+              fontWeight: ativa ? 500 : 400,
+              letterSpacing: "-1.19px",
+              color: ativa ? m.tinta : m.apoio,
+            }}
+          >
+            {it.texto}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+);
+
 export const Cena03: React.FC = () => {
   const f = useCurrentFrame();
 
   const regua = passo(f, s(0.7), s(2.0));
-  const a2017 = janela(f, s(2.6), CENA03_FRAMES, 14, 0);
-  const a2020 = janela(f, s(8.4), CENA03_FRAMES, 14, 0);
-  const a2025 = janela(f, s(11.0), CENA03_FRAMES, 14, 0);
-  const chip = janela(f, s(4.8), s(10.6), 16, 14);
+  const a2017 = janela(f, s(1.6), CENA03_FRAMES, 14, 0);
+  const a2020 = janela(f, s(8.2), CENA03_FRAMES, 14, 0);
+  const a2025 = janela(f, s(10.4), CENA03_FRAMES, 14, 0);
+
+  // a lista de 2017 acompanha a fala sobre o app e sai quando ela diz que
+  // nao sobreviveu; a de 2025 entra junto com "em 2025 ela voltou"
+  const lista2017 = janela(f, s(3.6), s(10.0), 14, 12);
+  const lista2025 = janela(f, s(10.6), CENA03_FRAMES, 14, 0);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -117,9 +196,7 @@ export const Cena03: React.FC = () => {
           A tentativa anterior
         </div>
 
-        {/* a massa do quadro fica no meio: a caixa tem a altura do conteudo,
-            senao a regua sobe e sobra um terco de nada embaixo */}
-        <div style={{ position: "relative", height: 186 }}>
+        <div style={{ position: "relative", height: 166 }}>
           {/* a regua: 1px, como manda a marca, desenhada da esquerda */}
           <div
             style={{
@@ -138,24 +215,26 @@ export const Cena03: React.FC = () => {
           <Marca x={88} ano="2025" rotulo="a EITA no WhatsApp" o={a2025} ativa />
         </div>
 
-        {/* o dado de contexto entra como chip, nunca como fala */}
-        <div style={{ ...entra(chip) }}>
-          <span
-            style={{
-              display: "inline-block",
-              fontSize: 28,
-              letterSpacing: "-0.98px",
-              color: m.tinta,
-              background: marca.branco,
-              border: `1px solid ${marca.linha}`,
-              borderRadius: marca.raio.controle,
-              padding: "14px 24px",
-            }}
-          >
-            30% dos trabalhadores com sintomas de burnout
-          </span>
+        {/* as duas listas dividem a mesma caixa, com altura fixa para nada
+            pular quando uma troca pela outra */}
+        <div style={{ position: "relative", height: 260 }}>
+          <Lista itens={LISTA_2017} o={lista2017} entraEm={s(3.6)} f={f} ativa={false} />
+          <Lista itens={LISTA_2025} o={lista2025} entraEm={s(10.6)} f={f} ativa />
         </div>
       </AbsoluteFill>
+
+      {/* um tique em cada marca da linha do tempo */}
+      <Sfx som="marca" em={s(1.6)} volume={0.26} />
+      <Sfx som="marca" em={s(8.2)} volume={0.26} />
+      <Sfx som="marca" em={s(10.4)} volume={0.3} />
+
+      {/* e um pop discreto em cada item das listas */}
+      {[0, 1, 2].map((i) => (
+        <Sfx key={"a" + i} som="pop" em={s(3.6) + i * 7} volume={0.14} />
+      ))}
+      {[0, 1, 2].map((i) => (
+        <Sfx key={"b" + i} som="pop" em={s(10.6) + i * 7} volume={0.18} />
+      ))}
     </AbsoluteFill>
   );
 };

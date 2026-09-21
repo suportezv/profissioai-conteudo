@@ -1,0 +1,17 @@
+[
+ {
+  "nome": "c04-a-fluxo-quadro",
+  "duracao": 4,
+  "prompt": "Documentary b-roll, bright daylight office with large windows: a hand holding a marker draws arrows between boxes on a glass whiteboard, sketching a conversation flow. Warm natural light, soft shadows, white and light grey room, plants out of focus in the background. Shallow depth of field, no faces in focus, no readable text, no logos. Natural color, gentle contrast, calm pace, slight handheld drift."
+ },
+ {
+  "nome": "c04-c-dupla-laptop",
+  "duracao": 4,
+  "prompt": "Documentary b-roll, bright daylight room: two colleagues sit side by side at a wooden table looking at a laptop, one points at the screen and talks quietly, the other nods. Warm window light from the left, light neutral clothing, calm and focused, not excited. Medium shot from slightly behind, shallow depth of field, screen content unreadable, no logos, no text. Natural color, documentary realism."
+ },
+ {
+  "nome": "c04-d-maos-teclado",
+  "duracao": 4,
+  "prompt": "Extreme close-up, warm daylight from a window: hands typing steadily on a low-profile keyboard on a light wooden desk, a mug just out of focus beside them, soft glow from an off-screen monitor. Shallow depth of field, warm neutral color, no readable screen, no logos, no text. Calm and deliberate, documentary realism."
+ }
+]

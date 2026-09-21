@@ -4,6 +4,7 @@ import { CartaoTitulo } from "./CartaoTitulo";
 import { Hero } from "./Hero";
 import { Cena01, CENA01_FRAMES } from "./Cena01";
 import { Cena03, CENA03_FRAMES } from "./Cena03";
+import { Cena04, CENA04_FRAMES } from "./Cena04";
 import { Cena06, CENA06_FRAMES } from "./Cena06";
 import { Cena07, CENA07_FRAMES } from "./Cena07";
 import { Cena08, CENA08_FRAMES } from "./Cena08";
@@ -39,6 +40,14 @@ export const RemotionRoot: React.FC = () => (
       id="CaseEitaCena03"
       component={Cena03}
       durationInFrames={CENA03_FRAMES}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="CaseEitaCena04"
+      component={Cena04}
+      durationInFrames={CENA04_FRAMES}
       fps={30}
       width={1920}
       height={1080}

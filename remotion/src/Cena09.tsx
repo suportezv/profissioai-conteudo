@@ -10,6 +10,7 @@ import {
 import { marca, modos } from "./marca";
 import { Superficie } from "./Superficie";
 import { janela, entra, s } from "./anim";
+import { Sfx } from "./Sfx";
 
 /**
  * Cena 09 do case: a tese e os lockups.
@@ -103,6 +104,9 @@ export const Cena09: React.FC = () => {
           />
         </div>
       </AbsoluteFill>
+
+      {/* a assinatura entrando */}
+      <Sfx som="surge" em={s(5.4)} volume={0.2} />
     </AbsoluteFill>
   );
 };

@@ -9,6 +9,7 @@ import {
 import { marca, modos } from "./marca";
 import { Superficie } from "./Superficie";
 import { janela, entra, s } from "./anim";
+import { Sfx } from "./Sfx";
 
 /**
  * Cena 06 do case: as tres escolhas.
@@ -158,6 +159,14 @@ export const Cena06: React.FC = () => {
           ))}
         </div>
       </AbsoluteFill>
+
+      {/* um por cartao que acende, e um tique por "nao" */}
+      {ESCOLHAS.map((e) => (
+        <Sfx key={e.n} som="surge" em={e.acende} volume={0.2} />
+      ))}
+      {[0, 1, 2].map((i) => (
+        <Sfx key={"n" + i} som="marca" em={s(13.4) + i * 8} volume={0.12} />
+      ))}
     </AbsoluteFill>
   );
 };

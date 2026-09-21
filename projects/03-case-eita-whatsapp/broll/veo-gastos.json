@@ -1,0 +1,31 @@
+{
+  "geracoes": [
+    {
+      "quando": "2026-09-21T22:00:02Z",
+      "nome": "c04-a-fluxo-quadro",
+      "modelo": "veo-3.1-generate-preview",
+      "resolucao": null,
+      "segundos": 4,
+      "usd": 1.6,
+      "ok": true
+    },
+    {
+      "quando": "2026-09-21T22:00:50Z",
+      "nome": "c04-c-dupla-laptop",
+      "modelo": "veo-3.1-generate-preview",
+      "resolucao": null,
+      "segundos": 4,
+      "usd": 1.6,
+      "ok": true
+    },
+    {
+      "quando": "2026-09-21T22:01:38Z",
+      "nome": "c04-d-maos-teclado",
+      "modelo": "veo-3.1-generate-preview",
+      "resolucao": null,
+      "segundos": 4,
+      "usd": 1.6,
+      "ok": true
+    }
+  ]
+}

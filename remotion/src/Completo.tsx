@@ -1,13 +1,22 @@
 import React from "react";
-import { AbsoluteFill, Audio, Sequence, Series, staticFile } from "remotion";
+import {
+  AbsoluteFill,
+  Audio,
+  Sequence,
+  Series,
+  interpolate,
+  staticFile,
+} from "remotion";
 import { s } from "./anim";
 import { Cena01, CENA01_FRAMES } from "./Cena01";
 import { Cena03, CENA03_FRAMES } from "./Cena03";
+import { Cena04, CENA04_FRAMES } from "./Cena04";
 import { Cena06, CENA06_FRAMES } from "./Cena06";
 import { Cena07, CENA07_FRAMES } from "./Cena07";
 import { Cena08, CENA08_FRAMES } from "./Cena08";
 import { Cena09, CENA09_FRAMES } from "./Cena09";
 import { Placeholder } from "./Placeholder";
+import { Sonora } from "./Sonora";
 
 /**
  * Corte de montagem do case, ponta a ponta.
@@ -23,8 +32,8 @@ import { Placeholder } from "./Placeholder";
  *    e a cena 01 tem os 8 s do clipe, nao os 11 s da tabela. A diferenca esta
  *    detalhada no `PLANO.md`; fechar em 2:00 e decisao de montagem, nao de
  *    codigo, e depende das sonoras reais.
- *  - **Nao tem trilha nem mixagem.** So a locucao, no volume em que saiu. O
- *    master a -14 LUFS e o ultimo passo, depois das sonoras.
+ *  - **Nao esta mixado.** Tem trilha e efeitos, mas cada um no ganho em que
+ *    foi colocado. O master a -14 LUFS e o ultimo passo, depois das sonoras.
  *
  * A cena 01 nao carrega a locucao dentro dela de proposito: a narracao entra
  * depois do silencio de abertura, e esse atraso e uma decisao de montagem.
@@ -38,24 +47,77 @@ const NARRACAO_01_EM = s(1.2);
 
 /** Tempo dos cartoes de lacuna, tirado do roteiro. */
 const LACUNA_02 = s(13);
-const LACUNA_04 = s(17.5);
 const LACUNA_05 = s(12);
-const LACUNA_07_SONORA = s(5);
+
+/** A sonora da 07 nao e mais lacuna: e o corte real, de 7,8 s. */
+const SONORA_07 = s(7.8);
+
+/**
+ * A trilha.
+ *
+ * Um leito so, do primeiro ao ultimo frame, **bem abaixo da locucao**. O
+ * volume nao e chute, e conta: o arquivo mede -22,4 dB de media e a locucao
+ * -20,2 dB; o ganho de 0,26 tira outros 11,7 dB, entao o leito toca uns **14 dB
+ * abaixo da fala**, que e onde ele sustenta sem disputar. Na abertura, antes da
+ * primeira narracao, ele fica em 0,42.
+ *
+ * Fade de 2,5 s nas duas pontas. Trilha que comeca no frame 1 em volume cheio
+ * denuncia a emenda; entrando de baixo, ela parece ter comecado antes do filme.
+ */
+const TRILHA_BASE = 0.26;
+const TRILHA_ALTA = 0.42;
+const FADE = s(2.5);
 
 export const COMPLETO_FRAMES =
   CENA01_FRAMES +
   LACUNA_02 +
   CENA03_FRAMES +
-  LACUNA_04 +
+  CENA04_FRAMES +
   LACUNA_05 +
   CENA06_FRAMES +
   CENA07_FRAMES +
-  LACUNA_07_SONORA +
+  SONORA_07 +
   CENA08_FRAMES +
   CENA09_FRAMES;
 
+/**
+ * A curva de volume da trilha, quadro a quadro.
+ *
+ * Tres movimentos e nada mais: entra de baixo, **desce para o leito quando a
+ * primeira narracao comeca** e sai no fim. E ducking escrito a mao, de
+ * proposito: o `volume` do Remotion aceita funcao do frame, entao a curva mora
+ * junto da montagem e se le olhando o codigo, em vez de virar um passo de
+ * mixagem que ninguem lembra de refazer quando uma cena muda de duracao.
+ *
+ * Nao ha degrau por cena. Trilha que sobe e desce a cada corte chama atencao
+ * para si, e o pedido era o contrario: presente e discreta. O acerto fino de
+ * cada trecho e da mixagem final, junto do master a -14 LUFS.
+ */
+const volumeTrilha = (f: number) => {
+  const entrada = interpolate(f, [0, FADE], [0, TRILHA_ALTA], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const leito = interpolate(
+    f,
+    [NARRACAO_01_EM, NARRACAO_01_EM + s(1.4)],
+    [TRILHA_ALTA, TRILHA_BASE],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
+  const saida = interpolate(
+    f,
+    [COMPLETO_FRAMES - FADE, COMPLETO_FRAMES],
+    [1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
+  return Math.min(entrada, leito) * saida;
+};
+
 export const Completo: React.FC = () => (
   <AbsoluteFill style={{ backgroundColor: "#000" }}>
+    {/* a trilha atravessa o filme inteiro, por baixo de tudo */}
+    <Audio src={staticFile("sfx/trilha-longo.mp3")} volume={volumeTrilha} />
+
     <Series>
       <Series.Sequence durationInFrames={CENA01_FRAMES}>
         <AbsoluteFill>
@@ -81,21 +143,8 @@ export const Completo: React.FC = () => (
         <Cena03 />
       </Series.Sequence>
 
-      <Series.Sequence durationInFrames={LACUNA_04}>
-        <AbsoluteFill>
-          <Placeholder
-            cena="04"
-            rotulo="Bastidor a captar · locução pronta"
-            titulo="O desafio, dito pela Profissio"
-            detalhe="Tela de código, painel do agente sendo configurado, equipe trabalhando. Ritmo seco, sem música épica. Fecha no ícone do WhatsApp na última frase."
-            origem="Captação: equipe real da Profissio, ou Gravações Base no Drive. A locução já está sincronizada neste corte."
-          />
-          {/* a locucao da 04 ja existe e toca por cima do cartao: e ela que da
-              o tempo real da cena, nao o chute do roteiro */}
-          <Sequence from={s(0.6)}>
-            <Audio src={staticFile("locucao/cena-04.mp3")} />
-          </Sequence>
-        </AbsoluteFill>
+      <Series.Sequence durationInFrames={CENA04_FRAMES}>
+        <Cena04 />
       </Series.Sequence>
 
       <Series.Sequence durationInFrames={LACUNA_05}>
@@ -116,13 +165,16 @@ export const Completo: React.FC = () => (
         <Cena07 />
       </Series.Sequence>
 
-      <Series.Sequence durationInFrames={LACUNA_07_SONORA}>
-        <Placeholder
-          cena="07"
-          rotulo="Sonora a captar"
-          titulo="Anaclaudia ouvindo a própria voz"
-          detalhe="Reação, não fala preparada. A pergunta que puxa: o que você sentiu ao ouvir sua própria voz respondendo alguém que você nunca vai conhecer?"
-          origem="Captação junto com a cena 02. O áudio real do produto precisa de aprovação e checagem de LGPD."
+      {/* a sonora real: ela pergunta, e o produto responde na voz dela. O
+          corte fecha no fim da frase inteira ("criada e alimentada por voce"),
+          nao no meio dela: 7,8 s medidos no silencio do arquivo. */}
+      <Series.Sequence durationInFrames={SONORA_07}>
+        <Sonora
+          arquivo="ana-ouvindo.mp4"
+          nome="Anaclaudia Zani"
+          papel="psicóloga · criadora da EITA"
+          gcEm={2.8}
+          gcDura={3.6}
         />
       </Series.Sequence>
 

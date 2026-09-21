@@ -93,3 +93,39 @@ export const textoEm = (
   const ultimo = trechos[trechos.length - 1];
   return { texto: ultimo ? ultimo.texto : "", digitando: false };
 };
+
+/** Um toque de tecla: quando, e se foi digitando ou apagando. */
+export type Toque = { seg: number; apagando: boolean };
+
+/**
+ * Os tempos de cada tecla, para o som ficar colado na imagem.
+ *
+ * `cada` existe porque a densidade visual e a sonora nao sao a mesma coisa.
+ * Digitando a 19 caracteres por segundo, um som por caractere vira zumbido
+ * continuo em vez de digitacao; apagando a 38, pior ainda. Tocar a cada 2 ou 3
+ * caracteres soa como alguem digitando rapido, que e o que a cena quer dizer.
+ *
+ * Os tempos saem da **mesma linha do tempo que desenha o texto**, entao imagem
+ * e som nao podem divergir: nao existe uma segunda tabela para manter em dia.
+ */
+export const toques = (
+  trechos: Trecho[],
+  cadaDigita = 2,
+  cadaApaga = 3,
+): Toque[] => {
+  const fora: Toque[] = [];
+  for (let i = 0; i < trechos.length; i++) {
+    const tr = trechos[i];
+    if (!tr.ativo || !tr.texto) continue;
+    const anterior = trechos[i - 1];
+    const apagando =
+      anterior !== undefined && anterior.texto === tr.texto && !anterior.ativo;
+    const passo = apagando ? cadaApaga : cadaDigita;
+    const n = tr.texto.length;
+    const dur = tr.fim - tr.ini;
+    for (let c = 0; c < n; c += passo) {
+      fora.push({ seg: tr.ini + (dur * c) / n, apagando });
+    }
+  }
+  return fora;
+};

@@ -1,0 +1,16 @@
+[
+ {"nome":"tecla","segundos":0.5,"influencia":0.6,
+  "prompt":"one single soft key press on a phone touchscreen keyboard, very short dry click, close microphone, no reverb, no music, no tail"},
+ {"nome":"apaga","segundos":0.5,"influencia":0.6,
+  "prompt":"one single quick backspace key tap, duller and softer than a normal key, very short, dry, no reverb, no music, no tail"},
+ {"nome":"pop","segundos":0.8,"influencia":0.5,
+  "prompt":"soft rounded user interface pop, gentle and pleasant, short, clean, no reverb, no music"},
+ {"nome":"surge","segundos":1.2,"influencia":0.45,
+  "prompt":"very soft airy whoosh for a user interface element appearing, subtle, short, gentle, no music, no impact, no bass drop"},
+ {"nome":"marca","segundos":0.6,"influencia":0.55,
+  "prompt":"minimal soft tick, a small clean user interface click, very short, dry, no reverb, no music"},
+ {"nome":"recebido","segundos":1.4,"influencia":0.45,
+  "prompt":"soft gentle two note notification chime, warm and quiet, short, no reverb tail, no music bed"},
+ {"nome":"trilha","segundos":22,"influencia":0.35,"estender_para":125,
+  "prompt":"soft warm ambient music bed, gentle felt piano and airy synth pad, hopeful and light, calm but not sad, slow and unobtrusive, no drums, no percussion, no vocals, seamless and even throughout"}
+]

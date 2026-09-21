@@ -9,6 +9,7 @@ import {
 import { marca, modos } from "./marca";
 import { Superficie } from "./Superficie";
 import { janela, entra, conta, br, s } from "./anim";
+import { Sfx } from "./Sfx";
 
 /**
  * Cena 08 do case: o que aconteceu, em numero.
@@ -148,6 +149,11 @@ export const Cena08: React.FC = () => {
           );
         })}
       </AbsoluteFill>
+
+      {/* um pop por numero que entra */}
+      {DADOS.map((d) => (
+        <Sfx key={d.titulo} som="pop" em={d.entra} volume={0.24} />
+      ))}
     </AbsoluteFill>
   );
 };
