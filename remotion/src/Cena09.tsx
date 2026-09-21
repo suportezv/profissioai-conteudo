@@ -18,9 +18,9 @@ import { janela, entra, s } from "./anim";
  * revelacao da gramatica da casa, e o ultimo verso segura sozinho antes de
  * virar assinatura.
  *
- * **O lockup da EITA e um espaco reservado.** O arquivo ainda nao chegou, e
- * inventar logo de cliente numa peca de premiacao e pior do que deixar o vazio
- * visivel: assim o buraco cobra a si mesmo em toda revisao.
+ * Os dois lockups ficam lado a lado, e a ordem nao e decorativa: no formulario
+ * da premiacao a anunciante e a EITA, e a Profissio assina como quem construiu.
+ * A peca nao pode sugerir que a Profissio e dona do produto.
  */
 
 export const CENA09_FRAMES = s(7.5);
@@ -82,38 +82,30 @@ export const Cena09: React.FC = () => {
       <AbsoluteFill
         style={{
           padding: MARGEM,
-          alignItems: "center",
+          alignItems: "flex-start",
           justifyContent: "center",
           ...entra(assina, 20),
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 80 }}>
-          <div
-            style={{
-              width: 440,
-              height: 118,
-              border: `1px dashed ${marca.linha}`,
-              borderRadius: marca.raio.controle,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 22,
-              letterSpacing: "-0.77px",
-              color: m.apoio,
-            }}
-          >
-            logo EITA (a receber)
-          </div>
-          <div style={{ width: 1, height: 72, background: marca.linha }} />
+        <div style={{ display: "flex", alignItems: "center", gap: 88 }}>
+          {/* a EITA aparece como ela e, sem reestilizar: e a marca da cliente,
+              nao um elemento da Profissio. O PNG ja vem com fundo
+              transparente e foi aparado ate o conteudo, senao um retangulo
+              branco apareceria sobre a superficie #F4F6F9. */}
+          <Img
+            src={staticFile("marca/eita-mentora-virtual.png")}
+            style={{ height: 290, width: "auto" }}
+          />
+          <div style={{ width: 1, height: 200, background: marca.linha }} />
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
             <Img
               src={staticFile("marca/profissio-ai-escuro.svg")}
-              style={{ width: 440, height: "auto" }}
+              style={{ width: 500, height: "auto" }}
             />
             <div
               style={{
-                fontSize: 22,
-                letterSpacing: "-0.77px",
+                fontSize: 26,
+                letterSpacing: "-0.91px",
                 color: m.apoio,
               }}
             >

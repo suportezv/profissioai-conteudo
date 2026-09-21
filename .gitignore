@@ -18,3 +18,6 @@ remotion/out/
 
 # fundos de cena do kit de marca (baixar do Drive quando precisar)
 marca/fundos/
+
+# b-roll copiado de projects/ para o Remotion enxergar: mídia não vai para o git
+remotion/public/broll/

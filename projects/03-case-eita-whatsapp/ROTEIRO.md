@@ -32,13 +32,13 @@
 
 | # | Tempo | Vídeo | Quem fala | Conteúdo |
 |---|---|---|---|---|
-| **01** | 0:00 a 0:11 | Close da tela no escuro. 23:47. Alguém digita **não tô bem**, envia. Fica com **um check**. Nada acontece. | ninguém, depois narração entra baixa | *(4 s de silêncio: só o teclado e o envio)*<br><br>**Narração:** Todo dia, milhões de brasileiros escrevem uma mensagem assim. E a maioria nunca manda pra ninguém. |
+| **01** | 0:00 a 0:11 | Plano filmado: alguém na cama, no escuro, com o celular na mão e o display estourado de branco. A mensagem **não tô bem** é digitada e **levanta da tela em 3D**, girando até encarar a câmera. Fica com **um check**. Nada acontece. | ninguém, depois narração entra baixa | *(4 s de silêncio: só o teclado e o envio)*<br><br>**Narração:** Todo dia, milhões de brasileiros escrevem uma mensagem assim. E a maioria nunca manda pra ninguém. |
 | **02** | 0:11 a 0:24 | Corte seco para a Anaclaudia, consultório, luz natural. Plano médio. Sem lettering em cima dela nos primeiros 3 s. | **Sonora Anaclaudia** | Eu percebi que a conta não fechava e precisava levar o que aprendi nesses 20 anos de consultório para o máximo de pessoas possível.<br><br>**GC, entrando depois da frase dela:** `547 mil psicólogos no Brasil` e `R$ 200 a R$ 2.000 por sessão` |
 | **03** | 0:24 a 0:40 | Tela antiga do app de 2017 em arquivo. Depois, os números sobem em motion sobre a superfície clara da Profissio. | **Narração Profissio** | Ela já tinha tentado em 2017, antes da IA generativa existir. Um app que dependia de psicólogos catalogando sentimentos à mão. Não sobreviveu à pandemia. Em 2025 ela voltou. |
 | **04** | 0:40 a 0:59 | Bastidor: tela de código, o painel do agente sendo configurado, pessoas da Profissio trabalhando. Ritmo seco, sem música épica. Fecha no ícone do WhatsApp na última frase. | **Narração Profissio** | O desafio não era fazer um chatbot. Era construir uma inteligência artificial capaz de fazer as pessoas abrirem suas emoções e ser o porto-seguro que elas precisam quando enfrentam os seus desafios, isso tudo no canal mais popular do Brasil: o WhatsApp. |
 | **05** | 0:59 a 1:11 | Clésio, ambiente de trabalho da Profissio, plano médio. Mesma linguagem visual da sonora da Anaclaudia. | **Sonora Profissio** | Foi construir uma IA que não fale para o usuário o que ele quer ouvir, mas sim o que a Anaclaudia falaria para ele. |
 | **06** | 1:11 a 1:28 | Três cartões em motion sobre prints recriados de conversa. Tokens Profissio: superfície clara `#F4F6F9`, cartão branco, Sora 500, azul `#2458F5` no número. | **Narração Profissio** | Três escolhas entraram no produto, e nenhuma veio de boa prática de mercado. A autolimitação. Um segundo modelo que lê risco e aciona um time de especialistas. E memória contínua, porque quem sofre não deveria se explicar de novo. |
-| **07** | 1:28 a 1:41 | Volta o celular da cena 01. Agora **dois checks**. Chega um áudio. Play. A forma de onda anda. Corta para a Anaclaudia ouvindo a própria voz. | **áudio do produto**, depois **Sonora Anaclaudia** | O áudio toca na voz clonada dela. *(usar áudio real do produto, aprovado)*<br><br>**Pergunta:** *O que você sentiu ao ouvir sua própria voz respondendo alguém que você nunca vai conhecer?* |
+| **07** | 1:28 a 1:41 | Volta o mesmo tratamento da cena 01, agora em outro plano filmado: mão segurando o celular, luz quente. O balão levanta com **dois checks**, que viram azuis. Um áudio levanta do mesmo display e toca, com a onda andando. Corta para a Anaclaudia ouvindo a própria voz. | **áudio do produto**, depois **Sonora Anaclaudia** | O áudio toca na voz clonada dela. *(usar áudio real do produto, aprovado)*<br><br>**Pergunta:** *O que você sentiu ao ouvir sua própria voz respondendo alguém que você nunca vai conhecer?* |
 | **08** | 1:41 a 1:53 | Números em motion, um por vez, sobre grade de conversas desfocada. Base e período sempre no lettering. | **Narração Profissio** | Em quinze meses: trinta e cinco mil pessoas. Dois milhões e trezentas mil mensagens. Uma em cada cinco, por áudio. Três de cada quatro voltaram na semana seguinte. |
 | **09** | 1:53 a 2:00 | Fade para os lockups, EITA e Profissio lado a lado, tokens da revisão 3. | **Narração Profissio** | A barreira nunca foi falta de interesse. É dar o primeiro passo. E ele cabe numa mensagem. |
 
@@ -85,7 +85,9 @@ Para a versão da inscrição, um **cartão de 3 s** depois da cena 09 listando 
 
 **Saúde mental é o assunto.** Os três "não" aparecem em lettering com tempo de tela na cena 06. A sinalização de risco é dita em uma frase, sem dramatizar: sem sirene, sem tela vermelha, sem a palavra "suicídio" no lettering. O formulário escrito já a nomeia para o júri.
 
-**Nenhuma conversa real na tela.** Todas recriadas em motion. A frase **não tô bem** é a única que o espectador lê inteira. A grade da cena 08 é desfocada a ponto de ser textura.
+**Nenhuma conversa real na tela.** Os balões são todos recriados em motion, e o plano embaixo deles é filmado, nunca captura de tela de usuário. A frase **não tô bem** é a única que o espectador lê inteira. A grade da cena 08 é desfocada a ponto de ser textura.
+
+**O balão levanta, a tela não é mostrada.** As cenas 01 e 07 não desenham o app: mostram a pessoa e deixam a mensagem sair do display em perspectiva. A escolha muda o que a cena diz, de "print de conversa" para "a frase existe no mundo". A contagem de checks continua sendo o significado, então ela nunca pode ser gerada por IA nem capturada: um check na 01, dois na 07.
 
 **O áudio da cena 07 precisa de aprovação.** Se for áudio real do produto, exige consentimento e anonimização, e vale passar por quem cuida de LGPD na EITA, que o case já cita.
 
@@ -116,7 +118,9 @@ Para a versão da inscrição, um **cartão de 3 s** depois da cena 09 listando 
 | Bastidor Profissio: código, painel do agente, equipe | 04 | **captar** · ou usar `Gravações Base` do Drive |
 | Print ou vídeo do app de 2017 | 03 | arquivo da EITA |
 | Áudio real do produto na voz clonada | 07 | EITA, com aprovação |
-| Tela de WhatsApp recriada | 01, 06, 07 | **pronta**: composição `CaseEitaCena01` no Remotion |
+| Plano filmado da cena 01 (pessoa na cama, celular) | 01 | **pronto**: gerado em Veo, `broll/mood-01-abertura.mp4` |
+| Plano filmado da cena 07 (mão, celular, luz quente) | 07 | **pronto**: gerado em Veo, `broll/mood-07-audio-maos.mp4` |
+| Balões em 3D levantando do display | 01, 07 | **prontos**: `CaseEitaCena01` e `CaseEitaCena07` |
 | Cartões e números em motion | 03, 06, 08 | Remotion, tokens rev. 3 |
 | Lockup Profissio rev. 3 | 09 | `marca/` neste repo |
 | Logo EITA | 09 | pedir à EITA |
