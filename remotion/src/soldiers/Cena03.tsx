@@ -64,14 +64,22 @@ type Clipe = { arq: string; de: number };
 /**
  * Os dezoito, na ordem da faixa. Os cinco primeiros sao os que abrem a cena,
  * e a **Pietra e a ultima**, porque a faixa para com o ultimo cartao centrado.
+ *
+ * O **MC Bin Laden abre**: e o nome de maior alcance da base, e quem entra
+ * primeiro e quem o juri associa ao tamanho do time. Doze destes clipes vieram
+ * do ZIP **sem faixa de audio**, entao nao ha transcricao que os identifique;
+ * quem tem nome aqui foi confirmado pelo cliente, e os outros ficam anonimos de
+ * proposito, porque atribuir rosto por palpite num filme de premiacao e erro
+ * que nao se conserta depois.
  */
 const CLIPES: Clipe[] = [
+  { arq: "C0028-mc-bin-laden.mp4", de: 0 },
   { arq: "C0001-gordelas.mp4", de: s(1.2) },
   { arq: "C0002-seu-bolinha.mp4", de: s(1.5) },
   { arq: "C0027.mp4", de: s(1.0) },
   { arq: "C0021.mp4", de: s(1.0) },
   { arq: "C0008.mp4", de: 0 },
-  { arq: "C0005.mp4", de: 0 },
+  { arq: "C0005-matheus-ueda.mp4", de: 0 },
   { arq: "C0009.mp4", de: 0 },
   { arq: "C0010.mp4", de: 0 },
   { arq: "C0011.mp4", de: 0 },
@@ -80,7 +88,6 @@ const CLIPES: Clipe[] = [
   { arq: "C0022.mp4", de: 0 },
   { arq: "C0024.mp4", de: 0 },
   { arq: "C0026.mp4", de: 0 },
-  { arq: "C0028.mp4", de: 0 },
   { arq: "C0029.mp4", de: 0 },
   { arq: "C0032.mp4", de: 0 },
   { arq: "C0004-pietra.mp4", de: s(2.0) },

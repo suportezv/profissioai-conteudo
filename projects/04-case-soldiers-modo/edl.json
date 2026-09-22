@@ -48,5 +48,15 @@
     "ate": "Você topa"
    }
   ]
+ },
+ "C0005": {
+  "pessoa": "Matheus Ueda",
+  "arquivo": "C0005-matheus-ueda.mp4",
+  "nota": "identificado pelo cliente em 22/set; o bruto nao tem faixa de audio, entao nao ha transcricao"
+ },
+ "C0028": {
+  "pessoa": "MC Bin Laden",
+  "arquivo": "C0028-mc-bin-laden.mp4",
+  "nota": "identificado pelo cliente em 22/set; abre a esteira da cena 03"
  }
 }
