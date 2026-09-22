@@ -1,0 +1,22 @@
+{
+  "geracoes": [
+    {
+      "quando": "2026-09-22T13:22:43Z",
+      "nome": "c01-gondola-a",
+      "modelo": "veo-3.1-generate-preview",
+      "resolucao": "1080p",
+      "segundos": 8,
+      "usd": 3.2,
+      "ok": true
+    },
+    {
+      "quando": "2026-09-22T13:25:19Z",
+      "nome": "c01-gondola-b",
+      "modelo": "veo-3.1-generate-preview",
+      "resolucao": "1080p",
+      "segundos": 8,
+      "usd": 3.2,
+      "ok": true
+    }
+  ]
+}

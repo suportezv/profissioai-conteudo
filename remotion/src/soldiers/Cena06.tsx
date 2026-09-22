@@ -16,73 +16,221 @@ import { Sfx } from "../Sfx";
 /**
  * Cena 06 do case Soldiers: o ritual diario. **E o filme.**
  *
- * 17 s, narracao de 12,82 s que comeca em 0,6 s. Pausas do arquivo em 1,97 /
+ * 18 s, narracao de 12,82 s que comeca em 0,6 s. Pausas do arquivo em 1,97 /
  * 3,61 / 7,39 / 9,68 / 10,64 / 12,43 s, somado o atraso: 2,57 / 4,21 / 7,99 /
  * 10,28 / 11,24 / 13,03.
  *
- * ## Como a repeticao vira forma
+ * ## A conversa acumula, ela nao pisca
  *
- * A conversa acontece uma vez: o agente pergunta o horario, o cliente responde.
- * Dai em diante **o relogio e o balao ficam parados no mesmo lugar** e so o
- * cabecalho muda de dia. Cinco repeticoes, **cada uma mais curta que a
- * anterior**, de 1,1 s para 0,45 s.
+ * A versao anterior mantinha **um** balao de audio no mesmo lugar, sumindo e
+ * reaparecendo com o cabecalho trocando de dia. Lia como glitch, nao como
+ * habito: nada sobrava na tela para provar que os dias passaram.
  *
- * A aceleracao e o que impede a cena de ficar monotona dizendo que algo se
- * repete: ela deixa de mostrar cinco dias e passa a mostrar um habito. Repeticao
- * em intervalo constante lê como loop travado; encurtando, lê como rotina que
- * ja pegou.
+ * Agora a conversa **empilha**. Cada dia entra com a marcacao central de data,
+ * o agente manda a mensagem e o cliente responde, e o conteudo antigo sobe e sai
+ * por cima. E assim que a continuidade fica visivel: no fim da cena da para ver
+ * que aquilo ja vem acontecendo ha dias, porque o rastro esta ali.
+ *
+ * O empilhamento nao precisa de scroll animado. A coluna tem altura fixa,
+ * `justify-content: flex-end` e `overflow: hidden`: mensagem nova empurra a
+ * antiga para cima e ela sai sozinha, que e exatamente o que um app faz.
+ *
+ * ## Toda mensagem do agente e precedida de "digitando"
+ *
+ * Mensagem que aparece do nada lê como cartao de motion. Com os tres pontinhos
+ * antes, lê como alguem do outro lado. O indicador dura 0,5 s e some no frame
+ * em que o balao entra, porque os dois juntos na tela seria erro de app.
+ *
+ * ## A alternancia audio / texto e proposital
+ *
+ * O agente manda audio num dia e texto no outro, e o cliente as vezes responde
+ * e as vezes so **curte**. E o que uma conversa real de lembrete parece depois
+ * da primeira semana: o engajamento cai de resposta para reacao sem o vinculo
+ * cair junto. Mostrar sempre a mesma troca entusiasmada seria propaganda.
  *
  * ## Nenhuma conversa real na tela
  *
- * Os baloes sao recriados com a paleta do `whatsapp.ts`, a mesma das cenas 01 e
- * 07 do case anterior. Nenhuma captura de tela de usuario entra na peca.
+ * Os baloes sao recriados com a paleta do `whatsapp.ts`. Nenhuma captura de
+ * tela de usuario entra na peca, e nenhuma reacao usa emoji de fonte: os
+ * simbolos sao SVG, porque o render headless nao tem fonte de emoji e o que
+ * sairia seria um retangulo vazio.
  */
 
-export const CENA06_FRAMES = s(17);
+export const CENA06_FRAMES = s(18);
 const AUDIO_EM = s(0.6);
 const MARGEM = 120;
 const m = modos.claro;
 
-const PERGUNTA_EM = s(4.6);
-const RESPOSTA_EM = s(6.6);
-const RITUAL_EM = s(8.4);
+const TELA_EM = s(0.8);
+/**
+ * A conversa comeca no onboarding, e nao na pergunta do horario.
+ *
+ * Sem isso o painel abria como um retangulo preto quase vazio por cinco
+ * segundos, porque a coluna e alinhada embaixo e so havia um balao. A boas
+ * vindas nao e enchimento: e o momento em que o cliente estreia o MODO, que e
+ * de onde o ritual parte.
+ */
+const DIA_ZERO = s(1.2);
+const DIGITA_BOAS = s(1.7);
+const BOAS_EM = s(2.3);
+const DIGITA_PERGUNTA = s(3.4);
+const PERGUNTA_EM = s(4.0);
+const RESPOSTA_EM = s(5.3);
+
+/** Onde o ritual comeca. Os dias sao medidos a partir daqui. */
+const RITUAL_EM = s(6.2);
+
+type Dia = {
+  nome: string;
+  /** Segundos depois de `RITUAL_EM`. Os intervalos encurtam de proposito. */
+  t: number;
+  tipo: "audio" | "texto";
+  /** O texto, quando o agente escreve em vez de mandar audio. */
+  msg?: string;
+  /** Resposta escrita do cliente, quando ele responde. */
+  resposta?: string;
+  /** Quando ele so reage, em vez de responder. */
+  curte?: "coracao" | "joinha";
+};
 
 /**
- * Os cinco dias, com o inicio de cada um. Os intervalos encurtam de proposito:
- * 1,10 · 0,95 · 0,80 · 0,60 · 0,45 s.
+ * Cinco dias, com intervalos de 2,5 · 2,1 · 1,8 · 1,5 s.
+ *
+ * A aceleracao e o que impede a cena de virar monotonia: repeticao em intervalo
+ * constante lê como loop travado, encurtando lê como rotina que ja pegou.
  */
-const DIAS = ["terça", "quarta", "quinta", "sexta", "sábado"];
-const PASSOS = [0, 1.1, 2.05, 2.85, 3.45].map((t) => RITUAL_EM + s(t));
+const DIAS: Dia[] = [
+  { nome: "terça-feira", t: 0, tipo: "audio", resposta: "valeu, já tomei!" },
+  {
+    nome: "quarta-feira",
+    t: 2.5,
+    tipo: "texto",
+    msg: "7h! bora de creatina antes do treino",
+    resposta: "bora",
+  },
+  { nome: "quinta-feira", t: 4.6, tipo: "audio", curte: "coracao" },
+  {
+    nome: "sexta-feira",
+    t: 6.4,
+    tipo: "texto",
+    msg: "já tomou hoje?",
+    curte: "joinha",
+  },
+  { nome: "sábado", t: 7.9, tipo: "audio", curte: "coracao" },
+];
 
-/** Onda curta do audio que chega, desenhada uma vez e reusada em todos os dias. */
+/** Deslocamentos dentro de um dia: marcacao, digitando, mensagem, reacao. */
+const D_DIGITA = 0.3;
+const D_MSG = 0.8;
+const D_REACAO = 1.45;
+
+const emDia = (d: Dia) => RITUAL_EM + s(d.t);
+
+/** Onda curta do audio, desenhada uma vez e reusada. */
 const ONDA = [
   0.4, 0.75, 0.5, 0.95, 0.65, 0.45, 0.85, 0.6, 0.35, 0.8, 0.55, 0.9, 0.6, 0.4,
 ];
 
-const BalaoAgente: React.FC<{ o: number; progresso: number }> = ({
+/** Os tres pontinhos, com salto defasado. */
+const Digitando: React.FC<{ o: number }> = ({ o }) => {
+  const f = useCurrentFrame();
+  return (
+    <div
+      style={{
+        background: wa.balaoEntrada,
+        borderRadius: 18,
+        borderTopLeftRadius: 5,
+        padding: "18px 22px",
+        alignSelf: "flex-start",
+        display: "flex",
+        gap: 7,
+        alignItems: "center",
+        ...entra(o, 8),
+      }}
+    >
+      {[0, 1, 2].map((i) => {
+        const fase = ((f - i * 4) % 30) / 30;
+        const sobe = Math.sin(fase * Math.PI * 2) * 0.5 + 0.5;
+        return (
+          <div
+            key={i}
+            style={{
+              width: 10,
+              height: 10,
+              borderRadius: 5,
+              background: wa.apoio,
+              opacity: 0.45 + sobe * 0.55,
+              transform: `translateY(${-sobe * 5}px)`,
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
+/** A marcacao central de data, como a do proprio app. */
+const MarcaDia: React.FC<{ o: number; texto: string }> = ({ o, texto }) => (
+  <div
+    style={{
+      alignSelf: "center",
+      background: wa.barra,
+      borderRadius: 10,
+      padding: "8px 18px",
+      fontFamily: UI,
+      fontSize: 17,
+      letterSpacing: "0.6px",
+      textTransform: "uppercase",
+      color: wa.apoio,
+      ...entra(o, 8),
+    }}
+  >
+    {texto}
+  </div>
+);
+
+/** Coracao e joinha em SVG: o render headless nao tem fonte de emoji. */
+const Reacao: React.FC<{ tipo: "coracao" | "joinha" }> = ({ tipo }) =>
+  tipo === "coracao" ? (
+    <svg width="20" height="20" viewBox="0 0 24 24">
+      <path
+        d="M12 21s-7.5-4.7-9.3-9A5.3 5.3 0 0 1 12 6.6 5.3 5.3 0 0 1 21.3 12c-1.8 4.3-9.3 9-9.3 9z"
+        fill="#F0475B"
+      />
+    </svg>
+  ) : (
+    <svg width="20" height="20" viewBox="0 0 24 24">
+      <path
+        d="M7 22H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h3v10zm2-10.4 4.2-8.2a1 1 0 0 1 1.8.1l.4 1a4 4 0 0 1 .1 2.8L14.8 10H20a2 2 0 0 1 2 2.4l-1.4 7A2 2 0 0 1 18.6 21H9V11.6z"
+        fill="#F6C800"
+      />
+    </svg>
+  );
+
+/** O balao do agente com audio, com a onda correndo de verdade. */
+const BalaoAudio: React.FC<{ o: number; progresso: number }> = ({
   o,
   progresso,
 }) => (
   <div
     style={{
       background: wa.balaoEntrada,
-      borderRadius: 20,
+      borderRadius: 18,
       borderTopLeftRadius: 5,
-      padding: "18px 24px 12px",
+      padding: "14px 20px 8px",
       display: "flex",
       flexDirection: "column",
-      gap: 8,
+      gap: 4,
       alignSelf: "flex-start",
-      maxWidth: 520,
-      ...entra(o, 14),
+      ...entra(o, 12),
     }}
   >
-    <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
       <div
         style={{
-          width: 52,
-          height: 52,
-          borderRadius: 26,
+          width: 42,
+          height: 42,
+          borderRadius: 21,
           background: wa.verde,
           flexShrink: 0,
           display: "flex",
@@ -90,18 +238,18 @@ const BalaoAgente: React.FC<{ o: number; progresso: number }> = ({
           justifyContent: "center",
         }}
       >
-        <svg width="18" height="22" viewBox="0 0 12 14">
+        <svg width="15" height="18" viewBox="0 0 12 14">
           <rect x="0" y="0" width="4" height="14" fill={wa.fundoChat} />
           <rect x="8" y="0" width="4" height="14" fill={wa.fundoChat} />
         </svg>
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 4, height: 46 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 3, height: 38 }}>
         {ONDA.map((v, i) => (
           <div
             key={i}
             style={{
-              width: 4,
-              height: 5 + v * 38,
+              width: 3,
+              height: 4 + v * 30,
               borderRadius: 2,
               background: i / ONDA.length <= progresso ? wa.lido : wa.apoio,
               opacity: i / ONDA.length <= progresso ? 0.95 : 0.4,
@@ -110,36 +258,95 @@ const BalaoAgente: React.FC<{ o: number; progresso: number }> = ({
         ))}
       </div>
     </div>
-    <div style={{ fontFamily: UI, fontSize: 18, color: wa.apoio, alignSelf: "flex-end" }}>
+    <div
+      style={{
+        fontFamily: UI,
+        fontSize: 15,
+        color: wa.apoio,
+        alignSelf: "flex-end",
+      }}
+    >
       0:12
     </div>
+  </div>
+);
+
+/** Balao de texto, de qualquer lado. */
+const BalaoTexto: React.FC<{
+  o: number;
+  texto: string;
+  saida?: boolean;
+  reacao?: "coracao" | "joinha";
+  reacaoO?: number;
+}> = ({ o, texto, saida, reacao, reacaoO = 0 }) => (
+  <div
+    style={{
+      position: "relative",
+      alignSelf: saida ? "flex-end" : "flex-start",
+      maxWidth: 440,
+      marginBottom: reacao && reacaoO > 0.01 ? 16 : 0,
+      ...entra(o, 12),
+    }}
+  >
+    <div
+      style={{
+        background: saida ? wa.balaoSaida : wa.balaoEntrada,
+        borderRadius: 18,
+        borderTopLeftRadius: saida ? 18 : 5,
+        borderTopRightRadius: saida ? 5 : 18,
+        padding: "14px 18px",
+        fontFamily: UI,
+        fontSize: 22,
+        color: wa.texto,
+        lineHeight: 1.35,
+      }}
+    >
+      {texto}
+    </div>
+    {reacao && reacaoO > 0.01 ? (
+      <div
+        style={{
+          position: "absolute",
+          left: 14,
+          bottom: -14,
+          background: wa.barra,
+          borderRadius: 14,
+          padding: "3px 8px",
+          display: "flex",
+          alignItems: "center",
+          transform: `scale(${0.6 + reacaoO * 0.4})`,
+          opacity: reacaoO,
+        }}
+      >
+        <Reacao tipo={reacao} />
+      </div>
+    ) : null}
   </div>
 );
 
 export const Cena06: React.FC = () => {
   const f = useCurrentFrame();
 
-  const tela = janela(f, s(0.8), CENA06_FRAMES, 18, 0);
+  const tela = janela(f, TELA_EM, CENA06_FRAMES, 18, 0);
   const pergunta = janela(f, PERGUNTA_EM, CENA06_FRAMES, 14, 0);
   const resposta = janela(f, RESPOSTA_EM, CENA06_FRAMES, 14, 0);
+  // o indicador da pergunta some no frame em que o balao entra
+  const digitaPergunta =
+    f >= DIGITA_PERGUNTA && f < PERGUNTA_EM
+      ? passo(f, DIGITA_PERGUNTA, DIGITA_PERGUNTA + 6)
+      : 0;
+  const diaZero = janela(f, DIA_ZERO, CENA06_FRAMES, 10, 0);
+  const boas = janela(f, BOAS_EM, CENA06_FRAMES, 14, 0);
+  const digitaBoas =
+    f >= DIGITA_BOAS && f < BOAS_EM ? passo(f, DIGITA_BOAS, DIGITA_BOAS + 6) : 0;
 
-  // qual dia esta em cena, e o progresso do audio daquele dia
-  let diaAtivo = -1;
-  for (let i = 0; i < PASSOS.length; i++) {
-    if (f >= PASSOS[i]) diaAtivo = i;
-  }
-  const inicio = diaAtivo >= 0 ? PASSOS[diaAtivo] : 0;
-  const fim =
-    diaAtivo >= 0 && diaAtivo + 1 < PASSOS.length
-      ? PASSOS[diaAtivo + 1]
-      : inicio + s(1.0);
-  const progresso = interpolate(f, [inicio, fim - 4], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const balaoDia = diaAtivo >= 0 ? passo(f, inicio, inicio + 8) : 0;
+  /** Qual dia esta tocando audio agora, para a onda correr no balao certo. */
+  const ultimoAudio = DIAS.reduce<number>((ac, d, i) => {
+    if (d.tipo === "audio" && f >= emDia(d) + s(D_MSG)) return i;
+    return ac;
+  }, -1);
 
-  const fecho = janela(f, s(13.4), CENA06_FRAMES, 16, 0);
+  const fecho = janela(f, s(14.2), CENA06_FRAMES, 16, 0);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -157,10 +364,10 @@ export const Cena06: React.FC = () => {
           gap: 72,
         }}
       >
-        {/* a tela recriada, com o cabecalho que e a unica coisa que muda */}
+        {/* a tela recriada: a conversa empilha e o antigo sobe e sai */}
         <div
           style={{
-            width: 640,
+            width: 660,
             flexShrink: 0,
             background: wa.fundoChat,
             borderRadius: marca.raio.arte,
@@ -172,80 +379,118 @@ export const Cena06: React.FC = () => {
           <div
             style={{
               background: wa.barra,
-              padding: "20px 26px",
+              padding: "18px 24px",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
             }}
           >
-            <div style={{ fontFamily: UI, fontSize: 24, color: wa.texto }}>
+            <div style={{ fontFamily: UI, fontSize: 23, color: wa.texto }}>
               MODO Soldiers
             </div>
             <div
               style={{
                 fontFamily: UI,
-                fontSize: 22,
+                fontSize: 21,
                 fontWeight: 600,
-                color: diaAtivo >= 0 ? wa.lido : wa.apoio,
+                color: wa.lido,
               }}
             >
-              {diaAtivo >= 0 ? `${DIAS[diaAtivo]} · 7:00` : "7:00"}
+              7:00
             </div>
           </div>
 
           <div
             style={{
-              padding: 26,
+              padding: 24,
               display: "flex",
               flexDirection: "column",
-              gap: 16,
-              minHeight: 460,
+              gap: 14,
+              height: 440,
               justifyContent: "flex-end",
+              overflow: "hidden",
             }}
           >
-            {/* a conversa, que acontece uma vez */}
+            {/* o onboarding, e depois a combinacao do horario */}
+            {diaZero > 0.001 ? (
+              <MarcaDia o={diaZero} texto="segunda-feira" />
+            ) : null}
+            {digitaBoas > 0.001 ? <Digitando o={digitaBoas} /> : null}
+            {boas > 0.001 ? (
+              <BalaoTexto
+                o={boas}
+                texto="Bem-vindo ao MODO Soldiers. Vou te acompanhar todo dia."
+              />
+            ) : null}
+            {digitaPergunta > 0.001 ? <Digitando o={digitaPergunta} /> : null}
             {pergunta > 0.001 ? (
-              <div
-                style={{
-                  background: wa.balaoEntrada,
-                  borderRadius: 18,
-                  borderTopLeftRadius: 5,
-                  padding: "16px 20px",
-                  alignSelf: "flex-start",
-                  maxWidth: 460,
-                  fontFamily: UI,
-                  fontSize: 24,
-                  color: wa.texto,
-                  lineHeight: 1.35,
-                  ...entra(pergunta, 14),
-                }}
-              >
-                Que horas você costuma tomar?
-              </div>
+              <BalaoTexto o={pergunta} texto="Que horas você costuma tomar?" />
             ) : null}
-
             {resposta > 0.001 ? (
-              <div
-                style={{
-                  background: wa.balaoSaida,
-                  borderRadius: 18,
-                  borderTopRightRadius: 5,
-                  padding: "16px 20px",
-                  alignSelf: "flex-end",
-                  fontFamily: UI,
-                  fontSize: 24,
-                  color: wa.texto,
-                  ...entra(resposta, 14),
-                }}
-              >
-                7h
-              </div>
+              <BalaoTexto o={resposta} texto="7h" saida />
             ) : null}
 
-            {/* e o audio que chega todo dia, no mesmo lugar */}
-            {diaAtivo >= 0 ? (
-              <BalaoAgente o={balaoDia} progresso={progresso} />
-            ) : null}
+            {/* e entao o ritual, dia a dia, acumulando */}
+            {DIAS.map((d, i) => {
+              const t0 = emDia(d);
+              if (f < t0) return null;
+              const oDia = passo(f, t0, t0 + 8);
+              const tMsg = t0 + s(D_MSG);
+              const tDigita = t0 + s(D_DIGITA);
+              const oMsg = f >= tMsg ? passo(f, tMsg, tMsg + 8) : 0;
+              const oDigita =
+                f >= tDigita && f < tMsg ? passo(f, tDigita, tDigita + 5) : 0;
+              const tReacao = t0 + s(D_REACAO);
+              const oReacao = f >= tReacao ? passo(f, tReacao, tReacao + 7) : 0;
+              const progresso =
+                i === ultimoAudio
+                  ? interpolate(f, [tMsg, tMsg + s(1.1)], [0, 1], {
+                      extrapolateLeft: "clamp",
+                      extrapolateRight: "clamp",
+                    })
+                  : 1;
+
+              return (
+                <React.Fragment key={d.nome}>
+                  <MarcaDia o={oDia} texto={d.nome} />
+                  {oDigita > 0.001 ? <Digitando o={oDigita} /> : null}
+                  {oMsg > 0.001 ? (
+                    d.tipo === "audio" ? (
+                      <div style={{ position: "relative", alignSelf: "flex-start" }}>
+                        <BalaoAudio o={oMsg} progresso={progresso} />
+                        {d.curte && oReacao > 0.01 ? (
+                          <div
+                            style={{
+                              position: "absolute",
+                              left: 14,
+                              bottom: -12,
+                              background: wa.barra,
+                              borderRadius: 14,
+                              padding: "3px 8px",
+                              display: "flex",
+                              transform: `scale(${0.6 + oReacao * 0.4})`,
+                              opacity: oReacao,
+                            }}
+                          >
+                            <Reacao tipo={d.curte} />
+                          </div>
+                        ) : null}
+                      </div>
+                    ) : (
+                      <BalaoTexto
+                        o={oMsg}
+                        texto={d.msg as string}
+                        reacao={d.curte}
+                        reacaoO={oReacao}
+                      />
+                    )
+                  ) : null}
+                  {d.resposta && oReacao > 0.001 ? (
+                    <BalaoTexto o={oReacao} texto={d.resposta} saida />
+                  ) : null}
+                </React.Fragment>
+              );
+            })}
           </div>
         </div>
 
@@ -294,12 +539,20 @@ export const Cena06: React.FC = () => {
         </div>
       </AbsoluteFill>
 
+      <Sfx som="tique" em={DIA_ZERO} volume={0.07} />
+      <Sfx som="recebido" em={BOAS_EM} volume={0.16} />
       <Sfx som="pop" em={PERGUNTA_EM} volume={0.16} />
       <Sfx som="pop" em={RESPOSTA_EM} volume={0.16} />
-      {PASSOS.map((p, i) => (
-        <Sfx key={i} som="recebido" em={p} volume={0.2} />
+      {DIAS.map((d) => (
+        <React.Fragment key={d.nome}>
+          <Sfx som="tique" em={emDia(d)} volume={0.07} />
+          <Sfx som="recebido" em={emDia(d) + s(D_MSG)} volume={0.18} />
+          {d.resposta || d.curte ? (
+            <Sfx som="pop" em={emDia(d) + s(D_REACAO)} volume={0.12} />
+          ) : null}
+        </React.Fragment>
       ))}
-      <Sfx som="surge" em={s(13.4)} volume={0.2} />
+      <Sfx som="surge" em={s(14.2)} volume={0.2} />
     </AbsoluteFill>
   );
 };

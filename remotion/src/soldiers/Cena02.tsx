@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  Img,
   Sequence,
   staticFile,
   useCurrentFrame,
@@ -50,11 +51,22 @@ const ETAPAS = [
 const FIM_REGUA = 46;
 const VAZIO_EM = s(6.2);
 
+/**
+ * Quando a marca da Soldiers entra: junto com o nome dela na narracao.
+ *
+ * Ela vai sobre um painel escuro porque o arquivo que o cliente entregou e o
+ * logo **branco**, e branco sobre a superficie clara da marca nao existe.
+ * Painel escuro e a aplicacao correta dele, nao um improviso: recolorir marca
+ * de cliente para caber no nosso fundo seria pior.
+ */
+const MARCA_EM = s(0.9);
+
 export const Cena02: React.FC = () => {
   const f = useCurrentFrame();
   const regua = passo(f, s(0.7), s(3.0));
   const rotulo = janela(f, s(0.6), CENA02_FRAMES, 14, 0);
   const vazio = janela(f, VAZIO_EM, CENA02_FRAMES, 16, 0);
+  const marcaSoldiers = janela(f, MARCA_EM, CENA02_FRAMES, 16, 0);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -74,15 +86,40 @@ export const Cena02: React.FC = () => {
       >
         <div
           style={{
-            fontSize: 24,
-            fontWeight: 500,
-            letterSpacing: "2px",
-            textTransform: "uppercase",
-            color: m.apoio,
-            opacity: rotulo,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          A jornada que já existia
+          <div
+            style={{
+              fontSize: 24,
+              fontWeight: 500,
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              color: m.apoio,
+              opacity: rotulo,
+            }}
+          >
+            A jornada que já existia
+          </div>
+
+          <div
+            style={{
+              background: marca.tinta,
+              borderRadius: marca.raio.painel,
+              padding: "26px 40px",
+              display: "flex",
+              alignItems: "center",
+              boxShadow: marca.sombra.painel,
+              ...entra(marcaSoldiers, 16),
+            }}
+          >
+            <Img
+              src={staticFile("marca-soldiers/soldiers-branco.png")}
+              style={{ height: 86, width: "auto", display: "block" }}
+            />
+          </div>
         </div>
 
         <div style={{ position: "relative", height: 150 }}>
@@ -164,6 +201,7 @@ export const Cena02: React.FC = () => {
       {ETAPAS.map((e) => (
         <Sfx key={e.nome} som="tique" em={e.em} volume={0.1} />
       ))}
+      <Sfx som="marca" em={MARCA_EM} volume={0.2} />
       <Sfx som="surge" em={VAZIO_EM} volume={0.22} />
     </AbsoluteFill>
   );

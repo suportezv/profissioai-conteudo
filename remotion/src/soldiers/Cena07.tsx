@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  Img,
   Sequence,
   staticFile,
   useCurrentFrame,
@@ -12,26 +13,35 @@ import { janela, entra, passo, s } from "../anim";
 import { Sfx } from "../Sfx";
 
 /**
- * Cena 07 do case Soldiers: sete personas, uma arquitetura.
+ * Cena 07 do case Soldiers: sete personas sobre a mesma arquitetura.
  *
- * 10 s, narracao de 7,89 s que comeca em 0,6 s. Pausas em 2,17 / 5,57 / 7,56 s.
+ * 10 s, narracao de 7,89 s que comeca em 0,6 s.
  *
- * ## Os nomes ficam de fora ate a Soldiers aprovar
+ * ## Os nomes sao os reais, lidos do proprio produto
  *
- * O case cita Juju Salimeni, Lucas Stein e Vitor Zanelatto, e **nenhum dos tres
- * esta no material gravado**. Nome e imagem de influenciador so entram com
- * aprovacao, entao os cartoes mostram a **estrutura** (sete slots, um deles o
- * MODO base) e nao a identidade de ninguem.
+ * Saiam do site do MODO (`modo.soldiersnutrition.com.br`), da mesma estrutura
+ * de dados que desenha os cartoes de "Modos exclusivos". Nao sao suposicao: sao
+ * o que o cliente publica.
  *
- * Isso nao e perda: a frase da narracao e sobre a arquitetura sustentar
- * crescimento, e e a arquitetura que precisa ser vista. Quando a aprovacao
- * chegar, e so trocar o texto de cada cartao, sem mexer no motion.
+ * **Os MODOs de influenciador nao sao os mesmos rostos dos videos de opt-in da
+ * cena 03.** Aquela e a base de afiliados, bem maior; esta e a lista curada de
+ * sete. Misturar as duas seria erro de fato, entao nenhuma imagem viaja de uma
+ * cena para a outra.
  *
- * ## A linha que liga
+ * ## Onde falta foto, entra a letra, nao um rosto parecido
  *
- * Os sete cartoes descem de um unico ponto, e a linha so aparece depois que
- * todos entraram: ate la nao ha o que ligar. E o mesmo raciocinio do grafo de
- * fontes da cena 04 do case anterior.
+ * O site serve a arte de dois cartoes (o MODO base e o Vitor Zanelato) e
+ * **404 nos outros cinco**: o `R()` da pagina cai no caminho `assets/std/...`
+ * porque `window.__resources` nunca e definido naquele deploy. Ate as imagens
+ * chegarem, esses cartoes usam a **inicial**, que e o proprio fallback que o
+ * site desenhou para eles. Recriar o rosto de alguem, ou pescar um frame de
+ * outro video achando que e a mesma pessoa, seria pior que a lacuna.
+ *
+ * ## O cartao e do cliente, entao ele tem a cara do cliente
+ *
+ * Fundo escuro e amarelo `#F6C800` sao do MODO, nao da Profissio. Mesma regra
+ * do verde do WhatsApp na cena 04 do case anterior: cor de terceiro e do
+ * terceiro, mesmo quando quem monta a peca somos nos.
  */
 
 export const CENA07_FRAMES = s(10);
@@ -39,28 +49,48 @@ const AUDIO_EM = s(0.6);
 const MARGEM = 120;
 const m = modos.claro;
 
-/**
- * Sete slots. O primeiro e o MODO base, que o case nomeia e que nao depende de
- * aprovacao de ninguem; os outros ficam como posicao ate a Soldiers liberar.
- */
-const PERSONAS = [
-  { rotulo: "MODO base", base: true },
-  { rotulo: "persona 02", base: false },
-  { rotulo: "persona 03", base: false },
-  { rotulo: "persona 04", base: false },
-  { rotulo: "persona 05", base: false },
-  { rotulo: "persona 06", base: false },
-  { rotulo: "persona 07", base: false },
+/** O amarelo do MODO. E da Soldiers, nao da Profissio: nao trocar pelo azul. */
+const MODO_AMARELO = "#F6C800";
+const MODO_FUNDO = "#141414";
+const MODO_BORDA = "#2C2C2C";
+
+type Persona = {
+  /** Como o cartao se chama no site, depois da palavra MODO. */
+  nome: string;
+  /** A inicial que o proprio site usa quando a arte nao carrega. */
+  letra: string;
+  /** Arquivo em `public/soldiers-personas`, quando existe. */
+  arte?: string;
+  /** A arte do MODO base e quadrada: "cover" decepa o lockup, entao ela cabe. */
+  encaixe?: "cover" | "contain";
+  /** O MODO base vem na assinatura; os outros pedem cupom. */
+  base?: boolean;
+};
+
+const PERSONAS: Persona[] = [
+  {
+    nome: "SOLDIERS",
+    letra: "M",
+    arte: "modo-avatar.png",
+    encaixe: "contain",
+    base: true,
+  },
+  { nome: "JUJU SALIMENI", letra: "J" },
+  { nome: "CANTARELLI", letra: "F" },
+  { nome: "CEUBOLINHA", letra: "C" },
+  { nome: "GORDELAZZ", letra: "G" },
+  { nome: "LUCAS STEIN", letra: "L" },
+  { nome: "VITOR ZANELATO", letra: "V", arte: "vitor-zanelato.jpg" },
 ];
 
 const PRIMEIRO = s(1.0);
-const PASSO_ENTRE = 11;
-const LIGA = s(6.4);
+const PASSO_ENTRE = 9;
+const LIGA = s(6.2);
 
 export const Cena07: React.FC = () => {
   const f = useCurrentFrame();
   const liga = passo(f, LIGA, LIGA + s(0.9));
-  const base = janela(f, s(6.8), CENA07_FRAMES, 16, 0);
+  const base = janela(f, s(6.6), CENA07_FRAMES, 16, 0);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -75,7 +105,7 @@ export const Cena07: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          gap: 56,
+          gap: 48,
         }}
       >
         <div
@@ -96,39 +126,109 @@ export const Cena07: React.FC = () => {
             const o = janela(f, PRIMEIRO + i * PASSO_ENTRE, CENA07_FRAMES, 12, 0);
             return (
               <div
-                key={p.rotulo}
+                key={p.nome}
                 style={{
                   flexGrow: 1,
-                  background: p.base ? marca.azul : marca.branco,
-                  border: `1px solid ${p.base ? marca.azul : marca.linha}`,
+                  flexBasis: 0,
+                  background: MODO_FUNDO,
+                  border: `1px solid ${p.base ? MODO_AMARELO : MODO_BORDA}`,
                   borderRadius: marca.raio.painel,
-                  boxShadow: p.base ? marca.sombra.azul : marca.sombra.painel,
-                  padding: 22,
-                  minHeight: 230,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
+                  boxShadow: marca.sombra.painel,
+                  height: 400,
+                  position: "relative",
+                  overflow: "hidden",
                   ...entra(o, 18),
                 }}
               >
+                {p.arte ? (
+                  <Img
+                    src={staticFile(`soldiers-personas/${p.arte}`)}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: p.encaixe ?? "cover",
+                      objectPosition: p.encaixe === "contain" ? "center 38%" : "center",
+                    }}
+                  />
+                ) : (
+                  /* o fallback que o proprio site desenhou: a inicial, fantasma */
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: 200,
+                      fontWeight: 700,
+                      color: MODO_AMARELO,
+                      opacity: 0.09,
+                      lineHeight: 1,
+                    }}
+                  >
+                    {p.letra}
+                  </div>
+                )}
+
+                {/* o escurecimento que segura o nome sobre a foto */}
                 <div
                   style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 20,
-                    background: p.base ? marca.branco : marca.linha,
+                    position: "absolute",
+                    inset: 0,
+                    background:
+                      "linear-gradient(180deg, rgba(20,20,20,0) 38%, rgba(20,20,20,0.92) 88%)",
                   }}
                 />
+
                 <div
                   style={{
-                    fontSize: 19,
-                    fontWeight: 500,
-                    letterSpacing: "-0.67px",
-                    lineHeight: 1.25,
-                    color: p.base ? marca.branco : m.apoio,
+                    position: "absolute",
+                    left: 16,
+                    right: 16,
+                    bottom: 18,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 8,
                   }}
                 >
-                  {p.rotulo}
+                  <div
+                    style={{
+                      alignSelf: "flex-start",
+                      border: `1px solid ${p.base ? "#3a3a3a" : "#4c471f"}`,
+                      borderRadius: 999,
+                      padding: "5px 12px",
+                      fontSize: 13,
+                      fontWeight: 500,
+                      letterSpacing: "1px",
+                      textTransform: "uppercase",
+                      color: p.base ? "#AAA9A5" : MODO_AMARELO,
+                    }}
+                  >
+                    {p.base ? "na assinatura" : "por cupom"}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 15,
+                      fontWeight: 700,
+                      letterSpacing: "1px",
+                      color: MODO_AMARELO,
+                    }}
+                  >
+                    MODO
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 22,
+                      fontWeight: 700,
+                      letterSpacing: "-0.5px",
+                      lineHeight: 1.1,
+                      color: marca.branco,
+                    }}
+                  >
+                    {p.nome}
+                  </div>
                 </div>
               </div>
             );
@@ -136,7 +236,7 @@ export const Cena07: React.FC = () => {
         </div>
 
         {/* a linha que liga os sete: so existe depois que todos entraram */}
-        <div style={{ position: "relative", height: 60 }}>
+        <div style={{ position: "relative", height: 58 }}>
           <div
             style={{
               position: "absolute",
@@ -152,7 +252,7 @@ export const Cena07: React.FC = () => {
           <div
             style={{
               position: "absolute",
-              top: 22,
+              top: 20,
               left: 0,
               right: 0,
               textAlign: "center",
@@ -168,7 +268,7 @@ export const Cena07: React.FC = () => {
       </AbsoluteFill>
 
       {PERSONAS.map((p, i) => (
-        <Sfx key={p.rotulo} som="tique" em={PRIMEIRO + i * PASSO_ENTRE} volume={0.11} />
+        <Sfx key={p.nome} som="tique" em={PRIMEIRO + i * PASSO_ENTRE} volume={0.1} />
       ))}
       <Sfx som="surge" em={LIGA} volume={0.2} />
     </AbsoluteFill>

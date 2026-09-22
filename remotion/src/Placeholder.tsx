@@ -46,6 +46,15 @@ export const Placeholder: React.FC<Props> = ({
   const { durationInFrames, fps } = useVideoConfig();
   const entra = passo(f, 0, s(0.5));
   const restam = Math.max(0, Math.ceil((durationInFrames - f) / fps));
+  /**
+   * A barra que escoa, e a razao dela e de leitura, nao de enfeite.
+   *
+   * O contador regressivo so muda de segundo em segundo, entao o cartao ficava
+   * 14 s sem um unico pixel se mexendo e o filme parecia **travar** ali. Uma
+   * barra que anda a cada frame diz "esta rodando, isto e uma lacuna" em vez
+   * de "o render morreu".
+   */
+  const escoa = durationInFrames > 0 ? f / durationInFrames : 0;
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -151,16 +160,34 @@ export const Placeholder: React.FC<Props> = ({
             </div>
           </div>
 
-          <div
-            style={{
-              borderTop: `1px solid ${marca.linha}`,
-              paddingTop: 22,
-              fontSize: 24,
-              letterSpacing: "-0.84px",
-              color: m.apoio,
-            }}
-          >
-            {origem}
+          <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
+            {/* a barra anda a cada frame: e o que separa "lacuna" de "travou" */}
+            <div
+              style={{
+                height: 3,
+                borderRadius: 2,
+                background: marca.linha,
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  height: "100%",
+                  width: `${escoa * 100}%`,
+                  background: marca.azul,
+                  opacity: 0.55,
+                }}
+              />
+            </div>
+            <div
+              style={{
+                fontSize: 24,
+                letterSpacing: "-0.84px",
+                color: m.apoio,
+              }}
+            >
+              {origem}
+            </div>
           </div>
         </div>
       </AbsoluteFill>

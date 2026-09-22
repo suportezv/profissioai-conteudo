@@ -1,6 +1,6 @@
 # Roteiro · Case Profissio sobre o MODO Soldiers · premiação do WhatsApp
 
-**Duração: 2:00.** 16:9 para a inscrição e para o site; cortes verticais no fim deste documento.
+**Duração: 2:01.** 16:9 para a inscrição e para o site; cortes verticais no fim deste documento.
 
 **Categoria**: Campanha de Relacionamento e Retenção no WhatsApp.
 **Anunciante no formulário**: Soldiers Nutrition. **Coautoria**: Soldiers Nutrition e Profissio.
@@ -14,16 +14,33 @@
 
 ### Estado do corte, 22/set/2026
 
-**Este documento descreve o filme que existe, não o que foi planejado.** O corte completo está montado e renderizado em `sem-trilha.mp4`, **120,55 s**, com uma única lacuna: a sonora do Clésio na cena 04, que ocupa um cartão de placeholder de 14 s.
+**Este documento descreve o filme que existe, não o que foi planejado.** O corte completo está montado e renderizado em `sem-trilha.mp4`, **121 s**, com uma única lacuna: a sonora do Clésio na cena 04, que ocupa um cartão de placeholder de 14 s.
 
 Onde o construído divergiu do plano, a divergência está escrita na própria linha da cena (07 sem os nomes, 08 sem o mapa). Os tempos da tabela abaixo são os do corte, medidos, e não mais os da estimativa.
 
 | Falta | Cena | De quem depende |
 |---|---|---|
-| Sonora do Clésio | 04 | captação da Profissio |
-| Nome e imagem dos seis influenciadores | 07 | aprovação da Soldiers |
-| Lockup da Soldiers | 09 | Soldiers, em SVG ou PNG com alfa |
-| Escolha da trilha | todas | três candidatas entregues, aguardando |
+| Sonora do Clésio | 04 | captação da Profissio · pauta abaixo |
+| Foto de 5 das 7 personas | 07 | Soldiers · **o site serve 404 nessas artes hoje** |
+| Escolha da trilha | todas | três candidatas fitness entregues, aguardando |
+
+> **O lockup da Soldiers chegou** e já está nas cenas 02 e 09, recortado com alfa a partir do arquivo enviado. Como é a versão branca, ele assina sobre faixa escura, junto da versão branca da Profissio.
+
+> **As fotos das personas não estão publicadas.** No site do MODO, cinco dos sete cartões (Juju Salimeni, Cantarelli, Ceubolinha, Gordelazz, Lucas Stein) apontam para `assets/std/*.jpg`, que responde **404**: o resolvedor `R()` da página depende de `window.__resources`, que aquele deploy nunca define. Só o MODO base e o Vitor Zanelato carregam. Vale arrumar no site, independente do filme.
+
+### Pauta da sonora do Clésio (cena 04)
+
+A cena é a dobradiça do filme: vem depois do problema (o pós-venda vazio, o vínculo com o influenciador) e antes do mecanismo (o cupom que vira chave, o ritual diário). Ele não precisa decorar texto, e **número não entra na boca dele**, vai para lettering.
+
+**Pergunta que puxa**: qual foi a parte difícil de fazer sete personas soarem como sete pessoas, e não como o mesmo agente com nomes diferentes?
+
+Três caminhos de resposta, em ordem de preferência:
+
+1. **O risco, que é o mais forte**: "A tentação era fazer um agente genérico e só trocar o nome. Só que o cliente comprou porque confia naquela pessoa. Se o jeito de falar não bate, ele percebe na primeira mensagem, e aí a gente perdeu."
+2. **A validação**: "Dar sete nomes para o mesmo agente qualquer um faz. A gente treinou cada persona com o material real do influenciador, e quem aprova se ficou parecido é ele. Se ele não reconhece a própria voz, não sobe."
+3. **A separação técnica**: "O difícil não foi a tecnologia, foi a fidelidade. A gente teve que separar a regra do negócio, que é igual para todos, do jeito de cada um falar."
+
+Qualquer um cabe nos 14 s reservados. Vale lembrar que sonora real vem mais curta que a estimativa: no case anterior a dele fechou em 8,4 s onde havia 12 reservados, então o corte se acha no silêncio do arquivo, não no relógio do roteiro.
 
 ---
 
@@ -75,15 +92,15 @@ E declara em tela que a medição de recompra começa em novembro. O júri confe
 
 | # | Tempo | Vídeo | Quem fala | Conteúdo |
 |---|---|---|---|---|
-| **01** | 0:00 a 0:11 | Motion. Dois potes de suplemento iguais lado a lado na superfície clara, só o preço muda entre eles. O preço de um cai, e o cursor escolhe esse. Seco, sem graça, de propósito. | **Narração Profissio** | Creatina é creatina. Num mercado de sete vírgula seis bilhões de reais, o que decide a próxima compra quase sempre é preço. |
-| **02** | 0:11 a 0:20 | Motion. A jornada de compra desenhada como régua de 1px: anúncio, site, checkout, entrega. Depois da entrega, a régua simplesmente acaba. O vazio depois dela segura 2 s. | **Narração Profissio** | A Soldiers foi procurar vantagem onde ninguém estava olhando: o que acontece depois que o cliente compra. |
-| **03** | 0:20 a 0:36 | Grade de rostos: os vídeos reais dos influenciadores parceiros, vários ao mesmo tempo, com áudio baixo por baixo da narração. Um deles cresce e fica. | **Narração Profissio** + som ambiente dos clipes | Quem convence o cliente da Soldiers não é um anúncio. É alguém que ele já segue, já escuta e já confia. A pergunta foi: e se essa pessoa continuasse por perto depois da venda? |
-| **04** | 0:36 a 0:50 | Clésio, ambiente de trabalho da Profissio, plano médio. Mesma gramática de luz do case anterior, para os dois filmes parecerem a mesma série. | **Sonora Profissio** | **A captar.** Pergunta que puxa: *qual foi a parte difícil de fazer sete personas soarem como sete pessoas, e não como o mesmo agente com nomes diferentes?* |
-| **05** | 0:50 a 1:02 | Motion. Um cupom de desconto vira uma chave: o mesmo objeto, girando em 3D, muda de função. Depois, contador de 90 dias, e uma segunda compra empilhando mais 90 em cima. | **Narração Profissio** | O cupom do influenciador deixou de ser desconto e virou chave. Qualquer compra, de qualquer valor, abre noventa dias de acompanhamento. Cada nova compra soma mais noventa. |
-| **06** | 1:02 a 1:19 | O coração do filme. Conversa recriada em motion: o agente pergunta o horário, o cliente responde "7h", e então **o mesmo relógio marca 7h em dias diferentes**, com o balão de áudio chegando toda vez. Repetição como forma. | **Narração Profissio** | E o vínculo não se sustenta na compra, se sustenta no dia. O agente pergunta a que horas o cliente toma o suplemento, e passa a aparecer nesse horário, todo dia, na voz de quem ele escolheu. |
-| **07** | 1:19 a 1:29 | Sete cartões de persona entrando em sequência sobre a mesma grade, para mostrar que a arquitetura é uma só. **Construído com os nomes de fora**: o primeiro cartão é o MODO base, que o case nomeia, e os outros seis ficam como posição marcada até a Soldiers liberar nome e imagem de cada influenciador. O que a cena precisa provar é a arquitetura, e ela se lê sem os nomes. | **Narração Profissio** | São sete personas rodando ao mesmo tempo, cada uma com o vocabulário e as gírias do seu influenciador, sobre a mesma arquitetura. |
-| **08** | 1:29 a 1:45 | Números em motion, um por vez, com base e período colados em cada um. **Construído com quatro números e sem o mapa**: 151.034 mensagens, 495 pessoas por dia, ~600 lembretes por dia e NPS 95. O mapa regional saiu porque entrava como enfeite no fim de uma cena que já carrega quatro dados, e distribuição geográfica não responde a nenhum critério da categoria. | **Narração Profissio** | Em dois meses: cento e cinquenta e um mil mensagens trocadas, quatrocentas e noventa e cinco pessoas por dia, e quase seiscentos lembretes disparados a cada vinte e quatro horas. |
-| **09** | 1:45 a 2:00 | Cartão da tese, depois os lockups Soldiers e Profissio lado a lado. | **Narração Profissio** | A recompra começa a ser medida em novembro. O hábito que vai sustentá-la já está de pé. |
+| **01** | 0:00 a 0:12 | Abre com plano gerado no Veo: a câmera varre uma gôndola de potes de creatina quase idênticos e um consumidor, de costas, coça a cabeça sem conseguir escolher. O dado de mercado entra sobre a prateleira. Depois corta para dois potes desenhados, mesma dose e mesmo texto, só o preço muda: um cai de preço e o cursor pousa em cima do número. | **Narração Profissio** | Creatina é creatina. Num mercado de sete vírgula seis bilhões de reais, o que decide a próxima compra quase sempre é preço. |
+| **02** | 0:12 a 0:21 | Motion. A marca da Soldiers entra quando a narração diz o nome dela, sobre painel escuro. A jornada de compra é desenhada como régua de 1px: anúncio, site, checkout, entrega. Depois da entrega, a régua simplesmente acaba, e o vazio segura quase 3 s. | **Narração Profissio** | A Soldiers foi procurar vantagem onde ninguém estava olhando: o que acontece depois que o cliente compra. |
+| **03** | 0:21 a 0:37 | Grade de rostos: os vídeos reais dos influenciadores parceiros, vários ao mesmo tempo, com áudio baixo por baixo da narração. Um deles cresce e fica. | **Narração Profissio** + som ambiente dos clipes | Quem convence o cliente da Soldiers não é um anúncio. É alguém que ele já segue, já escuta e já confia. A pergunta foi: e se essa pessoa continuasse por perto depois da venda? |
+| **04** | 0:37 a 0:51 | Clésio, ambiente de trabalho da Profissio, plano médio. Mesma gramática de luz do case anterior, para os dois filmes parecerem a mesma série. | **Sonora Profissio** | **A captar.** Pergunta que puxa: *qual foi a parte difícil de fazer sete personas soarem como sete pessoas, e não como o mesmo agente com nomes diferentes?* |
+| **05** | 0:51 a 1:04 | Motion. Um cupom picotado, com entalhes e canhoto, gira em 3D e vira uma chave: o mesmo objeto, outra função. Depois o contador sobe em quatro degraus, um por compra, 90 / 180 / 270 / 360, fechando em **1 ano com 4 compras**. | **Narração Profissio** | O cupom do influenciador deixou de ser desconto e virou chave. Qualquer compra, de qualquer valor, abre noventa dias de acompanhamento. Cada nova compra soma mais noventa. |
+| **06** | 1:04 a 1:22 | O coração do filme. A conversa **acumula** em vez de piscar: onboarding, o agente pergunta o horário, o cliente responde "7h", e daí cada dia entra com a marcação central de data, o agente manda áudio ou texto e o cliente responde ou só curte. O antigo sobe e sai por cima, então o rastro dos dias fica visível. **Toda mensagem do agente vem precedida do indicador de digitando.** Cinco dias, com os intervalos encurtando. | **Narração Profissio** | E o vínculo não se sustenta na compra, se sustenta no dia. O agente pergunta a que horas o cliente toma o suplemento, e passa a aparecer nesse horário, todo dia, na voz de quem ele escolheu. |
+| **07** | 1:22 a 1:32 | Sete cartões de persona entrando em sequência sobre a mesma grade, para mostrar que a arquitetura é uma só. **Construído com os nomes de fora**: o primeiro cartão é o MODO base, que o case nomeia, e os outros seis ficam como posição marcada até a Soldiers liberar nome e imagem de cada influenciador. O que a cena precisa provar é a arquitetura, e ela se lê sem os nomes. | **Narração Profissio** | São sete personas rodando ao mesmo tempo, cada uma com o vocabulário e as gírias do seu influenciador, sobre a mesma arquitetura. |
+| **08** | 1:32 a 1:48 | Números em motion, um por vez, com base e período colados em cada um. **Construído com quatro números e sem o mapa**: 151.034 mensagens, 495 pessoas por dia, ~600 lembretes por dia e NPS 95. O mapa regional saiu porque entrava como enfeite no fim de uma cena que já carrega quatro dados, e distribuição geográfica não responde a nenhum critério da categoria. | **Narração Profissio** | Em dois meses: cento e cinquenta e um mil mensagens trocadas, quatrocentas e noventa e cinco pessoas por dia, e quase seiscentos lembretes disparados a cada vinte e quatro horas. |
+| **09** | 1:48 a 2:01 | Cartão da tese, depois os lockups Soldiers e Profissio lado a lado. | **Narração Profissio** | A recompra começa a ser medida em novembro. O hábito que vai sustentá-la já está de pé. |
 
 ### Lettering por cena, em Sora 500, tracking -3,5%
 

@@ -31,3 +31,9 @@ remotion/public/soldiers/
 # Scribe. O que vale versionar e o edl.json, que e a decisao de corte.
 projects/**/*.cube
 projects/**/stt/
+
+# Ativos do cliente e b-roll do case 04: repo publico, nada disso entra sem
+# autorizacao explicita. Inclui a foto de pessoa real publicada pelo cliente.
+remotion/public/soldiers-personas/
+remotion/public/marca-soldiers/
+remotion/public/soldiers-broll/

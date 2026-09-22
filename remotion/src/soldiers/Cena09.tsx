@@ -38,17 +38,20 @@ import { Sfx } from "../Sfx";
  * ordem nao e decorativa e a peca nao pode sugerir que a Profissio e dona do
  * produto.
  *
- * **O lockup da Soldiers ainda nao chegou.** Ate ele chegar, entra um campo
- * marcado, e nao um desenho aproximado: recriar a marca de um cliente a mao e
- * pior que assumir que ela falta.
+ * **As duas marcas assinam sobre uma faixa escura**, e a razao e do arquivo: o
+ * logo que a Soldiers entregou e o branco, e branco sobre a superficie clara
+ * nao existe. Painel escuro e a aplicacao correta dele. Como a Profissio
+ * tambem tem versao branca para fundo escuro, as duas ficam na mesma condicao,
+ * que e o que uma coautoria pede: recolorir a marca de um cliente para ela
+ * caber no nosso fundo seria pior que trocar o fundo.
  */
 
-export const CENA09_FRAMES = s(15);
+export const CENA09_FRAMES = s(13);
 const AUDIO_EM = s(0.6);
 const MARGEM = 120;
 const m = modos.claro;
 
-const ASSINA_EM = s(9.4);
+const ASSINA_EM = s(7.6);
 
 export const Cena09: React.FC = () => {
   const f = useCurrentFrame();
@@ -123,42 +126,34 @@ export const Cena09: React.FC = () => {
             ...entra(assina, 20),
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 88 }}>
-            {/* o lockup da Soldiers ainda nao chegou: campo marcado, nunca um
-                desenho aproximado da marca do cliente */}
+          {/* a faixa escura: e onde as duas marcas brancas convivem */}
+          <div
+            style={{
+              background: marca.tinta,
+              borderRadius: marca.raio.arte,
+              boxShadow: marca.sombra.painel,
+              padding: "72px 110px",
+              display: "flex",
+              alignItems: "center",
+              gap: 96,
+            }}
+          >
+            <Img
+              src={staticFile("marca-soldiers/soldiers-branco.png")}
+              style={{ height: 150, width: "auto", display: "block" }}
+            />
+
             <div
               style={{
-                width: 420,
-                height: 200,
-                border: `2px dashed ${marca.linha}`,
-                borderRadius: marca.raio.painel,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 10,
+                width: 1,
+                height: 150,
+                background: "rgba(255,255,255,0.22)",
               }}
-            >
-              <div
-                style={{
-                  fontSize: 30,
-                  fontWeight: 500,
-                  letterSpacing: "-1.05px",
-                  color: m.apoio,
-                }}
-              >
-                Soldiers Nutrition
-              </div>
-              <div style={{ fontSize: 19, letterSpacing: "-0.66px", color: m.apoio }}>
-                lockup a pedir ao cliente
-              </div>
-            </div>
-
-            <div style={{ width: 1, height: 200, background: marca.linha }} />
+            />
 
             <Img
-              src={staticFile("marca/profissio-ai-escuro.svg")}
-              style={{ width: 500, height: "auto" }}
+              src={staticFile("marca/profissio-ai-branco.svg")}
+              style={{ width: 460, height: "auto", display: "block" }}
             />
           </div>
         </AbsoluteFill>
