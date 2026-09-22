@@ -20,6 +20,18 @@ import {
   Completo as SoldiersCompleto,
   COMPLETO_FRAMES as SOLDIERS_FRAMES,
 } from "./soldiers/Completo";
+import {
+  Completo as YooperCompleto,
+  COMPLETO_FRAMES as YOOPER_FRAMES,
+} from "./yooper/Completo";
+import { Cena01 as Y01, CENA01_FRAMES as Y01_F } from "./yooper/Cena01";
+import { Cena02 as Y02, CENA02_FRAMES as Y02_F } from "./yooper/Cena02";
+import { Cena03 as Y03, CENA03_FRAMES as Y03_F } from "./yooper/Cena03";
+import { Cena05 as Y05, CENA05_FRAMES as Y05_F } from "./yooper/Cena05";
+import { Cena06 as Y06, CENA06_FRAMES as Y06_F } from "./yooper/Cena06";
+import { Cena07 as Y07, CENA07_FRAMES as Y07_F } from "./yooper/Cena07";
+import { Cena08 as Y08, CENA08_FRAMES as Y08_F } from "./yooper/Cena08";
+import { Cena09 as Y09, CENA09_FRAMES as Y09_F } from "./yooper/Cena09";
 
 const base = {
   sobrelinha: "Agentes de IA · Atendimento · CRM",
@@ -30,6 +42,78 @@ const base = {
 
 export const RemotionRoot: React.FC = () => (
   <>
+    <Composition
+      id="YooperCompleto"
+      component={YooperCompleto}
+      durationInFrames={YOOPER_FRAMES}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="YooperCena01"
+      component={Y01}
+      durationInFrames={Y01_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="YooperCena02"
+      component={Y02}
+      durationInFrames={Y02_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="YooperCena03"
+      component={Y03}
+      durationInFrames={Y03_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="YooperCena05"
+      component={Y05}
+      durationInFrames={Y05_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="YooperCena06"
+      component={Y06}
+      durationInFrames={Y06_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="YooperCena07"
+      component={Y07}
+      durationInFrames={Y07_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="YooperCena08"
+      component={Y08}
+      durationInFrames={Y08_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="YooperCena09"
+      component={Y09}
+      durationInFrames={Y09_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
     <Composition
       id="SoldiersCompleto"
       component={SoldiersCompleto}

@@ -3,12 +3,14 @@
 **Categoria: Experiência do Cliente no WhatsApp.** Anunciante **Yooper**;
 coautoria **Yooper + Profissio**.
 
-**Duração alvo: ~2:00.** 16:9 para a inscrição; cortes verticais no fim deste
-documento.
+**Duração do corte: 2:16** (136,3 s), 16:9 para a inscrição; cortes verticais no
+fim deste documento. Sem a sonora do cliente, 2:05.
 
-> **Estimativa, não medida.** Os tempos abaixo são de escrita. O corte se monta
-> contra o arquivo de locução, nunca contra esta tabela: nos dois cases
-> anteriores a estimativa errou 17% e 29% para mais.
+> **Os tempos abaixo são os do corte montado**, não mais os de escrita. Foram
+> refeitos depois da montagem, contra as marcas de palavra que o Scribe devolveu
+> em cada arquivo de locução. A locução inteira deu **100,8 s** contra os ~115 s
+> estimados no roteiro original, 12% a menos, que é a terceira medição seguida
+> do mesmo erro para mais (case 03: −17%, case 04: −29%).
 
 ---
 
@@ -24,10 +26,28 @@ Yoodash; o agente não recebe nome próprio.**
 
 ---
 
-## A sonora do cliente é removível, e isso é decisão de arquitetura
+## Duas sonoras, e só uma delas é removível
 
-A **cena 04 é a única sonora do filme** e ela foi desenhada para sair sem
-costura, porque a captação pode não acontecer.
+O filme tem **duas falas captadas**, e elas cobrem buracos diferentes:
+
+| Cena | Quem | Sobre o quê | Sai? |
+|---|---|---|---|
+| **04** | um cliente da Yoodash | satisfação e relacionamento | **sim**, sem costura |
+| **05B** | Clésio Souza, Profissio | governança: por que ele nunca muda nada sozinho | **não** |
+
+**A do Clésio não sai porque ela responde a objeção que a cena 05 abre.** Um
+agente que escreve na base do cliente é a primeira coisa que um júri questiona,
+e nenhuma cena de motion responde "por que confiar nisso" tão bem quanto a
+pessoa que desenhou a regra. Testemunha existe para cobrir o buraco que o júri
+vai procurar.
+
+> **As duas sonoras do Clésio, esta e a do case MODO Soldiers, se captam na
+> mesma sessão.** São dois filmes parados pela mesma pessoa.
+
+### Por que a do cliente pode sair
+
+A cena 04 foi desenhada para sair sem costura, porque a captação pode não
+acontecer.
 
 Como isso é garantido, e não só torcido:
 
@@ -40,7 +60,7 @@ Como isso é garantido, e não só torcido:
 4. No `Completo.tsx` ela é **um `Series.Sequence` isolado**. Tirar é apagar um
    bloco, sem retimar nada em volta.
 
-**Sem ela o filme perde ~12 s e nada mais.** O que ele perde de argumento é o
+**Sem ela o filme perde 11 s e nada mais** (2:16 vira 2:05). O que ele perde de argumento é o
 critério "satisfação dos clientes", que passa a depender só do NPS.
 
 ---
@@ -63,19 +83,18 @@ critério "satisfação dos clientes", que passa a depender só do NPS.
 
 ## Cena a cena
 
-| # | Tempo (estim.) | Imagem | Voz | Texto |
+| # | Tempo (corte) | Imagem | Voz | Divergência do plano |
 |---|---|---|---|---|
-| **01** | 0:00 a 0:12 | Um dashboard cheio na superfície clara: cartões de métrica, gráfico, tabela. Tudo legível, tudo certo. O cursor passa por cima e **para**. Um campo de pergunta pisca e não é preenchido. | **Narração Profissio** | Toda agência de mídia entrega dashboard. O dado está lá, atualizado, completo. Mas ler um dado e decidir com ele são duas habilidades diferentes. |
-| **02** | 0:12 a 0:23 | Conversa de WhatsApp recriada: a pergunta sai para o analista. O balão fica entregue. **O relógio do cabeçalho anda** e a resposta não chega. Sem drama, sem vilão. | **Narração Profissio** | Para uma pergunta mais específica, o caminho era o de sempre: mandar mensagem para o analista e esperar. Funciona. Mas depende de alguém estar disponível. |
-| **03** | 0:23 a 0:38 | Cinco fontes entram como chips e convergem num nó único: mídia paga, analytics, e-commerce, CRM, orgânico. Do nó sai **uma conversa de WhatsApp**. A pergunta é em português comum; a resposta vem em número. | **Narração Profissio** | A Yooper colocou um agente de inteligência artificial dentro do WhatsApp, ligado ao data lake da Yoodash. Mídia paga, analytics, e-commerce, CRM e canais orgânicos, na mesma base, respondidos em linguagem natural. |
-| **04** | 0:38 a 0:50 | **SONORA CLIENTE (removível).** Plano médio, ambiente de trabalho dele. GC com nome, cargo e empresa. | **Sonora cliente Yoodash** | *A captar.* Pauta abaixo. |
-| **05** | 0:50 a 1:05 | A conversa continua e vira **ação**: "atualizar a meta de setembro?" com dois botões. O cliente confirma. A meta muda na tela do dashboard ao lado. Lettering: `nada muda sem confirmação explícita`. | **Narração Profissio** | E ele não só responde. Dentro de regras de governança, ele atualiza uma meta, ajusta um orçamento, cadastra uma demanda. Sempre com confirmação explícita antes de mudar qualquer coisa. |
-| **06** | 1:05 a 1:22 | Três mensagens chegam **sem ninguém pedir**, empilhando: alerta de ruptura de estoque, relatório da semana como anexo dentro da conversa, projeção de faturamento. Depois um balão de áudio entra e outro volta, com a onda andando. | **Narração Profissio** | E antecipa. Avisa quando um produto entra em risco de ruptura, manda o relatório da semana dentro da conversa, projeta faturamento. Sem ninguém pedir. E se a pergunta vem em áudio, a resposta volta em áudio. |
-| **07** | 1:22 a 1:38 | Números em motion, um por vez, com base e período colados em cada um. | **Narração Profissio** | De maio a setembro: cento e trinta e um usuários, dez mil e trinta e nove mensagens, e quase quatro em cada dez conversas fora do horário comercial. Setenta e cinco por cento dos usuários nunca precisaram falar com um humano. |
-| **08** | 1:38 a 1:52 | Dois relógios: **40 minutos** encolhendo para **segundos**, e a frequência virando de semanal para diária. Depois o `12,22x` e a decisão que veio dele. | **Narração Profissio** | Um cliente pedia toda semana um ROAS que levava quarenta minutos para ser calculado. Agora leva segundos, e ele consulta todo dia. Outro viu o mês fechar em doze vírgula vinte e dois, e decidiu aumentar o investimento em vinte por cento. |
-| **09** | 1:52 a 2:02 | A tese na superfície clara, e a assinatura Yooper + Profissio sobre faixa escura. | **Narração Profissio** | O valor não está em automatizar uma resposta. Está em reduzir a distância entre uma pergunta e uma decisão. |
-
----
+| **01** | 0:00 a 0:11,6 | Dashboard recriado na superfície clara, em cinza de interface. O cursor percorre cartões e tabela e **estanca** em "mas". O painel recua atrás de um véu e sobe um campo de pergunta **que nunca é preenchido**. | Narração | O painel ficou monocromático de propósito: pintá-lo de azul faria a tela do cliente parecer produto nosso, e o cinza lê como "correto e inerte", que é a tese |
+| **02** | 0:11,6 a 0:22,4 | Conversa recriada: a pergunta sai para o analista e fica com **dois checks cinza**. Anotação: `entregue, não lido`. Barra de espera escoando. | Narração | Sem contador de minutos: seria dado inventado. O contato na barra é o cargo, não um nome, porque a cena não precisa de culpado |
+| **03** | 0:22,4 a 0:38,2 | Cinco fontes entram como chips e **convergem em curva** no nó `data lake Yoodash`. Em "na mesma base" os pulsos viajam. Só então o painel do WhatsApp cresce do nó, com a troca em linguagem natural. | Narração | O painel entrava em "dentro do WhatsApp" (3,5 s) e ficava **nove segundos como retângulo preto vazio**. Agora entra em 12,3 s, com o que mostrar |
+| **04** | 0:38,2 a 0:49,2 | **SONORA CLIENTE, REMOVÍVEL.** Hoje é cartão de lacuna com barra escoando. | Sonora cliente | *A captar* |
+| **05** | 0:49,2 a 1:03,6 | Cartão de ação no chat com dois botões. O ponteiro vai até `Confirmar` e **pressiona**; só depois a meta muda no cartão ao lado. Três ações nomeadas à direita, uma encenada. | Narração | Encenar as três ações com botão encheria a tela de repetição e tiraria o peso do único gesto que importa |
+| **05B** | 1:03,6 a 1:16,6 | **SONORA CLÉSIO.** Hoje é cartão de lacuna. | Sonora Profissio | Cena nova, não prevista no plano |
+| **06** | 1:16,6 a 1:33,4 | Três mensagens do agente **seguidas, sem nada do outro lado**, empilhando e saindo por cima: ruptura, relatório em PDF, projeção. Depois áudio do cliente e áudio de volta, com a onda correndo. | Narração | Os `42 relatórios enviados sem pedido` migraram da cena 07 para cá: colados na frase que sustentam, são evidência; soltos entre outros números, seriam enchimento |
+| **07** | 1:33,4 a 1:50,3 | 131, 10.039 e 38,9% como contadores. O **75% vira contagem**: 131 pontos, 98 acesos. | Narração | O 75% ganhou desenho próprio porque é a afirmação que a categoria premia, e o desenho carrega a base junto |
+| **08** | 1:50,3 a 2:06,3 | A barra de 40 minutos encolhe para segundos; um ponto por semana vira sete. Depois o `12,22x`, com a autoria do número separada por escrito do que o agente fez, e o `+20%` como decisão do cliente. | Narração | Sem mudança |
+| **09** | 2:06,3 a 2:16,3 | `uma pergunta` e `uma decisão` nascem nas bordas opostas com a distância pontilhada entre elas, e **andam uma para a outra** em "decisão". Assinatura Yooper + Profissio sobre faixa escura. | Narração | O lockup carrega a caixa tracejada `arte final a receber`: desenhar aproximação da marca do anunciante seria pior que assumir que ela falta |
 
 ## Lettering por cena
 
@@ -84,7 +103,8 @@ Sempre em Sora 500, tracking -3,5%.
 - **03**: `mídia paga` · `analytics` · `e-commerce` · `CRM` · `orgânico` e, no nó: `data lake Yoodash`
 - **05**: `nada muda sem confirmação explícita` e, discreto: `troca de conta dentro do WhatsApp · nenhum dado se mistura entre clientes`
 - **06**: `ruptura de estoque` · `relatório da semana` · `projeção de faturamento`
-- **07**: `131 usuários únicos · mai a 18/set/2026` · `10.039 mensagens` · `38,9% das conversas fora do horário comercial` · `75% dos usuários sem intervenção humana · 98 de 131` · `42 relatórios enviados sem pedido` · `NPS: A CONFIRMAR`
+- **06** (fecho): `42 relatórios enviados sem pedido · maio a 18/set/2026`
+- **07**: `131 usuários únicos · maio a 18/set/2026` · `10.039 mensagens · no mesmo período` · `38,9% das conversas fora do horário comercial · total de conversas: a confirmar` · `75% dos usuários nunca precisaram falar com um humano · 98 de 131 usuários · NPS: a confirmar`
 - **08**: `um cliente, um cálculo recorrente · de semanal para diário` · `ROAS faturado 12,22x no mês` · `decisão do cliente: +20% de investimento`
 - **09**: `Yooper` · `Profissio`
 
@@ -103,8 +123,12 @@ resultado.
 cálculo recorrente". Número de eficiência sem base vira dúvida quando o júri
 compara com o formulário.
 
-**O NPS entra como `A CONFIRMAR` em tela**, não como ausência silenciosa. Buraco
-visível é revisável.
+**O NPS e o denominador do 38,9% entram como `a confirmar` em tela**, em rosa,
+não como ausência silenciosa. Buraco visível é revisável.
+
+**O 75% é arredondamento de 74,81%**, que é o número que o cliente informou e o
+que a locução diz. O arredondamento fica transparente porque a base, 98 de 131,
+está na mesma tela logo abaixo dos pontos.
 
 **Nenhuma conversa real na tela.** Todos os balões, o dashboard e os anexos são
 recriados em motion. Nenhum print de cliente, nenhum dado de conta real legível.
@@ -144,6 +168,7 @@ relacionamento, e é a única resposta que nenhuma cena de motion consegue dar.
 | Asset | Cena | Situação |
 |---|---|---|
 | Sonora do cliente | 04 | **captar** · pode não acontecer, e o filme está preparado |
+| Sonora do Clésio | 05B | **captar** · não sai do filme · mesma sessão da sonora do Soldiers |
 | Logo Yooper (PNG com alfa ou SVG) | 09 | **pedir** |
 | Logo Yoodash, se a plataforma for nomeada com marca | 03 | **pedir** · se não vier, fica só o nome em lettering |
 | NPS | 07 | **pendente** · aparece como `A CONFIRMAR` até chegar |
@@ -160,7 +185,12 @@ relacionamento, e é a única resposta que nenhuma cena de motion consegue dar.
    material prova é conversa com confirmação, não clique. O júri lê o formulário
    junto do vídeo; vale alinhar os dois.
 3. **O NPS**: quando chega, e de que base.
-4. **A sonora**: acontece ou não, e até quando dá para esperar.
+4. **A sonora do cliente**: acontece ou não, e até quando dá para esperar.
+5. **A pronúncia de Yooper e Yoodash.** O TTS lê "iúper" e "iúdash", e o Scribe
+   devolve "Youper" e "YouDash", o que confirma que é isso que sai do arquivo.
+   Se a casa pronuncia de outro jeito, as duas faixas se regravam.
+6. **A trilha**: três candidatas em `edit/`, igualadas em loudness para a
+   escolha não virar acidente de ganho.
 
 ---
 

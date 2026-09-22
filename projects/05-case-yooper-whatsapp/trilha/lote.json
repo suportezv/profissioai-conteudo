@@ -1,0 +1,20 @@
+[
+  {
+    "nome": "yooper-trilha-A-pulso-limpo",
+    "prompt": "Minimal modern corporate underscore, steady soft electronic pulse at 96 bpm, warm sub bass, clean muted plucks, light shaker, no drums fills, no risers, no vocals, calm confident forward motion, loops seamlessly",
+    "segundos": 22,
+    "estender_para": 145
+  },
+  {
+    "nome": "yooper-trilha-B-piano-dado",
+    "prompt": "Understated tech documentary bed, repeating felt piano figure over soft analog pad, subtle click percussion, 90 bpm, no melody lead, no vocals, thoughtful and clear, loops seamlessly",
+    "segundos": 22,
+    "estender_para": 145
+  },
+  {
+    "nome": "yooper-trilha-C-arpejo",
+    "prompt": "Bright optimistic tech arpeggio bed, short plucked synth arpeggio, light hi hat, soft bass, 104 bpm, no drops, no build up, no vocals, steady momentum, loops seamlessly",
+    "segundos": 22,
+    "estender_para": 145
+  }
+]
