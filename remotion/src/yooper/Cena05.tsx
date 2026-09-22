@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  Img,
   Sequence,
   interpolate,
   staticFile,
@@ -124,9 +125,12 @@ export const Cena05: React.FC = () => {
               gap: 14,
             }}
           >
-            <div style={{ width: 40, height: 40, borderRadius: 20, background: marca.azul }} />
+            <Img
+              src={staticFile("marca-yooper/yoodash-avatar.png")}
+              style={{ width: 42, height: 42, borderRadius: 21, display: "block", objectFit: "cover" }}
+            />
             <div style={{ fontFamily: UI, fontSize: 21, color: wa.texto, flex: 1 }}>
-              Agente Yooper
+              Yoodash
             </div>
             {/* a marca de governanca vive na barra: e condicao, nao mensagem */}
             {gov > 0.001 ? (

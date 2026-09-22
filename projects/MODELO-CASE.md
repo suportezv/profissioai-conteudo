@@ -13,6 +13,13 @@ master a -14 LUFS.**
 
 ## A ordem, e por que ela é essa
 
+**0. A abertura conceitual, gerada no Veo.**
+Todo case abre com um plano que estabelece o **mundo** do filme, sem narração e
+sem lettering, cortando seco para a primeira cena de motion. Dura 4 a 5 s. A
+primeira geração vai devolver a leitura automática da categoria, que é banco de
+imagem: o plano que presta é **físico em vez de conceitual-holográfico** e
+aponta para o objeto de que o filme trata. O áudio do clipe não entra na peça.
+
 **1. Roteiro cena a cena, com a narração escrita.**
 Serve para escrever e decidir a estrutura. **Nunca serve para montar**: a
 estimativa de duração erra para mais, e o erro cresce com a densidade. Medido:
@@ -31,10 +38,17 @@ as marcas novas; deslocar em bloco é o que quebra primeiro.
 **4. Pedidos externos em paralelo**, assim que o roteiro fecha. São eles que
 determinam a data de entrega, não o motion.
 
-**5. Trilha depois do corte inteiro.** Renderizar sem leito
-(`--props '{"trilha":null}'`) e misturar cada candidata por fora com
-`scripts/monta_trilha.py --alvo-dbfs`, que iguala a loudness das candidatas.
-Sem isso a mais alta ganha sempre e a escolha vira acidente de ganho.
+**5. Trilha depois do corte inteiro, e em movimentos, não em loop.**
+Renderizar sem leito (`--props '{"trilha":null}'`) e misturar por fora. Para
+comparar **candidatas**, `scripts/monta_trilha.py --alvo-dbfs` iguala a loudness
+das faixas: sem isso a mais alta ganha sempre e a escolha vira acidente de ganho.
+
+Mas num filme de dois minutos **uma faixa só não serve**, por mais bonita que
+seja: um loop começa onde termina, então a virada do roteiro passa e a música
+não sabe. O sintoma é sempre o mesmo, "genérica" e "não acompanha o que está
+acontecendo". `scripts/costura_secoes.py` monta a trilha por movimentos, com as
+bordas das seções caindo **exatamente nos cortes de cena**, trechos quase mudos
+sob as sonoras e a maior energia na cena que carrega a prova.
 
 **6. B-roll pago por último**, quando o buraco já está medido. E antes de gerar
 qualquer clipe, conferir se o que a cena precisa **não é informação em vez de

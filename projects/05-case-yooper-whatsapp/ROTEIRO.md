@@ -3,8 +3,8 @@
 **Categoria: Experiência do Cliente no WhatsApp.** Anunciante **Yooper**;
 coautoria **Yooper + Profissio**.
 
-**Duração do corte: 2:16** (136,3 s), 16:9 para a inscrição; cortes verticais no
-fim deste documento. Sem a sonora do cliente, 2:05.
+**Duração do corte: 2:23** (143,2 s), 16:9 para a inscrição; cortes verticais no
+fim deste documento. Sem a sonora do cliente, 2:12.
 
 > **Os tempos abaixo são os do corte montado**, não mais os de escrita. Foram
 > refeitos depois da montagem, contra as marcas de palavra que o Scribe devolveu
@@ -60,7 +60,7 @@ Como isso é garantido, e não só torcido:
 4. No `Completo.tsx` ela é **um `Series.Sequence` isolado**. Tirar é apagar um
    bloco, sem retimar nada em volta.
 
-**Sem ela o filme perde 11 s e nada mais** (2:16 vira 2:05). O que ele perde de argumento é o
+**Sem ela o filme perde 11 s e nada mais** (2:23 vira 2:12). O que ele perde de argumento é o
 critério "satisfação dos clientes", que passa a depender só do NPS.
 
 ---
@@ -85,16 +85,17 @@ critério "satisfação dos clientes", que passa a depender só do NPS.
 
 | # | Tempo (corte) | Imagem | Voz | Divergência do plano |
 |---|---|---|---|---|
-| **01** | 0:00 a 0:11,6 | Dashboard recriado na superfície clara, em cinza de interface. O cursor percorre cartões e tabela e **estanca** em "mas". O painel recua atrás de um véu e sobe um campo de pergunta **que nunca é preenchido**. | Narração | O painel ficou monocromático de propósito: pintá-lo de azul faria a tela do cliente parecer produto nosso, e o cinza lê como "correto e inerte", que é a tese |
-| **02** | 0:11,6 a 0:22,4 | Conversa recriada: a pergunta sai para o analista e fica com **dois checks cinza**. Anotação: `entregue, não lido`. Barra de espera escoando. | Narração | Sem contador de minutos: seria dado inventado. O contato na barra é o cargo, não um nome, porque a cena não precisa de culpado |
-| **03** | 0:22,4 a 0:38,2 | Cinco fontes entram como chips e **convergem em curva** no nó `data lake Yoodash`. Em "na mesma base" os pulsos viajam. Só então o painel do WhatsApp cresce do nó, com a troca em linguagem natural. | Narração | O painel entrava em "dentro do WhatsApp" (3,5 s) e ficava **nove segundos como retângulo preto vazio**. Agora entra em 12,3 s, com o que mostrar |
-| **04** | 0:38,2 a 0:49,2 | **SONORA CLIENTE, REMOVÍVEL.** Hoje é cartão de lacuna com barra escoando. | Sonora cliente | *A captar* |
-| **05** | 0:49,2 a 1:03,6 | Cartão de ação no chat com dois botões. O ponteiro vai até `Confirmar` e **pressiona**; só depois a meta muda no cartão ao lado. Três ações nomeadas à direita, uma encenada. | Narração | Encenar as três ações com botão encheria a tela de repetição e tiraria o peso do único gesto que importa |
-| **05B** | 1:03,6 a 1:16,6 | **SONORA CLÉSIO.** Hoje é cartão de lacuna. | Sonora Profissio | Cena nova, não prevista no plano |
-| **06** | 1:16,6 a 1:33,4 | Três mensagens do agente **seguidas, sem nada do outro lado**, empilhando e saindo por cima: ruptura, relatório em PDF, projeção. Depois áudio do cliente e áudio de volta, com a onda correndo. | Narração | Os `42 relatórios enviados sem pedido` migraram da cena 07 para cá: colados na frase que sustentam, são evidência; soltos entre outros números, seriam enchimento |
-| **07** | 1:33,4 a 1:50,3 | 131, 10.039 e 38,9% como contadores. O **75% vira contagem**: 131 pontos, 98 acesos. | Narração | O 75% ganhou desenho próprio porque é a afirmação que a categoria premia, e o desenho carrega a base junto |
-| **08** | 1:50,3 a 2:06,3 | A barra de 40 minutos encolhe para segundos; um ponto por semana vira sete. Depois o `12,22x`, com a autoria do número separada por escrito do que o agente fez, e o `+20%` como decisão do cliente. | Narração | Sem mudança |
-| **09** | 2:06,3 a 2:16,3 | `uma pergunta` e `uma decisão` nascem nas bordas opostas com a distância pontilhada entre elas, e **andam uma para a outra** em "decisão". Assinatura Yooper + Profissio sobre faixa escura. | Narração | O lockup carrega a caixa tracejada `arte final a receber`: desenhar aproximação da marca do anunciante seria pior que assumir que ela falta |
+| **00** | 0:00 a 0:04,2 | **Abertura conceitual, gerada no Veo.** Macro de um celular deitado numa mesa escura, tela acesa, ninguém tocando nele; a chuva da cidade desfocada atrás. Aproximação lenta ancorada no aparelho. Sem narração, sem lettering. | silêncio + atmosfera | Cena nova. É o padrão da casa a partir daqui: o filme estabelece o mundo antes de qualquer afirmação |
+| **01** | 0:04,2 a 0:15,8 | Dashboard recriado na superfície clara, em cinza de interface. O cursor percorre cartões e tabela e **estanca** em "mas". O painel recua atrás de um véu e sobe um campo de pergunta **que nunca é preenchido**. | Narração | O painel ficou monocromático de propósito: pintá-lo de azul faria a tela do cliente parecer produto nosso, e o cinza lê como "correto e inerte", que é a tese |
+| **02** | 0:15,8 a 0:29,3 | Cinco mensagens do cliente em três dias, com as marcações de data entre elas, todas com **dois checks cinza**. A última, já em silêncio depois da narração, cai com **um check só**. | Narração | Era uma mensagem parada. Uma diz "ainda não responderam"; cinco em três dias dizem **quanto tempo**, e o check que falta diz que a última nem chegou ao aparelho |
+| **03** | 0:29,3 a 0:45,1 | Cinco fontes entram como chips e **convergem em curva** no nó `data lake Yoodash`. Em "na mesma base" os pulsos viajam. Só então o painel do WhatsApp cresce do nó, com a troca em linguagem natural. | Narração | O painel entrava em "dentro do WhatsApp" (3,5 s) e ficava nove segundos como retângulo preto vazio. Agora entra em 12,3 s, com o que mostrar |
+| **04** | 0:45,1 a 0:56,1 | **SONORA CLIENTE, REMOVÍVEL.** Hoje é cartão de lacuna com barra escoando. | Sonora cliente | *A captar* |
+| **05** | 0:56,1 a 1:10,5 | Cartão de ação no chat com dois botões. O ponteiro vai até `Confirmar` e **pressiona**; só depois a meta muda no cartão ao lado. Três ações nomeadas à direita, uma encenada. | Narração | Encenar as três ações com botão encheria a tela de repetição e tiraria o peso do único gesto que importa |
+| **05B** | 1:10,5 a 1:23,5 | **SONORA CLÉSIO.** Hoje é cartão de lacuna. | Sonora Profissio | Cena nova, não prevista no plano |
+| **06** | 1:23,5 a 1:40,3 | Três mensagens do agente **seguidas, sem nada do outro lado**, empilhando e saindo por cima: ruptura, relatório em PDF, projeção. Depois áudio do cliente e áudio de volta, com a onda correndo. | Narração | Os `42 relatórios enviados sem pedido` migraram da cena 07 para cá: colados na frase que sustentam, são evidência |
+| **07** | 1:40,3 a 1:57,2 | 131, 10.039 e 38,9% como contadores. O **75% vira contagem**: 131 pontos, 98 acesos. | Narração | O 75% ganhou desenho próprio porque é a afirmação que a categoria premia, e o desenho carrega a base junto |
+| **08** | 1:57,2 a 2:13,2 | A barra de 40 minutos encolhe para segundos; um ponto por semana vira sete. Depois o `12,22x`, com a autoria do número separada por escrito do que o agente fez, e o `+20%` como decisão do cliente. | Narração | Sem mudança |
+| **09** | 2:13,2 a 2:23,2 | `uma pergunta` e `uma decisão` nascem nas bordas opostas com a distância pontilhada entre elas, e **andam uma para a outra** em "decisão". Assinatura Yooper + Profissio sobre faixa escura. | Narração | O lockup já carrega o wordmark branco real da Yooper: a arte final chegou em 22/set e a caixa tracejada saiu |
 
 ## Lettering por cena
 
@@ -169,8 +170,8 @@ relacionamento, e é a única resposta que nenhuma cena de motion consegue dar.
 |---|---|---|
 | Sonora do cliente | 04 | **captar** · pode não acontecer, e o filme está preparado |
 | Sonora do Clésio | 05B | **captar** · não sai do filme · mesma sessão da sonora do Soldiers |
-| Logo Yooper (PNG com alfa ou SVG) | 09 | **pedir** |
-| Logo Yoodash, se a plataforma for nomeada com marca | 03 | **pedir** · se não vier, fica só o nome em lettering |
+| Logo Yooper (PNG com alfa) | 09 | **recebido** em 22/set · `remotion/public/marca-yooper/yooper-branco.png` |
+| Avatar da Yoodash | 03, 05, 06 | **recebido** em 22/set · é o contato das três conversas recriadas |
 | NPS | 07 | **pendente** · aparece como `A CONFIRMAR` até chegar |
 | Contagem de **conversas** | 07 | **pendente** · ver abaixo |
 
@@ -189,14 +190,15 @@ relacionamento, e é a única resposta que nenhuma cena de motion consegue dar.
 5. **A pronúncia de Yooper e Yoodash.** O TTS lê "iúper" e "iúdash", e o Scribe
    devolve "Youper" e "YouDash", o que confirma que é isso que sai do arquivo.
    Se a casa pronuncia de outro jeito, as duas faixas se regravam.
-6. **A trilha**: três candidatas em `edit/`, igualadas em loudness para a
-   escolha não virar acidente de ganho.
+6. **A trilha**: a versão em movimentos está em `trilha/mapa.json`, com oito
+   seções trocando nas viradas do corte. As três candidatas anteriores, em loop
+   único, foram recusadas por serem genéricas e não acompanharem o filme.
 
 ---
 
 ## Cortes derivados
 
-**Vertical 60 s**: cenas 01, 03, 06, 07, 09. O problema, a virada, a
+**Vertical 60 s**: cenas 00, 01, 03, 06, 07, 09. O problema, a virada, a
 antecipação, a prova, a tese.
 
 **Vertical 30 s**: cenas 06 e 09. A cena 06 se explica sozinha, e é a que melhor

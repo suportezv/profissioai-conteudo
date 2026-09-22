@@ -9,6 +9,7 @@ import {
 } from "remotion";
 import { s } from "../anim";
 import { Placeholder } from "../Placeholder";
+import { Cena00, CENA00_FRAMES } from "./Cena00";
 import { Cena01, CENA01_FRAMES } from "./Cena01";
 import { Cena02, CENA02_FRAMES } from "./Cena02";
 import { Cena03, CENA03_FRAMES } from "./Cena03";
@@ -48,7 +49,7 @@ import { Cena09, CENA09_FRAMES } from "./Cena09";
  */
 
 /** Onde a narracao da cena 01 entra, contado do inicio do filme. */
-const NARRACAO_01_EM = s(0.5);
+const NARRACAO_01_EM = CENA00_FRAMES + s(0.5);
 
 /** A lacuna removivel: a sonora do cliente. */
 const LACUNA_04 = s(11);
@@ -67,6 +68,7 @@ const TRILHA_ALTA = 0.4;
 const FADE = s(2.5);
 
 export const COMPLETO_FRAMES =
+  CENA00_FRAMES +
   CENA01_FRAMES +
   CENA02_FRAMES +
   CENA03_FRAMES +
@@ -103,6 +105,11 @@ export const Completo: React.FC = () => (
     ) : null}
 
     <Series>
+      {/* a abertura conceitual em Veo: padrao da casa desde o case 03 */}
+      <Series.Sequence durationInFrames={CENA00_FRAMES}>
+        <Cena00 />
+      </Series.Sequence>
+
       <Series.Sequence durationInFrames={CENA01_FRAMES}>
         <Cena01 />
       </Series.Sequence>

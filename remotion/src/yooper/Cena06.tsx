@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  Img,
   Sequence,
   interpolate,
   staticFile,
@@ -66,8 +67,8 @@ const RESPOSTA_AUDIO_EM = s(14.2);
 const FECHO_EM = s(15.2);
 
 const ONDA = [
-  0.35, 0.7, 0.45, 0.9, 0.6, 0.42, 0.8, 0.55, 0.3, 0.75, 0.5, 0.88, 0.58, 0.38,
-  0.72, 0.48,
+  0.3, 0.55, 0.38, 0.72, 0.5, 0.88, 0.6, 0.42, 0.8, 0.55, 0.32, 0.68, 0.46,
+  0.9, 0.58, 0.36, 0.74, 0.5, 0.82, 0.6, 0.4, 0.66, 0.48, 0.86, 0.54, 0.34,
 ];
 
 const Digitando: React.FC<{ o: number }> = ({ o }) => {
@@ -132,6 +133,16 @@ const BalaoAgente: React.FC<{ o: number; children: React.ReactNode; hora: string
   </div>
 );
 
+/**
+ * Balao de audio no tamanho que um audio de WhatsApp realmente tem.
+ *
+ * A primeira versao usava um balao compacto, e ao lado das mensagens de texto
+ * ele lia como um chip, nao como um audio: o usuario reportou "muito pequenas
+ * em relacao as outras e a como e uma mensagem de audio no WhatsApp". No app o
+ * audio **ocupa quase a largura util da conversa**, porque a barra de
+ * progresso precisa de curso. Aqui ele tem largura fixa de 440 px, avatar do
+ * remetente, botao de 52 px e onda de 46 px de altura.
+ */
 const BalaoAudioWa: React.FC<{
   o: number;
   progresso: number;
@@ -141,23 +152,24 @@ const BalaoAudioWa: React.FC<{
   <div
     style={{
       alignSelf: saida ? "flex-end" : "flex-start",
+      width: 440,
       background: saida ? wa.balaoSaida : wa.balaoEntrada,
       borderRadius: 18,
       borderTopLeftRadius: saida ? 18 : 5,
       borderTopRightRadius: saida ? 5 : 18,
-      padding: "13px 18px 7px",
+      padding: "14px 18px 8px",
       display: "flex",
       flexDirection: "column",
-      gap: 4,
+      gap: 2,
       ...entra(o, 12),
     }}
   >
-    <div style={{ display: "flex", alignItems: "center", gap: 13 }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
       <div
         style={{
-          width: 38,
-          height: 38,
-          borderRadius: 19,
+          width: 52,
+          height: 52,
+          borderRadius: 26,
           background: wa.verde,
           flexShrink: 0,
           display: "flex",
@@ -165,18 +177,26 @@ const BalaoAudioWa: React.FC<{
           justifyContent: "center",
         }}
       >
-        <svg width="13" height="16" viewBox="0 0 12 14">
+        <svg width="17" height="20" viewBox="0 0 12 14">
           <rect x="0" y="0" width="4" height="14" fill={wa.fundoChat} />
           <rect x="8" y="0" width="4" height="14" fill={wa.fundoChat} />
         </svg>
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 3, height: 34 }}>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          gap: 3,
+          height: 46,
+        }}
+      >
         {ONDA.map((v, i) => (
           <div
             key={i}
             style={{
-              width: 3,
-              height: 4 + v * 27,
+              flex: 1,
+              height: 6 + v * 38,
               borderRadius: 2,
               background: i / ONDA.length <= progresso ? wa.lido : wa.apoio,
               opacity: i / ONDA.length <= progresso ? 0.95 : 0.4,
@@ -184,15 +204,31 @@ const BalaoAudioWa: React.FC<{
           />
         ))}
       </div>
+      {/* o avatar so aparece no audio que chega, que e o da Yoodash. No que
+          sai o app mostraria a foto do proprio cliente, e foto de cliente nao
+          se inventa: um disco cinza no lugar lê como imagem quebrada, entao a
+          onda ocupa o espaco inteiro. */}
+      {saida ? null : (
+        <Img
+          src={staticFile("marca-yooper/yoodash-avatar.png")}
+          style={{
+            width: 44,
+            height: 44,
+            borderRadius: 22,
+            flexShrink: 0,
+            display: "block",
+            objectFit: "cover",
+          }}
+        />
+      )}
     </div>
     <div
       style={{
         fontFamily: UI,
-        fontSize: 14,
+        fontSize: 15,
         color: wa.apoio,
         display: "flex",
         justifyContent: "space-between",
-        gap: 24,
       }}
     >
       <span>0:09</span>
@@ -255,8 +291,11 @@ export const Cena06: React.FC = () => {
               gap: 14,
             }}
           >
-            <div style={{ width: 40, height: 40, borderRadius: 20, background: marca.azul }} />
-            <div style={{ fontFamily: UI, fontSize: 21, color: wa.texto }}>Agente Yooper</div>
+            <Img
+              src={staticFile("marca-yooper/yoodash-avatar.png")}
+              style={{ width: 44, height: 44, borderRadius: 22, display: "block", objectFit: "cover" }}
+            />
+            <div style={{ fontFamily: UI, fontSize: 21, color: wa.texto }}>Yoodash</div>
           </div>
 
           <div
@@ -335,22 +374,33 @@ export const Cena06: React.FC = () => {
                   <div style={{ fontFamily: UI, fontSize: 21, color: wa.texto, lineHeight: 1.4 }}>
                     No ritmo atual, setembro fecha acima da meta.
                   </div>
-                  <div style={{ display: "flex", alignItems: "flex-end", gap: 5, height: 46 }}>
-                    {[0.3, 0.42, 0.38, 0.55, 0.5, 0.68, 0.62, 0.8, 0.88, 1].map((v, i) => {
+                  {/* as barras ocupam a largura inteira do balao: paradas na
+                      metade esquerda elas liam como grafico cortado */}
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-end",
+                      gap: 6,
+                      height: 78,
+                      width: "100%",
+                    }}
+                  >
+                    {[0.26, 0.34, 0.3, 0.45, 0.4, 0.52, 0.47, 0.6, 0.55, 0.68,
+                      0.63, 0.76, 0.82, 0.9, 1].map((v, i) => {
                       const p = passo(
                         f,
-                        PROJECAO_EM + 4 + i * 2,
-                        PROJECAO_EM + 12 + i * 2,
+                        PROJECAO_EM + 4 + i * 1.6,
+                        PROJECAO_EM + 11 + i * 1.6,
                       );
                       return (
                         <div
                           key={i}
                           style={{
-                            width: 13,
-                            height: 44 * v * p,
+                            flex: 1,
+                            height: 76 * v * p,
                             borderRadius: 3,
-                            background: i >= 8 ? wa.verde : wa.apoio,
-                            opacity: i >= 8 ? 0.95 : 0.55,
+                            background: i >= 12 ? wa.verde : wa.apoio,
+                            opacity: i >= 12 ? 0.95 : 0.55,
                           }}
                         />
                       );

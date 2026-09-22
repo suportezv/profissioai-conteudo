@@ -24,6 +24,7 @@ import {
   Completo as YooperCompleto,
   COMPLETO_FRAMES as YOOPER_FRAMES,
 } from "./yooper/Completo";
+import { Cena00 as Y00, CENA00_FRAMES as Y00_F } from "./yooper/Cena00";
 import { Cena01 as Y01, CENA01_FRAMES as Y01_F } from "./yooper/Cena01";
 import { Cena02 as Y02, CENA02_FRAMES as Y02_F } from "./yooper/Cena02";
 import { Cena03 as Y03, CENA03_FRAMES as Y03_F } from "./yooper/Cena03";
@@ -46,6 +47,14 @@ export const RemotionRoot: React.FC = () => (
       id="YooperCompleto"
       component={YooperCompleto}
       durationInFrames={YOOPER_FRAMES}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="YooperCena00"
+      component={Y00}
+      durationInFrames={Y00_F}
       fps={30}
       width={1920}
       height={1080}

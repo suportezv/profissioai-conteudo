@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  Img,
   Sequence,
   interpolate,
   staticFile,
@@ -376,17 +377,15 @@ export const Cena03: React.FC = () => {
                 gap: 14,
               }}
             >
-              <div
-                style={{
-                  width: 42,
-                  height: 42,
-                  borderRadius: 21,
-                  background: marca.azul,
-                }}
+              {/* o contato e a plataforma, nao o agente: a regra de que o
+                  agente nao ganha nome proprio continua valendo, e o avatar
+                  oficial da Yoodash e o que o cliente ve no aparelho dele */}
+              <Img
+                src={staticFile("marca-yooper/yoodash-avatar.png")}
+                style={{ width: 42, height: 42, borderRadius: 21, display: "block", objectFit: "cover" }}
               />
-              {/* o agente nao tem nome proprio, em nenhuma cena */}
               <div style={{ fontFamily: UI, fontSize: 22, color: wa.texto }}>
-                Agente Yooper
+                Yoodash
               </div>
             </div>
 

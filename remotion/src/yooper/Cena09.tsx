@@ -29,12 +29,12 @@ import { Sfx } from "../Sfx";
  * outra** no exato frame em que a locucao diz "decisao". A frase afirma e a
  * imagem confirma, que e a diferenca entre ilustrar e provar.
  *
- * ## A assinatura declara a lacuna em vez de esconde-la
+ * ## A assinatura
  *
- * A arte final do logo da Yooper ainda nao chegou. Em vez de desenhar uma
- * aproximacao da marca do anunciante, que seria pior que assumir que ela
- * falta, o lockup carrega a caixa tracejada dizendo o que falta. Buraco
- * visivel e revisavel; aproximacao de marca de cliente vira erro de fato.
+ * Ate 22/set o lockup carregava uma caixa tracejada dizendo que a arte final
+ * da Yooper nao tinha chegado, porque desenhar uma aproximacao da marca do
+ * anunciante seria pior que assumir que ela falta. O arquivo chegou e a caixa
+ * saiu.
  *
  * As duas assinam sobre faixa escura porque e ali que a versao branca da
  * Profissio existe, e porque coautoria pede que as duas estejam na mesma
@@ -183,39 +183,12 @@ export const Cena09: React.FC = () => {
               gap: 86,
             }}
           >
-            {/* a arte final da Yooper nao chegou: a lacuna fica escrita */}
-            <div
-              style={{
-                border: `2px dashed rgba(255,255,255,0.35)`,
-                borderRadius: marca.raio.painel,
-                padding: "26px 38px",
-                display: "flex",
-                flexDirection: "column",
-                gap: 10,
-                alignItems: "flex-start",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 64,
-                  fontWeight: 500,
-                  letterSpacing: "-2.24px",
-                  color: marca.branco,
-                }}
-              >
-                Yooper
-              </div>
-              <div
-                style={{
-                  fontSize: 18,
-                  letterSpacing: "1.4px",
-                  textTransform: "uppercase",
-                  color: marca.apoioEscuro,
-                }}
-              >
-                arte final a receber
-              </div>
-            </div>
+            {/* a arte final chegou em 22/set: o wordmark branco com alfa, que
+                e a aplicacao certa sobre a faixa escura */}
+            <Img
+              src={staticFile("marca-yooper/yooper-branco.png")}
+              style={{ width: 400, height: "auto", display: "block" }}
+            />
 
             <div style={{ width: 1, height: 130, background: "rgba(255,255,255,0.22)" }} />
 
