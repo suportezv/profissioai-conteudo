@@ -1,0 +1,45 @@
+{
+  "voz": "4r3G9XKliGgVZLKMgjik",
+  "ajustes": {
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.55,
+    "similaridade": 0.75,
+    "estilo": 0.0,
+    "speaker_boost": true
+  },
+  "falas": [
+    {
+      "nome": "cena-01",
+      "texto": "Toda agência de mídia entrega dashboard. O dado está lá, atualizado, completo. Mas ler um dado e decidir com ele são duas habilidades diferentes."
+    },
+    {
+      "nome": "cena-02",
+      "texto": "Para uma pergunta mais específica, o caminho era o de sempre: mandar mensagem para o analista e esperar. Funciona. Mas depende de alguém estar disponível.",
+      "nota": "a construcao \"Quando a pergunta era especifica\" quebrava: em tres takes o modelo inseriu uma palavra diferente entre \"Quando a\" e \"pergunta\" (\"Perdiu a\", \"sua ... ainda\", \"sera\"). Reescrever saiu mais barato que insistir"
+    },
+    {
+      "nome": "cena-03",
+      "texto": "A Yooper colocou um agente de inteligência artificial dentro do WhatsApp, ligado ao data lake da Yoodash. Mídia paga, analytics, e-commerce, CRM e canais orgânicos, na mesma base, respondidos em linguagem natural."
+    },
+    {
+      "nome": "cena-05",
+      "texto": "E ele não só responde. Dentro de regras de governança, ele atualiza uma meta, ajusta um orçamento, cadastra uma demanda. Sempre com confirmação explícita antes de mudar qualquer coisa."
+    },
+    {
+      "nome": "cena-06",
+      "texto": "E antecipa. Avisa quando um produto entra em risco de ruptura, manda o relatório da semana dentro da conversa, projeta faturamento. Sem ninguém pedir. E se a pergunta vem em áudio, a resposta volta em áudio."
+    },
+    {
+      "nome": "cena-07",
+      "texto": "De maio a setembro: cento e trinta e um usuários, dez mil e trinta e nove mensagens, e quase quatro em cada dez conversas fora do horário comercial. Setenta e cinco por cento dos usuários nunca precisaram falar com um humano."
+    },
+    {
+      "nome": "cena-08",
+      "texto": "Um cliente pedia toda semana um ROAS que levava quarenta minutos para ser calculado. Agora leva segundos, e ele consulta todo dia. Outro viu o mês fechar em doze vírgula vinte e dois, e decidiu aumentar o investimento em vinte por cento."
+    },
+    {
+      "nome": "cena-09",
+      "texto": "O valor não está em automatizar uma resposta. Está em reduzir a distância entre uma pergunta e uma decisão."
+    }
+  ]
+}
