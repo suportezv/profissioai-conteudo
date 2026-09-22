@@ -4,12 +4,30 @@
 Conta palavra FALADA: numero escrito em algarismo e expandido para a forma
 que a locucao diz ("2017" vale quatro palavras, nao uma). Sem isso a medida
 mente justo nas cenas que carregam dado.
+
+O caminho do roteiro **vem por argumento**. Ele ja foi fixo no codigo, para um
+case so, e a primeira vez que o estudio teve dois cases o script mediu o roteiro
+errado sem reclamar de nada: imprimiu uma tabela plausivel do projeto anterior.
+Ferramenta que se diz generica e carrega o caminho de um projeto dentro nao
+falha, mente.
+
+Uso:
+    python3 mede_ritmo.py projects/<projeto>/ROTEIRO.md [--silencio 01=4]
 """
 import io, re, sys
 
-ARQ = "projects/03-case-eita-whatsapp/ROTEIRO.md"
 LIMITE = 2.45
-SILENCIO = {"01": 4}          # segundos sem fala dentro da cena
+
+def le_silencios(args):
+    """`--silencio 01=4,06=2`: segundos sem fala dentro de uma cena."""
+    fora = {}
+    for i, a in enumerate(args):
+        if a == "--silencio" and i + 1 < len(args):
+            for par in args[i + 1].split(","):
+                cena, s = par.split("=")
+                fora[cena.strip()] = float(s)
+    return fora
+
 
 def seg(mmss):
     m, s = mmss.split(":")
@@ -48,7 +66,14 @@ def palavras_faladas(txt):
         total += por_extenso(tok) if tok.isdigit() else 1
     return total
 
+if len(sys.argv) < 2 or sys.argv[1].startswith("--"):
+    sys.exit("uso: mede_ritmo.py <roteiro.md> [--silencio 01=4]")
+ARQ = sys.argv[1]
+SILENCIO = le_silencios(sys.argv)
+
 linhas = [l for l in io.open(ARQ, encoding="utf-8") if re.match(r"^\| \*\*\d\d\*\* \|", l)]
+if not linhas:
+    sys.exit("nenhuma linha de cena encontrada em %s" % ARQ)
 if len(linhas) != 9:
     sys.exit("esperava 9 cenas, achei %d" % len(linhas))
 
