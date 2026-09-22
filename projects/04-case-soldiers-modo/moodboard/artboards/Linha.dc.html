@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Linha do tempo do filme</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap">
+<style>
+body{margin:0;font-family:"Sora",system-ui,sans-serif;background:#F4F6F9;color:#101218}
+</style>
+</helmet>
+<div style="width: 2800px; height: 760px; box-sizing: border-box; padding: 72px; background: #F4F6F9; display: flex; flex-direction: column; gap: 30px;">
+
+  <div style="display: flex; justify-content: space-between; align-items: baseline;">
+    <div style="font-size: 22px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: #2458F5;">Linha do tempo · 2:00</div>
+    <div style="font-size: 20px; letter-spacing: -0.7px; color: #59616E;">75,1 s de locução medidos · 31 s de respiro para distribuir</div>
+  </div>
+
+  <div style="display: flex; gap: 8px; align-items: stretch; height: 210px;">
+    <sc-for list="{{cenas}}" as="c" hint-placeholder-count="9">
+      <div style="flex-grow: {{c.peso}}; background: {{c.fundo}}; border: 1px solid {{c.borda}}; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 20px 48px -20px rgba(16,18,24,0.20);">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="font-size: 15px; letter-spacing: 1.5px; text-transform: uppercase; color: {{c.apoio}};">{{c.n}} · {{c.t}}</div>
+          <div style="font-size: 24px; font-weight: 500; letter-spacing: -0.84px; line-height: 1.2; color: {{c.tinta}};">{{c.titulo}}</div>
+        </div>
+        <div style="font-size: 15px; letter-spacing: -0.52px; color: {{c.apoio}};">{{c.fonte}}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display: flex; gap: 40px;">
+    <div style="display: flex; gap: 16px; align-items: stretch; flex-grow: 1;">
+      <div style="width: 3px; background: #2458F5; border-radius: 2px;"></div>
+      <div style="font-size: 19px; letter-spacing: -0.66px; line-height: 1.5;"><strong>Duas metades e uma dobradiça.</strong> 01 a 04 é o problema e a aposta. 05 a 08 é o mecanismo e a prova. A sonora do Clésio fica exatamente no meio e responde qual foi a parte difícil.</div>
+    </div>
+    <div style="display: flex; gap: 16px; align-items: stretch; flex-grow: 1;">
+      <div style="width: 3px; background: #BE3F84; border-radius: 2px;"></div>
+      <div style="font-size: 19px; letter-spacing: -0.66px; line-height: 1.5;"><strong>A estimativa errou 29% para mais.</strong> No case anterior foram 17%. Duas medições, mesma conclusão: tabela de roteiro ordena cenas, não reserva tempo.</div>
+    </div>
+    <div style="display: flex; gap: 16px; align-items: stretch; flex-grow: 1;">
+      <div style="width: 3px; background: #101218; border-radius: 2px;"></div>
+      <div style="font-size: 19px; letter-spacing: -0.66px; line-height: 1.5;"><strong>A cena 01 é a única apertada</strong>, e é a que abre o filme: 9,94 s de fala num slot de 10 s. Passa para 11,5 s, com 1 s de silêncio antes da primeira palavra.</div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":2800,"height":760}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var brutas = [
+      ['01', '0:00', 'Creatina é creatina', 'motion', 11.5],
+      ['02', '0:11', 'O pós-venda é terra de ninguém', 'motion', 9],
+      ['03', '0:20', 'Quem convence já é conhecido', 'clipes reais', 16],
+      ['04', '0:36', 'A parte difícil', 'sonora Clésio', 14],
+      ['05', '0:50', 'O cupom vira chave', 'motion', 12],
+      ['06', '1:02', 'Todo dia, no mesmo horário', 'motion', 17],
+      ['07', '1:19', 'Sete personas', 'motion', 10],
+      ['08', '1:29', 'A prova', 'motion', 16],
+      ['09', '1:45', 'A recompra começa em novembro', 'motion', 15]
+    ];
+    var destaque = { '06': true, '04': true };
+    return {
+      cenas: brutas.map(function (b) {
+        var alvo = destaque[b[0]];
+        var sonora = b[3] === 'sonora Clésio';
+        return {
+          n: b[0],
+          t: b[1],
+          titulo: b[2],
+          fonte: b[3],
+          peso: String(b[4]),
+          fundo: alvo ? (sonora ? '#101218' : '#2458F5') : '#FFFFFF',
+          borda: alvo ? (sonora ? '#101218' : '#2458F5') : '#DFE3EB',
+          tinta: alvo ? '#FFFFFF' : '#101218',
+          apoio: alvo ? (sonora ? '#AAB3C4' : '#E1E9FF') : '#59616E'
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

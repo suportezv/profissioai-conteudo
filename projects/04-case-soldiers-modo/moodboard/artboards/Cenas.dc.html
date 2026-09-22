@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Cenas 01, 02, 05 e 07</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap">
+<style>
+body{margin:0;font-family:"Sora",system-ui,sans-serif;background:#F4F6F9;color:#101218}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1020px; box-sizing: border-box; padding: 72px; background: #F4F6F9; display: flex; flex-direction: column; gap: 26px;">
+
+  <div style="font-size: 20px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: #2458F5;">Como cada cena aparece</div>
+
+  <div style="display: flex; gap: 20px;">
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 10px;">
+      <div style="height: 250px; border-radius: 18px; border: 1px solid #DFE3EB; background: #F4F6F9; background-image: radial-gradient(60% 55% at 90% 10%, rgba(36,88,245,0.16), transparent 66%); padding: 26px; display: flex; flex-direction: column; justify-content: center; gap: 18px;">
+        <div style="display: flex; gap: 16px; align-items: flex-end;">
+          <div style="flex-grow: 1; background: #FFFFFF; border: 1px solid #DFE3EB; border-radius: 14px; padding: 16px; box-shadow: 0 18px 44px -16px rgba(16,18,24,0.22);">
+            <div style="height: 54px; background: #DFE3EB; border-radius: 8px; margin-bottom: 12px;"></div>
+            <div style="font-size: 15px; color: #59616E;">creatina 300 g</div>
+            <div style="font-size: 24px; font-weight: 500; letter-spacing: -0.84px;">R$ 119</div>
+          </div>
+          <div style="flex-grow: 1; background: #FFFFFF; border: 1px solid #2458F5; border-radius: 14px; padding: 16px; box-shadow: 0 18px 44px -16px rgba(36,88,245,0.45);">
+            <div style="height: 54px; background: #DFE3EB; border-radius: 8px; margin-bottom: 12px;"></div>
+            <div style="font-size: 15px; color: #59616E;">creatina 300 g</div>
+            <div style="font-size: 24px; font-weight: 500; letter-spacing: -0.84px; color: #2458F5;">R$ 97</div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size: 19px; font-weight: 500; letter-spacing: -0.66px;">01 · o produto não diferencia</div>
+      <div style="font-size: 16px; letter-spacing: -0.56px; color: #59616E; line-height: 1.45;">Dois potes iguais, só o preço muda. O cursor escolhe o mais barato. Seco e sem graça, de propósito.</div>
+    </div>
+
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 10px;">
+      <div style="height: 250px; border-radius: 18px; border: 1px solid #DFE3EB; background: #F4F6F9; padding: 26px; display: flex; flex-direction: column; justify-content: center;">
+        <div style="display: flex; align-items: center;">
+          <sc-for list="{{jornada}}" as="j" hint-placeholder-count="4">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; width: 92px;">
+              <div style="width: 2px; height: 26px; background: rgba(16,18,24,0.35);"></div>
+              <div style="font-size: 14px; color: #101218; white-space: nowrap;">{{j.nome}}</div>
+            </div>
+            <div style="flex-grow: 1; height: 1px; background: rgba(16,18,24,0.22); margin-bottom: 26px;"></div>
+          </sc-for>
+          <div style="width: 130px; height: 1px; background: transparent;"></div>
+        </div>
+        <div style="margin-top: 26px; font-size: 26px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #2458F5; text-align: right;">o pós-venda</div>
+      </div>
+      <div style="font-size: 19px; font-weight: 500; letter-spacing: -0.66px;">02 · o vazio é o argumento</div>
+      <div style="font-size: 16px; letter-spacing: -0.56px; color: #59616E; line-height: 1.45;">A régua da jornada acaba na entrega e o quadro fica parado 3 s. É o único momento em que nada acontece, e é o ponto.</div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 20px;">
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 10px;">
+      <div style="height: 250px; border-radius: 18px; border: 1px solid #DFE3EB; background: #F4F6F9; padding: 26px; display: flex; align-items: center; justify-content: center; gap: 28px;">
+        <div style="width: 150px; height: 92px; border-radius: 12px; border: 2px dashed #DFE3EB; display: flex; align-items: center; justify-content: center; font-size: 17px; color: #59616E;">CUPOM10</div>
+        <div style="font-size: 30px; color: #2458F5;">&#8594;</div>
+        <div style="width: 150px; height: 92px; border-radius: 12px; background: #2458F5; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 500; color: #FFFFFF; box-shadow: 0 22px 54px -18px rgba(36,88,245,0.55);">chave</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start;">
+          <div style="font-size: 38px; font-weight: 500; letter-spacing: -1.33px;">90</div>
+          <div style="font-size: 15px; color: #59616E;">dias por compra,<br>cumulativos</div>
+        </div>
+      </div>
+      <div style="font-size: 19px; font-weight: 500; letter-spacing: -0.66px;">05 · o cupom vira chave</div>
+      <div style="font-size: 16px; letter-spacing: -0.56px; color: #59616E; line-height: 1.45;">O mesmo objeto gira em 3D e muda de função. Reusa a curva do <code>Balao3D</code> do case anterior.</div>
+    </div>
+
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 10px;">
+      <div style="height: 250px; border-radius: 18px; border: 1px solid #DFE3EB; background: #F4F6F9; padding: 26px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-content: center;">
+        <sc-for list="{{personas}}" as="p" hint-placeholder-count="7">
+          <div style="background: #FFFFFF; border: 1px solid {{p.borda}}; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 14px 34px -14px rgba(16,18,24,0.18);">
+            <div style="width: 26px; height: 26px; border-radius: 13px; background: {{p.cor}};"></div>
+            <div style="font-size: 14px; font-weight: 500; letter-spacing: -0.49px;">{{p.nome}}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-size: 19px; font-weight: 500; letter-spacing: -0.66px;">07 · sete personas, uma arquitetura</div>
+      <div style="font-size: 16px; letter-spacing: -0.56px; color: #59616E; line-height: 1.45;"><strong>Só entram os nomes que a Soldiers aprovar.</strong> Persona citada no case sem material gravado não aparece em imagem.</div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 20px; align-items: stretch; margin-top: auto;">
+    <div style="width: 3px; background: #BE3F84; border-radius: 2px;"></div>
+    <div style="font-size: 19px; letter-spacing: -0.66px; line-height: 1.5;"><strong>Cena 03 não está desenhada aqui de propósito.</strong> Ela é feita dos vídeos de opt-in reais dos influenciadores, que já existem decupados no repo. Desenhar um substituto seria inventar o que já temos.</div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1020}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      jornada: [
+        { nome: 'anúncio' },
+        { nome: 'site' },
+        { nome: 'checkout' },
+        { nome: 'entrega' }
+      ],
+      personas: [
+        { nome: 'MODO base', cor: '#2458F5', borda: '#2458F5' },
+        { nome: 'persona 2', cor: '#DFE3EB', borda: '#DFE3EB' },
+        { nome: 'persona 3', cor: '#DFE3EB', borda: '#DFE3EB' },
+        { nome: 'persona 4', cor: '#DFE3EB', borda: '#DFE3EB' },
+        { nome: 'persona 5', cor: '#DFE3EB', borda: '#DFE3EB' },
+        { nome: 'persona 6', cor: '#DFE3EB', borda: '#DFE3EB' },
+        { nome: 'persona 7', cor: '#DFE3EB', borda: '#DFE3EB' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
