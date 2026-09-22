@@ -107,11 +107,23 @@ type Limiar = { pct: number; rotulo: string; em: number };
  * Os tres limiares, do mais raso para o mais fundo. A ordem importa: entrando
  * nesta sequencia, cada barra nova e visivelmente menor que a anterior e sai
  * da mesma origem, que e como se le "subconjunto" em vez de "fatia".
+ *
+ * **A primeira barra entra junto com o titulo**, 0,3 s depois dele. Antes ela
+ * esperava 1,2 s, e nesse intervalo a frase "quem ja tinha esfriado voltou a
+ * comprar" ficava sozinha num quadro vazio, para reaparecer em seguida com o
+ * grafico: o usuario leu isso como "largado, sem leitura", e ele esta certo.
+ * **Titulo que anuncia um grafico nao segura tela sozinho**; ou o grafico vem
+ * junto, ou o titulo nao devia ter entrado ainda.
+ *
+ * As duas ultimas entram coladas, em 4,0 e 4,8 s, porque e ali que a locucao
+ * diz "um quinto, ha mais de noventa" (8,98 no arquivo, 9,48 de cena). Vindo
+ * juntas elas leem como "e mais fundo, e mais fundo ainda", que e o que o dado
+ * afirma.
  */
 const LIMIARES: Limiar[] = [
-  { pct: 50, rotulo: "há mais de 30 dias sem comprar", em: REAT_EM + s(1.2) },
-  { pct: 32, rotulo: "há mais de 60 dias", em: REAT_EM + s(2.6) },
-  { pct: 21, rotulo: "há mais de 90 dias", em: REAT_EM + s(3.8) },
+  { pct: 50, rotulo: "há mais de 30 dias sem comprar", em: REAT_EM + s(0.3) },
+  { pct: 32, rotulo: "há mais de 60 dias", em: REAT_EM + s(4.0) },
+  { pct: 21, rotulo: "há mais de 90 dias", em: REAT_EM + s(4.8) },
 ];
 
 /** Largura util da faixa de barras, em px de 1920. 100% ocupa isso. */
@@ -213,7 +225,7 @@ export const Cena08B: React.FC = () => {
               letterSpacing: "-1.4px",
               lineHeight: 1.2,
               maxWidth: 1180,
-              marginBottom: 52,
+              marginBottom: 44,
               ...entra(reat, 18),
             }}
           >
