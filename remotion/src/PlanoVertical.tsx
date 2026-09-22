@@ -1,6 +1,7 @@
 import React from "react";
 import { AbsoluteFill, OffthreadVideo, staticFile, useCurrentFrame } from "remotion";
-import { janela, passo, s } from "./anim";
+import { janela, s } from "./anim";
+import { interpolate } from "remotion";
 import { BalaoAudio } from "./BalaoAudio";
 
 /**
@@ -33,22 +34,32 @@ export type Fala = {
   ate: number;
   /** O envelope medido no proprio arquivo. */
   valores: number[];
-  /** Rotulo de duracao no balao. */
-  duracao: string;
+  /**
+   * Onde o balao encosta, em coordenadas do quadro 1920x1080: o canto inferior
+   * direito dele. **Fica perto do celular dela**, porque balao solto no canto
+   * nao liga a imagem ao som; colado no aparelho, ele le como o audio que esta
+   * saindo dali.
+   */
+  ancora: { x: number; y: number };
 };
 
 export const PlanoVertical: React.FC<{
   arquivo: string;
   /** Se existir, desenha o balao de audio enquanto a EITA fala. */
   fala?: Fala;
-  /** Lado do balao. A esquerda por padrao, como mensagem recebida. */
-  balaoEm?: "esquerda" | "direita";
-}> = ({ arquivo, fala, balaoEm = "esquerda" }) => {
+}> = ({ arquivo, fala }) => {
   const f = useCurrentFrame();
   const src = staticFile("broll/" + arquivo);
 
   const entra = fala ? janela(f, s(fala.de - 0.5), s(fala.ate + 0.6), 12, 14) : 0;
-  const progresso = fala ? passo(f, s(fala.de), s(fala.ate)) : 0;
+  // linear, sem easing: mensagem de audio toca em velocidade constante, e a
+  // curva suave da casa fazia o cabecote correr na frente da voz
+  const progresso = fala
+    ? interpolate(f, [s(fala.de), s(fala.ate)], [0, 1], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      })
+    : 0;
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
@@ -77,16 +88,16 @@ export const PlanoVertical: React.FC<{
         <div
           style={{
             position: "absolute",
-            bottom: 96,
-            [balaoEm === "esquerda" ? "left" : "right"]: 72,
+            right: 1920 - fala.ancora.x,
+            bottom: 1080 - fala.ancora.y,
           }}
         >
           <BalaoAudio
             valores={fala.valores}
             progresso={progresso}
             o={entra}
-            duracao={fala.duracao}
-            escala={1.12}
+            segundos={fala.ate - fala.de}
+            escala={0.92}
           />
         </div>
       ) : null}

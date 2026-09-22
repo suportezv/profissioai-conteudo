@@ -185,7 +185,7 @@ export const Cena03: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
-      <Superficie modo="claro" grade />
+      <Superficie modo="claro" halo />
       {/* meio segundo de respiro antes da fala; quem atrasa e a Sequence */}
       <Sequence from={AUDIO_EM}>
         <Audio src={staticFile("locucao/cena-03.mp3")} />

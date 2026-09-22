@@ -49,7 +49,7 @@ export const Placeholder: React.FC<Props> = ({
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
-      <Superficie modo="claro" />
+      <Superficie modo="claro" halo />
       {guia ? (
         <div
           style={{
@@ -78,6 +78,8 @@ export const Placeholder: React.FC<Props> = ({
             flexGrow: 1,
             border: `2px dashed ${marca.linha}`,
             borderRadius: marca.raio.arte,
+            background: "rgba(255,255,255,0.55)",
+            boxShadow: marca.sombra.painel,
             padding: 72,
             display: "flex",
             flexDirection: "column",

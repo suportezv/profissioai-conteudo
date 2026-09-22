@@ -240,7 +240,13 @@ export const Completo: React.FC = () => (
           gcEm={0.4}
           gcDura={3.4}
           vertical
-          fala={{ de: 2.62, ate: 6.68, valores: ONDA_OUVINDO, duracao: "0:19" }}
+          fala={{
+            de: 2.62,
+            ate: 6.68,
+            valores: ONDA_OUVINDO,
+            // medido no frame: o celular dela fica em x 859..1061, y 720..834
+            ancora: { x: 1452, y: 806 },
+          }}
         />
       </Series.Sequence>
 

@@ -10,6 +10,19 @@ import { wa, UI } from "./whatsapp";
  * que e o ponto do filme, e sem o balao a cena parecia so uma mulher ao
  * telefone. O balao nomeia o que esta acontecendo.
  *
+ * ## O progresso e linear, e isso e a coisa mais importante aqui
+ *
+ * A primeira versao usava `passo()`, o helper da casa, que tem a curva
+ * `SUAVE` (bezier 0.16, 1, 0.3, 1). Essa curva dispara no comeco e rasteja no
+ * fim, entao **o cabecote corria na frente da voz e depois esperava por ela**,
+ * e era isso que fazia a onda parecer dessincronizada mesmo com os tempos
+ * certos. Mensagem de audio de verdade toca em velocidade constante: o
+ * progresso aqui e linear, sem easing, sempre.
+ *
+ * O contador tambem anda. Ele mostra o tempo decorrido, como o app faz quando
+ * esta tocando, e nao a duracao parada: relogio congelado ao lado de uma onda
+ * que anda e a segunda coisa que denuncia que o balao e desenho.
+ *
  * ## A onda e medida, nao desenhada
  *
  * `valores` vem de `ondas.ts`, que sai do envelope de volume do proprio
@@ -21,17 +34,24 @@ import { wa, UI } from "./whatsapp";
  * Nenhuma captura de tela de usuario entra na peca: isto aqui e recriacao, e a
  * paleta vem do `whatsapp.ts` que as cenas 01 e 07 ja usam.
  */
+/** Segundos para "m:ss", como o app escreve. */
+const relogio = (seg: number) => {
+  const s = Math.max(0, Math.floor(seg));
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+};
+
 export const BalaoAudio: React.FC<{
   valores: number[];
-  /** 0 antes de tocar, 1 no fim. */
+  /** 0 antes de tocar, 1 no fim. Linear, nunca com easing. */
   progresso: number;
   /** Entrada do balao, 0 a 1. */
   o: number;
-  /** Rotulo de duracao, no canto, como no app. */
-  duracao: string;
+  /** Duracao total do audio, em segundos. O contador anda ate ela. */
+  segundos: number;
   escala?: number;
-}> = ({ valores, progresso, o, duracao, escala = 1 }) => {
+}> = ({ valores, progresso, o, segundos, escala = 1 }) => {
   const tocando = progresso > 0 && progresso < 1;
+  const decorrido = tocando ? progresso * segundos : progresso >= 1 ? segundos : 0;
   return (
     <div
       style={{
@@ -110,7 +130,7 @@ export const BalaoAudio: React.FC<{
           alignSelf: "flex-end",
         }}
       >
-        {duracao}
+        {relogio(decorrido)}
       </div>
     </div>
   );

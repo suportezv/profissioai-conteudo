@@ -88,7 +88,7 @@ export const Cena08: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
-      <Superficie modo="claro" grade />
+      <Superficie modo="claro" halo />
       <Sequence from={AUDIO_EM}>
         <Audio src={staticFile("locucao/cena-08.mp3")} />
       </Sequence>
@@ -120,6 +120,7 @@ export const Cena08: React.FC = () => {
                   lineHeight: 1,
                   color: marca.azul,
                   fontVariantNumeric: "tabular-nums",
+                  textShadow: "0 18px 50px rgba(36,88,245,0.22)",
                 }}
               >
                 {d.prefixo ?? ""}

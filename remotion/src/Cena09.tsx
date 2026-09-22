@@ -73,7 +73,7 @@ const Assinatura: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
-      <Superficie modo="claro" grade />
+      <Superficie modo="claro" halo />
       <AbsoluteFill
         style={{
           padding: MARGEM,
@@ -112,7 +112,13 @@ export const Cena09: React.FC = () => (
       <Series.Sequence durationInFrames={TRECHO_FRAMES}>
         <PlanoVertical
           arquivo="ana-missao.mp4"
-          fala={{ de: 6.44, ate: 21.68, valores: ONDA_MISSAO, duracao: "0:15" }}
+          fala={{
+            de: 6.44,
+            ate: 21.68,
+            valores: ONDA_MISSAO,
+            // medido no frame: o celular fica em x 834..1213, y 859..960
+            ancora: { x: 1604, y: 832 },
+          }}
         />
       </Series.Sequence>
 

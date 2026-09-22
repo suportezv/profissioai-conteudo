@@ -9,6 +9,7 @@ import {
 import { marca, modos } from "./marca";
 import { Superficie } from "./Superficie";
 import { janela, entra, s } from "./anim";
+import { interpolate } from "remotion";
 import { Sfx } from "./Sfx";
 
 /**
@@ -69,7 +70,7 @@ export const Cena06: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
-      <Superficie modo="claro" grade />
+      <Superficie modo="claro" halo />
       <Sequence from={AUDIO_EM}>
         <Audio src={staticFile("locucao/cena-06.mp3")} />
       </Sequence>
@@ -110,12 +111,21 @@ export const Cena06: React.FC = () => {
                   background: marca.branco,
                   border: `1px solid ${ativo ? marca.azul : marca.linha}`,
                   borderRadius: marca.raio.painel,
+                  // o cartao aceso sobe: a sombra tingida de azul o separa do
+                  // fundo mais que a borda sozinha, agora que o fundo se mexe
+                  boxShadow: ativo ? marca.sombra.azul : marca.sombra.painel,
                   padding: 44,
                   display: "flex",
                   flexDirection: "column",
                   gap: 18,
                   minHeight: 340,
                   ...entra(vivo, 22),
+                  // o cartao aceso sobe 8px por cima da entrada padrao: `entra`
+                  // ja escreve um translateY, entao os dois vao juntos aqui,
+                  // senao o segundo apaga o primeiro
+                  transform: `translateY(${
+                    interpolate(vivo, [0, 1], [22, 0]) - (ativo ? 8 : 0)
+                  }px)`,
                 }}
               >
                 <div

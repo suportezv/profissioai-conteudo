@@ -134,7 +134,7 @@ export const Cena04A: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
-      <Superficie modo="claro" grade />
+      <Superficie modo="claro" halo />
 
       <Sequence from={AUDIO_A_EM}>
         <Audio src={staticFile("locucao/cena-04a.mp3")} />
@@ -167,6 +167,7 @@ export const Cena04A: React.FC = () => {
               background: marca.branco,
               border: `1px solid ${marca.linha}`,
               borderRadius: marca.raio.painel,
+              boxShadow: marca.sombra.painel,
               filter: `grayscale(${morre})`,
             }}
           >
@@ -233,6 +234,7 @@ export const Cena04A: React.FC = () => {
               padding: "20px 36px",
               background: marca.azul,
               borderRadius: marca.raio.painel,
+              boxShadow: marca.sombra.azul,
               ...entra(convergiu, 16),
             }}
           >
