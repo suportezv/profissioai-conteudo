@@ -90,6 +90,14 @@ export const textoEm = (
       : Math.round(tr.texto.length * p);
     return { texto: tr.texto.slice(0, n), digitando: true };
   }
+  // **Antes do primeiro trecho o campo esta vazio.** Esta funcao ja devolveu o
+  // texto do ultimo trecho para qualquer tempo fora da lista, e o efeito era
+  // silencioso e grave: no frame zero da cena a frase final ja aparecia
+  // escrita, ou seja a cena abria entregando o fim dela. Depois do ultimo
+  // trecho o texto persiste de proposito, porque o rascunho fica parado no
+  // campo sem ser enviado, que e o ponto da cena.
+  const primeiro = trechos[0];
+  if (primeiro && seg < primeiro.ini) return { texto: "", digitando: false };
   const ultimo = trechos[trechos.length - 1];
   return { texto: ultimo ? ultimo.texto : "", digitando: false };
 };
