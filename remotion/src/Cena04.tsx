@@ -75,7 +75,7 @@ const FONTES = [
   { texto: "20 anos de consultório", em: s(3.4) },
   { texto: "o método dela", em: s(5.2) },
   { texto: "o jeito dela de falar", em: s(7.0) },
-  { texto: "o que nunca se responde", em: s(8.8) },
+  { texto: "o cuidado e empatia que ela tem", em: s(8.8) },
 ];
 
 const CONVERGE = s(10.4);

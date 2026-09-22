@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, OffthreadVideo, staticFile, useCurrentFrame } from "remotion";
-import { marca, modos } from "./marca";
-import { Superficie } from "./Superficie";
+import { marca } from "./marca";
+import { PlanoVertical, type Fala } from "./PlanoVertical";
 import { janela, entra, s } from "./anim";
 
 /**
@@ -54,11 +54,12 @@ export const Sonora: React.FC<{
    * celular, numa peca que documenta uma conversa de WhatsApp.
    */
   vertical?: boolean;
-}> = ({ arquivo, nome, papel, gcEm = 2.4, gcDura = 3.4, rotulo, vertical = false }) => {
+  /** Quando a EITA responde em audio, para o balao entrar. */
+  fala?: Fala;
+}> = ({ arquivo, nome, papel, gcEm = 2.4, gcDura = 3.4, rotulo, vertical = false, fala }) => {
   const f = useCurrentFrame();
   const gc = janela(f, s(gcEm), s(gcEm + gcDura), 14, 14);
   const rot = janela(f, s(0.3), s(3.6), 14, 12);
-  const m = modos.claro;
 
   const video = (
     <OffthreadVideo
@@ -73,43 +74,41 @@ export const Sonora: React.FC<{
 
   if (vertical) {
     return (
-      <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
-        <Superficie modo="claro" grade />
-        {/* o plano encosta na direita e sangra em cima e embaixo */}
-        <AbsoluteFill style={{ alignItems: "flex-end", justifyContent: "center" }}>
-          {video}
-        </AbsoluteFill>
+      <AbsoluteFill style={{ fontFamily: marca.fonte }}>
+        <PlanoVertical arquivo={arquivo} fala={fala} />
 
         {gc > 0.001 ? (
           <div
             style={{
               position: "absolute",
-              left: 120,
-              bottom: 200,
+              left: 72,
+              top: 96,
               display: "flex",
-              gap: 24,
+              gap: 20,
               alignItems: "stretch",
-              maxWidth: 700,
+              maxWidth: 640,
+              textShadow: "0 2px 18px rgba(16,18,24,0.6)",
               ...entra(gc, 16),
             }}
           >
             <div style={{ width: 3, background: marca.azul, borderRadius: 2 }} />
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <div
                 style={{
-                  fontSize: 52,
+                  fontSize: 46,
                   fontWeight: 500,
-                  letterSpacing: "-1.82px",
+                  letterSpacing: "-1.61px",
                   lineHeight: 1.05,
+                  color: marca.branco,
                 }}
               >
                 {nome}
               </div>
               <div
                 style={{
-                  fontSize: 28,
-                  letterSpacing: "-0.98px",
-                  color: m.apoio,
+                  fontSize: 26,
+                  letterSpacing: "-0.91px",
+                  color: marca.apoioEscuro,
                   lineHeight: 1.2,
                 }}
               >
@@ -123,13 +122,13 @@ export const Sonora: React.FC<{
           <div
             style={{
               position: "absolute",
-              left: 120,
-              top: 120,
+              right: 72,
+              top: 96,
               fontSize: 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
-              color: marca.azul,
+              color: marca.branco,
               ...entra(rot, 14),
             }}
           >

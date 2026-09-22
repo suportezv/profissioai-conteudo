@@ -9,6 +9,8 @@ import {
 } from "remotion";
 import { marca, modos } from "./marca";
 import { Superficie } from "./Superficie";
+import { PlanoVertical } from "./PlanoVertical";
+import { ONDA_MISSAO } from "./ondas";
 import { janela, entra, s } from "./anim";
 import { Sfx } from "./Sfx";
 
@@ -104,18 +106,14 @@ const Assinatura: React.FC = () => {
 export const Cena09: React.FC = () => (
   <AbsoluteFill style={{ backgroundColor: modos.claro.fundo }}>
     <Series>
-      {/* o plano e vertical e nao preenche o 16:9; a superficie clara com a
-          regua de 1px segura o que sobra, em vez de cortar o cabelo dela */}
+      {/* o plano e vertical: entra inteiro, com as laterais preenchidas por
+          uma copia desfocada dele mesmo, e o balao de audio entra quando a
+          EITA assume a missao */}
       <Series.Sequence durationInFrames={TRECHO_FRAMES}>
-        <AbsoluteFill>
-          <Superficie modo="claro" grade />
-          <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
-            <OffthreadVideo
-              src={staticFile("broll/ana-missao.mp4")}
-              style={{ height: "100%", width: "auto" }}
-            />
-          </AbsoluteFill>
-        </AbsoluteFill>
+        <PlanoVertical
+          arquivo="ana-missao.mp4"
+          fala={{ de: 6.44, ate: 21.68, valores: ONDA_MISSAO, duracao: "0:15" }}
+        />
       </Series.Sequence>
 
       <Series.Sequence durationInFrames={ASSINA_FRAMES}>

@@ -22,6 +22,7 @@ import { Cena08, CENA08_FRAMES } from "./Cena08";
 import { Cena09, CENA09_FRAMES } from "./Cena09";
 import { Placeholder } from "./Placeholder";
 import { Sonora } from "./Sonora";
+import { ONDA_OUVINDO } from "./ondas";
 
 /**
  * Corte de montagem do case, ponta a ponta.
@@ -83,6 +84,14 @@ const SONORA_07 = s(6.9);
 /**
  * Qual trilha toca, e como renderizar sem nenhuma.
  *
+ * A escolhida e a **organica** (violao de nylon, vassourinha, Rhodes), entre
+ * tres candidatas. A anterior, gerada pelo endpoint de efeitos, variava 1,4 dB
+ * ao longo de dois minutos, ou seja era uma linha reta, e o defeito estava no
+ * proprio pedido que eu tinha escrito: "seamless and even throughout", feito
+ * para dar loop limpo. **Otimizar uma trilha para emendar e otimiza-la contra
+ * ter movimento.** As tres novas saem do endpoint de musica com os 2:05
+ * inteiros, entao nao precisam de emenda nenhuma.
+ *
  * `--props '{"trilha":null}'` rende o filme so com locucao e efeitos. Serve
  * para comparar trilhas sem re-renderizar: renderiza uma vez sem leito e
  * mistura cada candidata por fora, o que garante que **a unica diferenca entre
@@ -90,7 +99,7 @@ const SONORA_07 = s(6.9);
  */
 const trilhaEscolhida = (): string | null => {
   const p = getInputProps() as { trilha?: string | null };
-  return p.trilha === undefined ? "sfx/trilha-longo.mp3" : p.trilha;
+  return p.trilha === undefined ? "sfx/trilha-organica.mp3" : p.trilha;
 };
 
 const TRILHA_BASE = 0.26;
@@ -210,9 +219,10 @@ export const Completo: React.FC = () => (
           arquivo="ana-ouvindo.mp4"
           nome="Anaclaudia Zani"
           papel="psicóloga · criadora da EITA"
-          gcEm={2.0}
-          gcDura={4.2}
+          gcEm={0.4}
+          gcDura={3.4}
           vertical
+          fala={{ de: 2.62, ate: 6.68, valores: ONDA_OUVINDO, duracao: "0:19" }}
         />
       </Series.Sequence>
 

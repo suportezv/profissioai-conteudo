@@ -15,8 +15,13 @@ import { marca, modos, type Modo } from "./marca";
  * em 85%). E a regua de 1px da marca virada em textura, entao ela preenche a
  * superficie sem inventar ornamento novo.
  *
- * Fica opcional e desligada por padrao: a grade serve para quadro de motion com
- * muito espaco vazio, e atrapalha atras de imagem filmada.
+ * `grade` liga duas camadas, nao uma: a grade fina **e** uma lavagem larga de
+ * tom. A grade sozinha desaparece na previa reduzida, porque linha de 1px nao
+ * sobrevive ao downscale; a lavagem e larga e aguenta. Juntas, o fundo tem
+ * textura de perto e tom de longe.
+ *
+ * Fica opcional e desligada por padrao: serve para quadro de motion com muito
+ * espaco vazio, e atrapalha atras de imagem filmada.
  *
  * > O site tambem tem halos em rosa e violeta. **O violeta e identidade
  * > aposentada** (revisao 3) e nao entra aqui; quando um halo for preciso, ele
@@ -24,9 +29,38 @@ import { marca, modos, type Modo } from "./marca";
  */
 
 const LINHA_GRADE: Record<Modo, string> = {
-  claro: "rgba(16,18,24,0.05)",
-  escuro: "rgba(255,255,255,0.045)",
-  azul: "rgba(255,255,255,0.07)",
+  claro: "rgba(16,18,24,0.14)",
+  escuro: "rgba(255,255,255,0.06)",
+  azul: "rgba(255,255,255,0.09)",
+};
+
+/**
+ * A lavagem: um tom largo por cima da superficie chapada.
+ *
+ * A grade sozinha nao resolve, e o motivo e mecanico: **linha de 1px nao
+ * sobrevive a reducao de escala**. Numa previa de 854px de largura, cada linha
+ * cai para menos de meio pixel e some, entao o fundo volta a parecer chapado
+ * justo no arquivo que a pessoa assiste. A lavagem e larga e continua, entao
+ * ela aguenta qualquer reducao e qualquer compressao.
+ *
+ * O desenho copia a estrutura do site (halos radiais fora de centro) com a
+ * paleta atual: o azul `#2458F5` do acento, nunca o violeta, que a revisao 3
+ * aposentou.
+ */
+const LAVAGEM: Record<Modo, string> = {
+  claro: [
+    "radial-gradient(72% 58% at 16% 10%, rgba(36,88,245,0.16), transparent 64%)",
+    "radial-gradient(62% 52% at 90% 88%, rgba(36,88,245,0.115), transparent 62%)",
+    "radial-gradient(95% 72% at 50% 122%, rgba(16,18,24,0.055), transparent 66%)",
+  ].join(","),
+  escuro: [
+    "radial-gradient(70% 55% at 18% 12%, rgba(36,88,245,0.20), transparent 62%)",
+    "radial-gradient(60% 50% at 88% 86%, rgba(87,227,242,0.10), transparent 60%)",
+  ].join(","),
+  azul: [
+    "radial-gradient(70% 55% at 18% 12%, rgba(255,255,255,0.10), transparent 62%)",
+    "radial-gradient(60% 50% at 88% 86%, rgba(16,18,24,0.10), transparent 60%)",
+  ].join(","),
 };
 
 const MASCARA =
@@ -41,6 +75,9 @@ export const Superficie: React.FC<{
   const linha = LINHA_GRADE[modo];
   return (
     <AbsoluteFill style={{ backgroundColor: m.fundo }}>
+      {grade ? (
+        <AbsoluteFill style={{ background: LAVAGEM[modo] }} />
+      ) : null}
       {grade ? (
         <AbsoluteFill
           style={{
