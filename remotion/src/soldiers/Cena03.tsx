@@ -107,6 +107,20 @@ const ROLA_INI = s(3.2);
 const ROLA_FIM = s(8.4);
 const CRESCE = s(8.5);
 
+/**
+ * Quando a voz da Pietra sobe, e por que nao pode ser quando o cartao cresce.
+ *
+ * Ela subia junto com o cartao, em 8,5 s, e disputava a narracao inteira. A
+ * locucao da cena fecha em **12,44 s** (11,94 s de fala a partir de 0,5 s), e a
+ * frase dela "E e isso" comeca em **12,48 s de cena**: o Scribe poe em 16,64 s
+ * do bruto, o corte comeca em 2,16 s e o `startFrom` adianta outros 2,0 s.
+ *
+ * Ate la ela fica num leito audivel de 0,1, que da presenca sem competir. O
+ * que vem depois e o fecho quente dela ("um super beijo, espero que a gente
+ * esteja juntos"), e esse toca por cima, que e onde ele deve estar.
+ */
+const PIETRA_SOBE = s(12.45);
+
 /** A entrada escalonada dos cinco primeiros, que e como a cena abre. */
 const ENTRADAS = [s(0.8), s(1.2), s(1.6), s(2.0), s(2.4)];
 
@@ -131,6 +145,14 @@ export const Cena03: React.FC = () => {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
+
+  // a Pietra so sobe quando a narracao acaba (ver PIETRA_SOBE)
+  const vozPietra = interpolate(
+    f,
+    [CRESCE, CRESCE + s(0.5), PIETRA_SOBE, PIETRA_SOBE + s(0.4)],
+    [0.06, 0.1, 0.1, 0.9],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -211,7 +233,7 @@ export const Cena03: React.FC = () => {
                   <OffthreadVideo
                     src={staticFile("soldiers/" + c.arq)}
                     startFrom={c.de}
-                    volume={fim ? Math.max(murmurio, cresceu * 0.5) : murmurio}
+                    volume={fim ? Math.max(murmurio, vozPietra) : murmurio}
                     style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   />
                   {fim && cresceu > 0.6 ? (

@@ -15,12 +15,17 @@ import { Sfx } from "../Sfx";
 /**
  * Cena 09 do case Soldiers: a tese, a janela de medicao, e os lockups.
  *
- * 12 s, narracao de 6,83 s que comeca em 0,6 s.
+ * 12 s, narracao de 6,50 s que comeca em 0,6 s.
  *
  * A locucao foi regravada nesta revisao: "O primeiro coorte sera medido nos
  * proximos noventa dias. O habito que vai sustentar a recompra ja esta de pe."
  * **Coorte e mais preciso que "primeira leva"** e e o termo que o formulario
  * do premio usa, o que ajuda o juri a conferir video contra formulario.
+ *
+ * No texto de locucao a palavra vai acentuada, **"coorte" com acento no
+ * primeiro o**, porque sem ele o modelo fecha a vogal. Medido no F1 da
+ * silaba tonica: 415 Hz sem o acento, que e o fechado, e 565 Hz com ele, que
+ * e o aberto da pronuncia certa.
  *
  * A ordem na tela segue a ordem da fala: a janela de medicao entra primeiro,
  * a tese depois. Antes a tese vinha em cima e entrava antes de ser dita.
@@ -66,7 +71,7 @@ export const Cena09: React.FC = () => {
 
   // a fala diz a medicao primeiro e a tese depois; a tela acompanha
   const janelaMedicao = janela(f, s(0.9), ASSINA_EM, 9, 9);
-  const tese = janela(f, s(4.0), ASSINA_EM, 10, 9);
+  const tese = janela(f, s(4.2), ASSINA_EM, 10, 9);
   const assina = janela(f, ASSINA_EM, CENA09_FRAMES, 11, 0);
 
   return (

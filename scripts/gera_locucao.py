@@ -15,6 +15,10 @@ marca:
     volta por `/v1/speech-to-text` e comparar com o texto pedido acha palavra
     comida e nome errado sem ninguem precisar escutar faixa por faixa. E o que
     `--confere` faz.
+  * **Enfase se pede por fala, nao pelo lote.** Cada item aceita um bloco
+    `ajustes` proprio, que sobrescreve o do lote so naquela faixa. Serve para o
+    caso comum de uma frase de efeito precisar de mais expressao (estabilidade
+    mais baixa) sem soltar o resto do filme junto.
 
 Uso:
     python3 gera_locucao.py lote.json --pasta remotion/public/locucao --confere
@@ -99,7 +103,9 @@ def main():
         if os.path.exists(saida) and not a.refazer:
             print("  pulando: %s (ja existe)" % it["nome"], flush=True)
             continue
-        erro = fala(chave, voz, it["texto"], saida, ajustes)
+        # o bloco `ajustes` da fala sobrescreve o do lote, campo a campo
+        deste = dict(ajustes, **it.get("ajustes", {}))
+        erro = fala(chave, voz, it["texto"], saida, deste)
         if erro:
             print("  FALHOU %s: %s" % (it["nome"], erro), flush=True)
             continue

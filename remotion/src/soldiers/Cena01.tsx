@@ -56,15 +56,34 @@ const AUDIO_EM = s(1.0);
 const MARGEM = 120;
 const m = modos.claro;
 
-/** Os tres tempos. Cada um cobre uma frase da narracao. */
-const GONDOLA_ATE = s(3.4);
-const MERCADO_EM = s(3.2);
-const MERCADO_ATE = s(7.0);
-const ENTRA_POTES = s(6.8);
+/**
+ * Os tres tempos. Cada um cobre uma frase da narracao, e **todos saem das
+ * marcas de palavra do arquivo de locucao**, nao de estimativa: a faixa entra
+ * em `AUDIO_EM`, entao tempo de cena e tempo de audio mais 1,0 s.
+ *
+ * Marcas do Scribe na faixa atual: a frase de efeito fecha em 1,72; a segunda
+ * frase abre em 2,58 e diz "7,6" entre 3,62 e 4,54; a terceira abre em 6,16 e
+ * poe "preco" entre 8,52 e 8,84.
+ */
+const GONDOLA_ATE = s(3.5);
+const MERCADO_EM = s(3.35);
 
-const CAI_PRECO = s(8.3);
-const CURSOR_CHEGA = s(9.0);
-const ESCOLHE = s(9.9);
+/**
+ * A contagem tem tempo proprio, e nao um deslocamento a partir do rotulo.
+ *
+ * O rotulo entra quando a frase comeca; o numero tem que **assentar na palavra
+ * falada**, que vem quase um segundo depois. Derivar um do outro amarrava os
+ * dois a uma distancia fixa que quebrava a cada regravacao da locucao.
+ */
+const CONTA_EM = s(4.45);
+const CONTA_ATE = s(5.65);
+
+const MERCADO_ATE = s(7.15);
+const ENTRA_POTES = s(7.05);
+
+const CAI_PRECO = s(9.0);
+const CURSOR_CHEGA = s(9.9);
+const ESCOLHE = s(10.6);
 
 /**
  * A frase de efeito que abre o filme, em tres tempos.
@@ -79,9 +98,9 @@ const ESCOLHE = s(9.9);
  * fecham com a ultima, porque e citacao de mercado, nao fala da marca.
  */
 const PALAVRAS: { texto: string; em: number }[] = [
-  { texto: "CREATINA", em: s(1.05) },
-  { texto: "É", em: s(1.75) },
-  { texto: "CREATINA!", em: s(2.15) },
+  { texto: "CREATINA", em: s(1.1) },
+  { texto: "É", em: s(1.8) },
+  { texto: "CREATINA!", em: s(2.0) },
 ];
 
 const Estalo: React.FC<{ o: number; children: React.ReactNode }> = ({
@@ -197,7 +216,7 @@ export const Cena01: React.FC = () => {
   });
 
   const mercado = janela(f, MERCADO_EM, MERCADO_ATE, 10, 9);
-  const bilhoes = conta(f, MERCADO_EM + s(0.3), MERCADO_EM + s(1.5), 7.6);
+  const bilhoes = conta(f, CONTA_EM, CONTA_ATE, 7.6);
 
   const potes = janela(f, ENTRA_POTES, CENA01_FRAMES, 11, 0);
   const precoB = conta(f, CAI_PRECO, CAI_PRECO + s(0.8), 22);
@@ -442,10 +461,10 @@ export const Cena01: React.FC = () => {
       <Sfx som="tique" em={PALAVRAS[1].em} volume={0.12} />
       <Sfx som="marca" em={PALAVRAS[2].em} volume={0.26} />
       <Sfx som="surge" em={MERCADO_EM} volume={0.2} />
-      {tiquesDaContagem(MERCADO_EM + s(0.3), MERCADO_EM + s(1.5)).map((fr, i) => (
+      {tiquesDaContagem(CONTA_EM, CONTA_ATE).map((fr, i) => (
         <Sfx key={i} som="tique" em={fr} volume={0.06} />
       ))}
-      <Sfx som="assenta" em={MERCADO_EM + s(1.5)} volume={0.34} />
+      <Sfx som="assenta" em={CONTA_ATE} volume={0.34} />
       <Sfx som="pop" em={ENTRA_POTES} volume={0.18} />
       <Sfx som="tique" em={CAI_PRECO} volume={0.12} />
       <Sfx som="assenta" em={CAI_PRECO + s(0.8)} volume={0.3} />

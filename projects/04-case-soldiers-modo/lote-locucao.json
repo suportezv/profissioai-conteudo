@@ -10,7 +10,8 @@
   "falas": [
     {
       "nome": "cena-01",
-      "texto": "Creatina é creatina. Num mercado de sete vírgula seis bilhões de reais, o que decide a próxima compra quase sempre é preço."
+      "texto": "Creatina é creatina! Num mercado de sete vírgula seis bilhões de reais, o que decide a próxima compra quase sempre é preço.",
+      "nota": "o ponto de exclamacao e o que levanta a frase: medido, a versao com ponto final saia 51 Hz ABAIXO da frase seguinte, e com exclamacao sai 21 Hz acima"
     },
     {
       "nome": "cena-02",
@@ -38,7 +39,8 @@
     },
     {
       "nome": "cena-09",
-      "texto": "O primeiro coorte será medido nos próximos noventa dias. O hábito que vai sustentar a recompra já está de pé."
+      "texto": "O primeiro coórte será medido nos próximos noventa dias. O hábito que vai sustentar a recompra já está de pé.",
+      "nota": "o acento abre a vogal: sem ele o F1 da silaba tonica mede 415 Hz ([o] fechado), com ele 565 Hz ([o] aberto), que e a pronuncia certa"
     }
   ]
 }
