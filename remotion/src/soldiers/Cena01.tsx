@@ -67,6 +67,40 @@ const CURSOR_CHEGA = s(9.0);
 const ESCOLHE = s(9.9);
 
 /**
+ * A frase de efeito que abre o filme, em tres tempos.
+ *
+ * Ela e uma **repeticao**, e e por isso que empilha em duas linhas: com
+ * "CREATINA" em cima e "CREATINA" embaixo, no mesmo corpo e no mesmo peso, a
+ * igualdade que a frase afirma fica visivel antes de ser ouvida. Escrita numa
+ * linha so, viraria uma frase comprida qualquer.
+ *
+ * Cada palavra entra com estalo curto (7 frames, escala 1,08 e desfoque
+ * saindo), sincronizada com a locucao. As aspas entram junto da primeira e
+ * fecham com a ultima, porque e citacao de mercado, nao fala da marca.
+ */
+const PALAVRAS: { texto: string; em: number }[] = [
+  { texto: "CREATINA", em: s(1.05) },
+  { texto: "É", em: s(1.75) },
+  { texto: "CREATINA", em: s(2.15) },
+];
+
+const Estalo: React.FC<{ o: number; children: React.ReactNode }> = ({
+  o,
+  children,
+}) => (
+  <span
+    style={{
+      display: "inline-block",
+      opacity: o,
+      transform: `scale(${interpolate(o, [0, 1], [1.08, 1])})`,
+      filter: `blur(${(1 - o) * 12}px)`,
+    }}
+  >
+    {children}
+  </span>
+);
+
+/**
  * A silhueta do pote, desenhada e nao sugerida por um retangulo.
  *
  * O quadrado cinza que estava aqui antes nao lia como suplemento. A forma e a
@@ -162,10 +196,10 @@ export const Cena01: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
-  const mercado = janela(f, MERCADO_EM, MERCADO_ATE, 16, 14);
+  const mercado = janela(f, MERCADO_EM, MERCADO_ATE, 10, 9);
   const bilhoes = conta(f, MERCADO_EM + s(0.3), MERCADO_EM + s(1.5), 7.6);
 
-  const potes = janela(f, ENTRA_POTES, CENA01_FRAMES, 18, 0);
+  const potes = janela(f, ENTRA_POTES, CENA01_FRAMES, 11, 0);
   const precoB = conta(f, CAI_PRECO, CAI_PRECO + s(0.8), 22);
   const cursor = passo(f, CURSOR_CHEGA, CURSOR_CHEGA + s(0.6));
   const escolheu = f >= ESCOLHE;
@@ -197,7 +231,14 @@ export const Cena01: React.FC = () => {
                 "linear-gradient(90deg, rgba(16,18,24,0.66) 0%, rgba(16,18,24,0.3) 34%, rgba(16,18,24,0) 60%)",
             }}
           />
-          <AbsoluteFill style={{ padding: MARGEM }}>
+          <AbsoluteFill
+            style={{
+              padding: MARGEM,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
             <div
               style={{
                 fontSize: 24,
@@ -205,10 +246,36 @@ export const Cena01: React.FC = () => {
                 letterSpacing: "2px",
                 textTransform: "uppercase",
                 color: marca.apoioEscuro,
-                opacity: janela(f, s(0.5), GONDOLA_ATE, 14, 12),
+                opacity: janela(f, s(0.5), GONDOLA_ATE, 10, 10),
               }}
             >
               O mercado de suplementação
+            </div>
+
+            {/* a frase de efeito, empilhada para a repeticao ser vista */}
+            <div
+              style={{
+                fontSize: 132,
+                fontWeight: 500,
+                letterSpacing: "-4.62px",
+                lineHeight: 1.02,
+                color: marca.branco,
+                maxWidth: 1180,
+                textShadow: "0 12px 44px rgba(16,18,24,0.55)",
+              }}
+            >
+              <Estalo o={passo(f, PALAVRAS[0].em, PALAVRAS[0].em + 7)}>
+                <span style={{ color: marca.apoioEscuro }}>“</span>
+                {PALAVRAS[0].texto}
+              </Estalo>
+              <br />
+              <Estalo o={passo(f, PALAVRAS[1].em, PALAVRAS[1].em + 7)}>
+                {PALAVRAS[1].texto}
+              </Estalo>{" "}
+              <Estalo o={passo(f, PALAVRAS[2].em, PALAVRAS[2].em + 7)}>
+                {PALAVRAS[2].texto}
+                <span style={{ color: marca.apoioEscuro }}>”</span>
+              </Estalo>
             </div>
           </AbsoluteFill>
         </AbsoluteFill>
@@ -315,7 +382,7 @@ export const Cena01: React.FC = () => {
             letterSpacing: "2px",
             textTransform: "uppercase",
             color: m.apoio,
-            opacity: janela(f, ENTRA_POTES, CENA01_FRAMES, 14, 0),
+            opacity: janela(f, ENTRA_POTES, CENA01_FRAMES, 9, 0),
           }}
         >
           Mesmo produto, mesma dose
@@ -354,6 +421,9 @@ export const Cena01: React.FC = () => {
         </div>
       ) : null}
 
+      <Sfx som="tique" em={PALAVRAS[0].em} volume={0.14} />
+      <Sfx som="tique" em={PALAVRAS[1].em} volume={0.12} />
+      <Sfx som="marca" em={PALAVRAS[2].em} volume={0.26} />
       <Sfx som="surge" em={MERCADO_EM} volume={0.2} />
       {tiquesDaContagem(MERCADO_EM + s(0.3), MERCADO_EM + s(1.5)).map((fr, i) => (
         <Sfx key={i} som="tique" em={fr} volume={0.06} />

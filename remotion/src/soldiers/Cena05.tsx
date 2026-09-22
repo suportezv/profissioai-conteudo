@@ -102,7 +102,7 @@ const IconeChave: React.FC<{ cor: string }> = ({ cor }) => (
 export const Cena05: React.FC = () => {
   const f = useCurrentFrame();
 
-  const cupom = janela(f, ENTRA_CUPOM, CENA05_FRAMES, 18, 0);
+  const cupom = janela(f, ENTRA_CUPOM, CENA05_FRAMES, 11, 0);
   const giro = interpolate(f, [GIRA, GIRA + s(1.0)], [0, 180], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -116,8 +116,8 @@ export const Cena05: React.FC = () => {
     (soma, t) => soma + conta(f, t, t + PASSO_CONTA, 90),
     0,
   );
-  const mostraDias = janela(f, COMPRAS[0], CENA05_FRAMES, 16, 0);
-  const ano = janela(f, ANO_EM, CENA05_FRAMES, 14, 0);
+  const mostraDias = janela(f, COMPRAS[0], CENA05_FRAMES, 10, 0);
+  const ano = janela(f, ANO_EM, CENA05_FRAMES, 9, 0);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -142,7 +142,7 @@ export const Cena05: React.FC = () => {
             letterSpacing: "2px",
             textTransform: "uppercase",
             color: marca.azul,
-            opacity: janela(f, s(0.6), CENA05_FRAMES, 14, 0),
+            opacity: janela(f, s(0.6), CENA05_FRAMES, 9, 0),
           }}
         >
           A decisão que liga tudo à compra
@@ -204,7 +204,7 @@ export const Cena05: React.FC = () => {
               fontWeight: 500,
               letterSpacing: "-1.54px",
               lineHeight: 1.25,
-              opacity: janela(f, GIRA + s(0.8), CENA05_FRAMES, 16, 0),
+              opacity: janela(f, GIRA + s(0.8), CENA05_FRAMES, 10, 0),
             }}
           >
             Qualquer compra,
@@ -257,14 +257,15 @@ export const Cena05: React.FC = () => {
             </div>
           </div>
 
-          {/* o que quatro compras entregam, dito em tela */}
+          {/* o que quatro compras entregam, colado no numero que o produz:
+              jogado na borda oposta ele lia como um dado solto de outra cena */}
           <div
             style={{
-              marginLeft: "auto",
               display: "flex",
               alignItems: "center",
               gap: 16,
-              paddingBottom: 26,
+              paddingBottom: 22,
+              marginLeft: 48,
               ...entra(ano, 16),
             }}
           >

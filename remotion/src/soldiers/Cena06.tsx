@@ -327,16 +327,16 @@ const BalaoTexto: React.FC<{
 export const Cena06: React.FC = () => {
   const f = useCurrentFrame();
 
-  const tela = janela(f, TELA_EM, CENA06_FRAMES, 18, 0);
-  const pergunta = janela(f, PERGUNTA_EM, CENA06_FRAMES, 14, 0);
-  const resposta = janela(f, RESPOSTA_EM, CENA06_FRAMES, 14, 0);
+  const tela = janela(f, TELA_EM, CENA06_FRAMES, 11, 0);
+  const pergunta = janela(f, PERGUNTA_EM, CENA06_FRAMES, 9, 0);
+  const resposta = janela(f, RESPOSTA_EM, CENA06_FRAMES, 9, 0);
   // o indicador da pergunta some no frame em que o balao entra
   const digitaPergunta =
     f >= DIGITA_PERGUNTA && f < PERGUNTA_EM
       ? passo(f, DIGITA_PERGUNTA, DIGITA_PERGUNTA + 6)
       : 0;
   const diaZero = janela(f, DIA_ZERO, CENA06_FRAMES, 10, 0);
-  const boas = janela(f, BOAS_EM, CENA06_FRAMES, 14, 0);
+  const boas = janela(f, BOAS_EM, CENA06_FRAMES, 9, 0);
   const digitaBoas =
     f >= DIGITA_BOAS && f < BOAS_EM ? passo(f, DIGITA_BOAS, DIGITA_BOAS + 6) : 0;
 
@@ -346,7 +346,7 @@ export const Cena06: React.FC = () => {
     return ac;
   }, -1);
 
-  const fecho = janela(f, s(14.2), CENA06_FRAMES, 16, 0);
+  const fecho = janela(f, s(14.2), CENA06_FRAMES, 10, 0);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -502,7 +502,7 @@ export const Cena06: React.FC = () => {
               letterSpacing: "2px",
               textTransform: "uppercase",
               color: marca.azul,
-              opacity: janela(f, s(0.6), CENA06_FRAMES, 14, 0),
+              opacity: janela(f, s(0.6), CENA06_FRAMES, 9, 0),
             }}
           >
             O ritual diário
@@ -513,7 +513,7 @@ export const Cena06: React.FC = () => {
               fontWeight: 500,
               letterSpacing: "-1.82px",
               lineHeight: 1.22,
-              opacity: janela(f, s(1.2), CENA06_FRAMES, 16, 0),
+              opacity: janela(f, s(1.2), CENA06_FRAMES, 10, 0),
             }}
           >
             No horário que

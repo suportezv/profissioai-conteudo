@@ -46,7 +46,7 @@ import { Sfx } from "../Sfx";
  * caber no nosso fundo seria pior que trocar o fundo.
  */
 
-export const CENA09_FRAMES = s(13);
+export const CENA09_FRAMES = s(12);
 const AUDIO_EM = s(0.6);
 const MARGEM = 120;
 const m = modos.claro;
@@ -56,9 +56,9 @@ const ASSINA_EM = s(7.6);
 export const Cena09: React.FC = () => {
   const f = useCurrentFrame();
 
-  const tese = janela(f, s(0.8), ASSINA_EM, 16, 14);
-  const janelaMedicao = janela(f, s(3.2), ASSINA_EM, 14, 14);
-  const assina = janela(f, ASSINA_EM, CENA09_FRAMES, 18, 0);
+  const tese = janela(f, s(0.8), ASSINA_EM, 10, 9);
+  const janelaMedicao = janela(f, s(3.2), ASSINA_EM, 9, 9);
+  const assina = janela(f, ASSINA_EM, CENA09_FRAMES, 11, 0);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -110,7 +110,8 @@ export const Cena09: React.FC = () => {
                 color: m.apoio,
               }}
             >
-              A primeira leva de 90 dias vence no início de novembro de 2026.
+              A primeira leva de 90 dias vence no início de{" "}
+              <span style={{ whiteSpace: "nowrap" }}>novembro de 2026</span>.
               <br />A recompra começa a ser medida a partir daí.
             </div>
           </div>

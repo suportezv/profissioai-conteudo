@@ -37,7 +37,7 @@ import { Sfx } from "../Sfx";
  * desacelerando.
  */
 
-export const CENA08_FRAMES = s(16);
+export const CENA08_FRAMES = s(15);
 const AUDIO_EM = s(0.4);
 const MARGEM = 120;
 const m = modos.claro;

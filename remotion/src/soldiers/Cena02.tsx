@@ -15,58 +15,68 @@ import { Sfx } from "../Sfx";
 /**
  * Cena 02 do case Soldiers: o pos-venda e terra de ninguem.
  *
- * 9 s, narracao de 5,76 s que comeca em 0,6 s. Pausas do arquivo em 2,87 e
- * 5,38 s.
+ * 7,5 s, narracao de 5,76 s que comeca em 0,6 s. Pausas do arquivo em 2,87 e
+ * 5,38 s, somado o atraso: a frase da vantagem fecha em 3,47 e a do pos-venda
+ * em 5,98.
  *
- * ## O vazio e o argumento
+ * ## A cena e uma comparacao, e por isso tem dois titulos
  *
- * A jornada de compra e desenhada como regua de 1px com quatro marcas, e
- * **ela simplesmente acaba na entrega**. Depois disso o quadro fica com a
- * metade direita vazia por quase tres segundos, que e o unico momento do filme
- * em que nada acontece.
+ * A esquerda, sobre a regua que existe, **"A jornada que o mercado olhava"**.
+ * A direita, sobre o vazio, **"Onde resolveu inovar"**. Antes havia um titulo
+ * so e o vazio ficava sem nome, o que obrigava a narracao a carregar sozinha a
+ * comparacao que a imagem deveria estar fazendo.
  *
- * Isso e deliberado e e o ponto da cena: territorio negligenciado precisa ser
- * **visto**, nao dito. Uma animacao preenchendo aquele espaco destruiria o
- * argumento que a narracao esta fazendo em cima dele.
+ * A regua de 1px tem quatro marcas e **acaba na entrega**. O que vem depois
+ * fica vazio de proposito: territorio negligenciado precisa ser visto, nao
+ * dito. Preencher aquele espaco destruiria o argumento.
+ *
+ * ## A seta e quem diz de quem e a decisao
+ *
+ * Ela sai da marca da Soldiers e aponta para o pos-venda. Sem ela, os dois
+ * elementos dividem a tela sem se relacionar, e o espectador tem que inferir
+ * que foi a Soldiers que foi para la. **Com a seta, a cena afirma a autoria da
+ * escolha**, que e justamente o que o filme precisa estabelecer aqui.
  *
  * A regua usa tinta a 22%, nao o token `linha`: sobre a lavagem do fundo o
  * `#DFE3EB` desaparece, e foi assim que a linha do tempo do case anterior ficou
  * ilegivel.
  */
 
-export const CENA02_FRAMES = s(9);
+export const CENA02_FRAMES = s(7.5);
 const AUDIO_EM = s(0.6);
 const MARGEM = 120;
 const m = modos.claro;
 
 /** As quatro etapas que existem hoje. A regua para depois da ultima. */
 const ETAPAS = [
-  { nome: "anúncio", em: s(0.9) },
-  { nome: "site", em: s(1.5) },
-  { nome: "checkout", em: s(2.1) },
-  { nome: "entrega", em: s(2.7) },
+  { nome: "anúncio", em: s(0.7) },
+  { nome: "site", em: s(1.1) },
+  { nome: "checkout", em: s(1.5) },
+  { nome: "entrega", em: s(1.9) },
 ];
 
-/** Onde a regua para: a entrega fica em 46% da largura util. */
-const FIM_REGUA = 46;
-const VAZIO_EM = s(6.2);
-
-/**
- * Quando a marca da Soldiers entra: junto com o nome dela na narracao.
- *
- * Ela vai sobre um painel escuro porque o arquivo que o cliente entregou e o
- * logo **branco**, e branco sobre a superficie clara da marca nao existe.
- * Painel escuro e a aplicacao correta dele, nao um improviso: recolorir marca
- * de cliente para caber no nosso fundo seria pior.
- */
+const ROTULO_ESQ = s(0.3);
 const MARCA_EM = s(0.9);
+const ROTULO_DIR = s(2.7);
+const VAZIO_EM = s(3.5);
+const SETA_EM = s(4.1);
+
+/** Geometria do quadro, em px de 1920x1080. A seta depende dela. */
+const REGUA_Y = 600;
+const REGUA_FIM = MARGEM + 840; // onde a entrega fica
+const POS_X = 1060;
+const POS_Y = 560;
+const MARCA_X = 1380;
+const MARCA_Y = 250;
 
 export const Cena02: React.FC = () => {
   const f = useCurrentFrame();
-  const regua = passo(f, s(0.7), s(3.0));
-  const rotulo = janela(f, s(0.6), CENA02_FRAMES, 14, 0);
-  const vazio = janela(f, VAZIO_EM, CENA02_FRAMES, 16, 0);
-  const marcaSoldiers = janela(f, MARCA_EM, CENA02_FRAMES, 16, 0);
+  const regua = passo(f, s(0.5), s(2.2));
+  const rotuloEsq = janela(f, ROTULO_ESQ, CENA02_FRAMES, 10, 0);
+  const rotuloDir = janela(f, ROTULO_DIR, CENA02_FRAMES, 10, 0);
+  const vazio = janela(f, VAZIO_EM, CENA02_FRAMES, 11, 0);
+  const marcaSoldiers = janela(f, MARCA_EM, CENA02_FRAMES, 11, 0);
+  const seta = passo(f, SETA_EM, SETA_EM + s(0.7));
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -75,134 +85,176 @@ export const Cena02: React.FC = () => {
         <Audio src={staticFile("locucao-soldiers/cena-02.mp3")} />
       </Sequence>
 
-      <AbsoluteFill
+      {/* ---------- os dois titulos da comparacao ---------- */}
+      <div
         style={{
-          padding: MARGEM,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          gap: 90,
+          position: "absolute",
+          left: MARGEM,
+          top: 360,
+          width: 760,
+          fontSize: 34,
+          fontWeight: 500,
+          letterSpacing: "2px",
+          textTransform: "uppercase",
+          lineHeight: 1.3,
+          color: m.apoio,
+          ...entra(rotuloEsq, 14),
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{
-              fontSize: 24,
-              fontWeight: 500,
-              letterSpacing: "2px",
-              textTransform: "uppercase",
-              color: m.apoio,
-              opacity: rotulo,
-            }}
-          >
-            A jornada que já existia
-          </div>
+        A jornada que o
+        <br />
+        mercado olhava
+      </div>
 
+      <div
+        style={{
+          position: "absolute",
+          left: POS_X,
+          top: 360,
+          width: 700,
+          fontSize: 34,
+          fontWeight: 500,
+          letterSpacing: "2px",
+          textTransform: "uppercase",
+          lineHeight: 1.3,
+          color: marca.azul,
+          ...entra(rotuloDir, 14),
+        }}
+      >
+        Onde resolveu
+        <br />
+        inovar
+      </div>
+
+      {/* ---------- a regua, que acaba na entrega ---------- */}
+      <div
+        style={{
+          position: "absolute",
+          left: MARGEM,
+          top: REGUA_Y,
+          width: REGUA_FIM - MARGEM,
+          height: 1,
+          background: "rgba(16,18,24,0.22)",
+          transformOrigin: "left",
+          transform: `scaleX(${regua})`,
+        }}
+      />
+      {ETAPAS.map((e, i) => {
+        const o = janela(f, e.em, CENA02_FRAMES, 8, 0);
+        const x =
+          MARGEM + ((REGUA_FIM - MARGEM) / ETAPAS.length) * (i + 0.5);
+        return (
           <div
+            key={e.nome}
             style={{
-              background: marca.tinta,
-              borderRadius: marca.raio.painel,
-              padding: "26px 40px",
+              position: "absolute",
+              left: x,
+              top: REGUA_Y,
+              transform: "translateX(-50%)",
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
-              boxShadow: marca.sombra.painel,
-              ...entra(marcaSoldiers, 16),
+              gap: 14,
+              opacity: o,
             }}
           >
-            <Img
-              src={staticFile("marca-soldiers/soldiers-branco.png")}
-              style={{ height: 86, width: "auto", display: "block" }}
+            <div
+              style={{
+                width: 2,
+                height: 34,
+                background: m.tinta,
+                opacity: 0.35,
+                transformOrigin: "top",
+                transform: `scaleY(${o})`,
+              }}
             />
+            <div
+              style={{
+                fontSize: 32,
+                fontWeight: 500,
+                letterSpacing: "-1.12px",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {e.nome}
+            </div>
           </div>
-        </div>
+        );
+      })}
 
-        <div style={{ position: "relative", height: 150 }}>
-          {/* a regua para em 46%: o resto do quadro fica vazio de proposito */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: `${FIM_REGUA}%`,
-              height: 1,
-              background: "rgba(16,18,24,0.22)",
-              transformOrigin: "left",
-              transform: `scaleX(${regua})`,
-            }}
+      {/* ---------- o pos-venda, no espaco que a regua deixou ---------- */}
+      <div
+        style={{
+          position: "absolute",
+          left: POS_X,
+          top: POS_Y,
+          fontSize: 62,
+          fontWeight: 500,
+          letterSpacing: "3px",
+          textTransform: "uppercase",
+          color: marca.azul,
+          whiteSpace: "nowrap",
+          ...entra(vazio, 18),
+        }}
+      >
+        o pós-venda
+      </div>
+
+      {/* ---------- a marca, e a seta que liga a decisao a ela ---------- */}
+      <div
+        style={{
+          position: "absolute",
+          left: MARCA_X,
+          top: MARCA_Y,
+          background: marca.tinta,
+          borderRadius: marca.raio.painel,
+          padding: "24px 36px",
+          display: "flex",
+          alignItems: "center",
+          boxShadow: marca.sombra.painel,
+          ...entra(marcaSoldiers, 14),
+        }}
+      >
+        <Img
+          src={staticFile("marca-soldiers/soldiers-branco.png")}
+          style={{ height: 76, width: "auto", display: "block" }}
+        />
+      </div>
+
+      {seta > 0.001 ? (
+        <svg
+          style={{ position: "absolute", left: 0, top: 0 }}
+          width="1920"
+          height="1080"
+        >
+          {/* da base da marca ate a palavra: curva curta, sem contornar nada */}
+          <path
+            d="M 1430 370 C 1420 450, 1350 500, 1250 532"
+            fill="none"
+            stroke={marca.azul}
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeDasharray="200"
+            strokeDashoffset={200 - seta * 200}
           />
-          {ETAPAS.map((e, i) => {
-            const o = janela(f, e.em, CENA02_FRAMES, 12, 0);
-            const x = (FIM_REGUA / ETAPAS.length) * (i + 0.5);
-            return (
-              <div
-                key={e.nome}
-                style={{
-                  position: "absolute",
-                  left: `${x}%`,
-                  top: 0,
-                  transform: "translateX(-50%)",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: 16,
-                  opacity: o,
-                }}
-              >
-                <div
-                  style={{
-                    width: 2,
-                    height: 34,
-                    background: m.tinta,
-                    opacity: 0.35,
-                    transformOrigin: "top",
-                    transform: `scaleY(${o})`,
-                  }}
-                />
-                <div
-                  style={{
-                    fontSize: 30,
-                    fontWeight: 500,
-                    letterSpacing: "-1.05px",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {e.nome}
-                </div>
-              </div>
-            );
-          })}
+          <path
+            d="M 1268 520 L 1244 534 L 1266 548"
+            fill="none"
+            stroke={marca.azul}
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity={passo(f, SETA_EM + s(0.5), SETA_EM + s(0.7))}
+          />
+        </svg>
+      ) : null}
 
-          {/* o rotulo do vazio entra no espaco que a regua deixou */}
-          <div
-            style={{
-              position: "absolute",
-              left: `${FIM_REGUA + 8}%`,
-              top: 8,
-              fontSize: 64,
-              fontWeight: 500,
-              letterSpacing: "3px",
-              textTransform: "uppercase",
-              color: marca.azul,
-              whiteSpace: "nowrap",
-              ...entra(vazio, 20),
-            }}
-          >
-            o pós-venda
-          </div>
-        </div>
-      </AbsoluteFill>
-
+      <Sfx som="marca" em={MARCA_EM} volume={0.2} />
       {ETAPAS.map((e) => (
         <Sfx key={e.nome} som="tique" em={e.em} volume={0.1} />
       ))}
-      <Sfx som="marca" em={MARCA_EM} volume={0.2} />
       <Sfx som="surge" em={VAZIO_EM} volume={0.22} />
+      <Sfx som="pop" em={SETA_EM} volume={0.16} />
     </AbsoluteFill>
   );
 };

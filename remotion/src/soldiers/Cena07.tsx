@@ -41,9 +41,10 @@ import { Sfx } from "../Sfx";
  * inclui o Vitor Zanelato, que veio do site bem mais aberto que os outros e
  * foi repadronizado junto.
  *
- * Quem ainda nao tem arquivo usa a **inicial**, que e o proprio fallback que o
- * site desenhou. Recriar o rosto de alguem, ou pescar um frame de outro video
- * achando que e a mesma pessoa, seria pior que a lacuna.
+ * As sete artes chegaram. Se alguma faltasse, o cartao usaria a **inicial**,
+ * que e o proprio fallback que o site desenhou: recriar o rosto de alguem, ou
+ * pescar um frame de outro video achando que e a mesma pessoa, seria pior que
+ * a lacuna.
  *
  * ## O cartao e do cliente, entao ele tem a cara do cliente
  *
@@ -84,8 +85,7 @@ const PERSONAS: Persona[] = [
     base: true,
   },
   { nome: "JUJU SALIMENI", letra: "J", arte: "juju-salimeni.jpg" },
-  // a arte do Cantarelli ainda nao chegou em arquivo; entra a inicial ate chegar
-  { nome: "CANTARELLI", letra: "F" },
+  { nome: "CANTARELLI", letra: "F", arte: "cantarelli.jpg" },
   { nome: "CEUBOLINHA", letra: "C", arte: "ceubolinha.jpg" },
   { nome: "GORDELAZZ", letra: "G", arte: "gordelazz.jpg" },
   { nome: "LUCAS STEIN", letra: "L", arte: "lucas-stein.jpg" },
@@ -99,7 +99,7 @@ const LIGA = s(6.2);
 export const Cena07: React.FC = () => {
   const f = useCurrentFrame();
   const liga = passo(f, LIGA, LIGA + s(0.9));
-  const base = janela(f, s(6.6), CENA07_FRAMES, 16, 0);
+  const base = janela(f, s(6.6), CENA07_FRAMES, 10, 0);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -124,7 +124,7 @@ export const Cena07: React.FC = () => {
             letterSpacing: "2px",
             textTransform: "uppercase",
             color: marca.azul,
-            opacity: janela(f, s(0.6), CENA07_FRAMES, 14, 0),
+            opacity: janela(f, s(0.6), CENA07_FRAMES, 9, 0),
           }}
         >
           Sete personas ao mesmo tempo
@@ -132,7 +132,7 @@ export const Cena07: React.FC = () => {
 
         <div style={{ display: "flex", gap: 14 }}>
           {PERSONAS.map((p, i) => {
-            const o = janela(f, PRIMEIRO + i * PASSO_ENTRE, CENA07_FRAMES, 12, 0);
+            const o = janela(f, PRIMEIRO + i * PASSO_ENTRE, CENA07_FRAMES, 8, 0);
             return (
               <div
                 key={p.nome}
