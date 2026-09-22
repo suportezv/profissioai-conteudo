@@ -1,6 +1,6 @@
 # Roteiro · Case Profissio sobre o MODO Soldiers · premiação do WhatsApp
 
-**Duração: 1:57.** 16:9 para a inscrição e para o site; cortes verticais no fim deste documento.
+**Duração: 2:09.** 16:9 para a inscrição e para o site; cortes verticais no fim deste documento.
 
 **Categoria**: Campanha de Relacionamento e Retenção no WhatsApp.
 **Anunciante no formulário**: Soldiers Nutrition. **Coautoria**: Soldiers Nutrition e Profissio.
@@ -127,8 +127,9 @@ E declara em tela que a medição de recompra começa em novembro. O júri confe
 | **05** | 0:49 a 1:02 | Motion. Um cupom picotado, com entalhes e canhoto, gira em 3D e vira uma chave: o mesmo objeto, outra função. Depois o contador sobe em quatro degraus, um por compra, 90 / 180 / 270 / 360, fechando em **1 ano com 4 compras**. | **Narração Profissio** | O cupom do influenciador deixou de ser desconto e virou chave. Qualquer compra, de qualquer valor, abre noventa dias de acompanhamento. Cada nova compra soma mais noventa. |
 | **06** | 1:02 a 1:20 | O coração do filme. A conversa **acumula** em vez de piscar: onboarding, o agente pergunta o horário, o cliente responde "7h", e daí cada dia entra com a marcação central de data, o agente manda áudio ou texto e o cliente responde ou só curte. O antigo sobe e sai por cima, então o rastro dos dias fica visível. **Toda mensagem do agente vem precedida do indicador de digitando.** Cinco dias, com os intervalos encurtando. | **Narração Profissio** | E o vínculo não se sustenta na compra, se sustenta no dia. O agente pergunta a que horas o cliente toma o suplemento, e passa a aparecer nesse horário, todo dia, na voz de quem ele escolheu. |
 | **07** | 1:20 a 1:30 | Sete cartões de persona entrando em sequência sobre a mesma grade, para mostrar que a arquitetura é uma só. **Construído com os nomes de fora**: o primeiro cartão é o MODO base, que o case nomeia, e os outros seis ficam como posição marcada até a Soldiers liberar nome e imagem de cada influenciador. O que a cena precisa provar é a arquitetura, e ela se lê sem os nomes. | **Narração Profissio** | São sete personas rodando ao mesmo tempo, cada uma com o vocabulário e as gírias do seu influenciador, sobre a mesma arquitetura. |
-| **08** | 1:30 a 1:45 | Números em motion, um por vez, com base e período colados em cada um. **Construído com quatro números e sem o mapa**: 151.034 mensagens, 495 pessoas por dia, ~600 lembretes por dia e NPS 95. O mapa regional saiu porque entrava como enfeite no fim de uma cena que já carrega quatro dados, e distribuição geográfica não responde a nenhum critério da categoria. | **Narração Profissio** | Em dois meses: cento e cinquenta e um mil mensagens trocadas, quatrocentas e noventa e cinco pessoas por dia, e quase seiscentos lembretes disparados a cada vinte e quatro horas. |
-| **09** | 1:45 a 1:57 | A janela de medição entra primeiro, acompanhando a fala, e a tese depois. No fim os lockups Soldiers e Profissio, lado a lado sobre faixa escura. | **Narração Profissio** | O primeiro coorte será medido nos próximos noventa dias. O hábito que vai sustentar a recompra já está de pé. |
+| **08** | 1:30 a 1:43 | Números em motion, um por vez, com base e período colados em cada um. **Três números, sem o mapa e sem o NPS**: 151.034 mensagens, 495 pessoas por dia e ~600 lembretes por dia. O mapa regional saiu porque entrava como enfeite; o NPS 95 saiu em 22/set para pagar o tempo da cena 08B, e a troca é deliberada: ele vinha de amostra reduzida, era o número mais exposto do filme à regra de comunicação, e era o único cartão sem narração. | **Narração Profissio** | Em dois meses: cento e cinquenta e um mil mensagens trocadas, quatrocentas e noventa e cinco pessoas por dia, e quase seiscentos lembretes disparados a cada vinte e quatro horas. |
+| **08B** | 1:43 a 1:55 | **Cena nova, 22/set.** Dois tempos. **1)** Conversão: 13,5% e 1,7% no mesmo corpo, lado a lado, com o 8x entre elas e os dois recortes escritos embaixo. **2)** Reativação: três barras saindo da mesma origem e encurtando, 50% · 32% · 21%, com a regra em texto de que são limiares acumulados. A base é declarada em tela e **difere da cena 08**: aqui é o conjunto todo de agentes, com as personas. | **Narração Profissio** | Quem passou por um agente converteu oito vezes mais que a média do e-commerce. E metade das recompras veio de quem estava há mais de trinta dias sem comprar. Um quinto, há mais de noventa. |
+| **09** | 1:55 a 2:09 | A janela de medição entra primeiro, acompanhando a fala, e a tese depois. No fim os lockups Soldiers e Profissio, lado a lado sobre faixa escura. | **Narração Profissio** | A recompra já aparece nos primeiros números, e o coorte completo de noventa dias fecha em novembro. O hábito que sustenta esse movimento já está de pé. |
 
 ### Lettering por cena, em Sora 500, tracking -3,5%
 
@@ -139,10 +140,11 @@ E declara em tela que a medição de recompra começa em novembro. O júri confe
 - **05**: `cupom = chave` · `90 dias por compra, cumulativos`
 - **06**: `~600 lembretes por dia` · `no horário que o cliente escolheu`
 - **07**: `MODO` no primeiro cartão; os outros seis como posição marcada. Os nomes entram **só depois da aprovação da Soldiers**
-- **08**: `151.034 mensagens · 05/ago a 18/set/2026` · `14.695 conversas únicas` · `495 usuários por dia` · `3.049 por semana · 10.139 por mês` · `NPS 95 · amostra reduzida, pesquisa recente`
+- **08**: `151.034 mensagens · 05/ago a 18/set/2026` · `14.695 conversas únicas` · `495 usuários por dia` · `3.049 por semana · 10.139 por mês`
+- **08B**: `13,5% quem passou por um agente` · `1,7% média de quem acessa só o e-commerce` · `8x` · `50% há mais de 30 dias sem comprar` · `32% há mais de 60` · `21% há mais de 90` · `limiares acumulados: quem está há 90 dias conta nos três` · `todos os agentes da Soldiers, com as personas · período e N a confirmar`
   > A distribuição regional (`Sudeste 70,5% · Sul 13,5% · Nordeste 7,7% · Centro-Oeste 6,9% · Norte 1,2%`) e as `14.695 conversas únicas` estão medidas e ficam disponíveis, mas **não entraram no corte**: a cena já carrega quatro números.
   > **Todo número da cena 08 é só do MODO base**, sem as personas dos influenciadores. O lettering diz isso, porque o número sem recorte vira dúvida quando o júri compara com o formulário.
-- **09**: `O primeiro coorte será medido nos próximos 90 dias` · `Soldiers Nutrition` · `Profissio`
+- **09**: `A recompra já aparece nos primeiros números. O coorte completo de 90 dias fecha em novembro.` · `Soldiers Nutrition` · `Profissio`
 
 ---
 
@@ -158,7 +160,9 @@ O filme tem **duas metades e uma dobradiça**. A primeira metade (01 a 04) é so
 
 ## Cuidados que não são opcionais
 
-**A recompra não pode ser afirmada.** Nenhuma cena, lettering ou narração pode sugerir resultado de recompra, LTV realizado ou receita incremental. O `Comunicacao_Profissio.md` já proíbe porcentagem sem base e método e diz que venda atribuída a conversa não comprova receita incremental. Aqui a restrição é mais dura, porque o dado **ainda não existe**: a cena 09 declara a janela de medição.
+**A recompra mudou de estatuto em 22/set, e a restrição mudou junto.** Até então nenhuma cena podia sugerir resultado de recompra, porque o dado não existia. Agora existe dado de reativação, e ele está na cena 08B com base declarada. O que **continua proibido** é afirmar receita incremental ou LTV realizado: reativação atribuída não é o mesmo que venda que não teria acontecido, e o coorte completo de 90 dias só fecha em novembro, o que a cena 09 declara em tela.
+
+> **O 8x entra por decisão do usuário, registrada.** A recomendação deste estúdio era publicar as duas taxas sem o multiplicador, porque 13,5% e 1,7% descrevem populações que se escolheram sozinhas: quem conversou com um agente já tinha levantado a mão, então a diferença mede os dois grupos e não o efeito do agente. O usuário optou pelo 8x escrito. A mitigação que ficou: as duas taxas no mesmo corpo, os dois recortes nomeados e a base colada, de modo que quem conferir veja de que grupos se trata.
 
 **Nenhuma voz de influenciador é gerada.** A clonagem é assunto do filme, não ferramenta dele. O que se ouve são os arquivos gravados pelas próprias pessoas.
 

@@ -16,6 +16,7 @@ import { Cena05, CENA05_FRAMES } from "./Cena05";
 import { Cena06, CENA06_FRAMES } from "./Cena06";
 import { Cena07, CENA07_FRAMES } from "./Cena07";
 import { Cena08, CENA08_FRAMES } from "./Cena08";
+import { Cena08B, CENA08B_FRAMES } from "./Cena08B";
 import { Cena09, CENA09_FRAMES } from "./Cena09";
 
 /**
@@ -83,6 +84,7 @@ export const COMPLETO_FRAMES =
   CENA06_FRAMES +
   CENA07_FRAMES +
   CENA08_FRAMES +
+  CENA08B_FRAMES +
   CENA09_FRAMES;
 
 const volumeTrilha = (f: number) => {
@@ -146,6 +148,14 @@ export const Completo: React.FC = () => (
 
       <Series.Sequence durationInFrames={CENA08_FRAMES}>
         <Cena08 />
+      </Series.Sequence>
+
+      {/* o resultado que chegou em 22/set: conversao e reativacao. Fica
+          depois da cena 08 e antes da tese, porque a 08 mede atividade (o
+          habito) e esta mede o que o habito produziu. Base diferente da 08,
+          declarada em tela. */}
+      <Series.Sequence durationInFrames={CENA08B_FRAMES}>
+        <Cena08B />
       </Series.Sequence>
 
       <Series.Sequence durationInFrames={CENA09_FRAMES}>

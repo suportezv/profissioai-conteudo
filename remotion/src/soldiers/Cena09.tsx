@@ -59,19 +59,19 @@ import { Sfx } from "../Sfx";
  * caber no nosso fundo seria pior que trocar o fundo.
  */
 
-export const CENA09_FRAMES = s(12);
+export const CENA09_FRAMES = s(13.8);
 const AUDIO_EM = s(0.6);
 const MARGEM = 120;
 const m = modos.claro;
 
-const ASSINA_EM = s(7.6);
+const ASSINA_EM = s(10.2);
 
 export const Cena09: React.FC = () => {
   const f = useCurrentFrame();
 
   // a fala diz a medicao primeiro e a tese depois; a tela acompanha
-  const janelaMedicao = janela(f, s(0.9), ASSINA_EM, 9, 9);
-  const tese = janela(f, s(4.2), ASSINA_EM, 10, 9);
+  const janelaMedicao = janela(f, s(0.7), ASSINA_EM, 9, 9);
+  const tese = janela(f, s(6.7), ASSINA_EM, 10, 9);
   const assina = janela(f, ASSINA_EM, CENA09_FRAMES, 11, 0);
 
   return (
@@ -108,8 +108,9 @@ export const Cena09: React.FC = () => {
                 color: m.apoio,
               }}
             >
-              O primeiro coorte será medido nos{" "}
-              <span style={{ whiteSpace: "nowrap" }}>próximos 90 dias</span>.
+              A recompra já aparece nos primeiros números. O coorte completo
+              de <span style={{ whiteSpace: "nowrap" }}>90 dias</span> fecha em
+              novembro.
             </div>
           </div>
 
@@ -123,7 +124,7 @@ export const Cena09: React.FC = () => {
               ...entra(tese, 20),
             }}
           >
-            O hábito que vai sustentar a recompra
+            O hábito que sustenta esse movimento
             <br />
             <span style={{ color: marca.azul }}>já está de pé.</span>
           </div>

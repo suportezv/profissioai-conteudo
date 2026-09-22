@@ -22,10 +22,17 @@ import { Sfx } from "../Sfx";
  * 1. **Todo numero e so do MODO base**, sem as personas dos influenciadores. O
  *    juri compara o video com o formulario escrito, e numero sem recorte vira
  *    duvida.
- * 2. O **NPS 95** vem de amostra reduzida, de pesquisa recente. Numero de NPS
- *    sozinho e exatamente o que o `Comunicacao_Profissio.md` proibe.
- * 3. **Nenhuma linha afirma recompra**, porque a primeira leva de 90 dias so
- *    vence em novembro. Isso e assunto da cena 09.
+ * 2. **Nenhuma linha afirma recompra aqui.** A recompra e assunto da cena 08B,
+ *    que chegou depois e traz base propria.
+ *
+ * ## O NPS 95 saiu em 22/set/2026, e a troca foi deliberada
+ *
+ * Ele vinha de **amostra reduzida**, o que faz dele o numero mais exposto do
+ * filme a regra do `Comunicacao_Profissio.md`, e era o unico cartao sem
+ * narracao. Quando o dado de reativacao chegou, o tempo dele virou o tempo da
+ * cena nova: trocar um numero fraco e arriscado por um forte e da categoria e
+ * ganho dos dois lados. O numero continua no formulario escrito, onde cabe
+ * explicar a amostra.
  *
  * A base e o periodo andam colados em cada numero, nunca num rodape solto.
  *
@@ -37,7 +44,7 @@ import { Sfx } from "../Sfx";
  * desacelerando.
  */
 
-export const CENA08_FRAMES = s(15);
+export const CENA08_FRAMES = s(12.8);
 const AUDIO_EM = s(0.4);
 const MARGEM = 120;
 const m = modos.claro;
@@ -73,21 +80,12 @@ const DADOS: Dado[] = [
   },
   {
     entra: s(7.7),
-    sai: s(11.4),
+    sai: CENA08_FRAMES,
     alvo: 600,
     casas: 0,
     sufixo: "",
     titulo: "lembretes por dia",
     base: "no horário que cada cliente escolheu",
-  },
-  {
-    entra: s(11.4),
-    sai: CENA08_FRAMES,
-    alvo: 95,
-    casas: 0,
-    sufixo: "",
-    titulo: "NPS",
-    base: "amostra reduzida · pesquisa recente",
   },
 ];
 

@@ -38,9 +38,14 @@
       "texto": "Em dois meses: cento e cinquenta e um mil mensagens trocadas, quatrocentas e noventa e cinco pessoas por dia, e quase seiscentos lembretes disparados a cada vinte e quatro horas."
     },
     {
+      "nome": "cena-08b",
+      "texto": "Quem passou por um agente converteu oito vezes mais que a média do e-commerce. E metade das recompras veio de quem estava há mais de trinta dias sem comprar. Um quinto, há mais de noventa.",
+      "nota": "cena nova de resultado, 22/set; base do conjunto todo de agentes, com as personas"
+    },
+    {
       "nome": "cena-09",
-      "texto": "O primeiro coórte será medido nos próximos noventa dias. O hábito que vai sustentar a recompra já está de pé.",
-      "nota": "o acento abre a vogal: sem ele o F1 da silaba tonica mede 415 Hz ([o] fechado), com ele 565 Hz ([o] aberto), que e a pronuncia certa"
+      "texto": "A recompra já aparece nos primeiros números, e o co-órte completo de noventa dias fecha em novembro. O hábito que sustenta esse movimento já está de pé.",
+      "nota": "o hifen e o que segura as duas silabas: escrito so com acento, \"coorte\" colapsou para \"corte\" nesta frase, e a medida pegou (F1 517 Hz, aberto; e o Scribe voltou com duas silabas)"
     }
   ]
 }
