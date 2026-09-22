@@ -214,7 +214,14 @@ export const Cena03: React.FC = () => {
         </div>
 
         <div style={{ position: "relative", height: 166 }}>
-          {/* a regua: 1px, como manda a marca, desenhada da esquerda */}
+          {/* A regua: 1px, como manda a marca, desenhada da esquerda.
+              **A cor nao e o token `linha`.** `#DFE3EB` foi definido para
+              divisor sobre painel branco chapado; sobre a lavagem que anda por
+              tras ele desaparece, e o resultado era uma linha do tempo em que
+              os tracos dos anos liam e a horizontal que os liga, nao. A tinta
+              a 22% fica logo abaixo dos tracos, que estao a 35%: a regua
+              precisa ser vista, nao competir com as marcas.
+              Continua com 1px, que e a parte da regra que importa. */}
           <div
             style={{
               position: "absolute",
@@ -222,7 +229,7 @@ export const Cena03: React.FC = () => {
               left: 0,
               width: "100%",
               height: 1,
-              background: marca.linha,
+              background: "rgba(16,18,24,0.22)",
               transformOrigin: "left",
               transform: `scaleX(${regua})`,
             }}
