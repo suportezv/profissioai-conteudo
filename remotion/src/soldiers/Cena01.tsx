@@ -170,7 +170,6 @@ export const Cena01: React.FC = () => {
             display: "flex",
             gap: 40,
             alignItems: "baseline",
-            opacity: dado,
             ...entra(dado, 16),
           }}
         >

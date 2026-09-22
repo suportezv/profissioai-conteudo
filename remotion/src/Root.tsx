@@ -16,6 +16,10 @@ import { Cena07, CENA07_FRAMES } from "./Cena07";
 import { Cena08, CENA08_FRAMES } from "./Cena08";
 import { Cena09, CENA09_FRAMES } from "./Cena09";
 import { Completo, COMPLETO_FRAMES } from "./Completo";
+import {
+  Completo as SoldiersCompleto,
+  COMPLETO_FRAMES as SOLDIERS_FRAMES,
+} from "./soldiers/Completo";
 
 const base = {
   sobrelinha: "Agentes de IA · Atendimento · CRM",
@@ -26,6 +30,14 @@ const base = {
 
 export const RemotionRoot: React.FC = () => (
   <>
+    <Composition
+      id="SoldiersCompleto"
+      component={SoldiersCompleto}
+      durationInFrames={SOLDIERS_FRAMES}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
     <Composition
       id="CaseEitaCompleto"
       component={Completo}

@@ -25,6 +25,7 @@ marca/fundos/
 
 # b-roll copiado de projects/ para o Remotion enxergar: mídia não vai para o git
 remotion/public/broll/
+remotion/public/soldiers/
 
 # derivados reproduziveis: a LUT sai do gera_lut_slog2.py e a transcricao do
 # Scribe. O que vale versionar e o edl.json, que e a decisao de corte.
