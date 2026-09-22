@@ -48,15 +48,26 @@ import {
  * a narracao vira. Nada explode, nada fica vermelho: o problema desta cena nao
  * e erro, e inercia, e inercia se mostra com movimento que cessa.
  *
- * O campo de pergunta que sobe no fim fica **vazio, com o cursor piscando**.
- * Ele nao e preenchido em nenhum frame, porque a cena 02 e que mostra o
- * caminho que a pessoa realmente tomava.
+ * ## O que sobe no fim e a pergunta, nao um campo de busca
+ *
+ * A versao anterior subia um campo vazio com cursor piscando. O usuario leu
+ * como ilustracao fraca, e ele tem razao: um campo de busca fala de
+ * **interface**, e a frase da narracao fala de **decisao**. Campo vazio diz
+ * "ninguem digitou", que nao e o problema; o problema e que a pergunta que a
+ * pessoa realmente tem nao esta no painel.
+ *
+ * Entao o que aparece e a pergunta, escrita como alguem pensa: "eu aumento o
+ * investimento em prospeccao ou nao?". O painel atras esta completo e correto
+ * e **nao responde aquilo**, que e exatamente a distancia que o filme inteiro
+ * trata e que a cena 09 fecha.
  *
  * ## Tela recriada
  *
  * Nenhum print de cliente entra na peca e nenhum numero do painel e um numero
- * que o filme reivindica. A legenda abaixo do painel diz isso por escrito,
- * porque juri tira print de frame.
+ * que o filme reivindica. A legenda "tela recriada, dados ilustrativos" existia
+ * embaixo do painel e **saiu a pedido do usuario em 22/set**: ela pesava na
+ * peca e a ressalva cabe melhor no formulario escrito, que e onde ha espaco
+ * para explicar. A regra de nao usar print de cliente continua valendo.
  */
 
 export const CENA01_FRAMES = s(11.6);
@@ -71,7 +82,7 @@ const ATUALIZADO_EM = s(4.68);
 const COMPLETO_EM = s(5.54);
 /** "mas": o cursor estanca e o painel recua. */
 const PARA_EM = s(6.66);
-const CAMPO_EM = s(7.1);
+const PERGUNTA_EM = s(7.0);
 const TESE_EM = s(9.0);
 
 const PAINEL_L = 240;
@@ -115,10 +126,8 @@ export const Cena01: React.FC = () => {
   const cursor = janela(f, CURSOR_EM, CENA01_FRAMES, 8, 0) * (1 - recua * 0.9);
   const [cx, cy] = posCursor(f);
 
-  const campo = janela(f, CAMPO_EM, CENA01_FRAMES, 12, 0);
+  const pergunta = janela(f, PERGUNTA_EM, CENA01_FRAMES, 12, 0);
   const tese = janela(f, TESE_EM, CENA01_FRAMES, 12, 0);
-  // o cursor do campo pisca: 0,53 s aceso, 0,53 s apagado
-  const pisca = f % 32 < 17 ? 1 : 0;
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -149,19 +158,6 @@ export const Cena01: React.FC = () => {
             <GraficoDash desenha={grafico} altura={172} />
             <TabelaDash preenche={tabela} />
           </MolduraDash>
-
-          {/* dito por escrito, porque juri tira print de frame */}
-          <div
-            style={{
-              marginTop: 16,
-              fontFamily: UI,
-              fontSize: 17,
-              color: dash.apoio,
-              letterSpacing: "0.3px",
-            }}
-          >
-            tela recriada · dados ilustrativos
-          </div>
         </div>
       </AbsoluteFill>
 
@@ -170,54 +166,37 @@ export const Cena01: React.FC = () => {
       {/* o veu, e ele nao e acabamento: sem ele o lettering cai em cima da
           tabela e as duas camadas viram ruido. O painel precisa continuar
           legivel como textura e ilegivel como texto. */}
-      {campo > 0.001 ? (
+      {pergunta > 0.001 ? (
         <AbsoluteFill
-          style={{ background: "rgba(244,246,249,0.80)", opacity: campo }}
+          style={{ background: "rgba(244,246,249,0.80)", opacity: pergunta }}
         />
       ) : null}
 
-      {/* o campo que nunca e preenchido, e a tese */}
-      {campo > 0.001 ? (
+      {/* a pergunta que o painel nao responde, e a tese */}
+      {pergunta > 0.001 ? (
         <AbsoluteFill
           style={{
             alignItems: "center",
             justifyContent: "center",
             flexDirection: "column",
-            gap: 64,
+            gap: 56,
           }}
         >
           <div
             style={{
-              width: 980,
-              background: marca.branco,
-              border: `1px solid ${marca.linha}`,
-              borderRadius: marca.raio.painel,
-              boxShadow: marca.sombra.painel,
-              padding: "30px 34px",
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              ...entra(campo, 18),
+              fontSize: 54,
+              fontWeight: 400,
+              letterSpacing: "-1.89px",
+              lineHeight: 1.3,
+              textAlign: "center",
+              color: m.apoio,
+              maxWidth: 1240,
+              ...entra(pergunta, 18),
             }}
           >
-            <div
-              style={{
-                fontFamily: UI,
-                fontSize: 30,
-                color: dash.apoio,
-              }}
-            >
-              pergunte alguma coisa
-            </div>
-            <div
-              style={{
-                width: 2,
-                height: 36,
-                background: dash.tinta,
-                opacity: pisca * campo,
-                marginLeft: 4,
-              }}
-            />
+            “então, eu aumento o investimento
+            <br />
+            em prospecção ou não?”
           </div>
 
           {tese > 0.001 ? (
@@ -245,7 +224,7 @@ export const Cena01: React.FC = () => {
       ))}
       <Sfx som="tique" em={ATUALIZADO_EM} volume={0.09} />
       <Sfx som="apaga" em={PARA_EM} volume={0.18} />
-      <Sfx som="pop" em={CAMPO_EM} volume={0.16} />
+      <Sfx som="pop" em={PERGUNTA_EM} volume={0.16} />
     </AbsoluteFill>
   );
 };

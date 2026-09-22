@@ -41,6 +41,10 @@ import { dash } from "./Painel";
  *
  * ## Os 42 relatorios estao aqui, e nao na cena de numeros
  *
+ * O lettering diz "enviados proativamente", nao "sem pedido": a troca e do
+ * usuario, e a palavra positiva descreve o mecanismo em vez de descrever a
+ * ausencia de um pedido.
+ *
  * O dado e a prova desta afirmacao, nao mais um numero de volume. Colado na
  * frase que ele sustenta, ele e evidencia; solto entre outros quatro numeros
  * na cena 07, seria enchimento.
@@ -419,11 +423,6 @@ export const Cena06: React.FC = () => {
             ) : null}
           </div>
         </div>
-        {/* a legenda pertence ao painel: colada no lettering ela lia como
-            parte da afirmacao da marca */}
-        <div style={{ marginTop: 14, fontFamily: UI, fontSize: 16, color: dash.apoio }}>
-          tela recriada · exemplo ilustrativo
-        </div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 30, flex: 1 }}>
@@ -468,7 +467,7 @@ export const Cena06: React.FC = () => {
                 ...entra(fecho, 16),
               }}
             >
-              42 relatórios enviados sem pedido
+              42 relatórios enviados proativamente
               <br />
               <span style={{ fontSize: 24 }}>maio a 18/set/2026</span>
             </div>

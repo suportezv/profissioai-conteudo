@@ -1,0 +1,8 @@
+[
+  { "nome": "y-medio-b", "segundos": 20,
+    "prompt": "Slow cinematic underscore in D minor, slow tempo of 92 beats per minute, not faster. Warm analog synth bass pulsing on D, felt piano repeating a simple three note motif in D minor, a muted plucked synth answering the piano. Light rim clicks and soft shaker. No vocals, no drop, no double time. Steady, confident, resolved." },
+  { "nome": "y-cheio-b", "segundos": 20,
+    "prompt": "Slow cinematic underscore in D minor, slow tempo of 92 beats per minute, not faster, half time feel. Warm analog synth bass on D, felt piano repeating a simple three note motif in D minor, muted plucked synth answering it, a soft kick on beats one and three only, gentle shaker, low staccato strings doubling the bass. No vocals, no riser, no drop, no double time, no fast hi hats. Warm and determined." },
+  { "nome": "y-cheio-c", "segundos": 20,
+    "prompt": "Warm determined underscore in D minor at a slow 92 bpm with a half time groove. Analog bass on D, felt piano three note motif, plucked synth counter melody, soft kick every two beats, low staccato strings. Restrained and cinematic, no vocals, no drop, no fast percussion." }
+]

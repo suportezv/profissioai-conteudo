@@ -85,16 +85,16 @@ critério "satisfação dos clientes", que passa a depender só do NPS.
 
 | # | Tempo (corte) | Imagem | Voz | Divergência do plano |
 |---|---|---|---|---|
-| **00** | 0:00 a 0:04,2 | **Abertura conceitual, gerada no Veo.** Macro de um celular deitado numa mesa escura, tela acesa, ninguém tocando nele; a chuva da cidade desfocada atrás. Aproximação lenta ancorada no aparelho. Sem narração, sem lettering. | silêncio + atmosfera | Cena nova. É o padrão da casa a partir daqui: o filme estabelece o mundo antes de qualquer afirmação |
-| **01** | 0:04,2 a 0:15,8 | Dashboard recriado na superfície clara, em cinza de interface. O cursor percorre cartões e tabela e **estanca** em "mas". O painel recua atrás de um véu e sobe um campo de pergunta **que nunca é preenchido**. | Narração | O painel ficou monocromático de propósito: pintá-lo de azul faria a tela do cliente parecer produto nosso, e o cinza lê como "correto e inerte", que é a tese |
-| **02** | 0:15,8 a 0:29,3 | Cinco mensagens do cliente em três dias, com as marcações de data entre elas, todas com **dois checks cinza**. A última, já em silêncio depois da narração, cai com **um check só**. | Narração | Era uma mensagem parada. Uma diz "ainda não responderam"; cinco em três dias dizem **quanto tempo**, e o check que falta diz que a última nem chegou ao aparelho |
+| **00** | 0:00 a 0:04,2 | **Abertura conceitual, gerada no Veo.** Sala de reunião vazia à noite, cadeiras encostadas na mesa e a tela grande da parede ainda ligada, estourada e ilegível. Dolly lento para a frente. Sem narração, sem lettering. | silêncio + som de sala | Cena nova, e o quarto plano gerado: os três anteriores davam clima e não diziam nada sobre "toda agência entrega dashboard". Aqui a entrega aconteceu e a decisão não |
+| **01** | 0:04,2 a 0:15,8 | Dashboard recriado na superfície clara, em cinza de interface. O cursor percorre cartões e tabela e **estanca** em "mas". O painel recua atrás de um véu e sobe **a pergunta que ele não responde**: "então, eu aumento o investimento em prospecção ou não?" | Narração | Era um campo de busca vazio, que fala de interface enquanto a narração fala de decisão. A pergunta real mostra a distância que o filme inteiro trata |
+| **02** | 0:15,8 a 0:29,3 | Cinco mensagens do cliente em três dias, com as marcações de data entre elas, todas com **dois checks cinza**. A última, já em silêncio depois da narração, cai com **um check só**. À direita, só a sobrelinha e a frase. | Narração | A coluna da direita carregava "entregue, não lido", uma barra de espera e "três dias", e a conversa já mostrava as três coisas. Lettering que repete a tela transforma prova em legenda |
 | **03** | 0:29,3 a 0:45,1 | Cinco fontes entram como chips e **convergem em curva** no nó `data lake Yoodash`. Em "na mesma base" os pulsos viajam. Só então o painel do WhatsApp cresce do nó, com a troca em linguagem natural. | Narração | O painel entrava em "dentro do WhatsApp" (3,5 s) e ficava nove segundos como retângulo preto vazio. Agora entra em 12,3 s, com o que mostrar |
 | **04** | 0:45,1 a 0:56,1 | **SONORA CLIENTE, REMOVÍVEL.** Hoje é cartão de lacuna com barra escoando. | Sonora cliente | *A captar* |
 | **05** | 0:56,1 a 1:10,5 | Cartão de ação no chat com dois botões. O ponteiro vai até `Confirmar` e **pressiona**; só depois a meta muda no cartão ao lado. Três ações nomeadas à direita, uma encenada. | Narração | Encenar as três ações com botão encheria a tela de repetição e tiraria o peso do único gesto que importa |
 | **05B** | 1:10,5 a 1:23,5 | **SONORA CLÉSIO.** Hoje é cartão de lacuna. | Sonora Profissio | Cena nova, não prevista no plano |
-| **06** | 1:23,5 a 1:40,3 | Três mensagens do agente **seguidas, sem nada do outro lado**, empilhando e saindo por cima: ruptura, relatório em PDF, projeção. Depois áudio do cliente e áudio de volta, com a onda correndo. | Narração | Os `42 relatórios enviados sem pedido` migraram da cena 07 para cá: colados na frase que sustentam, são evidência |
+| **06** | 1:23,5 a 1:40,3 | Três mensagens do agente **seguidas, sem nada do outro lado**, empilhando e saindo por cima: ruptura, relatório em PDF, projeção. Depois áudio do cliente e áudio de volta, com a onda correndo. | Narração | Os `42 relatórios enviados proativamente` migraram da cena 07 para cá: colados na frase que sustentam, são evidência |
 | **07** | 1:40,3 a 1:57,2 | 131, 10.039 e 38,9% como contadores. O **75% vira contagem**: 131 pontos, 98 acesos. | Narração | O 75% ganhou desenho próprio porque é a afirmação que a categoria premia, e o desenho carrega a base junto |
-| **08** | 1:57,2 a 2:13,2 | A barra de 40 minutos encolhe para segundos; um ponto por semana vira sete. Depois o `12,22x`, com a autoria do número separada por escrito do que o agente fez, e o `+20%` como decisão do cliente. | Narração | Sem mudança |
+| **08** | 1:57,2 a 2:13,2 | **Cliente A** e **Cliente B** ganham rosto: um ícone que abre o sorriso no frame do resultado de cada um. A barra de 40 minutos encolhe para segundos; um ponto por semana vira sete. Depois o `12,22x`, com a autoria do número separada por escrito, e o `+20%` como decisão do cliente. | Narração | Os rostos são SVG com expressão animada, não emoji de fonte: o render headless não tem fonte de emoji, e um desenho animado diz o que um caractere parado não diz |
 | **09** | 2:13,2 a 2:23,2 | `uma pergunta` e `uma decisão` nascem nas bordas opostas com a distância pontilhada entre elas, e **andam uma para a outra** em "decisão". Assinatura Yooper + Profissio sobre faixa escura. | Narração | O lockup já carrega o wordmark branco real da Yooper: a arte final chegou em 22/set e a caixa tracejada saiu |
 
 ## Lettering por cena
@@ -104,8 +104,8 @@ Sempre em Sora 500, tracking -3,5%.
 - **03**: `mídia paga` · `analytics` · `e-commerce` · `CRM` · `orgânico` e, no nó: `data lake Yoodash`
 - **05**: `nada muda sem confirmação explícita` e, discreto: `troca de conta dentro do WhatsApp · nenhum dado se mistura entre clientes`
 - **06**: `ruptura de estoque` · `relatório da semana` · `projeção de faturamento`
-- **06** (fecho): `42 relatórios enviados sem pedido · maio a 18/set/2026`
-- **07**: `131 usuários únicos · maio a 18/set/2026` · `10.039 mensagens · no mesmo período` · `38,9% das conversas fora do horário comercial · total de conversas: a confirmar` · `75% dos usuários nunca precisaram falar com um humano · 98 de 131 usuários · NPS: a confirmar`
+- **06** (fecho): `42 relatórios enviados proativamente · maio a 18/set/2026`
+- **07**: `131 usuários únicos · maio a 18/set/2026` · `10.039 mensagens · no mesmo período` · `38,9% das conversas fora do horário comercial · 54 conversas · maio a 18/set/2026` · `75% dos usuários nunca precisaram falar com um humano · 98 de 131 usuários · NPS: a confirmar`
 - **08**: `um cliente, um cálculo recorrente · de semanal para diário` · `ROAS faturado 12,22x no mês` · `decisão do cliente: +20% de investimento`
 - **09**: `Yooper` · `Profissio`
 
@@ -133,6 +133,9 @@ está na mesma tela logo abaixo dos pontos.
 
 **Nenhuma conversa real na tela.** Todos os balões, o dashboard e os anexos são
 recriados em motion. Nenhum print de cliente, nenhum dado de conta real legível.
+As legendas `tela recriada · dados ilustrativos` saíram das quatro cenas a
+pedido do cliente em 22/set: a regra continua valendo, mas a ressalva passa a
+morar no formulário escrito, onde há espaço para explicar.
 
 **Três nomes parecidos.** Yooper assina, Yoodash é a plataforma, o agente não
 tem nome próprio. Em nenhuma cena os três aparecem juntos como se fossem pares.
@@ -179,9 +182,9 @@ relacionamento, e é a única resposta que nenhuma cena de motion consegue dar.
 
 ## Dúvidas que precisam de resposta antes do master
 
-1. **O 38,9% é de conversas, e o número de conversas não está no material.**
-   Temos 10.039 mensagens, que é outra coisa. Sem o denominador, a porcentagem
-   vai para a tela sem base.
+1. ~~O 38,9% não tem denominador.~~ **Resolvido em 22/set**: são 54 conversas
+   fora do horário comercial, e é esse número que vai na régua abaixo do
+   percentual.
 2. **O título do case diz "Campanhas geridas em um clique"**, mas o que o
    material prova é conversa com confirmação, não clique. O júri lê o formulário
    junto do vídeo; vale alinhar os dois.
@@ -190,9 +193,11 @@ relacionamento, e é a única resposta que nenhuma cena de motion consegue dar.
 5. **A pronúncia de Yooper e Yoodash.** O TTS lê "iúper" e "iúdash", e o Scribe
    devolve "Youper" e "YouDash", o que confirma que é isso que sai do arquivo.
    Se a casa pronuncia de outro jeito, as duas faixas se regravam.
-6. **A trilha**: a versão em movimentos está em `trilha/mapa.json`, com oito
-   seções trocando nas viradas do corte. As três candidatas anteriores, em loop
-   único, foram recusadas por serem genéricas e não acompanharem o filme.
+6. **A trilha**: uma só, em `trilha/mapa.json`, com variação de arranjo e
+   pontos de tensão. Foram duas rodadas recusadas antes: três candidatas em
+   loop único ("genéricas, não acompanham o filme") e uma versão com peças
+   diferentes por movimento ("uma totalmente diferente da outra, chamando
+   atenção"). O material agora é um só em três densidades.
 
 ---
 

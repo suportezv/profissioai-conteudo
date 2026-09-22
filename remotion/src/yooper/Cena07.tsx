@@ -22,10 +22,10 @@ import { Sfx } from "../Sfx";
  *
  * ## Dois buracos de base, e os dois estao escritos na tela
  *
- * 1. **O 38,9% e de conversas, e o material nao traz o numero de conversas.**
- *    Temos 10.039 **mensagens**, que e outra coisa. O percentual vai para a
- *    tela com o denominador declarado como `a confirmar`, porque buraco
- *    visivel e revisavel e buraco silencioso vai ao juri.
+ * 1. **O 38,9% era de conversas e o material so trazia mensagens**, que e
+ *    outra coisa. O numero absoluto chegou em 22/set: **54 conversas** fora do
+ *    horario comercial, e e ele que vai na regua embaixo do percentual. Quem
+ *    confere deriva a base sozinho, e a pendencia saiu da tela.
  * 2. **O NPS ainda nao chegou.** Ele aparece como pendencia na mesma regua do
  *    75%, e nao como ausencia silenciosa.
  *
@@ -86,7 +86,7 @@ const DADOS: Dado[] = [
     casas: 1,
     sufixo: "%",
     titulo: "das conversas fora do horário comercial",
-    base: "total de conversas: a confirmar",
+    base: "54 conversas · maio a 18/set/2026",
   },
 ];
 
@@ -180,7 +180,7 @@ export const Cena07: React.FC = () => {
                 style={{
                   fontSize: 26,
                   letterSpacing: "-0.91px",
-                  color: i === 2 ? marca.rosa : m.apoio,
+                  color: m.apoio,
                   borderTop: "1px solid rgba(16,18,24,0.22)",
                   paddingTop: 16,
                   maxWidth: 900,

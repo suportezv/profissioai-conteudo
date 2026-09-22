@@ -1,0 +1,12 @@
+[
+  {
+    "nome": "abertura-sala",
+    "duracao": 8,
+    "prompt": "Cinematic slow dolly forward inside a dark empty meeting room at night. A long table with empty chairs pushed in, nobody present. On the far wall a large wall mounted display is still switched on, glowing cold blue white, its content completely out of focus and unreadable, the only light source in the room. Soft light falls across the empty table. Deep shadow, volumetric haze, anamorphic lens, shallow depth of field, photographic realism."
+  },
+  {
+    "nome": "abertura-relatorios",
+    "duracao": 8,
+    "prompt": "Cinematic macro shot at a grazing angle across a dark wooden desk at night. Several printed report pages with charts lie spread out and overlapping, seen from the side so the content is illegible, edges catching a warm rim of light. A pen rests untouched on top of them. Very slow lateral dolly across the pages. Nobody present, no hands. Almost black background, single soft key light, shallow depth of field, photographic realism."
+  }
+]

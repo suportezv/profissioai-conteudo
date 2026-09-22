@@ -40,11 +40,16 @@ import { Sfx } from "../Sfx";
  * As quatro primeiras chegam: **dois checks cinza**, entregue e nao lido. A
  * quinta fica com **um check so**, ou seja nem chegou ao aparelho do outro
  * lado. E o pior estado dos dois, e nenhuma linha da narracao o menciona: e
- * informacao que so a tela carrega.
+ * informacao que so a tela carrega. Por isso ela cai **depois** da narracao
+ * terminar, em silencio.
  *
- * Por isso ela cai **depois** da narracao terminar, em silencio, e a anotacao
- * do lado troca de "entregue, nao lido" para "nem chegou a sair do aparelho".
- * Com a voz por cima ninguem reparava na contagem de check.
+ * ## A coluna da direita ficou com uma frase so
+ *
+ * Ela carregava tambem a anotacao "entregue, nao lido", uma barra de espera e
+ * o rotulo "tres dias". O usuario mandou tirar os tres, e a peca ficou melhor:
+ * **a contagem de check e a marcacao de data ja estao dentro da conversa**, e
+ * repetir em lettering o que a tela mostra transforma prova em legenda. Sobrou
+ * a sobrelinha e a frase que a narracao diz.
  *
  * ## Sem vilao, e isso e deliberado
  *
@@ -62,11 +67,9 @@ const m = modos.claro;
 const TELA_EM = s(0.5);
 const ROTULO_EM = s(2.56);
 const CHECKS_EM = s(4.34);
-const ESPERA_EM = s(5.96);
 const TESE_EM = s(8.04);
 /** A ultima mensagem cai depois da narracao, em silencio. */
 const SEM_ENTREGA_EM = s(11.3);
-const TROCA_ANOTACAO = s(11.9);
 
 type Msg = {
   texto: string;
@@ -162,14 +165,7 @@ export const Cena02: React.FC = () => {
 
   const tela = janela(f, TELA_EM, CENA02_FRAMES, 12, 0);
   const rotulo = janela(f, ROTULO_EM, CENA02_FRAMES, 10, 0);
-  const anota1 = janela(f, CHECKS_EM + 4, TROCA_ANOTACAO + 8, 10, 8);
-  const anota2 = janela(f, TROCA_ANOTACAO, CENA02_FRAMES, 10, 0);
-  const espera = janela(f, ESPERA_EM, CENA02_FRAMES, 10, 0);
   const tese = janela(f, TESE_EM, CENA02_FRAMES, 12, 0);
-  const escoa = interpolate(f, [ESPERA_EM, CENA02_FRAMES], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
   const pisca = f % 32 < 17 ? 1 : 0;
 
   return (
@@ -208,7 +204,15 @@ export const Cena02: React.FC = () => {
               gap: 16,
             }}
           >
-            <div style={{ width: 46, height: 46, borderRadius: 23, background: "#38464E" }} />
+            {/* o contato padrao do proprio app: circulo cinza com a silhueta.
+                Um disco cinza chapado lê como imagem que nao carregou, e foi
+                assim que ele foi lido no corte anterior. Aqui e uma pessoa sem
+                foto, que e o que a cena precisa: o analista nao tem marca. */}
+            <svg width="46" height="46" viewBox="0 0 46 46">
+              <circle cx="23" cy="23" r="23" fill="#4A5860" />
+              <circle cx="23" cy="18" r="7.4" fill="#C9D2D6" />
+              <path d="M9.5 41a13.5 13.5 0 0 1 27 0z" fill="#C9D2D6" />
+            </svg>
             <div style={{ fontFamily: UI, fontSize: 23, color: wa.texto }}>
               Analista de mídia
             </div>
@@ -313,84 +317,6 @@ export const Cena02: React.FC = () => {
             O caminho de sempre
           </div>
 
-          {/* a anotacao troca quando o estado do check troca */}
-          <div style={{ position: "relative", height: 58 }}>
-            {anota1 > 0.001 ? (
-              <div
-                style={{
-                  position: "absolute",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 16,
-                  ...entra(anota1, 14),
-                }}
-              >
-                <div
-                  style={{
-                    border: `1px solid ${marca.linha}`,
-                    background: marca.branco,
-                    borderRadius: 10,
-                    padding: "10px 14px",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <Checks cor={m.apoio} />
-                </div>
-                <div style={{ fontSize: 30, letterSpacing: "-1.05px", color: m.apoio }}>
-                  entregue, não lido
-                </div>
-              </div>
-            ) : null}
-            {anota2 > 0.001 ? (
-              <div
-                style={{
-                  position: "absolute",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 16,
-                  ...entra(anota2, 14),
-                }}
-              >
-                <div
-                  style={{
-                    border: `1px solid ${marca.rosa}`,
-                    background: marca.branco,
-                    borderRadius: 10,
-                    padding: "10px 16px",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <Checks cor={marca.rosa} dois={false} />
-                </div>
-                <div style={{ fontSize: 30, letterSpacing: "-1.05px", color: marca.rosa }}>
-                  a última nem chegou
-                </div>
-              </div>
-            ) : null}
-          </div>
-
-          {espera > 0.001 ? (
-            <div style={{ display: "flex", flexDirection: "column", gap: 14, opacity: espera }}>
-              <div
-                style={{ height: 3, borderRadius: 2, background: marca.linha, overflow: "hidden" }}
-              >
-                <div
-                  style={{
-                    height: "100%",
-                    width: `${escoa * 100}%`,
-                    background: m.apoio,
-                    opacity: 0.6,
-                  }}
-                />
-              </div>
-              <div style={{ fontSize: 26, letterSpacing: "-0.91px", color: m.apoio }}>
-                três dias
-              </div>
-            </div>
-          ) : null}
-
           {tese > 0.001 ? (
             <div
               style={{
@@ -421,7 +347,6 @@ export const Cena02: React.FC = () => {
           ) : null}
         </React.Fragment>
       ))}
-      <Sfx som="apaga" em={TROCA_ANOTACAO} volume={0.2} />
     </AbsoluteFill>
   );
 };

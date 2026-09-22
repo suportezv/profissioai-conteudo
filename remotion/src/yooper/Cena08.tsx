@@ -11,6 +11,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { janela, entra, conta, br, passo, s, tiquesDaContagem } from "../anim";
 import { Sfx } from "../Sfx";
+import { Rosto } from "./Rosto";
 
 /**
  * Cena 08 do case Yooper: dois clientes, duas historias de decisao.
@@ -38,6 +39,22 @@ import { Sfx } from "../Sfx";
  *
  * O lettering diz "um cliente, um calculo recorrente". Numero de eficiencia
  * sem base vira duvida quando o juri compara o video com o formulario escrito.
+ *
+ * ## Os dois clientes ganharam rosto
+ *
+ * A cena fala de "um cliente" e de "outro cliente", e ate aqui os dois eram
+ * so rotulos de texto. Com um rosto por ato, a cena passa a ter **duas
+ * pessoas** em vez de dois paragrafos, e o corte entre os atos fica obvio sem
+ * precisar de cartela.
+ *
+ * O rosto **abre o sorriso no frame do resultado**, nao na entrada: no ato A
+ * quando os quarenta minutos viram segundos, no ato B quando o cliente decide
+ * aumentar o investimento. E a expressao que entrega a boa noticia, entao ela
+ * precisa cair junto com a palavra que a diz.
+ *
+ * Nao e emoji de fonte: o render headless nao tem fonte de emoji, e um
+ * desenho animado diz o que um caractere parado nao diz. Detalhe no
+ * `Rosto.tsx`.
  *
  * ## A frequencia e o que prova mudanca de habito
  *
@@ -74,6 +91,10 @@ export const Cena08: React.FC = () => {
   const claro = janela(f, CLARO_EM, CENA08_FRAMES, 12, 0);
   const decisao = janela(f, DECISAO_EM, CENA08_FRAMES, 12, 0);
 
+  // o sorriso cai no frame do resultado, nao na entrada do rosto
+  const sorriA = passo(f, ENCOLHE_EM + s(0.2), ENCOLHE_EM + s(1.0));
+  const sorriB = passo(f, DECISAO_EM, DECISAO_EM + s(0.8));
+
   // 1 ponto por semana vira 7 por semana: a frequencia e o habito
   const pontos = Math.round(interpolate(freq > 0.02 ? passo(f, FREQ_EM, FREQ_EM + s(1.0)) : 0, [0, 1], [1, 7]));
 
@@ -90,15 +111,29 @@ export const Cena08: React.FC = () => {
           <div style={{ display: "flex", flexDirection: "column", gap: 44 }}>
             <div
               style={{
-                fontSize: 24,
-                fontWeight: 500,
-                letterSpacing: "2px",
-                textTransform: "uppercase",
-                color: marca.azul,
+                display: "flex",
+                alignItems: "center",
+                gap: 28,
                 opacity: rotulo,
               }}
             >
-              Um cálculo que ele pedia toda semana
+              <Rosto alegria={sorriA} tamanho={104} />
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <div
+                  style={{
+                    fontSize: 24,
+                    fontWeight: 500,
+                    letterSpacing: "2px",
+                    textTransform: "uppercase",
+                    color: marca.azul,
+                  }}
+                >
+                  Cliente A
+                </div>
+                <div style={{ fontSize: 34, fontWeight: 500, letterSpacing: "-1.19px" }}>
+                  Um cálculo que ele pedia toda semana
+                </div>
+              </div>
             </div>
 
             {barra > 0.001 ? (
@@ -182,15 +217,25 @@ export const Cena08: React.FC = () => {
       {/* ato B: o 12,22x, com a autoria do numero separada do que o agente fez */}
       {num > 0.001 ? (
         <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 30, ...entra(num, 24) }}>
-            <div
-              style={{
-                fontSize: 26,
-                letterSpacing: "-0.91px",
-                color: m.apoio,
-              }}
-            >
-              Outro cliente · ROAS faturado no mês
+          <div style={{ display: "flex", flexDirection: "column", gap: 28, ...entra(num, 24) }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
+              <Rosto alegria={sorriB} tamanho={104} />
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <div
+                  style={{
+                    fontSize: 24,
+                    fontWeight: 500,
+                    letterSpacing: "2px",
+                    textTransform: "uppercase",
+                    color: marca.azul,
+                  }}
+                >
+                  Cliente B
+                </div>
+                <div style={{ fontSize: 34, fontWeight: 500, letterSpacing: "-1.19px" }}>
+                  ROAS faturado no mês
+                </div>
+              </div>
             </div>
 
             <div style={{ display: "flex", alignItems: "flex-end", gap: 56 }}>

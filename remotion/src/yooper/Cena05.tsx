@@ -44,9 +44,9 @@ import { Cursor, dash } from "./Painel";
  * importa. Entao a coluna da direita **nomeia as tres** conforme a locucao as
  * diz, e o WhatsApp encena **uma**, ate o fim.
  *
- * Tela recriada, e a linha discreta do rodape diz o que a categoria vai
- * perguntar depois: a conta e trocada dentro do proprio WhatsApp e nenhum dado
- * se mistura entre clientes.
+ * A linha discreta do rodape diz o que a categoria vai perguntar depois: a
+ * conta e trocada dentro do proprio WhatsApp e nenhum dado se mistura entre
+ * clientes.
  */
 
 export const CENA05_FRAMES = s(14.4);
@@ -331,9 +331,6 @@ export const Cena05: React.FC = () => {
                   background: mudou > 0.02 ? marca.azul : dash.barraViva,
                 }}
               />
-            </div>
-            <div style={{ fontFamily: UI, fontSize: 16, color: dash.apoio }}>
-              tela recriada · dados ilustrativos
             </div>
           </div>
         ) : null}

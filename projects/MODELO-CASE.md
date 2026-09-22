@@ -14,11 +14,11 @@ master a -14 LUFS.**
 ## A ordem, e por que ela é essa
 
 **0. A abertura conceitual, gerada no Veo.**
-Todo case abre com um plano que estabelece o **mundo** do filme, sem narração e
-sem lettering, cortando seco para a primeira cena de motion. Dura 4 a 5 s. A
-primeira geração vai devolver a leitura automática da categoria, que é banco de
-imagem: o plano que presta é **físico em vez de conceitual-holográfico** e
-aponta para o objeto de que o filme trata. O áudio do clipe não entra na peça.
+Todo case abre com um plano de 4 a 5 s, sem narração e sem lettering, cortando
+seco para a primeira cena de motion. O teste é uma pergunta só: **qual a relação
+entre esta imagem e a primeira frase da narração?** Se a resposta for "dá o
+clima", o plano não serve. A primeira geração vai devolver a leitura automática
+da categoria, que é banco de imagem. O áudio do clipe não entra na peça.
 
 **1. Roteiro cena a cena, com a narração escrita.**
 Serve para escrever e decidir a estrutura. **Nunca serve para montar**: a
@@ -43,12 +43,20 @@ Renderizar sem leito (`--props '{"trilha":null}'`) e misturar por fora. Para
 comparar **candidatas**, `scripts/monta_trilha.py --alvo-dbfs` iguala a loudness
 das faixas: sem isso a mais alta ganha sempre e a escolha vira acidente de ganho.
 
-Mas num filme de dois minutos **uma faixa só não serve**, por mais bonita que
-seja: um loop começa onde termina, então a virada do roteiro passa e a música
-não sabe. O sintoma é sempre o mesmo, "genérica" e "não acompanha o que está
-acontecendo". `scripts/costura_secoes.py` monta a trilha por movimentos, com as
-bordas das seções caindo **exatamente nos cortes de cena**, trechos quase mudos
-sob as sonoras e a maior energia na cena que carrega a prova.
+Mas um loop único também não serve: ele começa onde termina, então a virada do
+roteiro passa e a música não sabe, e o sintoma é "genérica, não acompanha o que
+está acontecendo". O que serve é **uma trilha só, com variação de arranjo e
+pontos de tensão**. Trocar de peça nas viradas é o erro oposto e chama atenção
+para a trilha.
+
+`scripts/costura_secoes.py` monta isso a partir de um mapa de seções, com as
+bordas caindo **exatamente nos cortes de cena**, trechos quase mudos sob as
+sonoras e a maior densidade na cena que carrega a prova. O material é **um só
+em três densidades**: o nível médio se deriva do cheio por `lowpass`, o que
+garante mesma tonalidade e mesmo andamento em vez de torcer para o modelo
+repetir. E a coerência se mede antes de montar: BPM por autocorrelação do fluxo
+de energia e perfil de croma comparado por cosseno pegam um trecho fora de
+tempo ou fora de tom sem precisar ouvir.
 
 **6. B-roll pago por último**, quando o buraco já está medido. E antes de gerar
 qualquer clipe, conferir se o que a cena precisa **não é informação em vez de

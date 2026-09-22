@@ -45,8 +45,7 @@ import { dash } from "./Painel";
  * cinco fontes na mesma base permitem e o que nenhuma outra cena do filme
  * mostra. Uma resposta que so devolvesse um numero provaria menos que o grafo
  * que acabou de ser desenhado.
- *
- * Tela recriada, dito por escrito embaixo do painel.
+
  */
 
 export const CENA03_FRAMES = s(15.8);
@@ -440,16 +439,6 @@ export const Cena03: React.FC = () => {
                 </div>
               ) : null}
             </div>
-          </div>
-          <div
-            style={{
-              marginTop: 14,
-              fontFamily: UI,
-              fontSize: 16,
-              color: dash.apoio,
-            }}
-          >
-            tela recriada · exemplo ilustrativo
           </div>
         </div>
       ) : null}
