@@ -294,6 +294,15 @@ O bloqueio de `raw.githubusercontent.com` **não** afeta o truque de mídia púb
 - Testar escopo de chave da ElevenLabs sem gastar crédito: chamar o endpoint com parâmetro inválido. `401 missing_permissions` = escopo ausente; `400`/`404` de validação = escopo presente.
 - **Sessão filha para o Metricool (rota validada, com armadilhas)**: follow-up na mesma sessão via `create_trigger` com `persistent_session_id` + `fire_trigger` **sem `text`** (com `text` o disparo ignora a vinculação e cria sessão nova no environment do trigger, que morre no setup do estúdio). Sessão arquivada não aceita trigger: `unarchive_session` antes. O `post_turn_summary` comprime a resposta e **engole números/ids**; dado exato que precise voltar deve ser publicado pela filha num canal durável, não no resumo.
 
+## O modelo de case em vídeo
+
+Os cases 03 e 04 rodaram ponta a ponta e o método está destilado em
+**`projects/MODELO-CASE.md`**: a ordem de execução (roteiro, locução, motion
+contra as marcas de palavra, pedidos externos em paralelo, trilha e b-roll por
+último), a tabela do que precisa vir de fora, os seis portões de conformidade e
+as regras de corte de sonora. **Ao abrir um case novo, ler aquele arquivo
+antes de escrever o roteiro.**
+
 ## Histórico de decisões
 
 - **17/ago/2026**: estúdio criado a partir do template do `eita-conteudo`. Infra e gotchas técnicos herdados integralmente; marca, persona, voz, pilares e credencial **não** herdados (decisão explícita do usuário).
