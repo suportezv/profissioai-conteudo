@@ -4,6 +4,7 @@ import {
   Audio,
   Sequence,
   Series,
+  getInputProps,
   interpolate,
   staticFile,
 } from "remotion";
@@ -79,6 +80,19 @@ const SONORA_07 = s(6.9);
  * Fade de 2,5 s nas duas pontas. Trilha que comeca no frame 1 em volume cheio
  * denuncia a emenda; entrando de baixo, ela parece ter comecado antes do filme.
  */
+/**
+ * Qual trilha toca, e como renderizar sem nenhuma.
+ *
+ * `--props '{"trilha":null}'` rende o filme so com locucao e efeitos. Serve
+ * para comparar trilhas sem re-renderizar: renderiza uma vez sem leito e
+ * mistura cada candidata por fora, o que garante que **a unica diferenca entre
+ * as versoes e a musica**, e nao um detalhe de render.
+ */
+const trilhaEscolhida = (): string | null => {
+  const p = getInputProps() as { trilha?: string | null };
+  return p.trilha === undefined ? "sfx/trilha-longo.mp3" : p.trilha;
+};
+
 const TRILHA_BASE = 0.26;
 const TRILHA_ALTA = 0.42;
 const FADE = s(2.5);
@@ -131,7 +145,12 @@ const volumeTrilha = (f: number) => {
 export const Completo: React.FC = () => (
   <AbsoluteFill style={{ backgroundColor: "#000" }}>
     {/* a trilha atravessa o filme inteiro, por baixo de tudo */}
-    <Audio src={staticFile("sfx/trilha-longo.mp3")} volume={volumeTrilha} />
+    {trilhaEscolhida() ? (
+      <Audio
+        src={staticFile(trilhaEscolhida() as string)}
+        volume={volumeTrilha}
+      />
+    ) : null}
 
     <Series>
       <Series.Sequence durationInFrames={CENA01_FRAMES}>
