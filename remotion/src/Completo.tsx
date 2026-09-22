@@ -240,6 +240,8 @@ export const Completo: React.FC = () => (
           papel="psicóloga · criadora da EITA"
           gcEm={0.4}
           gcDura={3.4}
+          // segunda entrada dela no filme: ja foi creditada na cena 02
+          creditar={false}
           vertical
           fala={{
             de: 2.62,

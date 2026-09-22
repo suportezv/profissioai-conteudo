@@ -70,9 +70,30 @@ export const Sonora: React.FC<{
    * original. Aqui o numero fica visivel e volta atras numa linha.
    */
   volume?: number;
-}> = ({ arquivo, nome, papel, gcEm = 2.4, gcDura = 3.4, rotulo, vertical = false, fala, volume = 1 }) => {
+  /**
+   * Se o GC com nome e papel entra.
+   *
+   * **A segunda aparicao da mesma pessoa nao se credita de novo.** Quem ja foi
+   * apresentado continua apresentado; repetir o nome trata o espectador como
+   * se ele tivesse esquecido em noventa segundos, e rouba a tela de uma cena
+   * que ali esta contando outra coisa. Vale para a Anaclaudia, que fala nas
+   * cenas 02 e 07.
+   */
+  creditar?: boolean;
+}> = ({
+  arquivo,
+  nome,
+  papel,
+  gcEm = 2.4,
+  gcDura = 3.4,
+  rotulo,
+  vertical = false,
+  fala,
+  volume = 1,
+  creditar = true,
+}) => {
   const f = useCurrentFrame();
-  const gc = janela(f, s(gcEm), s(gcEm + gcDura), 14, 14);
+  const gc = creditar ? janela(f, s(gcEm), s(gcEm + gcDura), 14, 14) : 0;
   const rot = janela(f, s(0.3), s(3.6), 14, 12);
 
   const video = (

@@ -276,10 +276,16 @@ export const Cena07: React.FC = () => {
         </div>
       </AbsoluteFill>
 
+      {/* um toque por cartao, e mais nada.
+          A cena tinha sete cartoes e **oito** eventos de som: os sete tiques
+          mais um `surge` no beat da conexao. Contado de ouvido isso vira "um
+          click a mais", porque o ouvido nao separa o que e cartao do que e
+          transicao quando os dois tocam na mesma cena. Se a conexao voltar a
+          precisar de som, ele tem que ser de outra familia, nao mais um
+          toque. */}
       {PERSONAS.map((p, i) => (
         <Sfx key={p.nome} som="tique" em={PRIMEIRO + i * PASSO_ENTRE} volume={0.1} />
       ))}
-      <Sfx som="surge" em={LIGA} volume={0.2} />
     </AbsoluteFill>
   );
 };

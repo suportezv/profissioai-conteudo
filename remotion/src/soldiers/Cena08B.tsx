@@ -66,6 +66,38 @@ const CONV_EM = s(0.6);
 const CONV_SAI = s(4.9);
 const REAT_EM = s(4.9);
 
+/**
+ * O beat 1, tempo a tempo.
+ *
+ * A unidade entra primeiro de proposito: e contra a barra pequena que os oito
+ * blocos contam. Mostrar o numero grande antes deixaria a barra menor parecendo
+ * detalhe, e a conta some.
+ *
+ * Os blocos correm entre 2,2 e 3,4 s, que e onde a locucao diz "oito vezes
+ * mais" (1,90 a 2,84 no arquivo, mais os 0,5 s de atraso da faixa e os 0,1 do
+ * ataque). O olho conta junto com a voz.
+ */
+const UNIDADE_EM = s(0.9);
+const AGENTE_EM = s(1.6);
+const BLOCOS_EM = s(2.2);
+const BLOCOS_ATE = s(3.4);
+
+/**
+ * Oito blocos, porque 13,5 dividido por 1,7 da **7,94**.
+ *
+ * O bloco e a barra de 1,7% repetida: a barra azul nao e uma barra grande, e
+ * a barra pequena oito vezes. Assim o multiplicador fica **contado em tela**
+ * em vez de afirmado por escrito, que era a reclamacao: tres numeros soltos
+ * lado a lado nao constroem a imagem de "um e oito vezes o outro".
+ *
+ * A proporcao e a real: os oito blocos medem 13,6% da regua, nao 13,5%, e a
+ * diferenca de 0,1 ponto e menor que a borda entre eles.
+ */
+const BLOCOS = 8;
+/** Largura de um bloco, em px de 1920. Oito deles mais os vaos cabem na faixa. */
+const BLOCO = 118;
+const VAO_BLOCO = 8;
+
 /** A base que vale para os dois numeros, e que difere da cena 08. */
 const BASE = "todos os agentes da Soldiers, com as personas · período e N a confirmar";
 
@@ -88,6 +120,23 @@ const FAIXA = 1080;
 export const Cena08B: React.FC = () => {
   const f = useCurrentFrame();
   const conv = janela(f, CONV_EM, CONV_SAI, 11, 10);
+
+  /**
+   * A contagem dos blocos e **linear**, nao `passo`.
+   *
+   * O `passo` usa a curva SUAVE, que chega perto de 1 na primeira metade do
+   * intervalo: com ela os oito blocos apareciam quase juntos e a contagem, que
+   * e o argumento inteiro da cena, deixava de existir. Aqui o que importa e o
+   * olho acompanhar um a um junto com a voz.
+   */
+  const contados = interpolate(f, [BLOCOS_EM, BLOCOS_ATE], [0, BLOCOS], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const unidade = interpolate(f, [UNIDADE_EM, UNIDADE_EM + s(0.5)], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
   const reat = janela(f, REAT_EM, CENA08B_FRAMES, 11, 0);
 
   return (
@@ -97,7 +146,7 @@ export const Cena08B: React.FC = () => {
         <Audio src={staticFile("locucao-soldiers/cena-08b.mp3")} />
       </Sequence>
 
-      {/* ---------- beat 1: as duas taxas, e o 8x entre elas ---------- */}
+      {/* ---------- beat 1: o 8x contado, nao afirmado ---------- */}
       {conv > 0.001 ? (
         <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
           <div
@@ -107,63 +156,36 @@ export const Cena08B: React.FC = () => {
               letterSpacing: "2px",
               textTransform: "uppercase",
               color: marca.azul,
-              marginBottom: 44,
+              marginBottom: 46,
               ...entra(conv, 14),
             }}
           >
             Conversão
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-end",
-              gap: 72,
-              ...entra(conv, 22),
-            }}
-          >
-            <Taxa
-              valor={conta(f, CONV_EM + s(0.3), CONV_EM + s(1.3), 13.5)}
-              casas={1}
-              cor={marca.azul}
-              corpo={140}
-              rotulo={"quem passou por\num agente"}
-            />
+          {/* a unidade vem primeiro: e contra ela que os oito blocos contam */}
+          <Linha
+            rotulo="média de quem acessa só o e-commerce"
+            valor={unidade * 1.7}
+            blocos={1}
+            cheios={unidade}
+            cor={m.apoio}
+            o={janela(f, UNIDADE_EM, CONV_SAI, 11, 10)}
+          />
 
-            {/* o multiplicador fica entre as duas, que e onde ele se explica */}
-            <div
-              style={{
-                paddingBottom: 84,
-                opacity: passo(f, CONV_EM + s(1.5), CONV_EM + s(1.9)),
-                transform: `scale(${interpolate(
-                  passo(f, CONV_EM + s(1.5), CONV_EM + s(1.9)),
-                  [0, 1],
-                  [1.12, 1],
-                )})`,
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 112,
-                  fontWeight: 500,
-                  letterSpacing: "-3.92px",
-                  lineHeight: 1,
-                }}
-              >
-                8x
-              </div>
-            </div>
+          <div style={{ height: 54 }} />
 
-            <Taxa
-              valor={conta(f, CONV_EM + s(0.9), CONV_EM + s(1.7), 1.7)}
-              casas={1}
-              cor={m.apoio}
-              corpo={140}
-              rotulo={"média de quem acessa\nsó o e-commerce"}
-            />
-          </div>
+          <Linha
+            rotulo="quem passou por um agente"
+            valor={(contados / BLOCOS) * 13.5}
+            blocos={BLOCOS}
+            cheios={contados}
+            cor={marca.azul}
+            o={janela(f, AGENTE_EM, CONV_SAI, 11, 10)}
+            multiplicador={contados}
+          />
 
-          <Base texto={BASE} o={passo(f, CONV_EM + s(2.0), CONV_EM + s(2.4))} />
+          <Base texto={BASE} o={passo(f, BLOCOS_ATE + s(0.2), BLOCOS_ATE + s(0.6))} />
         </AbsoluteFill>
       ) : null}
 
@@ -261,37 +283,83 @@ export const Cena08B: React.FC = () => {
   );
 };
 
-/** Uma das duas taxas do beat 1: numero grande e o recorte embaixo. */
-const Taxa: React.FC<{
-  valor: number;
-  casas: number;
-  cor: string;
-  corpo: number;
+/**
+ * Uma linha do beat 1: rotulo, a barra feita de blocos, e o valor no fim dela.
+ *
+ * O `cheios` e fracionario: o bloco que esta entrando cresce em largura em vez
+ * de piscar, entao a contagem parece uma regua sendo estendida e nao uma
+ * sequencia de cartoes.
+ */
+const Linha: React.FC<{
   rotulo: string;
-}> = ({ valor, casas, cor, corpo, rotulo }) => (
-  <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-    <div
-      style={{
-        fontSize: corpo,
-        fontWeight: 500,
-        letterSpacing: `${-corpo * 0.035}px`,
-        lineHeight: 1,
-        color: cor,
-        fontVariantNumeric: "tabular-nums",
-      }}
-    >
-      {br(valor, casas)}%
-    </div>
+  valor: number;
+  blocos: number;
+  cheios: number;
+  cor: string;
+  o: number;
+  /** Quando presente, o "Nx" que acompanha a contagem dos blocos. */
+  multiplicador?: number;
+}> = ({ rotulo, valor, blocos, cheios, cor, o, multiplicador }) => (
+  <div style={{ ...entra(o, 18) }}>
     <div
       style={{
         fontSize: 28,
         letterSpacing: "-0.98px",
-        lineHeight: 1.25,
         color: modos.claro.apoio,
-        whiteSpace: "pre-line",
+        marginBottom: 16,
       }}
     >
       {rotulo}
+    </div>
+    <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
+      <div style={{ display: "flex", gap: VAO_BLOCO, height: 76 }}>
+        {Array.from({ length: blocos }, (_, i) => {
+          const parte = Math.max(0, Math.min(1, cheios - i));
+          if (parte <= 0) return null;
+          return (
+            <div
+              key={i}
+              style={{
+                width: BLOCO * parte,
+                height: "100%",
+                background: cor,
+                borderRadius: marca.raio.controle,
+              }}
+            />
+          );
+        })}
+      </div>
+      {/* o valor so existe depois que a barra comeca: "0,0%" parado ao lado de
+          uma faixa vazia lê como erro de render, nao como estado inicial */}
+      {cheios > 0.02 ? (
+        <div
+          style={{
+            fontSize: 76,
+            fontWeight: 500,
+            letterSpacing: "-2.66px",
+            lineHeight: 1,
+            color: cor,
+            fontVariantNumeric: "tabular-nums",
+          }}
+        >
+          {br(valor, 1)}%
+        </div>
+      ) : null}
+      {multiplicador !== undefined && multiplicador > 0.8 ? (
+        <div
+          style={{
+            marginLeft: 24,
+            fontSize: 64,
+            fontWeight: 500,
+            letterSpacing: "-2.66px",
+            lineHeight: 1,
+            color: modos.claro.tinta,
+            fontVariantNumeric: "tabular-nums",
+          }}
+        >
+          {Math.floor(multiplicador)}x mais
+        </div>
+      ) : null}
     </div>
   </div>
 );

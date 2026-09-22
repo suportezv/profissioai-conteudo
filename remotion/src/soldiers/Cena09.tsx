@@ -13,37 +13,34 @@ import { janela, entra, s } from "../anim";
 import { Sfx } from "../Sfx";
 
 /**
- * Cena 09 do case Soldiers: a tese, a janela de medicao, e os lockups.
+ * Cena 09 do case Soldiers: o encerramento.
  *
- * 12 s, narracao de 6,50 s que comeca em 0,6 s.
+ * 7,6 s. Uma frase e a assinatura das duas marcas, e nada mais.
  *
- * A locucao foi regravada nesta revisao: "O primeiro coorte sera medido nos
- * proximos noventa dias. O habito que vai sustentar a recompra ja esta de pe."
- * **Coorte e mais preciso que "primeira leva"** e e o termo que o formulario
- * do premio usa, o que ajuda o juri a conferir video contra formulario.
+ * ## Ela encolheu de 13,8 s para 7,6 s, e o motivo e o dado novo
  *
- * No texto de locucao a palavra vai acentuada, **"coorte" com acento no
- * primeiro o**, porque sem ele o modelo fecha a vogal. Medido no F1 da
- * silaba tonica: 415 Hz sem o acento, que e o fechado, e 565 Hz com ele, que
- * e o aberto da pronuncia certa.
+ * A versao anterior declarava a janela de medicao: "o coorte completo de 90
+ * dias fecha em novembro". Aquilo existia porque o filme **nao tinha** numero
+ * de recompra, e a ressalva era o que mantinha o case honesto.
  *
- * A ordem na tela segue a ordem da fala: a janela de medicao entra primeiro,
- * a tese depois. Antes a tese vinha em cima e entrava antes de ser dita.
+ * Com a cena 08B trazendo reativacao medida, a mesma frase virou o oposto do
+ * que era: logo depois de "metade voltou a comprar", falar de medicao futura
+ * **esfria o resultado que acabou de ser mostrado**. O usuario leu isso no
+ * corte ("com os resultados que agregamos isso perde contundencia") e mandou
+ * abandonar a partir dali.
  *
- * ## A cena mais delicada do filme, e a razao e de integridade
+ * Cortar a ressalva nao cria afirmacao falsa, porque o filme deixou de
+ * reivindicar retencao de coorte: ele mostra reativacao, com base em tela. **A
+ * janela de novembro continua no formulario escrito**, que e onde ela cabe,
+ * com espaco para explicar o metodo.
  *
- * A categoria premia **resultado de recompra**, e o case ainda nao tem: os
- * primeiros clientes compraram no lancamento, em 05/ago/2026, e completam 90
- * dias no inicio de novembro.
+ * ## Por que a frase que ficou e essa
  *
- * Esta cena declara isso em tela em vez de prometer o que nao existe. Nao e
- * fraqueza assumida por escrupulo: **o juri confere o video contra o formulario
- * escrito, e o formulario diz exatamente isso**. Video que promete mais que o
- * formulario perde nos dois.
- *
- * O que ela afirma no lugar e o que e verdade hoje e esta medido na cena 08: a
- * retencao foi desenhada na mecanica dos 90 dias cumulativos, e o habito diario
- * que vai sustentar a recompra ja esta de pe.
+ * "O habito que sustenta esse movimento ja esta de pe" era a segunda metade da
+ * narracao antiga, e e a unica que continua verdadeira sozinha: ela nao promete
+ * medicao, aponta para a cena 06, que e o coracao do filme. O audio dela foi
+ * recortado do proprio arquivo (6,10 a 8,95 s), entao a voz e a mesma leitura,
+ * sem regravacao.
  *
  * ## Os lockups
  *
@@ -59,19 +56,17 @@ import { Sfx } from "../Sfx";
  * caber no nosso fundo seria pior que trocar o fundo.
  */
 
-export const CENA09_FRAMES = s(13.8);
-const AUDIO_EM = s(0.6);
+export const CENA09_FRAMES = s(7.6);
+const AUDIO_EM = s(0.4);
 const MARGEM = 120;
 const m = modos.claro;
 
-const ASSINA_EM = s(10.2);
+const ASSINA_EM = s(3.5);
 
 export const Cena09: React.FC = () => {
   const f = useCurrentFrame();
 
-  // a fala diz a medicao primeiro e a tese depois; a tela acompanha
-  const janelaMedicao = janela(f, s(0.7), ASSINA_EM, 9, 9);
-  const tese = janela(f, s(6.7), ASSINA_EM, 10, 9);
+  const tese = janela(f, s(0.3), ASSINA_EM, 10, 9);
   const assina = janela(f, ASSINA_EM, CENA09_FRAMES, 11, 0);
 
   return (
@@ -81,39 +76,8 @@ export const Cena09: React.FC = () => {
         <Audio src={staticFile("locucao-soldiers/cena-09.mp3")} />
       </Sequence>
 
-      {janelaMedicao > 0.001 || tese > 0.001 ? (
-        <AbsoluteFill
-          style={{
-            padding: MARGEM,
-            justifyContent: "center",
-            gap: 52,
-          }}
-        >
-          {/* a janela de medicao, dita em tela e nao so no formulario */}
-          <div
-            style={{
-              display: "flex",
-              gap: 20,
-              alignItems: "stretch",
-              maxWidth: 1100,
-              ...entra(janelaMedicao, 16),
-            }}
-          >
-            <div style={{ width: 3, background: marca.azul, borderRadius: 2 }} />
-            <div
-              style={{
-                fontSize: 34,
-                letterSpacing: "-1.19px",
-                lineHeight: 1.4,
-                color: m.apoio,
-              }}
-            >
-              A recompra já aparece nos primeiros números. O coorte completo
-              de <span style={{ whiteSpace: "nowrap" }}>90 dias</span> fecha em
-              novembro.
-            </div>
-          </div>
-
+      {tese > 0.001 ? (
+        <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
           <div
             style={{
               fontSize: 76,
