@@ -13,12 +13,23 @@ master a -14 LUFS.**
 
 ## A ordem, e por que ela é essa
 
-**0. A abertura conceitual, gerada no Veo.**
-Todo case abre com um plano de 4 a 5 s, sem narração e sem lettering, cortando
-seco para a primeira cena de motion. O teste é uma pergunta só: **qual a relação
-entre esta imagem e a primeira frase da narração?** Se a resposta for "dá o
-clima", o plano não serve. A primeira geração vai devolver a leitura automática
-da categoria, que é banco de imagem. O áudio do clipe não entra na peça.
+**0. A abertura, gerada no Veo.**
+Todo case abre com 4 a 5 s de imagem gerada, cortando seco para a primeira cena
+de motion. Três regras, todas pagas com rodadas perdidas:
+
+- **A abertura mostra o que a primeira frase da narração afirma, acontecendo.**
+  Não o clima dela, não a consequência dela. O teste é uma pergunta: qual a
+  relação entre esta imagem e aquela frase? Se a resposta for "dá o clima", o
+  plano não serve. A primeira geração vai devolver a leitura automática da
+  categoria, que é banco de imagem.
+- **A narração começa na abertura.** Abertura muda é desperdício. Parte-se o
+  arquivo de locução **no silêncio** entre as duas primeiras frases: a primeira
+  toca na abertura, a segunda abre a cena 01. Partir no silêncio faz o corte de
+  cena ficar inaudível.
+- **Dois planos, com o corte caindo numa palavra da narração.** Palavra e imagem
+  chegando juntas é o oposto de cortar quando o plano cansou.
+
+O áudio do clipe não entra na peça: vídeo gerado traz trilha que ninguém pediu.
 
 **1. Roteiro cena a cena, com a narração escrita.**
 Serve para escrever e decidir a estrutura. **Nunca serve para montar**: a

@@ -44,6 +44,33 @@
       "segundos": 8,
       "usd": 3.2,
       "ok": true
+    },
+    {
+      "quando": "2026-09-22T23:27:35Z",
+      "nome": "abertura-analista",
+      "modelo": "veo-3.1-fast-generate-preview",
+      "resolucao": "1080p",
+      "segundos": 8,
+      "usd": 3.2,
+      "ok": true
+    },
+    {
+      "quando": "2026-09-22T23:28:38Z",
+      "nome": "abertura-dados",
+      "modelo": "veo-3.1-fast-generate-preview",
+      "resolucao": "1080p",
+      "segundos": 8,
+      "usd": 3.2,
+      "ok": false
+    },
+    {
+      "quando": "2026-09-22T23:31:00Z",
+      "nome": "abertura-dados",
+      "modelo": "veo-3.1-fast-generate-preview",
+      "resolucao": "1080p",
+      "segundos": 8,
+      "usd": 3.2,
+      "ok": true
     }
   ]
 }

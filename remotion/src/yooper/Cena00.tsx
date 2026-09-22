@@ -1,105 +1,133 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
   OffthreadVideo,
+  Sequence,
   interpolate,
   staticFile,
   useCurrentFrame,
 } from "remotion";
 import { marca } from "../marca";
 import { passo, s } from "../anim";
-import { Sfx } from "../Sfx";
 
 /**
- * Cena 00 do case Yooper: a abertura conceitual, gerada no Veo.
+ * Cena 00 do case Yooper: a agência apresentando o relatório.
  *
- * 4,2 s, sem narracao e sem lettering. **E o padrao da casa**: os cases 03 e 04
- * abrem com um plano que estabelece o mundo do filme antes de qualquer
- * afirmacao, e este segue a mesma regra.
+ * 4,8 s em **dois planos**, com a narração já correndo por cima. É o padrão da
+ * casa desde o case 03: o filme abre com um plano que estabelece o mundo antes
+ * de qualquer afirmação.
  *
- * ## Por que este plano, e as tres tentativas que ele custou
+ * ## A abertura custou quatro rodadas, e cada recusa ensinou uma coisa
  *
- * A abertura tem que ser **do que a narracao diz**, nao um clima bonito. A
- * primeira linha do filme e "toda agencia de midia entrega dashboard", e o
- * plano precisa carregar as duas metades da tese: **a entrega aconteceu** e
- * **a decisao nao**.
+ * 1. **Executivo de terno diante de gráficos holográficos sobre a cidade.** A
+ *    leitura automática de "empresa de dados", e exatamente a foto de banco de
+ *    imagem que o case 04 já tinha recusado, ainda por cima com números falsos
+ *    ilegíveis renderizados na tela.
+ * 2. **Corredor de mesas vazias.** Saiu com borda de filme fotográfico
+ *    desenhada dentro do quadro: pedir "35mm film grain" faz o modelo desenhar
+ *    a película em vez do grão.
+ * 3. **Celular na mesa com a chuva da cidade desfocada atrás.** Bonito, e o
+ *    usuário cortou com a pergunta que virou o critério da casa: **qual a
+ *    relação entre esta imagem e a frase "toda agência de mídia entrega
+ *    dashboard"?** Nenhuma. Clima não é conceito.
+ * 4. **Sala de reunião vazia com a tela ligada.** Mais perto, e ainda faltava:
+ *    a tese tem duas metades e a sala vazia só mostrava a segunda.
  *
- * Uma sala de reuniao vazia a noite, com a tela grande ainda ligada na parede
- * e as cadeiras encostadas na mesa, diz as duas coisas numa imagem so. O
- * conteudo da tela fica estourado e ilegivel de proposito: nao e o dado que
- * importa, e o fato de ele estar la sem ninguem na frente.
+ * O que ficou mostra a **entrega acontecendo**: alguém apresentando, gesto,
+ * expressão, e a câmera correndo pelos dados na tela. A segunda metade, a
+ * decisão que não acontece, é a cena 01 inteira.
  *
- * Os dois planos recusados no caminho valem como registro:
+ * ## Dois planos, e o corte cai na palavra
  *
- * 1. **O executivo de terno diante de graficos holograficos sobre a cidade.**
- *    E a leitura automatica de "empresa de dados" e e exatamente a foto de
- *    banco de imagem que o case 04 ja tinha recusado, com numeros falsos
- *    ilegiveis renderizados na tela, que leem como artefato de IA.
- * 2. **O celular na mesa com a chuva da cidade desfocada atras.** Bonito, e o
- *    usuario cortou com a pergunta certa: qual a relacao de um celular com
- *    luzes ao fundo e a frase "toda agencia de midia entrega dashboard"?
- *    Nenhuma. **Clima nao e conceito**, e abertura de case nao e cartao
- *    postal.
+ * O plano A é o analista gesticulando; o B é a travelling lateral pela tela.
+ * O corte acontece em **2,30 s, exatamente quando a locução diz "dashboard"**:
+ * a palavra e a imagem chegam juntas, o que é o oposto de cortar quando o
+ * plano cansou.
  *
- * Uma terceira tentativa, o corredor de mesas vazias, saiu com **borda de
- * filme fotografico desenhada no quadro**: pedir "35mm film grain" fez o modelo
- * renderizar a pelicula em vez do grao. Fica registrada como armadilha de
- * prompt.
+ * ## A locução começa aqui, e por isso o arquivo foi partido
  *
- * ## O audio nao e o do clipe
+ * A abertura anterior rodava muda, e o usuário pegou isso. A `cena-01.mp3` foi
+ * cortada em 2,5 s, no silêncio entre "entrega dashboard" e "o dado está lá":
+ * a primeira metade toca aqui, a segunda abre a cena 01. Partir no silêncio é
+ * o que faz o corte de cena ser invisível para o ouvido.
  *
- * Video gerado vem com trilha propria que ninguem controla, e ja apareceu com
- * fala e com musica onde o prompt nao pediu. A atmosfera daqui e SFX gerado a
- * parte, que se mede e se refaz.
+ * ## O reenquadramento do plano A não é gosto
  *
- * ## O corte para a cena 01 e seco
- *
- * Da sala escura com a tela estourada para a superficie clara do dashboard,
- * sem transicao. As duas imagens rimam de proposito: a segunda e o que estava
- * naquela tela, agora legivel, completo e igualmente incapaz de decidir
- * sozinho.
+ * A tela ao fundo dele saiu com texto ilegível gerado, que lê como artefato de
+ * IA. A escala com a origem deslocada para a direita empurra aquele lado para
+ * fora e desfoca o que sobra, sem precisar de máscara; a origem também sobe,
+ * porque recortar só pela horizontal cortava o alto da cabeça. O áudio dos
+ * dois clipes fica mudo: vídeo gerado traz trilha que ninguém pediu.
  */
 
-export const CENA00_FRAMES = s(4.2);
+export const CENA00_FRAMES = s(4.8);
 
-/** Onde o clipe comeca. O dolly ja esta em movimento, entao a cena nasce andando. */
-const ENTRA_EM = 2.0;
+/** Onde o plano B entra. Cai em cima da palavra "dashboard". */
+const CORTE = s(2.3);
+const NARRACAO_EM = s(0.7);
+
+/** Onde cada clipe começa, em segundos do arquivo de origem (24 fps). */
+const A_DE = 3.0;
+const B_DE = 2.0;
 
 export const Cena00: React.FC = () => {
   const f = useCurrentFrame();
+  const abre = passo(f, 0, s(0.5));
 
-  // abre do preto e empurra de leve: plano parado de quatro segundos lê como foto
-  const abre = passo(f, 0, s(0.7));
-  const empurra = interpolate(f, [0, CENA00_FRAMES], [1.01, 1.06], {
+  // plano A: recorte forte à direita, que é o que tira a tela do quadro
+  const empurraA = interpolate(f, [0, CORTE], [1.16, 1.24], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  // plano B: aproximação leve, só para o plano não ler como foto
+  const empurraB = interpolate(f, [CORTE, CENA00_FRAMES], [1.02, 1.09], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
   return (
     <AbsoluteFill style={{ backgroundColor: marca.tinta }}>
-      {/* o dolly do proprio clipe ja aproxima; a escala daqui so acrescenta
-          um empurrao continuo. Deslocar com translate descobriria a borda do
-          video, porque o objectFit cover preenche exatamente: quando precisar
-          reenquadrar, mexer na origem do scale, nunca no translate. */}
-      <AbsoluteFill style={{ opacity: abre, transform: `scale(${empurra})` }}>
-        <OffthreadVideo
-          src={staticFile("yooper/abertura-sala.mp4")}
-          startFrom={Math.round(ENTRA_EM * 24)}
-          muted
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
-      </AbsoluteFill>
+      {f < CORTE ? (
+        <AbsoluteFill
+          style={{
+            opacity: abre,
+            transform: `scale(${empurraA})`,
+            transformOrigin: "74% 42%",
+          }}
+        >
+          <OffthreadVideo
+            src={staticFile("yooper/abertura-analista.mp4")}
+            startFrom={Math.round(A_DE * 24)}
+            muted
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </AbsoluteFill>
+      ) : (
+        <AbsoluteFill
+          style={{ transform: `scale(${empurraB})`, transformOrigin: "50% 50%" }}
+        >
+          <OffthreadVideo
+            src={staticFile("yooper/abertura-dados.mp4")}
+            startFrom={Math.round(B_DE * 24)}
+            muted
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </AbsoluteFill>
+      )}
 
-      {/* vinheta: empurra as bordas para tras e segura o olho no celular */}
+      {/* vinheta discreta: os dois planos são claros, então ela é leve */}
       <AbsoluteFill
         style={{
           background:
-            "radial-gradient(82% 78% at 50% 48%, transparent 34%, rgba(0,0,0,0.60) 100%)",
+            "radial-gradient(90% 84% at 50% 50%, transparent 46%, rgba(0,0,0,0.42) 100%)",
           opacity: abre,
         }}
       />
 
-      <Sfx som="sala-noite" em={0} volume={0.55} />
+      <Sequence from={NARRACAO_EM}>
+        <Audio src={staticFile("locucao-yooper/cena-01a.mp3")} />
+      </Sequence>
     </AbsoluteFill>
   );
 };

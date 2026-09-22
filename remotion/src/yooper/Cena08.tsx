@@ -47,10 +47,10 @@ import { Rosto } from "./Rosto";
  * pessoas** em vez de dois paragrafos, e o corte entre os atos fica obvio sem
  * precisar de cartela.
  *
- * O rosto **abre o sorriso no frame do resultado**, nao na entrada: no ato A
- * quando os quarenta minutos viram segundos, no ato B quando o cliente decide
- * aumentar o investimento. E a expressao que entrega a boa noticia, entao ela
- * precisa cair junto com a palavra que a diz.
+ * O rosto **comeca pensativo e abre o sorriso no frame do resultado**: no ato
+ * A quando os quarenta minutos viram segundos, no ato B quando o cliente
+ * decide aumentar o investimento. E a expressao que entrega a boa noticia,
+ * entao ela precisa cair junto com a palavra que a diz.
  *
  * Nao e emoji de fonte: o render headless nao tem fonte de emoji, e um
  * desenho animado diz o que um caractere parado nao diz. Detalhe no
@@ -91,7 +91,15 @@ export const Cena08: React.FC = () => {
   const claro = janela(f, CLARO_EM, CENA08_FRAMES, 12, 0);
   const decisao = janela(f, DECISAO_EM, CENA08_FRAMES, 12, 0);
 
-  // o sorriso cai no frame do resultado, nao na entrada do rosto
+  /**
+   * O sorriso cai no frame do resultado, nao na entrada do rosto.
+   *
+   * E o estado de partida e **pensativo**, nao neutro. Neutro com a boca reta
+   * le como triste, e o usuario pegou isso no cliente B, que acabara de ver um
+   * ROAS de 12x e aparecia emburrado. Pensativo tambem e o que aquelas pessoas
+   * estavam fazendo de fato: olhando um numero e decidindo o que fazer com
+   * ele.
+   */
   const sorriA = passo(f, ENCOLHE_EM + s(0.2), ENCOLHE_EM + s(1.0));
   const sorriB = passo(f, DECISAO_EM, DECISAO_EM + s(0.8));
 

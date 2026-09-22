@@ -26,13 +26,21 @@ import {
 /**
  * Cena 01 do case Yooper: o problema, que nao e falta de dado.
  *
- * 11,6 s. Locucao de 10,31 s entrando em 0,5 s.
+ * 8,9 s. Toca a **segunda metade** da locucao da cena 01: a primeira frase,
+ * "toda agencia de midia entrega dashboard", ficou na abertura, onde a imagem
+ * mostra a entrega acontecendo. O arquivo foi partido em 2,5 s, no silencio
+ * entre as duas frases.
  *
  * ## Os tempos saem das marcas de palavra, nao da tabela do roteiro
  *
- * Scribe no proprio arquivo, mais o atraso de 0,5 s da entrada:
- * "dashboard" 2,08 · "O dado esta la" 3,26 · "atualizado" 4,68 ·
- * "completo" 5,54 · "mas" 6,66 · "habilidades diferentes" 9,22.
+ * Scribe no arquivo original, menos os 2,5 s que ficaram na abertura, mais o
+ * atraso de 0,3 s da entrada: "O dado esta la" 0,56 · "atualizado" 1,98 ·
+ * "completo" 2,84 · "mas" 3,96 · "habilidades diferentes" 6,02.
+ *
+ * O painel passa a **construir enquanto a narracao o descreve**: ele entra no
+ * corte, o grafico se desenha, a tabela preenche, e so entao a voz diz "o dado
+ * esta la, atualizado, completo". Na versao anterior ele ja estava pronto
+ * antes da frase, e a frase virava legenda do que a tela mostrava.
  *
  * ## Por que o painel e cinza
  *
@@ -70,20 +78,20 @@ import {
  * para explicar. A regra de nao usar print de cliente continua valendo.
  */
 
-export const CENA01_FRAMES = s(11.6);
-const AUDIO_EM = s(0.5);
+export const CENA01_FRAMES = s(8.9);
+const AUDIO_EM = s(0.3);
 const m = modos.claro;
 
-const PAINEL_EM = s(0.6);
-const GRAFICO_EM = s(1.7);
-const TABELA_EM = s(2.1);
-const CURSOR_EM = s(3.26);
-const ATUALIZADO_EM = s(4.68);
-const COMPLETO_EM = s(5.54);
+const PAINEL_EM = s(0.15);
+const GRAFICO_EM = s(0.5);
+const TABELA_EM = s(0.95);
+const CURSOR_EM = s(1.3);
+const ATUALIZADO_EM = s(1.98);
+const COMPLETO_EM = s(2.84);
 /** "mas": o cursor estanca e o painel recua. */
-const PARA_EM = s(6.66);
-const PERGUNTA_EM = s(7.0);
-const TESE_EM = s(9.0);
+const PARA_EM = s(3.96);
+const PERGUNTA_EM = s(4.35);
+const TESE_EM = s(6.02);
 
 const PAINEL_L = 240;
 const PAINEL_T = 128;
@@ -133,7 +141,7 @@ export const Cena01: React.FC = () => {
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
       <Superficie modo="claro" halo />
       <Sequence from={AUDIO_EM}>
-        <Audio src={staticFile("locucao-yooper/cena-01.mp3")} />
+        <Audio src={staticFile("locucao-yooper/cena-01b.mp3")} />
       </Sequence>
 
       <AbsoluteFill
@@ -150,7 +158,7 @@ export const Cena01: React.FC = () => {
                 <TileDash
                   key={t.rotulo}
                   t={t}
-                  o={passo(f, PAINEL_EM + i * 3, PAINEL_EM + i * 3 + 12)}
+                  o={passo(f, PAINEL_EM + i * 2, PAINEL_EM + i * 2 + 10)}
                   marcado={completo > 0.5}
                 />
               ))}
@@ -218,9 +226,9 @@ export const Cena01: React.FC = () => {
         </AbsoluteFill>
       ) : null}
 
-      <Sfx som="assenta" em={PAINEL_EM + 10} volume={0.22} />
+      <Sfx som="assenta" em={PAINEL_EM + 8} volume={0.22} />
       {[0, 1, 2, 3].map((i) => (
-        <Sfx key={i} som="tique" em={PAINEL_EM + i * 3} volume={0.06} />
+        <Sfx key={i} som="tique" em={PAINEL_EM + i * 2} volume={0.06} />
       ))}
       <Sfx som="tique" em={ATUALIZADO_EM} volume={0.09} />
       <Sfx som="apaga" em={PARA_EM} volume={0.18} />
