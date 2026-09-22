@@ -13,6 +13,12 @@ import { passo, s } from "./anim";
  *
  * Deliberadamente parece rascunho: borda tracejada e contador regressivo. Um
  * placeholder bonito demais acaba sendo aprovado sem querer.
+ *
+ * `guia` marca o cartao que toca uma **voz gerada** no lugar da pessoa, para
+ * medir o tempo antes da captacao. A marca e obrigatoria e fica visivel o
+ * tempo todo: audio sintetico de pessoa real, num corte que circula, tem que
+ * se anunciar em tela. Ele existe para marcacao e **nao pode sobreviver ate a
+ * entrega**.
  */
 
 type Props = {
@@ -22,6 +28,8 @@ type Props = {
   detalhe?: string;
   /** De onde o material vem, para virar pedido na hora certa. */
   origem: string;
+  /** Texto da tarja quando o cartao toca voz gerada. */
+  guia?: string;
 };
 
 const m = modos.claro;
@@ -32,6 +40,7 @@ export const Placeholder: React.FC<Props> = ({
   titulo,
   detalhe,
   origem,
+  guia,
 }) => {
   const f = useCurrentFrame();
   const { durationInFrames, fps } = useVideoConfig();
@@ -41,6 +50,28 @@ export const Placeholder: React.FC<Props> = ({
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
       <Superficie modo="claro" />
+      {guia ? (
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            padding: "14px 0",
+            background: marca.rosa,
+            color: marca.branco,
+            fontSize: 22,
+            fontWeight: 500,
+            letterSpacing: "2px",
+            textTransform: "uppercase",
+            textAlign: "center",
+            zIndex: 2,
+          }}
+        >
+          {guia}
+        </div>
+      ) : null}
+
       <AbsoluteFill style={{ padding: 96, opacity: entra }}>
         <div
           style={{

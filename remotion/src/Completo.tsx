@@ -52,7 +52,18 @@ const FPS = 30;
 const NARRACAO_01_EM = s(1.2);
 
 /** Tempo dos cartoes de lacuna, tirado do roteiro. */
-const LACUNA_02 = s(13);
+/**
+ * A lacuna da cena 02, agora medida contra um guia de voz e nao contra o
+ * relogio do roteiro: 0,8 s de entrada, 7,89 s de fala e 3,2 s para o GC
+ * depois dela.
+ *
+ * **O take real deve vir mais longo.** Voz gerada nao hesita, nao respira no
+ * meio da frase e nao repete uma palavra, e gente em entrevista faz as tres
+ * coisas. Este numero serve para marcar o ritmo do corte, nao para reservar o
+ * tempo final.
+ */
+const LACUNA_02 = s(11.9);
+const GUIA_02_EM = s(0.8);
 
 /**
  * As sonoras reais, ja cortadas no silencio do proprio arquivo.
@@ -173,13 +184,20 @@ export const Completo: React.FC = () => (
       </Series.Sequence>
 
       <Series.Sequence durationInFrames={LACUNA_02}>
-        <Placeholder
-          cena="02"
-          rotulo="Sonora a captar"
-          titulo="Anaclaudia Zani, no consultório"
-          detalhe="“Eu percebi que a conta não fechava e precisava levar o que aprendi nesses 20 anos de consultório para o máximo de pessoas possível.” GC entra depois da frase: 547 mil psicólogos no Brasil · R$ 200 a R$ 2.000 por sessão."
-          origem="Captação: janela, cortina fina, plano médio, tripé travado. Referência de luz no artboard de fotografia do moodboard."
-        />
+        <AbsoluteFill>
+          <Placeholder
+            cena="02"
+            rotulo="Sonora a captar"
+            titulo="Anaclaudia Zani, no consultório"
+            detalhe="“Eu percebi que a conta não fechava e precisava levar o que aprendi nesses 20 anos de consultório para o máximo de pessoas possível.” GC entra depois da frase: 547 mil psicólogos no Brasil · R$ 200 a R$ 2.000 por sessão."
+            origem="Captação: janela, cortina fina, plano médio, tripé travado. Referência de luz no artboard de fotografia do moodboard. O take real tende a vir mais longo que este guia."
+            guia="Voz gerada · guia de marcação · substituir pela captação"
+          />
+          {/* o guia toca dentro do cartao, para o corte ter o ritmo da fala */}
+          <Sequence from={GUIA_02_EM}>
+            <Audio src={staticFile("locucao/guia-cena-02-anaclaudia.mp3")} />
+          </Sequence>
+        </AbsoluteFill>
       </Series.Sequence>
 
       <Series.Sequence durationInFrames={CENA03_FRAMES}>
