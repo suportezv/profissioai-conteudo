@@ -77,14 +77,27 @@ export const Sonora: React.FC<{
       <AbsoluteFill style={{ fontFamily: marca.fonte }}>
         <PlanoVertical arquivo={arquivo} fala={fala} />
 
+        {/* o veu segue o GC, para o nome ler sobre o fundo desfocado */}
+        {gc > 0.001 ? (
+          <AbsoluteFill
+            style={{
+              opacity: gc,
+              background:
+                "linear-gradient(to top right, rgba(16,18,24,0.58) 0%, rgba(16,18,24,0.24) 24%, rgba(16,18,24,0) 48%)",
+            }}
+          />
+        ) : null}
+
+        {/* mesmo canto do GC do Clesio: credito de sonora mora embaixo a
+            esquerda, nas duas, senao cada entrevistado parece de um filme */}
         {gc > 0.001 ? (
           <div
             style={{
               position: "absolute",
-              left: 72,
-              top: 96,
+              left: 120,
+              bottom: 120,
               display: "flex",
-              gap: 20,
+              gap: 24,
               alignItems: "stretch",
               maxWidth: 640,
               textShadow: "0 2px 18px rgba(16,18,24,0.6)",
