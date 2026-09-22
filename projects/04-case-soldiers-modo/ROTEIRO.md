@@ -30,17 +30,23 @@ Onde o construído divergiu do plano, a divergência está escrita na própria l
 
 ### Pauta da sonora do Clésio (cena 04)
 
-A cena é a dobradiça do filme: vem depois do problema (o pós-venda vazio, o vínculo com o influenciador) e antes do mecanismo (o cupom que vira chave, o ritual diário). Ele não precisa decorar texto, e **número não entra na boca dele**, vai para lettering.
+A cena é a dobradiça do filme: vem depois do problema (o pós-venda vazio, o vínculo com o influenciador) e antes do mecanismo (o cupom que vira chave, os noventa dias cumulativos, o ritual diário). Ele não precisa decorar texto, e **número não entra na boca dele**, vai para lettering.
 
-**Pergunta que puxa**: qual foi a parte difícil de fazer sete personas soarem como sete pessoas, e não como o mesmo agente com nomes diferentes?
+**O assunto é recompra, e isso não é detalhe de pauta.** A categoria premia relacionamento e retenção, e é justamente onde o case ainda não tem número: a primeira leva de noventa dias só vence em novembro. Uma sonora que explica **por que o mecanismo foi desenhado assim** transforma "ainda não temos o dado" em "veja por que ele vai aparecer". Falar de engenharia de persona seria mais confortável e responderia a um critério que o filme já prova sozinho na cena 07.
+
+**Pergunta que puxa**: por que vocês amarraram o acompanhamento à compra, em noventa dias cumulativos, em vez de vender uma assinatura à parte?
 
 Três caminhos de resposta, em ordem de preferência:
 
-1. **O risco, que é o mais forte**: "A tentação era fazer um agente genérico e só trocar o nome. Só que o cliente comprou porque confia naquela pessoa. Se o jeito de falar não bate, ele percebe na primeira mensagem, e aí a gente perdeu."
-2. **A validação**: "Dar sete nomes para o mesmo agente qualquer um faz. A gente treinou cada persona com o material real do influenciador, e quem aprova se ficou parecido é ele. Se ele não reconhece a própria voz, não sobe."
-3. **A separação técnica**: "O difícil não foi a tecnologia, foi a fidelidade. A gente teve que separar a regra do negócio, que é igual para todos, do jeito de cada um falar."
+1. **A inversão**: "No suplemento, a recompra é o momento mais frágil. A pessoa termina o pote e só lembra da marca quando acaba. A gente inverteu isso: em vez de esperar ela voltar, o acompanhamento já está correndo todo dia, e a próxima compra estende o que ela já está usando."
+2. **Por que não assinatura**: "Assinatura cria uma segunda decisão, e toda decisão a mais é gente que desiste no caminho. Amarrando na compra, qualquer compra já abre o acompanhamento, de qualquer valor. O cliente não precisa escolher duas vezes."
+3. **O que o cumulativo faz**: "Os noventa dias somam, não reiniciam. Isso muda o que a próxima compra significa: não é repor estoque, é não perder o acesso que você já tem. É um motivo para voltar que não é desconto."
 
-Qualquer um cabe nos 14 s reservados. Vale lembrar que sonora real vem mais curta que a estimativa: no case anterior a dele fechou em 8,4 s onde havia 12 reservados, então o corte se acha no silêncio do arquivo, não no relógio do roteiro.
+O caminho 1 é o mais forte porque nomeia a fragilidade antes de nomear a solução, que é a mesma construção do resto do filme.
+
+**Cuidado de conformidade**: ele fala de **desenho do mecanismo**, nunca de resultado. Nada de percentual de recompra, de "aumentou X" ou de comparação com antes. O `Comunicacao_Profissio.md` proíbe porcentagem sem contexto, base e método, e a cena 09 já declara que a medição começa em novembro.
+
+Vale lembrar que sonora real vem mais curta que a estimativa: no case anterior a dele fechou em 8,4 s onde havia 12 reservados, então o corte se acha no silêncio do arquivo, não no relógio do roteiro. Os 14 s reservados são teto, não meta.
 
 ---
 

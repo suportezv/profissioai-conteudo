@@ -28,14 +28,22 @@ import { Sfx } from "../Sfx";
  * sete. Misturar as duas seria erro de fato, entao nenhuma imagem viaja de uma
  * cena para a outra.
  *
- * ## Onde falta foto, entra a letra, nao um rosto parecido
+ * ## As fotos foram recortadas contra a cabeca, nao contra a borda
  *
- * O site serve a arte de dois cartoes (o MODO base e o Vitor Zanelato) e
- * **404 nos outros cinco**: o `R()` da pagina cai no caminho `assets/std/...`
- * porque `window.__resources` nunca e definido naquele deploy. Ate as imagens
- * chegarem, esses cartoes usam a **inicial**, que e o proprio fallback que o
- * site desenhou para eles. Recriar o rosto de alguem, ou pescar um frame de
- * outro video achando que e a mesma pessoa, seria pior que a lacuna.
+ * O cliente mandou seis artes com enquadramentos muito diferentes: de plano
+ * inteiro a busto fechado, cada uma com a pessoa num lado do quadro. Cortadas
+ * pela borda elas viravam seis cartoes de escalas diferentes, e a grade
+ * perdia a leitura de "a mesma arquitetura".
+ *
+ * O corte e derivado da **caixa da cabeca** de cada foto: a cabeca ocupa 30%
+ * da altura do corte e o topo dela cai a 10% do quadro, sempre. Quem estava
+ * mais aberto foi aproximado, quem ja estava fechado ficou como estava. Isso
+ * inclui o Vitor Zanelato, que veio do site bem mais aberto que os outros e
+ * foi repadronizado junto.
+ *
+ * Quem ainda nao tem arquivo usa a **inicial**, que e o proprio fallback que o
+ * site desenhou. Recriar o rosto de alguem, ou pescar um frame de outro video
+ * achando que e a mesma pessoa, seria pior que a lacuna.
  *
  * ## O cartao e do cliente, entao ele tem a cara do cliente
  *
@@ -71,15 +79,16 @@ const PERSONAS: Persona[] = [
   {
     nome: "SOLDIERS",
     letra: "M",
-    arte: "modo-avatar.png",
+    arte: "modo-base.jpg",
     encaixe: "contain",
     base: true,
   },
-  { nome: "JUJU SALIMENI", letra: "J" },
+  { nome: "JUJU SALIMENI", letra: "J", arte: "juju-salimeni.jpg" },
+  // a arte do Cantarelli ainda nao chegou em arquivo; entra a inicial ate chegar
   { nome: "CANTARELLI", letra: "F" },
-  { nome: "CEUBOLINHA", letra: "C" },
-  { nome: "GORDELAZZ", letra: "G" },
-  { nome: "LUCAS STEIN", letra: "L" },
+  { nome: "CEUBOLINHA", letra: "C", arte: "ceubolinha.jpg" },
+  { nome: "GORDELAZZ", letra: "G", arte: "gordelazz.jpg" },
+  { nome: "LUCAS STEIN", letra: "L", arte: "lucas-stein.jpg" },
   { nome: "VITOR ZANELATO", letra: "V", arte: "vitor-zanelato.jpg" },
 ];
 

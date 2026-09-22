@@ -10,7 +10,7 @@ import {
 } from "remotion";
 import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
-import { janela, entra, passo, conta, br, s } from "../anim";
+import { janela, entra, passo, conta, br, s, tiquesDaContagem } from "../anim";
 import { Sfx } from "../Sfx";
 
 /**
@@ -20,17 +20,29 @@ import { Sfx } from "../Sfx";
  * (1,86 / 5,83 / 9,65 s), somado o atraso: "Creatina e creatina" fecha em
  * 2,86, o dado de mercado em 6,83 e a frase do preco em 10,65.
  *
- * ## A cena tem duas metades, e a primeira e filmada
+ * ## Tres tempos, um por frase da narracao
  *
- * Abre num plano gerado no Veo: a camera varre uma gondola de potes de
- * creatina quase identicos e um consumidor, de costas, coca a cabeca sem
- * conseguir escolher. **O gancho precisa da prateleira real**, porque
- * "creatina e creatina" e uma afirmacao sobre o mundo, nao sobre uma
- * interface: desenhada, ela vira opiniao; filmada, vira constatacao.
+ * A primeira versao tinha dois: o plano filmado com o dado de mercado por
+ * cima, e os potes. **Nao funcionou por dois motivos.** O dado, escrito sobre
+ * a prateleira, competia com a prateleira e nao era lido como dado; e os potes
+ * ficavam quase sete segundos em cena para uma frase que dura tres.
  *
- * Na metade seguinte a cena executa a decisao que aquela prateleira produz:
- * dois potes com o mesmo texto e o mesmo peso, **so o preco muda**, um deles
- * cai de preco e o cursor vai nele.
+ * Agora cada frase tem o seu tempo:
+ *
+ * 1. **A gondola filmada** (0 a 3,4 s), enquanto a narracao diz "creatina e
+ *    creatina". Com aproximacao lenta, porque plano parado de 3 s lê como foto.
+ * 2. **O tamanho do mercado** (3,2 a 7,0 s), sozinho na superficie clara. O
+ *    numero conta em vez de aparecer pronto, que e o que faz o espectador
+ *    esperar por ele.
+ * 3. **A decisao** (6,8 a 12 s): dois potes iguais, so o preco muda, e o
+ *    cursor pousa no mais barato.
+ *
+ * ## O que a cena mostra e a narracao nao diz
+ *
+ * O gancho precisa da prateleira real, porque "creatina e creatina" e uma
+ * afirmacao sobre o mundo: desenhada, vira opiniao; filmada, vira constatacao.
+ * E os potes executam a decisao que aquela prateleira produz, em vez de
+ * ilustra-la.
  *
  * Os potes sao genericos de proposito. **Nenhum rotulo de marca, nem da
  * Soldiers nem de concorrente**: a cena fala do mercado inteiro, e pintar um
@@ -44,20 +56,21 @@ const AUDIO_EM = s(1.0);
 const MARGEM = 120;
 const m = modos.claro;
 
-/** Ate onde o plano filmado ocupa o quadro. Os potes entram por baixo dele. */
-const GONDOLA_ATE = s(4.6);
-const ENTRA_POTES = s(4.3);
-const DADO_EM = s(2.9);
-const CAI_PRECO = s(7.5);
-const CURSOR_CHEGA = s(8.2);
-const ESCOLHE = s(9.2);
+/** Os tres tempos. Cada um cobre uma frase da narracao. */
+const GONDOLA_ATE = s(3.4);
+const MERCADO_EM = s(3.2);
+const MERCADO_ATE = s(7.0);
+const ENTRA_POTES = s(6.8);
+
+const CAI_PRECO = s(8.3);
+const CURSOR_CHEGA = s(9.0);
+const ESCOLHE = s(9.9);
 
 /**
  * A silhueta do pote, desenhada e nao sugerida por um retangulo.
  *
- * O quadrado cinza que estava aqui antes nao lia como suplemento, e o pedido
- * foi exatamente esse: ilustrar em vez de deixar em branco. A forma e a de
- * qualquer pote do mercado, tampa larga e corpo cilindrico, **sem rotulo**,
+ * O quadrado cinza que estava aqui antes nao lia como suplemento. A forma e a
+ * de qualquer pote do mercado, tampa larga e corpo cilindrico, **sem rotulo**,
  * porque o argumento da cena e que eles sao indistinguiveis.
  */
 const PoteSilhueta: React.FC<{ cor: string; altura: number }> = ({
@@ -68,9 +81,7 @@ const PoteSilhueta: React.FC<{ cor: string; altura: number }> = ({
     viewBox="0 0 120 168"
     style={{ height: altura, width: "auto", display: "block" }}
   >
-    {/* tampa */}
     <rect x="28" y="4" width="64" height="22" rx="7" fill={cor} />
-    {/* corpo */}
     <path
       d="M24 28 h72 a8 8 0 0 1 8 8 v116 a10 10 0 0 1 -10 10 h-68 a10 10 0 0 1 -10 -10 v-116 a8 8 0 0 1 8 -8 z"
       fill={cor}
@@ -139,17 +150,24 @@ const Pote: React.FC<{
 export const Cena01: React.FC = () => {
   const f = useCurrentFrame();
 
-  // o plano filmado sai por opacidade, e os potes ja estao entrando por baixo
   const gondola = interpolate(
     f,
     [GONDOLA_ATE - s(0.4), GONDOLA_ATE],
     [1, 0],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
+  // aproximacao lenta e continua: plano parado de tres segundos le como foto
+  const zoom = interpolate(f, [0, GONDOLA_ATE], [1, 1.14], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  const mercado = janela(f, MERCADO_EM, MERCADO_ATE, 16, 14);
+  const bilhoes = conta(f, MERCADO_EM + s(0.3), MERCADO_EM + s(1.5), 7.6);
+
   const potes = janela(f, ENTRA_POTES, CENA01_FRAMES, 18, 0);
-  const dado = janela(f, DADO_EM, GONDOLA_ATE, 14, 12);
-  const precoB = conta(f, CAI_PRECO, CAI_PRECO + s(0.9), 22);
-  const cursor = passo(f, CURSOR_CHEGA, CURSOR_CHEGA + s(0.7));
+  const precoB = conta(f, CAI_PRECO, CAI_PRECO + s(0.8), 22);
+  const cursor = passo(f, CURSOR_CHEGA, CURSOR_CHEGA + s(0.6));
   const escolheu = f >= ESCOLHE;
 
   return (
@@ -159,29 +177,27 @@ export const Cena01: React.FC = () => {
         <Audio src={staticFile("locucao-soldiers/cena-01.mp3")} />
       </Sequence>
 
-      {/* ---------- a metade filmada ---------- */}
+      {/* ---------- 1. a gondola filmada ---------- */}
       {gondola > 0.001 ? (
-        <AbsoluteFill style={{ opacity: gondola, zIndex: 2 }}>
+        <AbsoluteFill style={{ opacity: gondola, zIndex: 3, overflow: "hidden" }}>
           <OffthreadVideo
             src={staticFile("soldiers-broll/c01-gondola.mp4")}
             muted
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transform: `scale(${zoom})`,
+              transformOrigin: "60% 50%",
+            }}
           />
-          {/* escurecimento so do lado do lettering, para o texto ler */}
           <AbsoluteFill
             style={{
               background:
-                "linear-gradient(90deg, rgba(16,18,24,0.72) 0%, rgba(16,18,24,0.42) 34%, rgba(16,18,24,0) 62%)",
+                "linear-gradient(90deg, rgba(16,18,24,0.66) 0%, rgba(16,18,24,0.3) 34%, rgba(16,18,24,0) 60%)",
             }}
           />
-          <AbsoluteFill
-            style={{
-              padding: MARGEM,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
+          <AbsoluteFill style={{ padding: MARGEM }}>
             <div
               style={{
                 fontSize: 24,
@@ -194,52 +210,95 @@ export const Cena01: React.FC = () => {
             >
               O mercado de suplementação
             </div>
-
-            {/* o dado de mercado vive sobre a prateleira, que e o assunto dele */}
-            <div
-              style={{
-                display: "flex",
-                gap: 40,
-                alignItems: "baseline",
-                flexWrap: "wrap",
-                ...entra(dado, 16),
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 76,
-                  fontWeight: 500,
-                  letterSpacing: "-2.66px",
-                  color: marca.branco,
-                }}
-              >
-                R$ 7,6 bi por ano
-              </div>
-              <div
-                style={{
-                  fontSize: 44,
-                  fontWeight: 500,
-                  letterSpacing: "-1.54px",
-                  color: marca.ciano,
-                }}
-              >
-                +15% em 2025
-              </div>
-              <div
-                style={{
-                  fontSize: 24,
-                  letterSpacing: "-0.84px",
-                  color: marca.apoioEscuro,
-                }}
-              >
-                fonte: BRASNUTRI
-              </div>
-            </div>
           </AbsoluteFill>
         </AbsoluteFill>
       ) : null}
 
-      {/* ---------- a metade desenhada: a decisao ---------- */}
+      {/* ---------- 2. o tamanho do mercado, sozinho ---------- */}
+      {mercado > 0.001 ? (
+        <AbsoluteFill
+          style={{
+            padding: MARGEM,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            gap: 34,
+            opacity: mercado,
+            zIndex: 2,
+          }}
+        >
+          <div
+            style={{
+              fontSize: 24,
+              fontWeight: 500,
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              color: m.apoio,
+            }}
+          >
+            Suplementação no Brasil
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: 24,
+              ...entra(mercado, 22),
+            }}
+          >
+            <div
+              style={{
+                fontSize: 230,
+                fontWeight: 500,
+                letterSpacing: "-8.05px",
+                lineHeight: 0.95,
+                color: marca.azul,
+                fontVariantNumeric: "tabular-nums",
+                textShadow: "0 20px 56px rgba(36,88,245,0.22)",
+              }}
+            >
+              R$ {br(bilhoes, 1)} bi
+            </div>
+            <div
+              style={{
+                fontSize: 44,
+                fontWeight: 500,
+                letterSpacing: "-1.54px",
+                color: m.apoio,
+              }}
+            >
+              por ano
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: 32,
+              borderTop: "1px solid rgba(16,18,24,0.22)",
+              paddingTop: 22,
+              maxWidth: 1180,
+            }}
+          >
+            <div
+              style={{
+                fontSize: 46,
+                fontWeight: 500,
+                letterSpacing: "-1.61px",
+              }}
+            >
+              +15% em 2025
+            </div>
+            <div
+              style={{ fontSize: 26, letterSpacing: "-0.91px", color: m.apoio }}
+            >
+              fonte: BRASNUTRI
+            </div>
+          </div>
+        </AbsoluteFill>
+      ) : null}
+
+      {/* ---------- 3. a decisao ---------- */}
       <AbsoluteFill
         style={{
           padding: MARGEM,
@@ -273,17 +332,15 @@ export const Cena01: React.FC = () => {
         </div>
       </AbsoluteFill>
 
-      {/* o cursor: entra pela direita e para em cima do pote mais barato */}
+      {/* o cursor: entra pela direita e para em cima do preco mais barato */}
       {cursor > 0.001 ? (
         <div
           style={{
             position: "absolute",
-            // pousa em cima do preco do pote mais barato, nao na descricao:
-            // o que a narracao diz que decide e o numero
             left: 1420 + (1 - cursor) * 420,
             top: 706 + (1 - cursor) * 160,
             opacity: cursor,
-            zIndex: 3,
+            zIndex: 4,
           }}
         >
           <svg width="46" height="52" viewBox="0 0 24 28">
@@ -297,10 +354,14 @@ export const Cena01: React.FC = () => {
         </div>
       ) : null}
 
-      <Sfx som="surge" em={DADO_EM} volume={0.18} />
+      <Sfx som="surge" em={MERCADO_EM} volume={0.2} />
+      {tiquesDaContagem(MERCADO_EM + s(0.3), MERCADO_EM + s(1.5)).map((fr, i) => (
+        <Sfx key={i} som="tique" em={fr} volume={0.06} />
+      ))}
+      <Sfx som="assenta" em={MERCADO_EM + s(1.5)} volume={0.34} />
       <Sfx som="pop" em={ENTRA_POTES} volume={0.18} />
       <Sfx som="tique" em={CAI_PRECO} volume={0.12} />
-      <Sfx som="assenta" em={CAI_PRECO + s(0.9)} volume={0.3} />
+      <Sfx som="assenta" em={CAI_PRECO + s(0.8)} volume={0.3} />
       <Sfx som="marca" em={ESCOLHE} volume={0.28} />
     </AbsoluteFill>
   );

@@ -43,9 +43,26 @@ const NARRACAO_01_EM = s(1.0);
 /** A unica lacuna: a sonora do Clesio. */
 const LACUNA_04 = s(14);
 
+/**
+ * A trilha escolhida pelo usuario, ouvindo as candidatas: **D, pulso de
+ * treino**, batida marcada.
+ *
+ * As tres primeiras candidatas foram recusadas com um diagnostico que vale
+ * registrar: "todas muito mortas", e combinadas com a locucao, que e pausada,
+ * deixavam o filme tedioso. O filme e de performance e de habito diario, entao
+ * a trilha precisa empurrar. Trilha discreta nao e a mesma coisa que trilha
+ * sem pulso.
+ *
+ * `--props '{"trilha":null}'` segue rendendo o filme sem leito, que e como as
+ * candidatas sao comparadas: um render so, misturado por fora com
+ * `scripts/monta_trilha.py --alvo-dbfs`, para a unica diferenca entre as
+ * versoes ser a musica e nao o ganho.
+ */
+const TRILHA_PADRAO = "soldiers/trilha-treino-pulso.mp3";
+
 const trilhaEscolhida = (): string | null => {
   const p = getInputProps() as { trilha?: string | null };
-  return p.trilha === undefined ? null : p.trilha;
+  return p.trilha === undefined ? TRILHA_PADRAO : p.trilha;
 };
 
 /**
@@ -110,7 +127,7 @@ export const Completo: React.FC = () => (
           cena="04"
           rotulo="Sonora a captar · a única do filme"
           titulo="Clésio Souza, na Profissio"
-          detalhe="Pergunta que puxa: qual foi a parte difícil de fazer sete personas soarem como sete pessoas, e não como o mesmo agente com nomes diferentes? A resposta dele é a dobradiça do filme, entre o problema e o mecanismo."
+          detalhe="Pergunta que puxa: por que amarrar o acompanhamento à compra, em noventa dias cumulativos, em vez de vender uma assinatura à parte? A resposta é sobre recompra, que é o que a categoria premia, e prepara exatamente o mecanismo da cena seguinte."
           origem="Captação: mesma gramática de luz do case da EITA, janela e plano médio, para os dois filmes parecerem a mesma série. Sem GC de dado técnico: número vai para lettering, nunca para a boca de ninguém."
         />
       </Series.Sequence>
