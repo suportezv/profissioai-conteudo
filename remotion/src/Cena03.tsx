@@ -14,13 +14,13 @@ import {
 } from "./Icones";
 
 /**
- * Cena 03 do case: a tentativa de 2017 e a volta em 2025.
+ * Cena 03 do case: a tentativa de 2017 e a volta em 2024.
  *
  * 14 s. A narracao dura 12,45 s e comeca depois de meio segundo de respiro.
  *
  * O device e uma linha do tempo de 1px com tres marcas, e **cada lista fica
- * embaixo da sua marca**: a de 2017 alinhada a esquerda, sob 2017, e a de 2025
- * alinhada a direita, sob 2025. Elas nao dividem mais a mesma caixa. Lista que
+ * embaixo da sua marca**: a de 2017 alinhada a esquerda, sob 2017, e a de 2024
+ * alinhada a direita, sob 2024. Elas nao dividem mais a mesma caixa. Lista que
  * troca no mesmo lugar parece correcao da anterior; lista embaixo do proprio
  * ano diz que sao dois momentos, que e o que a cena conta.
  *
@@ -28,7 +28,7 @@ import {
  * de trazer um dado solto: dado de contexto sem relacao com a fala e ruido, e
  * foi por isso que o chip de burnout saiu daqui.
  *
- * A lista de 2017 entra no cinza de apoio e a de 2025 na tinta cheia com
+ * A lista de 2017 entra no cinza de apoio e a de 2024 na tinta cheia com
  * icone azul. A cor conta o resultado antes do texto: uma nao sobreviveu, a
  * outra e a que esta de pe.
  */
@@ -46,7 +46,7 @@ const LISTA_2017: Item[] = [
   { Icone: IconeTeto, texto: "dificuldade em escalar" },
 ];
 
-const LISTA_2025: Item[] = [
+const LISTA_2024: Item[] = [
   { Icone: IconeBalao, texto: "WhatsApp" },
   { Icone: IconeFaisca, texto: "IA treinada com o método dela" },
   { Icone: IconeSubida, texto: "escalabilidade ilimitada" },
@@ -111,7 +111,7 @@ const Marca: React.FC<{
  * Uma lista ancorada embaixo da sua marca na linha do tempo.
  *
  * `x` e a mesma porcentagem da marca, e `lado` diz de que borda a lista se
- * alinha. A de 2025 alinha a direita porque a marca dela esta em 88%: alinhada
+ * alinha. A de 2024 alinha a direita porque a marca dela esta em 88%: alinhada
  * a esquerda, ela sairia do quadro.
  */
 const Lista: React.FC<{
@@ -173,14 +173,15 @@ export const Cena03: React.FC = () => {
   const f = useCurrentFrame();
 
   const regua = passo(f, s(0.7), s(2.0));
-  const a2017 = janela(f, s(1.6), CENA03_FRAMES, 14, 0);
-  const a2020 = janela(f, s(8.2), CENA03_FRAMES, 14, 0);
-  const a2025 = janela(f, s(10.4), CENA03_FRAMES, 14, 0);
+  const a2017 = janela(f, s(2.0), CENA03_FRAMES, 14, 0);
+  const a2020 = janela(f, s(8.8), CENA03_FRAMES, 14, 0);
+  const a2024 = janela(f, s(10.9), CENA03_FRAMES, 14, 0);
 
-  // a lista de 2017 acompanha a fala sobre o app e sai quando ela diz que
-  // nao sobreviveu; a de 2025 entra junto com "em 2025 ela voltou"
-  const lista2017 = janela(f, s(3.6), s(10.0), 14, 12);
-  const lista2025 = janela(f, s(10.6), CENA03_FRAMES, 14, 0);
+  // tempos medidos nos silencios da locucao (3,81 / 8,03 / 10,38 s) mais o
+  // atraso de 0,5 s: a lista de 2017 acompanha a fala sobre o app e sai quando
+  // ela diz que nao sobreviveu; a de 2024 entra junto com "em 2024 ela voltou"
+  const lista2017 = janela(f, s(4.7), s(10.7), 14, 12);
+  const lista2024 = janela(f, s(11.1), CENA03_FRAMES, 14, 0);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -228,7 +229,7 @@ export const Cena03: React.FC = () => {
           />
           <Marca x={12} ano="2017" rotulo="o primeiro app" o={a2017} />
           <Marca x={50} ano="2020" rotulo="descontinuado" o={a2020} />
-          <Marca x={88} ano="2025" rotulo="a EITA no WhatsApp" o={a2025} ativa />
+          <Marca x={88} ano="2024" rotulo="a EITA no WhatsApp" o={a2024} ativa />
         </div>
 
         {/* cada lista embaixo do proprio ano; altura fixa para nada pular */}
@@ -236,16 +237,16 @@ export const Cena03: React.FC = () => {
           <Lista
             itens={LISTA_2017}
             o={lista2017}
-            entraEm={s(3.6)}
+            entraEm={s(4.7)}
             f={f}
             ativa={false}
             x={12}
             lado="esquerda"
           />
           <Lista
-            itens={LISTA_2025}
-            o={lista2025}
-            entraEm={s(10.6)}
+            itens={LISTA_2024}
+            o={lista2024}
+            entraEm={s(11.1)}
             f={f}
             ativa
             x={88}
@@ -255,16 +256,16 @@ export const Cena03: React.FC = () => {
       </AbsoluteFill>
 
       {/* um tique em cada marca da linha do tempo */}
-      <Sfx som="marca" em={s(1.6)} volume={0.26} />
-      <Sfx som="marca" em={s(8.2)} volume={0.26} />
-      <Sfx som="marca" em={s(10.4)} volume={0.3} />
+      <Sfx som="marca" em={s(2.0)} volume={0.26} />
+      <Sfx som="marca" em={s(8.8)} volume={0.26} />
+      <Sfx som="marca" em={s(10.9)} volume={0.3} />
 
       {/* e um pop discreto em cada item das listas */}
       {[0, 1, 2].map((i) => (
-        <Sfx key={"a" + i} som="pop" em={s(3.6) + i * 7} volume={0.14} />
+        <Sfx key={"a" + i} som="pop" em={s(4.7) + i * 7} volume={0.14} />
       ))}
       {[0, 1, 2].map((i) => (
-        <Sfx key={"b" + i} som="pop" em={s(10.6) + i * 7} volume={0.18} />
+        <Sfx key={"b" + i} som="pop" em={s(11.1) + i * 7} volume={0.18} />
       ))}
     </AbsoluteFill>
   );
