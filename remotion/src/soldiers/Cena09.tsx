@@ -15,7 +15,15 @@ import { Sfx } from "../Sfx";
 /**
  * Cena 09 do case Soldiers: a tese, a janela de medicao, e os lockups.
  *
- * 15 s, narracao de 5,02 s que comeca em 0,6 s. Pausas em 2,11 e 4,71 s.
+ * 12 s, narracao de 6,83 s que comeca em 0,6 s.
+ *
+ * A locucao foi regravada nesta revisao: "O primeiro coorte sera medido nos
+ * proximos noventa dias. O habito que vai sustentar a recompra ja esta de pe."
+ * **Coorte e mais preciso que "primeira leva"** e e o termo que o formulario
+ * do premio usa, o que ajuda o juri a conferir video contra formulario.
+ *
+ * A ordem na tela segue a ordem da fala: a janela de medicao entra primeiro,
+ * a tese depois. Antes a tese vinha em cima e entrava antes de ser dita.
  *
  * ## A cena mais delicada do filme, e a razao e de integridade
  *
@@ -56,8 +64,9 @@ const ASSINA_EM = s(7.6);
 export const Cena09: React.FC = () => {
   const f = useCurrentFrame();
 
-  const tese = janela(f, s(0.8), ASSINA_EM, 10, 9);
-  const janelaMedicao = janela(f, s(3.2), ASSINA_EM, 9, 9);
+  // a fala diz a medicao primeiro e a tese depois; a tela acompanha
+  const janelaMedicao = janela(f, s(0.9), ASSINA_EM, 9, 9);
+  const tese = janela(f, s(4.0), ASSINA_EM, 10, 9);
   const assina = janela(f, ASSINA_EM, CENA09_FRAMES, 11, 0);
 
   return (
@@ -67,15 +76,38 @@ export const Cena09: React.FC = () => {
         <Audio src={staticFile("locucao-soldiers/cena-09.mp3")} />
       </Sequence>
 
-      {tese > 0.001 ? (
+      {janelaMedicao > 0.001 || tese > 0.001 ? (
         <AbsoluteFill
           style={{
             padding: MARGEM,
             justifyContent: "center",
-            gap: 48,
-            opacity: tese,
+            gap: 52,
           }}
         >
+          {/* a janela de medicao, dita em tela e nao so no formulario */}
+          <div
+            style={{
+              display: "flex",
+              gap: 20,
+              alignItems: "stretch",
+              maxWidth: 1100,
+              ...entra(janelaMedicao, 16),
+            }}
+          >
+            <div style={{ width: 3, background: marca.azul, borderRadius: 2 }} />
+            <div
+              style={{
+                fontSize: 34,
+                letterSpacing: "-1.19px",
+                lineHeight: 1.4,
+                color: m.apoio,
+              }}
+            >
+              O primeiro coorte será medido nos{" "}
+              <span style={{ whiteSpace: "nowrap" }}>próximos 90 dias</span>.
+            </div>
+          </div>
+
           <div
             style={{
               fontSize: 76,
@@ -89,31 +121,6 @@ export const Cena09: React.FC = () => {
             O hábito que vai sustentar a recompra
             <br />
             <span style={{ color: marca.azul }}>já está de pé.</span>
-          </div>
-
-          {/* a janela de medicao, dita em tela e nao so no formulario */}
-          <div
-            style={{
-              display: "flex",
-              gap: 20,
-              alignItems: "stretch",
-              maxWidth: 900,
-              ...entra(janelaMedicao, 16),
-            }}
-          >
-            <div style={{ width: 3, background: marca.azul, borderRadius: 2 }} />
-            <div
-              style={{
-                fontSize: 30,
-                letterSpacing: "-1.05px",
-                lineHeight: 1.45,
-                color: m.apoio,
-              }}
-            >
-              A primeira leva de 90 dias vence no início de{" "}
-              <span style={{ whiteSpace: "nowrap" }}>novembro de 2026</span>.
-              <br />A recompra começa a ser medida a partir daí.
-            </div>
           </div>
         </AbsoluteFill>
       ) : null}

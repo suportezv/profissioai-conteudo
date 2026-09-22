@@ -106,7 +106,7 @@ E declara em tela que a medição de recompra começa em novembro. O júri confe
 | **06** | 1:02 a 1:20 | O coração do filme. A conversa **acumula** em vez de piscar: onboarding, o agente pergunta o horário, o cliente responde "7h", e daí cada dia entra com a marcação central de data, o agente manda áudio ou texto e o cliente responde ou só curte. O antigo sobe e sai por cima, então o rastro dos dias fica visível. **Toda mensagem do agente vem precedida do indicador de digitando.** Cinco dias, com os intervalos encurtando. | **Narração Profissio** | E o vínculo não se sustenta na compra, se sustenta no dia. O agente pergunta a que horas o cliente toma o suplemento, e passa a aparecer nesse horário, todo dia, na voz de quem ele escolheu. |
 | **07** | 1:20 a 1:30 | Sete cartões de persona entrando em sequência sobre a mesma grade, para mostrar que a arquitetura é uma só. **Construído com os nomes de fora**: o primeiro cartão é o MODO base, que o case nomeia, e os outros seis ficam como posição marcada até a Soldiers liberar nome e imagem de cada influenciador. O que a cena precisa provar é a arquitetura, e ela se lê sem os nomes. | **Narração Profissio** | São sete personas rodando ao mesmo tempo, cada uma com o vocabulário e as gírias do seu influenciador, sobre a mesma arquitetura. |
 | **08** | 1:30 a 1:45 | Números em motion, um por vez, com base e período colados em cada um. **Construído com quatro números e sem o mapa**: 151.034 mensagens, 495 pessoas por dia, ~600 lembretes por dia e NPS 95. O mapa regional saiu porque entrava como enfeite no fim de uma cena que já carrega quatro dados, e distribuição geográfica não responde a nenhum critério da categoria. | **Narração Profissio** | Em dois meses: cento e cinquenta e um mil mensagens trocadas, quatrocentas e noventa e cinco pessoas por dia, e quase seiscentos lembretes disparados a cada vinte e quatro horas. |
-| **09** | 1:45 a 1:57 | Cartão da tese, depois os lockups Soldiers e Profissio lado a lado. | **Narração Profissio** | A recompra começa a ser medida em novembro. O hábito que vai sustentá-la já está de pé. |
+| **09** | 1:45 a 1:57 | A janela de medição entra primeiro, acompanhando a fala, e a tese depois. No fim os lockups Soldiers e Profissio, lado a lado sobre faixa escura. | **Narração Profissio** | O primeiro coorte será medido nos próximos noventa dias. O hábito que vai sustentar a recompra já está de pé. |
 
 ### Lettering por cena, em Sora 500, tracking -3,5%
 
@@ -120,7 +120,7 @@ E declara em tela que a medição de recompra começa em novembro. O júri confe
 - **08**: `151.034 mensagens · 05/ago a 18/set/2026` · `14.695 conversas únicas` · `495 usuários por dia` · `3.049 por semana · 10.139 por mês` · `NPS 95 · amostra reduzida, pesquisa recente`
   > A distribuição regional (`Sudeste 70,5% · Sul 13,5% · Nordeste 7,7% · Centro-Oeste 6,9% · Norte 1,2%`) e as `14.695 conversas únicas` estão medidas e ficam disponíveis, mas **não entraram no corte**: a cena já carrega quatro números.
   > **Todo número da cena 08 é só do MODO base**, sem as personas dos influenciadores. O lettering diz isso, porque o número sem recorte vira dúvida quando o júri compara com o formulário.
-- **09**: `primeira leva de 90 dias vence em nov/2026` · `Soldiers Nutrition` · `Profissio`
+- **09**: `O primeiro coorte será medido nos próximos 90 dias` · `Soldiers Nutrition` · `Profissio`
 
 ---
 

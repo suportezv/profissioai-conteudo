@@ -41,6 +41,18 @@ import { Sfx } from "../Sfx";
  * antes, lê como alguem do outro lado. O indicador dura 0,5 s e some no frame
  * em que o balao entra, porque os dois juntos na tela seria erro de app.
  *
+ * ## Todo lembrete chega as 7:00, e isso precisa estar escrito
+ *
+ * O cliente escolheu 7h, entao **toda mensagem do agente carrega 7:00**, dia
+ * apos dia. Sem a hora em cada balao a cena mostrava mensagens em dias
+ * diferentes sem provar o que a narracao afirma, que e a pontualidade. As
+ * respostas dele vem alguns minutos depois, porque pessoa nao responde no
+ * mesmo minuto.
+ *
+ * As mensagens de boas vindas ficam de fora dessa regra e levam 20:14: elas
+ * sao o cadastro, aconteceram na vespera, e e o contraste com elas que faz o
+ * 7:00 repetido ler como ritual.
+ *
  * ## A alternancia audio / texto e proposital
  *
  * O agente manda audio num dia e texto no outro, e o cliente as vezes responde
@@ -89,6 +101,8 @@ type Dia = {
   msg?: string;
   /** Resposta escrita do cliente, quando ele responde. */
   resposta?: string;
+  /** Quando ele respondeu. Sempre alguns minutos depois do lembrete. */
+  respostaHora?: string;
   /** Quando ele so reage, em vez de responder. */
   curte?: "coracao" | "joinha";
 };
@@ -100,13 +114,20 @@ type Dia = {
  * constante lê como loop travado, encurtando lê como rotina que ja pegou.
  */
 const DIAS: Dia[] = [
-  { nome: "terça-feira", t: 0, tipo: "audio", resposta: "valeu, já tomei!" },
+  {
+    nome: "terça-feira",
+    t: 0,
+    tipo: "audio",
+    resposta: "valeu, já tomei!",
+    respostaHora: "7:06",
+  },
   {
     nome: "quarta-feira",
     t: 2.5,
     tipo: "texto",
     msg: "7h! bora de creatina antes do treino",
     resposta: "bora",
+    respostaHora: "7:03",
   },
   { nome: "quinta-feira", t: 4.6, tipo: "audio", curte: "coracao" },
   {
@@ -208,10 +229,11 @@ const Reacao: React.FC<{ tipo: "coracao" | "joinha" }> = ({ tipo }) =>
   );
 
 /** O balao do agente com audio, com a onda correndo de verdade. */
-const BalaoAudio: React.FC<{ o: number; progresso: number }> = ({
-  o,
-  progresso,
-}) => (
+const BalaoAudio: React.FC<{
+  o: number;
+  progresso: number;
+  hora: string;
+}> = ({ o, progresso, hora }) => (
   <div
     style={{
       background: wa.balaoEntrada,
@@ -263,10 +285,12 @@ const BalaoAudio: React.FC<{ o: number; progresso: number }> = ({
         fontFamily: UI,
         fontSize: 15,
         color: wa.apoio,
-        alignSelf: "flex-end",
+        display: "flex",
+        justifyContent: "space-between",
       }}
     >
-      0:12
+      <span>0:12</span>
+      <span>{hora}</span>
     </div>
   </div>
 );
@@ -275,10 +299,11 @@ const BalaoAudio: React.FC<{ o: number; progresso: number }> = ({
 const BalaoTexto: React.FC<{
   o: number;
   texto: string;
+  hora: string;
   saida?: boolean;
   reacao?: "coracao" | "joinha";
   reacaoO?: number;
-}> = ({ o, texto, saida, reacao, reacaoO = 0 }) => (
+}> = ({ o, texto, hora, saida, reacao, reacaoO = 0 }) => (
   <div
     style={{
       position: "relative",
@@ -299,9 +324,15 @@ const BalaoTexto: React.FC<{
         fontSize: 22,
         color: wa.texto,
         lineHeight: 1.35,
+        display: "flex",
+        alignItems: "flex-end",
+        gap: 12,
       }}
     >
-      {texto}
+      <span>{texto}</span>
+      <span style={{ fontSize: 15, color: wa.apoio, whiteSpace: "nowrap" }}>
+        {hora}
+      </span>
     </div>
     {reacao && reacaoO > 0.01 ? (
       <div
@@ -420,14 +451,15 @@ export const Cena06: React.FC = () => {
               <BalaoTexto
                 o={boas}
                 texto="Bem-vindo ao MODO Soldiers. Vou te acompanhar todo dia."
+                hora="20:14"
               />
             ) : null}
             {digitaPergunta > 0.001 ? <Digitando o={digitaPergunta} /> : null}
             {pergunta > 0.001 ? (
-              <BalaoTexto o={pergunta} texto="Que horas você costuma tomar?" />
+              <BalaoTexto o={pergunta} texto="Que horas você costuma tomar?" hora="20:14" />
             ) : null}
             {resposta > 0.001 ? (
-              <BalaoTexto o={resposta} texto="7h" saida />
+              <BalaoTexto o={resposta} texto="7h" hora="20:16" saida />
             ) : null}
 
             {/* e entao o ritual, dia a dia, acumulando */}
@@ -457,7 +489,7 @@ export const Cena06: React.FC = () => {
                   {oMsg > 0.001 ? (
                     d.tipo === "audio" ? (
                       <div style={{ position: "relative", alignSelf: "flex-start" }}>
-                        <BalaoAudio o={oMsg} progresso={progresso} />
+                        <BalaoAudio o={oMsg} progresso={progresso} hora="7:00" />
                         {d.curte && oReacao > 0.01 ? (
                           <div
                             style={{
@@ -480,13 +512,14 @@ export const Cena06: React.FC = () => {
                       <BalaoTexto
                         o={oMsg}
                         texto={d.msg as string}
+                        hora="7:00"
                         reacao={d.curte}
                         reacaoO={oReacao}
                       />
                     )
                   ) : null}
                   {d.resposta && oReacao > 0.001 ? (
-                    <BalaoTexto o={oReacao} texto={d.resposta} saida />
+                    <BalaoTexto o={oReacao} texto={d.resposta} hora={d.respostaHora ?? "7:05"} saida />
                   ) : null}
                 </React.Fragment>
               );

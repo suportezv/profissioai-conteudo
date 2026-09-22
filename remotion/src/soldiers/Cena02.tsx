@@ -65,9 +65,20 @@ const SETA_EM = s(4.1);
 const REGUA_Y = 600;
 const REGUA_FIM = MARGEM + 840; // onde a entrega fica
 const POS_X = 1060;
-const POS_Y = 560;
-const MARCA_X = 1380;
-const MARCA_Y = 250;
+const POS_Y = 700;
+/**
+ * A marca fica **em cima** do pos-venda, nao ao lado.
+ *
+ * Com ela na diagonal a seta precisava de uma curva, e curva com ponta
+ * desenhada a mao sai torta: a ponta nao acompanha a tangente e a leitura vira
+ * "risco", nao "seta". Alinhada verticalmente, a seta e um segmento reto com a
+ * ponta apontando para baixo, que nao tem como sair torto.
+ */
+const MARCA_CENTRO = 1300;
+const MARCA_LARG = 182;
+const MARCA_X = MARCA_CENTRO - MARCA_LARG / 2;
+const MARCA_Y = 480;
+const MARCA_BASE = 604;
 
 export const Cena02: React.FC = () => {
   const f = useCurrentFrame();
@@ -227,24 +238,26 @@ export const Cena02: React.FC = () => {
           width="1920"
           height="1080"
         >
-          {/* da base da marca ate a palavra: curva curta, sem contornar nada */}
-          <path
-            d="M 1430 370 C 1420 450, 1350 500, 1250 532"
-            fill="none"
+          {/* reta, da base da marca ate a palavra: nao tem como sair torta */}
+          <line
+            x1={MARCA_CENTRO}
+            y1={MARCA_BASE + 14}
+            x2={MARCA_CENTRO}
+            y2={POS_Y - 26}
             stroke={marca.azul}
             strokeWidth="3"
             strokeLinecap="round"
-            strokeDasharray="200"
-            strokeDashoffset={200 - seta * 200}
+            strokeDasharray={POS_Y - 26 - (MARCA_BASE + 14)}
+            strokeDashoffset={(1 - seta) * (POS_Y - 26 - (MARCA_BASE + 14))}
           />
           <path
-            d="M 1268 520 L 1244 534 L 1266 548"
+            d={`M ${MARCA_CENTRO - 13} ${POS_Y - 40} L ${MARCA_CENTRO} ${POS_Y - 24} L ${MARCA_CENTRO + 13} ${POS_Y - 40}`}
             fill="none"
             stroke={marca.azul}
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
-            opacity={passo(f, SETA_EM + s(0.5), SETA_EM + s(0.7))}
+            opacity={passo(f, SETA_EM + s(0.45), SETA_EM + s(0.65))}
           />
         </svg>
       ) : null}

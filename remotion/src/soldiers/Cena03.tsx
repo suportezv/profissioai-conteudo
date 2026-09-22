@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  Easing,
   OffthreadVideo,
   Sequence,
   interpolate,
@@ -25,36 +26,32 @@ import { Sfx } from "../Sfx";
  * recebe no WhatsApp depois de comprar, gravado por cada influenciador. Eles ja
  * existiam e foram rebaixados do ZIP de 11,5 GB no Drive pelo
  * `zip_index_remoto.py`, que le o indice por `Range` em vez de baixar o arquivo
- * inteiro; cada bruto foi apagado logo depois do corte para o disco aguentar.
+ * inteiro.
  *
- * **Usar o material real aqui e o que separa este filme de uma animacao de
- * produto.** Nada nesta cena e recriado.
+ * ## Por que carrossel, e nao troca no lugar
  *
- * ## A grade gira, e e a quantidade que e o argumento
+ * A primeira versao trocava o clipe dentro de cinco vagas fixas, com a chave do
+ * React mudando a cada troca. **Isso travava o render**: cada troca desmontava
+ * um video e montava outro, e remontar significa reabrir o arquivo e buscar o
+ * quadro do zero, cinco vezes a cada poucos frames.
  *
- * A versao anterior mostrava cinco rostos e parava. Cinco nao e grandiosidade,
- * e uma amostra. Agora os cinco entram igual, e a partir dai a grade **troca de
- * rosto em intervalos cada vez mais curtos**, passando por dezoito pessoas em
- * cinco segundos. Ninguem consegue ler um por um, e nao e para ler: o que fica
- * e a sensacao de que tem muita gente, que e exatamente o que a narracao
- * afirma.
+ * Agora e uma **esteira**: os dezoito cartoes existem lado a lado numa faixa
+ * que desliza para a esquerda, e cada video fica montado do momento em que
+ * entra pela direita ate sair pela esquerda. Nenhuma remontagem, e a leitura
+ * melhora junto: o olho segue o movimento em vez de levar corte no mesmo lugar.
  *
- * A aceleracao importa tanto quanto o numero. Troca em intervalo constante lê
- * como slideshow; encurtando, lê como base crescendo.
+ * ## A esteira acelera e freia no lugar certo
+ *
+ * A curva e `bezier(0.65, 0, 0.25, 1)`: sai devagar, ganha velocidade no meio
+ * e assenta no fim. Acelerar e o argumento (a base cresce), mas parar em cima
+ * de um rosto especifico exige a freada, e ela nao e opcional: **a Pietra e o
+ * ultimo cartao da faixa**, e a faixa termina exatamente com ela centrada.
+ * Sem isso quem ficasse no centro seria sorteio.
  *
  * ## Ninguem e nomeado, menos quem fica
  *
- * Durante a rotacao os nomes piscariam e virariam ruido, e nem todos os clipes
- * estao identificados no relatorio de decupagem. Entao a grade roda sem nome
- * nenhum e **so quem cresce no fim e nomeado**, que e a Pietra.
- *
- * ## O audio deles entra baixo, nao mudo
- *
- * Cinco pessoas falando ao mesmo tempo por baixo da narracao viram ruido, e
- * mudo demais faz a grade parecer foto. O leito fica em 0,08: da para perceber
- * que sao vozes sem entender nenhuma, que e a sensacao de ver o feed de
- * alguem. O clipe que cresce sobe para 0,5, porque ai ele passa a ser uma
- * pessoa e nao mais textura.
+ * Na esteira os nomes piscariam e virariam ruido, e nem todos os clipes estao
+ * identificados no relatorio de decupagem. So quem para no centro leva nome.
  */
 
 export const CENA03_FRAMES = s(16);
@@ -65,18 +62,16 @@ const m = modos.claro;
 type Clipe = { arq: string; de: number };
 
 /**
- * Os dezoito, na ordem em que aparecem. Os cinco primeiros abrem a grade; o
- * resto entra pela rotacao. `de` e so para os que nao foram cortados no ponto
- * certo na ingestao; os baixados depois ja vieram com a janela boa.
+ * Os dezoito, na ordem da faixa. Os cinco primeiros sao os que abrem a cena,
+ * e a **Pietra e a ultima**, porque a faixa para com o ultimo cartao centrado.
  */
 const CLIPES: Clipe[] = [
   { arq: "C0001-gordelas.mp4", de: s(1.2) },
-  { arq: "C0004-pietra.mp4", de: s(2.0) },
-  { arq: "C0027.mp4", de: s(1.0) },
   { arq: "C0002-seu-bolinha.mp4", de: s(1.5) },
+  { arq: "C0027.mp4", de: s(1.0) },
   { arq: "C0021.mp4", de: s(1.0) },
-  { arq: "C0005.mp4", de: 0 },
   { arq: "C0008.mp4", de: 0 },
+  { arq: "C0005.mp4", de: 0 },
   { arq: "C0009.mp4", de: 0 },
   { arq: "C0010.mp4", de: 0 },
   { arq: "C0011.mp4", de: 0 },
@@ -88,52 +83,47 @@ const CLIPES: Clipe[] = [
   { arq: "C0028.mp4", de: 0 },
   { arq: "C0029.mp4", de: 0 },
   { arq: "C0032.mp4", de: 0 },
+  { arq: "C0004-pietra.mp4", de: s(2.0) },
 ];
 
-const VAGAS = 5;
-/** A Pietra e quem fica: ela volta para a vaga do meio antes de crescer. */
-const PIETRA = 1;
-const ESCOLHIDO = 1;
+/** Geometria da faixa, em px de 1920. Cinco cartoes preenchem a area util. */
+const LARG = 320;
+const VAO = 14;
+const PASSO_CARTAO = LARG + VAO;
+const ULTIMO = CLIPES.length - 1;
 
+/** Onde a faixa comeca e onde ela para, com o ultimo cartao centrado. */
+const FAIXA_INI = MARGEM;
+const FAIXA_FIM = (1920 - LARG) / 2 - ULTIMO * PASSO_CARTAO;
+
+const ROLA_INI = s(3.2);
+const ROLA_FIM = s(8.4);
+const CRESCE = s(8.5);
+
+/** A entrada escalonada dos cinco primeiros, que e como a cena abre. */
 const ENTRADAS = [s(0.8), s(1.2), s(1.6), s(2.0), s(2.4)];
-const CRESCE = s(8.6);
 
-/**
- * Os instantes de troca, com o intervalo encurtando 10% a cada passo.
- *
- * Derivado, nao tabelado: mexer no inicio ou no fim reescreve a escada inteira
- * sem risco de deixar um buraco no meio.
- */
-const TROCAS: number[] = (() => {
-  // 8,35 e nao 8,2: com 8,2 a escada dava doze trocas e o decimo oitavo
-  // clipe nunca entrava em cena. Conferido reproduzindo a escada antes de render.
-  const fim = 8.35;
-  const out: number[] = [];
-  let t = 3.2;
-  let passoS = 0.7;
-  while (t < fim) {
-    out.push(s(t));
-    t += passoS;
-    passoS *= 0.9;
-  }
-  return out;
-})();
-
-/** Que clipe esta em cada vaga neste frame. */
-const clipeDaVaga = (vaga: number, f: number): Clipe => {
-  if (vaga === ESCOLHIDO && f >= CRESCE - s(0.6)) return CLIPES[PIETRA];
-  let idx = vaga;
-  TROCAS.forEach((t, i) => {
-    if (i % VAGAS === vaga && f >= t) idx = (VAGAS + i) % CLIPES.length;
-  });
-  return CLIPES[idx];
-};
+/** Sai devagar, acelera, e assenta. A freada e o que deixa a Pietra no centro. */
+const ROLAGEM = Easing.bezier(0.65, 0, 0.25, 1);
 
 export const Cena03: React.FC = () => {
   const f = useCurrentFrame();
   const rotulo = janela(f, s(0.5), CRESCE, 10, 9);
   const cresceu = passo(f, CRESCE, CRESCE + s(0.9));
   const pergunta = janela(f, s(12.2), CENA03_FRAMES, 11, 0);
+
+  const faixaX = interpolate(f, [ROLA_INI, ROLA_FIM], [FAIXA_INI, FAIXA_FIM], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: ROLAGEM,
+  });
+
+  // o murmurio existe enquanto da para distinguir vozes; na parte rapida os
+  // fragmentos ficariam picotados, entao ele sai
+  const murmurio = interpolate(f, [s(4.4), s(5.2)], [0.06, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -158,36 +148,36 @@ export const Cena03: React.FC = () => {
         </div>
 
         <div style={{ position: "relative", flexGrow: 1 }}>
-          {Array.from({ length: VAGAS }, (_, i) => {
-            const vivo = janela(f, ENTRADAS[i], CENA03_FRAMES, 11, 0);
-            const ativo = i === ESCOLHIDO;
-            const larguraGrade = 100 / VAGAS;
-            const left = interpolate(
-              ativo ? cresceu : 0,
-              [0, 1],
-              [larguraGrade * i, 28],
-            );
-            const width = interpolate(
-              ativo ? cresceu : 0,
-              [0, 1],
-              [larguraGrade, 44],
-            );
-            const some = ativo ? 1 : 1 - cresceu;
-            if (vivo <= 0.001 || some <= 0.001) return null;
-            const c = clipeDaVaga(i, f);
+          {CLIPES.map((c, i) => {
+            const fim = i === ULTIMO;
+            const x = faixaX - MARGEM + i * PASSO_CARTAO;
+
+            // quem cresce sai da faixa e assume o centro da area util
+            const left = fim ? interpolate(cresceu, [0, 1], [x, 420]) : x;
+            const larg = fim ? interpolate(cresceu, [0, 1], [LARG, 600]) : LARG;
+
+            // fora do quadro nao monta: e o que segura o custo do render
+            if (left > 1720 || left + larg < -40) return null;
+
+            const entrada =
+              i < ENTRADAS.length
+                ? janela(f, ENTRADAS[i], CENA03_FRAMES, 11, 0)
+                : 1;
+            const some = fim ? 1 : 1 - cresceu;
+            if (some <= 0.001) return null;
+
             return (
               <div
-                key={i}
+                key={c.arq}
                 style={{
                   position: "absolute",
-                  left: `${left}%`,
-                  width: `${width}%`,
+                  left,
+                  width: larg,
                   top: 0,
                   bottom: 0,
-                  padding: 8,
-                  transform: `translateY(${interpolate(vivo, [0, 1], [26, 0])}px)`,
-                  opacity: vivo * some,
-                  zIndex: ativo ? 2 : 1,
+                  transform: `translateY(${interpolate(entrada, [0, 1], [26, 0])}px)`,
+                  opacity: entrada * some,
+                  zIndex: fim ? 2 : 1,
                 }}
               >
                 <div
@@ -197,24 +187,20 @@ export const Cena03: React.FC = () => {
                     borderRadius: marca.raio.painel,
                     overflow: "hidden",
                     boxShadow:
-                      ativo && cresceu > 0.5
+                      fim && cresceu > 0.5
                         ? marca.sombra.azul
                         : marca.sombra.painel,
                     position: "relative",
                     background: marca.tinta,
                   }}
                 >
-                  {/* a chave inclui o arquivo: trocar de clipe remonta o video
-                      em vez de tentar reaproveitar o elemento anterior */}
                   <OffthreadVideo
-                    key={c.arq}
                     src={staticFile("soldiers/" + c.arq)}
                     startFrom={c.de}
-                    volume={ativo ? 0.08 + cresceu * 0.42 : 0.08}
+                    volume={fim ? Math.max(murmurio, cresceu * 0.5) : murmurio}
                     style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   />
-                  {/* so quem fica e nomeado: na rotacao o nome viraria ruido */}
-                  {ativo && cresceu > 0.6 ? (
+                  {fim && cresceu > 0.6 ? (
                     <div
                       style={{
                         position: "absolute",
@@ -236,22 +222,21 @@ export const Cena03: React.FC = () => {
             );
           })}
 
-          {/* a pergunta da cena, na metade que o clipe centralizado deixou */}
+          {/* a pergunta da cena, no espaco que o cartao centralizado deixou */}
           {pergunta > 0.001 ? (
             <div
               style={{
                 position: "absolute",
                 right: 0,
                 top: "50%",
-                width: "24%",
+                width: "26%",
                 fontSize: 40,
                 fontWeight: 500,
                 letterSpacing: "-1.4px",
                 lineHeight: 1.28,
                 opacity: pergunta,
                 filter: `blur(${(1 - pergunta) * 6}px)`,
-                // o -50% da centralizacao e a entrada dividem o mesmo
-                // transform, entao vao juntos aqui
+                // o -50% da centralizacao e a entrada dividem o mesmo transform
                 transform: `translateY(calc(-50% + ${(1 - pergunta) * 18}px))`,
               }}
             >
@@ -265,10 +250,8 @@ export const Cena03: React.FC = () => {
       {ENTRADAS.map((t, i) => (
         <Sfx key={`e${i}`} som="pop" em={t} volume={0.12} />
       ))}
-      {TROCAS.map((t, i) => (
-        <Sfx key={`t${i}`} som="tique" em={t} volume={0.07} />
-      ))}
-      <Sfx som="surge" em={CRESCE} volume={0.22} />
+      <Sfx som="surge" em={ROLA_INI} volume={0.16} />
+      <Sfx som="assenta" em={ROLA_FIM} volume={0.26} />
     </AbsoluteFill>
   );
 };

@@ -81,7 +81,7 @@ const ESCOLHE = s(9.9);
 const PALAVRAS: { texto: string; em: number }[] = [
   { texto: "CREATINA", em: s(1.05) },
   { texto: "É", em: s(1.75) },
-  { texto: "CREATINA", em: s(2.15) },
+  { texto: "CREATINA!", em: s(2.15) },
 ];
 
 const Estalo: React.FC<{ o: number; children: React.ReactNode }> = ({
@@ -253,6 +253,22 @@ export const Cena01: React.FC = () => {
             </div>
 
             {/* a frase de efeito, empilhada para a repeticao ser vista */}
+            <div>
+              {/* a pergunta em cima transforma a frase em provocacao: sozinha
+                  ela e constatacao, com a duvida acima ela cobra resposta */}
+              <div
+                style={{
+                  fontSize: 30,
+                  fontWeight: 500,
+                  letterSpacing: "2px",
+                  textTransform: "uppercase",
+                  color: marca.ciano,
+                  marginBottom: 18,
+                  opacity: passo(f, s(0.6), s(0.6) + 8),
+                }}
+              >
+                Tudo igual?
+              </div>
             <div
               style={{
                 fontSize: 132,
@@ -276,6 +292,7 @@ export const Cena01: React.FC = () => {
                 {PALAVRAS[2].texto}
                 <span style={{ color: marca.apoioEscuro }}>”</span>
               </Estalo>
+            </div>
             </div>
           </AbsoluteFill>
         </AbsoluteFill>
