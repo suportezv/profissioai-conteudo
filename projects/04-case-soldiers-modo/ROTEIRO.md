@@ -56,6 +56,28 @@ Vale lembrar que sonora real vem mais curta que a estimativa: no case anterior a
 
 ---
 
+## Dados de resultado que chegaram em 22/set/2026
+
+Entregues pelo cliente, **ainda sem base e sem período**, e por isso ainda fora do corte. O `Comunicacao_Profissio.md` proíbe publicar porcentagem de resultado sem contexto, base e método, então nenhum destes números entra em tela antes de as lacunas abaixo estarem preenchidas.
+
+**Conversão.** Clientes que passaram por um agente convertem **13,5%**; a média geral de quem acessa apenas o e-commerce é **1,7%**.
+
+**Reativação.** Das recompras atribuídas aos agentes, **50% estavam há mais de 30 dias sem comprar, 32% há mais de 60 e 21% há mais de 90**.
+
+### Duas ressalvas que não são de estilo, são de fato
+
+**O "8x" é uma comparação entre duas populações que se escolheram sozinhas.** Quem conversou com um agente já tinha levantado a mão: respondeu a uma mensagem, ou procurou a marca. Comparar essa gente com o tráfego geral do e-commerce mede a diferença entre os dois grupos, não o efeito do agente. Publicar "8x mais conversão" é exatamente a afirmação que o `Comunicacao_Profissio.md` chama de venda atribuída a conversa apresentada como receita incremental. **As duas taxas podem aparecer lado a lado, com as duas bases nomeadas; o multiplicador não pode virar manchete.**
+
+**Os três percentuais de reativação são limiares encaixados, não fatias.** Quem está há 95 dias sem comprar conta nos três. Desenhar pizza, ou três barras lado a lado somando 103%, seria erro de fato. A leitura correta é escada ou curva que decai.
+
+### O que falta perguntar antes de desenhar
+
+1. **Estes números são do conjunto todo de agentes ou só do MODO base?** O texto diz "o conjunto de agentes de IA que a Profissio.ai opera na Soldiers", o que soa como incluindo as personas dos influenciadores. **Toda a cena 08 é declarada como só do MODO base.** Se as bases forem diferentes, os números não podem dividir a mesma cena sem que a tela diga.
+2. **Qual o N das recompras atribuídas?** "50%" de vinte recompras e de duas mil são coisas diferentes para um júri.
+3. **Qual o período de cada medida**, e ele bate com o da cena 08 (05/ago a 18/set/2026)?
+4. **O que "atribuída" quer dizer aqui?** O produto tem janela de atribuição de 30 dias separando venda gerada de venda influenciada; é essa?
+5. **Os dois denominadores da conversão**: 13,5% de quantos clientes, 1,7% de quantas sessões ou pessoas, no mesmo período?
+
 ## O que a categoria pede, e onde cada critério é respondido
 
 A categoria premia campanhas que **aprofundam relacionamento, fidelizam, geram recompra e aumentam o valor ao longo do tempo**. O filme foi estruturado para responder aos quatro critérios na ordem em que eles pesam.
