@@ -83,3 +83,50 @@ export const br = (n: number, casas = 0) =>
     minimumFractionDigits: casas,
     maximumFractionDigits: casas,
   });
+
+/**
+ * Os frames em que um contador cruza cada degrau do valor.
+ *
+ * Serve para sonorizar a contagem **derivando o som da mesma curva que move o
+ * numero**, e nao de uma grade regular. O `conta` usa a curva SUAVE, que
+ * dispara e desacelera; tique em intervalo constante por cima disso soa como
+ * metronomo tocando junto de um numero que freia, e a divergencia se ouve.
+ *
+ * O metodo e amostrar a curva quadro a quadro e anotar quando ela passa de
+ * `k/n`. Inverter a bezier daria o mesmo resultado com mais algebra e mais
+ * chance de erro, e aqui a resolucao de um frame ja e mais fina que o ouvido.
+ *
+ * `intervalo` e o que torna isso audivel. A curva SUAVE chega perto de 90% no
+ * primeiro terco, entao os degraus iniciais caem a **um por quadro**, e trinta
+ * tiques por segundo nao soam como contagem, soam como zumbido. Com um
+ * intervalo minimo de tres quadros a desaceleracao continua sendo ouvida
+ * (3, 3, 4, 4 quadros) e cada tique continua sendo um evento.
+ *
+ * Os ultimos quadros ficam de fora porque ali entra o som de assentamento; dois
+ * sons no mesmo quadro viram um so, mais sujo.
+ */
+export const tiquesDaContagem = (
+  ini: number,
+  fim: number,
+  n = 20,
+  intervalo = 3,
+) => {
+  const fora: number[] = [];
+  const limite = fim - intervalo;
+  let proximo = 1;
+  for (let f = Math.ceil(ini); f <= Math.floor(fim) && proximo <= n; f++) {
+    const p = interpolate(f, [ini, fim], [0, 1], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      easing: SUAVE,
+    });
+    while (proximo <= n && p >= proximo / n) {
+      const vazio = fora.length === 0;
+      if (f < limite && (vazio || f - fora[fora.length - 1] >= intervalo)) {
+        fora.push(f);
+      }
+      proximo++;
+    }
+  }
+  return fora;
+};

@@ -8,7 +8,7 @@ import {
 } from "remotion";
 import { marca, modos } from "./marca";
 import { Superficie } from "./Superficie";
-import { janela, entra, conta, br, s } from "./anim";
+import { janela, entra, conta, br, s, tiquesDaContagem } from "./anim";
 import { Sfx } from "./Sfx";
 
 /**
@@ -155,10 +155,27 @@ export const Cena08: React.FC = () => {
         })}
       </AbsoluteFill>
 
-      {/* um pop por numero que entra */}
-      {DADOS.map((d) => (
-        <Sfx key={d.titulo} som="pop" em={d.entra} volume={0.24} />
-      ))}
+      {/* A contagem e sonorizada, e os tiques saem da **mesma curva que move o
+          numero**: eles desaceleram junto com ele, em vez de marcar um tempo
+          constante por cima de um valor que freia. O `assenta` entra no frame
+          em que o numero para no valor cheio.
+
+          Os ganhos sao desiguais de proposito, porque os arquivos sao: o
+          `tique` tem pico em -1,1 dB e o `assenta` em -18,6 dB. Igualar o
+          volume dos dois deixaria o tique batendo no nivel da locucao e o
+          assentamento inaudivel. **Ganho se acerta contra o pico do arquivo,
+          nunca contra o numero do outro efeito.** */}
+      {DADOS.map((d) => {
+        const paraEm = d.entra + s(1.1);
+        return (
+          <React.Fragment key={d.titulo}>
+            {tiquesDaContagem(d.entra, paraEm).map((f, i) => (
+              <Sfx key={i} som="tique" em={f} volume={0.07} />
+            ))}
+            <Sfx som="assenta" em={paraEm} volume={0.4} />
+          </React.Fragment>
+        );
+      })}
     </AbsoluteFill>
   );
 };
