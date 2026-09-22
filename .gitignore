@@ -2,8 +2,12 @@
 .DS_Store
 __pycache__/
 
-# Mídia pesada dos projetos (brutos e renders ficam locais ou no Drive)
+# Mídia pesada dos projetos (brutos e renders ficam locais ou no Drive).
+# As extensoes vao em maiuscula E minuscula: a camera Sony grava `.MP4` e o
+# padrao minusculo deixava passar 742 MB de bruto sem ninguem notar.
 projects/**/*.mp4
+projects/**/*.MP4
+projects/**/*.MP4.part
 projects/**/*.mov
 projects/**/*.wav
 projects/**/*.m4a
@@ -21,3 +25,8 @@ marca/fundos/
 
 # b-roll copiado de projects/ para o Remotion enxergar: mídia não vai para o git
 remotion/public/broll/
+
+# derivados reproduziveis: a LUT sai do gera_lut_slog2.py e a transcricao do
+# Scribe. O que vale versionar e o edl.json, que e a decisao de corte.
+projects/**/*.cube
+projects/**/stt/

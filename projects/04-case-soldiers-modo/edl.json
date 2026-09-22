@@ -1,0 +1,52 @@
+{
+ "C0001": {
+  "pessoa": "Gordelas",
+  "arquivo": "C0001-gordelas.mp4",
+  "trechos": [
+   {
+    "de": "Oi, eu sou o Gordelas",
+    "ate": "Bora"
+   }
+  ]
+ },
+ "C0002": {
+  "pessoa": "Seu Bolinha",
+  "arquivo": "C0002-seu-bolinha.mp4",
+  "trechos": [
+   {
+    "de": "Fala, Major, muito obrigado",
+    "ate": "junto comigo"
+   }
+  ]
+ },
+ "C0004": {
+  "pessoa": "Pietra",
+  "arquivo": "C0004-pietra.mp4",
+  "trechos": [
+   {
+    "de": "Oi, tudo bem? Aqui é a Pietra",
+    "ate": "esteja juntos"
+   }
+  ]
+ },
+ "C0021": {
+  "pessoa": "influenciadora C0021",
+  "arquivo": "C0021.mp4",
+  "trechos": [
+   {
+    "de": "Oi! Muito obrigada por ter comprado com o meu cupom",
+    "ate": "Você topa"
+   }
+  ]
+ },
+ "C0027": {
+  "pessoa": "influenciador C0027",
+  "arquivo": "C0027.mp4",
+  "trechos": [
+   {
+    "de": "Muito obrigado por usar o meu cupom",
+    "ate": "Você topa"
+   }
+  ]
+ }
+}
