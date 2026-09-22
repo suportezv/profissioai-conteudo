@@ -8,7 +8,7 @@ alterar os `.dc.html` em `artboards/` e republicar no **mesmo** artefato.
 > O artefato nasce privado. Quem não for a conta dona só abre depois que o menu
 > Share da própria página liberar.
 
-## Os seis artboards
+## Os sete artboards
 
 | Arquivo | O que decide |
 |---|---|
@@ -18,6 +18,7 @@ alterar os `.dc.html` em `artboards/` e republicar no **mesmo** artefato.
 | `Numeros.dc.html` | A cena 08 e as três ressalvas que entram em tela |
 | `Cenas.dc.html` | Como as cenas 01, 02, 05 e 07 aparecem |
 | `Linha.dc.html` | A linha do tempo, com o peso real de cada cena |
+| `Roteiro.dc.html` | O roteiro cena a cena, legível sem abrir o `.md` |
 
 **A cena 03 não está desenhada de propósito.** Ela é feita dos vídeos de opt-in
 reais dos influenciadores, que já existem decupados em
