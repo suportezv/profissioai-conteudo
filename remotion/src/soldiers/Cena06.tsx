@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  Img,
   Sequence,
   interpolate,
   staticFile,
@@ -407,27 +408,31 @@ export const Cena06: React.FC = () => {
             ...entra(tela, 22),
           }}
         >
+          {/* a barra do app: avatar e nome, como qualquer conversa.
+              O 7:00 saiu daqui: hora de cabecalho nao existe no WhatsApp e
+              competia com as 7:00 que cada lembrete carrega, que e onde o
+              dado tem sentido. */}
           <div
             style={{
               background: wa.barra,
-              padding: "18px 24px",
+              padding: "16px 24px",
               display: "flex",
-              justifyContent: "space-between",
               alignItems: "center",
+              gap: 16,
             }}
           >
+            <Img
+              src={staticFile("marca-soldiers/modo-avatar.png")}
+              style={{
+                width: 46,
+                height: 46,
+                borderRadius: 23,
+                display: "block",
+                objectFit: "cover",
+              }}
+            />
             <div style={{ fontFamily: UI, fontSize: 23, color: wa.texto }}>
               MODO Soldiers
-            </div>
-            <div
-              style={{
-                fontFamily: UI,
-                fontSize: 21,
-                fontWeight: 600,
-                color: wa.lido,
-              }}
-            >
-              7:00
             </div>
           </div>
 

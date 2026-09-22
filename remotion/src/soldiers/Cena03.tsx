@@ -147,7 +147,9 @@ export const Cena03: React.FC = () => {
           Quem já falava com o cliente
         </div>
 
-        <div style={{ position: "relative", flexGrow: 1 }}>
+        {/* a faixa e recortada: sem isso o cartao que espera a vez vaza para
+            a margem e aparece antes do primeiro entrar */}
+        <div style={{ position: "relative", flexGrow: 1, overflow: "hidden" }}>
           {CLIPES.map((c, i) => {
             const fim = i === ULTIMO;
             const x = faixaX - MARGEM + i * PASSO_CARTAO;
@@ -156,13 +158,18 @@ export const Cena03: React.FC = () => {
             const left = fim ? interpolate(cresceu, [0, 1], [x, 420]) : x;
             const larg = fim ? interpolate(cresceu, [0, 1], [LARG, 600]) : LARG;
 
-            // fora do quadro nao monta: e o que segura o custo do render
-            if (left > 1720 || left + larg < -40) return null;
+            // fora da faixa nao monta: segura o custo do render e garante que
+            // nada seja desenhado onde o recorte nao alcanca
+            if (left > 1680 || left + larg < -40) return null;
 
+            // os cinco primeiros entram escalonados, que e como a cena abre.
+            // **Os outros ficam invisiveis ate a esteira andar**: com opacidade
+            // fixa em 1 eles apareciam parados na borda direita antes de o
+            // primeiro cartao sequer existir.
             const entrada =
               i < ENTRADAS.length
                 ? janela(f, ENTRADAS[i], CENA03_FRAMES, 11, 0)
-                : 1;
+                : passo(f, ROLA_INI - 4, ROLA_INI + 4);
             const some = fim ? 1 : 1 - cresceu;
             if (some <= 0.001) return null;
 
