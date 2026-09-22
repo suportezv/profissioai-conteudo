@@ -55,16 +55,21 @@ const NARRACAO_01_EM = s(1.2);
  * 22/set/2026 e substituiu o cartao com voz guia.
  *
  * **E a previsao do guia errou, como sempre erra.** O guia reservava 11,9 s
- * com 7,89 s de fala; o take real tem 8,02 s de fala e o plano aguenta 9,10 s,
- * porque logo depois ela estica o braco para parar a gravacao e a mao entra no
- * quadro. O limite aqui nao e a frase, e onde a imagem para de servir.
+ * com 7,89 s de fala; o take real tem 8,02 s de fala.
+ *
+ * **A cena fecha em 8,30 s, logo depois da ultima palavra.** "Possivel" fecha
+ * em 8,15 s e o audio cai para -57 dB no mesmo instante, entao 0,15 s ja e
+ * silencio inteiro e o corte nao soa cortado. O que vem depois nao serve: em
+ * 8,45 s ela comeca a se levantar para parar a gravacao, e o enquadramento
+ * sobe. **Cauda de sonora nao e respiro, e o gesto de desligar a camera
+ * entrando no filme.**
  *
  * O bruto trazia quatro tentativas. A escolhida e a **ultima**, e nao por ser
  * a ultima: e a unica sem hesitacao no meio (a segunda tem 0,8 s de pausa
  * depois de "fechava") e a unica que diz "mais de 20 anos", que e o que o GC
  * afirma.
  */
-const CENA02_FRAMES = s(9.1);
+const CENA02_FRAMES = s(8.3);
 
 /**
  * As sonoras reais, ja cortadas no silencio do proprio arquivo.
