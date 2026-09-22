@@ -20,7 +20,6 @@ import {
 import { Cena06, CENA06_FRAMES } from "./Cena06";
 import { Cena08, CENA08_FRAMES } from "./Cena08";
 import { Cena09, CENA09_FRAMES } from "./Cena09";
-import { Placeholder } from "./Placeholder";
 import { Sonora } from "./Sonora";
 import { ONDA_OUVINDO } from "./ondas";
 
@@ -51,19 +50,21 @@ const FPS = 30;
 /** Onde a narracao da cena 01 entra, contado do inicio do filme. */
 const NARRACAO_01_EM = s(1.2);
 
-/** Tempo dos cartoes de lacuna, tirado do roteiro. */
 /**
- * A lacuna da cena 02, agora medida contra um guia de voz e nao contra o
- * relogio do roteiro: 0,8 s de entrada, 7,89 s de fala e 3,2 s para o GC
- * depois dela.
+ * A cena 02 deixou de ser lacuna: o take real da Anaclaudia chegou em
+ * 22/set/2026 e substituiu o cartao com voz guia.
  *
- * **O take real deve vir mais longo.** Voz gerada nao hesita, nao respira no
- * meio da frase e nao repete uma palavra, e gente em entrevista faz as tres
- * coisas. Este numero serve para marcar o ritmo do corte, nao para reservar o
- * tempo final.
+ * **E a previsao do guia errou, como sempre erra.** O guia reservava 11,9 s
+ * com 7,89 s de fala; o take real tem 8,02 s de fala e o plano aguenta 9,10 s,
+ * porque logo depois ela estica o braco para parar a gravacao e a mao entra no
+ * quadro. O limite aqui nao e a frase, e onde a imagem para de servir.
+ *
+ * O bruto trazia quatro tentativas. A escolhida e a **ultima**, e nao por ser
+ * a ultima: e a unica sem hesitacao no meio (a segunda tem 0,8 s de pausa
+ * depois de "fechava") e a unica que diz "mais de 20 anos", que e o que o GC
+ * afirma.
  */
-const LACUNA_02 = s(11.9);
-const GUIA_02_EM = s(0.8);
+const CENA02_FRAMES = s(9.1);
 
 /**
  * As sonoras reais, ja cortadas no silencio do proprio arquivo.
@@ -119,7 +120,7 @@ const FADE = s(2.5);
 
 export const COMPLETO_FRAMES =
   CENA01_FRAMES +
-  LACUNA_02 +
+  CENA02_FRAMES +
   CENA03_FRAMES +
   CENA04A_FRAMES +
   SONORA_05 +
@@ -183,21 +184,18 @@ export const Completo: React.FC = () => (
         </AbsoluteFill>
       </Series.Sequence>
 
-      <Series.Sequence durationInFrames={LACUNA_02}>
-        <AbsoluteFill>
-          <Placeholder
-            cena="02"
-            rotulo="Sonora a captar"
-            titulo="Anaclaudia Zani, no consultório"
-            detalhe="“Eu percebi que a conta não fechava e precisava levar o que aprendi nesses 20 anos de consultório para o máximo de pessoas possível.” GC entra depois da frase: 547 mil psicólogos no Brasil · R$ 200 a R$ 2.000 por sessão."
-            origem="Captação: janela, cortina fina, plano médio, tripé travado. Referência de luz no artboard de fotografia do moodboard. O take real tende a vir mais longo que este guia."
-            guia="Voz gerada · guia de marcação · substituir pela captação"
-          />
-          {/* o guia toca dentro do cartao, para o corte ter o ritmo da fala */}
-          <Sequence from={GUIA_02_EM}>
-            <Audio src={staticFile("locucao/guia-cena-02-anaclaudia.mp3")} />
-          </Sequence>
-        </AbsoluteFill>
+      {/* a sonora que abre o filme na voz dela: o GC entra depois da primeira
+          oracao ("...que a conta nao fechava", que fecha em 2,89 s) e sai
+          antes das ultimas palavras, para a frase terminar limpa */}
+      <Series.Sequence durationInFrames={CENA02_FRAMES}>
+        <Sonora
+          arquivo="ana-missao-set26.mp4"
+          nome="Anaclaudia Zani"
+          papel="neurocientista e psicóloga · 20 anos de clínica"
+          rotulo="Por que ela começou"
+          gcEm={3.0}
+          gcDura={3.4}
+        />
       </Series.Sequence>
 
       <Series.Sequence durationInFrames={CENA03_FRAMES}>
@@ -218,6 +216,9 @@ export const Completo: React.FC = () => (
           rotulo="O maior desafio"
           gcEm={1.6}
           gcDura={3.2}
+          // o arquivo dele mede -12,0 LUFS contra -18,7 da Anaclaudia e -19,5
+          // da narracao: 0,45 e os -7 dB que poem os tres no mesmo nivel
+          volume={0.45}
         />
       </Series.Sequence>
 

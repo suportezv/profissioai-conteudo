@@ -56,7 +56,21 @@ export const Sonora: React.FC<{
   vertical?: boolean;
   /** Quando a EITA responde em audio, para o balao entrar. */
   fala?: Fala;
-}> = ({ arquivo, nome, papel, gcEm = 2.4, gcDura = 3.4, rotulo, vertical = false, fala }) => {
+  /**
+   * Ganho do som do plano, para nivelar sonoras gravadas em condicoes
+   * diferentes.
+   *
+   * As tres do filme chegaram longe uma da outra: a Anaclaudia em -18,5 e
+   * -18,7 LUFS, perto da narracao (-19,5), e o Clesio em **-12,0**, sete
+   * decibeis acima de tudo. Isso nao se conserta no master, que mede o filme
+   * inteiro e so empurra a media: quem esta alto continua alto no lugar dele.
+   *
+   * O ajuste mora aqui, no componente, e nao no arquivo: o bruto do Clesio foi
+   * aprovado como esta, e corrigir nivel reescrevendo o asset perde o
+   * original. Aqui o numero fica visivel e volta atras numa linha.
+   */
+  volume?: number;
+}> = ({ arquivo, nome, papel, gcEm = 2.4, gcDura = 3.4, rotulo, vertical = false, fala, volume = 1 }) => {
   const f = useCurrentFrame();
   const gc = janela(f, s(gcEm), s(gcEm + gcDura), 14, 14);
   const rot = janela(f, s(0.3), s(3.6), 14, 12);
@@ -64,6 +78,7 @@ export const Sonora: React.FC<{
   const video = (
     <OffthreadVideo
       src={staticFile("broll/" + arquivo)}
+      volume={volume}
       style={
         vertical
           ? { height: "100%", width: "auto" }
