@@ -134,7 +134,7 @@ export const Cena04A: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
-      <Superficie modo="claro" />
+      <Superficie modo="claro" grade />
 
       <Sequence from={AUDIO_A_EM}>
         <Audio src={staticFile("locucao/cena-04a.mp3")} />

@@ -210,8 +210,9 @@ export const Completo: React.FC = () => (
           arquivo="ana-ouvindo.mp4"
           nome="Anaclaudia Zani"
           papel="psicóloga · criadora da EITA"
-          gcEm={2.8}
-          gcDura={3.6}
+          gcEm={2.0}
+          gcDura={4.2}
+          vertical
         />
       </Series.Sequence>
 

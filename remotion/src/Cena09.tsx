@@ -71,7 +71,7 @@ const Assinatura: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
-      <Superficie modo="claro" />
+      <Superficie modo="claro" grade />
       <AbsoluteFill
         style={{
           padding: MARGEM,
@@ -102,14 +102,19 @@ const Assinatura: React.FC = () => {
 };
 
 export const Cena09: React.FC = () => (
-  <AbsoluteFill style={{ backgroundColor: marca.tinta }}>
+  <AbsoluteFill style={{ backgroundColor: modos.claro.fundo }}>
     <Series>
+      {/* o plano e vertical e nao preenche o 16:9; a superficie clara com a
+          regua de 1px segura o que sobra, em vez de cortar o cabelo dela */}
       <Series.Sequence durationInFrames={TRECHO_FRAMES}>
         <AbsoluteFill>
-          <OffthreadVideo
-            src={staticFile("broll/ana-missao.mp4")}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
+          <Superficie modo="claro" grade />
+          <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
+            <OffthreadVideo
+              src={staticFile("broll/ana-missao.mp4")}
+              style={{ height: "100%", width: "auto" }}
+            />
+          </AbsoluteFill>
         </AbsoluteFill>
       </Series.Sequence>
 

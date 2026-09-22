@@ -1,6 +1,7 @@
 import React from "react";
 import { AbsoluteFill, OffthreadVideo, staticFile, useCurrentFrame } from "remotion";
-import { marca } from "./marca";
+import { marca, modos } from "./marca";
+import { Superficie } from "./Superficie";
 import { janela, entra, s } from "./anim";
 
 /**
@@ -38,17 +39,110 @@ export const Sonora: React.FC<{
    * no alto devolvem o contexto sem roubar a frase.
    */
   rotulo?: string;
-}> = ({ arquivo, nome, papel, gcEm = 2.4, gcDura = 3.4, rotulo }) => {
+  /**
+   * Plano gravado na vertical, que nao preenche o quadro.
+   *
+   * O material da Anaclaudia e de celular, 1080x1920. Para encher um 16:9 sem
+   * deformar seria preciso cortar uma faixa de 608px de altura, e ai **some o
+   * cabelo e sobra meio rosto**: a largura do fonte ja esta toda em uso, entao
+   * nao existe "afastar a camera" dentro de um corte. A saida e o contrario de
+   * cortar mais: mostrar o plano quase inteiro e **nao preencher o quadro**.
+   *
+   * O espaco que sobra nao fica vazio, vira o lugar do GC, na superficie clara
+   * com regua de 1px. Isso resolve de quebra a legibilidade que antes obrigava
+   * um veu por cima da imagem, e assume o que o material e: filmado no
+   * celular, numa peca que documenta uma conversa de WhatsApp.
+   */
+  vertical?: boolean;
+}> = ({ arquivo, nome, papel, gcEm = 2.4, gcDura = 3.4, rotulo, vertical = false }) => {
   const f = useCurrentFrame();
   const gc = janela(f, s(gcEm), s(gcEm + gcDura), 14, 14);
   const rot = janela(f, s(0.3), s(3.6), 14, 12);
+  const m = modos.claro;
+
+  const video = (
+    <OffthreadVideo
+      src={staticFile("broll/" + arquivo)}
+      style={
+        vertical
+          ? { height: "100%", width: "auto" }
+          : { width: "100%", height: "100%", objectFit: "cover" }
+      }
+    />
+  );
+
+  if (vertical) {
+    return (
+      <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
+        <Superficie modo="claro" grade />
+        {/* o plano encosta na direita e sangra em cima e embaixo */}
+        <AbsoluteFill style={{ alignItems: "flex-end", justifyContent: "center" }}>
+          {video}
+        </AbsoluteFill>
+
+        {gc > 0.001 ? (
+          <div
+            style={{
+              position: "absolute",
+              left: 120,
+              bottom: 200,
+              display: "flex",
+              gap: 24,
+              alignItems: "stretch",
+              maxWidth: 700,
+              ...entra(gc, 16),
+            }}
+          >
+            <div style={{ width: 3, background: marca.azul, borderRadius: 2 }} />
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <div
+                style={{
+                  fontSize: 52,
+                  fontWeight: 500,
+                  letterSpacing: "-1.82px",
+                  lineHeight: 1.05,
+                }}
+              >
+                {nome}
+              </div>
+              <div
+                style={{
+                  fontSize: 28,
+                  letterSpacing: "-0.98px",
+                  color: m.apoio,
+                  lineHeight: 1.2,
+                }}
+              >
+                {papel}
+              </div>
+            </div>
+          </div>
+        ) : null}
+
+        {rotulo ? (
+          <div
+            style={{
+              position: "absolute",
+              left: 120,
+              top: 120,
+              fontSize: 24,
+              fontWeight: 500,
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              color: marca.azul,
+              ...entra(rot, 14),
+            }}
+          >
+            {rotulo}
+          </div>
+        ) : null}
+      </AbsoluteFill>
+    );
+  }
 
   return (
     <AbsoluteFill style={{ backgroundColor: marca.tinta }}>
-      <OffthreadVideo
-        src={staticFile("broll/" + arquivo)}
-        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-      />
+      {video}
 
       {rotulo && rot > 0.001 ? (
         <AbsoluteFill style={{ opacity: rot, fontFamily: marca.fonte }}>

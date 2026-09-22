@@ -60,12 +60,16 @@ const NAOS = ["não diagnostica", "não prescreve", "não substitui terapia"];
 
 export const Cena06: React.FC = () => {
   const f = useCurrentFrame();
-  // a sobrelinha nao sai: era ela saindo que deixava um terco morto no alto
+  // a sobrelinha nao sai: era ela saindo que deixava um terco morto no alto.
+  // **O texto dela e o mesmo da locucao, palavra por palavra.** Quando a fala
+  // mudou, este lettering ficou para tras e o quadro passou a dizer uma coisa
+  // enquanto a voz dizia outra: trocar locucao obriga a reler o lettering da
+  // cena, nao so a remedir os tempos.
   const titulo = janela(f, s(0.6), CENA06_FRAMES, 14, 0);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
-      <Superficie modo="claro" />
+      <Superficie modo="claro" grade />
       <Sequence from={AUDIO_EM}>
         <Audio src={staticFile("locucao/cena-06.mp3")} />
       </Sequence>
@@ -88,7 +92,8 @@ export const Cena06: React.FC = () => {
             ...entra(titulo, 14),
           }}
         >
-          Três escolhas, e nenhuma veio de boa prática de mercado
+          Três escolhas contraintuitivas foram determinantes
+          para o sucesso do produto
         </div>
 
         <div style={{ display: "flex", gap: 32 }}>
