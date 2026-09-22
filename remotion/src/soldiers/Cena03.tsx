@@ -105,7 +105,9 @@ const CRESCE = s(8.6);
  * sem risco de deixar um buraco no meio.
  */
 const TROCAS: number[] = (() => {
-  const fim = 8.2;
+  // 8,35 e nao 8,2: com 8,2 a escada dava doze trocas e o decimo oitavo
+  // clipe nunca entrava em cena. Conferido reproduzindo a escada antes de render.
+  const fim = 8.35;
   const out: number[] = [];
   let t = 3.2;
   let passoS = 0.7;
