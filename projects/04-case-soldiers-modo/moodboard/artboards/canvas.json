@@ -1,19 +1,106 @@
 {
   "v": 3,
-  "createdOnFiles": { "v": 1, "at": "2026-09-22T11:40:00Z" },
-  "title": "Moodboard · Case MODO Soldiers",
-  "launch": { "view": "canvas" },
-  "pages": [],
-  "designSystems": [],
+  "attachments": {},
   "boards": {
-    "Main.dc.html":    { "x": 0,    "y": 0,    "w": 1440, "h": 900,  "title": "Capa e tese" },
-    "Paleta.dc.html":  { "x": 1520, "y": 0,    "w": 1280, "h": 960,  "title": "Cor e superfície" },
-    "Ritual.dc.html":  { "x": 0,    "y": 1080, "w": 1440, "h": 1000, "title": "Cena 06 · o coração" },
-    "Numeros.dc.html": { "x": 1520, "y": 1080, "w": 1280, "h": 1000, "title": "Cena 08 · a prova" },
-    "Cenas.dc.html":   { "x": 0,    "y": 2200, "w": 1440, "h": 1020, "title": "Cenas 01, 02, 05 e 07" },
-    "Linha.dc.html":   { "x": 0,    "y": 3340, "w": 2800, "h": 760,  "title": "Linha do tempo" }
+    "Roteiro.dc.html": {
+      "h": 2740,
+      "title": "Roteiro cena a cena",
+      "w": 1800,
+      "x": -1960,
+      "y": 0
+    },
+    "Cenas.dc.html": {
+      "h": 1020,
+      "title": "Cenas 01, 02, 05 e 07",
+      "w": 1440,
+      "x": 0,
+      "y": 2200
+    },
+    "Linha.dc.html": {
+      "h": 760,
+      "title": "Linha do tempo",
+      "w": 2800,
+      "x": 0,
+      "y": 3340
+    },
+    "Main.dc.html": {
+      "h": 900,
+      "title": "Capa e tese",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Numeros.dc.html": {
+      "h": 1000,
+      "title": "Cena 08 · a prova",
+      "w": 1280,
+      "x": 1520,
+      "y": 1080
+    },
+    "Paleta.dc.html": {
+      "h": 960,
+      "title": "Cor e superfície",
+      "w": 1280,
+      "x": 1520,
+      "y": 0
+    },
+    "Ritual.dc.html": {
+      "h": 1000,
+      "title": "Cena 06 · o coração",
+      "w": 1440,
+      "x": 0,
+      "y": 1080
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-22T11:40:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "focused",
+    "file": "Roteiro.dc.html"
+  },
+  "notes": {
+    "aviso": {
+      "fill": "red",
+      "text": "O risco número um deste case não é técnico: a categoria pede resultado de recompra e o case ainda não tem. Os primeiros 90 dias vencem em novembro. O filme afirma que a retenção foi desenhada na mecânica, mostra o hábito já medido, e declara a janela em tela. Vídeo que promete mais que o formulário escrito perde nos dois.",
+      "w": 520,
+      "x": 2900,
+      "y": 1080
+    },
+    "custo": {
+      "fill": "green",
+      "text": "Custo previsto em API: zero. Não há b-roll gerado no plano. As imagens são motion, os clipes reais dos influenciadores e uma sonora filmada.",
+      "w": 520,
+      "x": 2900,
+      "y": 2020
+    },
+    "serie": {
+      "fill": "blue",
+      "text": "Decisão de série, não de peça: são cinco cases da Profissio. Se cada um adotar a cara do cliente, o conjunto vira portfólio sem voz própria. A moldura é sempre a mesma; o que muda é o material dentro dela.",
+      "w": 520,
+      "x": 2900,
+      "y": 1560
+    },
+    "titulo": {
+      "kind": "title1",
+      "maxW": 2800,
+      "text": "MODO Soldiers · direção de arte",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "leitura": {
+      "kind": "title1",
+      "maxW": 1800,
+      "text": "Roteiro",
+      "x": -1960,
+      "y": -300
+    }
   },
   "order": [
+    "Roteiro.dc.html",
     "Main.dc.html",
     "Paleta.dc.html",
     "Ritual.dc.html",
@@ -21,34 +108,6 @@
     "Cenas.dc.html",
     "Linha.dc.html"
   ],
-  "notes": {
-    "titulo": {
-      "x": 0,
-      "y": -300,
-      "text": "MODO Soldiers · direção de arte",
-      "kind": "title1",
-      "maxW": 2800
-    },
-    "aviso": {
-      "x": 2900,
-      "y": 1080,
-      "text": "O risco número um deste case não é técnico: a categoria pede resultado de recompra e o case ainda não tem. Os primeiros 90 dias vencem em novembro. O filme afirma que a retenção foi desenhada na mecânica, mostra o hábito já medido, e declara a janela em tela. Vídeo que promete mais que o formulário escrito perde nos dois.",
-      "w": 520,
-      "fill": "red"
-    },
-    "serie": {
-      "x": 2900,
-      "y": 1560,
-      "text": "Decisão de série, não de peça: são cinco cases da Profissio. Se cada um adotar a cara do cliente, o conjunto vira portfólio sem voz própria. A moldura é sempre a mesma; o que muda é o material dentro dela.",
-      "w": 520,
-      "fill": "blue"
-    },
-    "custo": {
-      "x": 2900,
-      "y": 2020,
-      "text": "Custo previsto em API: zero. Não há b-roll gerado no plano. As imagens são motion, os clipes reais dos influenciadores e uma sonora filmada.",
-      "w": 520,
-      "fill": "green"
-    }
-  }
+  "pages": [],
+  "title": "Moodboard · Case MODO Soldiers"
 }
