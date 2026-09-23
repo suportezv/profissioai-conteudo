@@ -1,0 +1,8 @@
+[
+  { "nome": "p-cheio-1", "segundos": 20,
+    "prompt": "Warm homely underscore in D major, relaxed 92 beats per minute, half time groove. Warm upright bass on D, felt piano playing a simple bright three note motif, soft nylon guitar plucks answering it, light brushed snare and shaker, a warm sustained string pad underneath. Friendly, human, optimistic, the feeling of a good kitchen. No vocals, no drop, no fast percussion, no minor chords, not sad, not dark." },
+  { "nome": "p-cheio-2", "segundos": 20,
+    "prompt": "Bright warm acoustic underscore in D major at a relaxed 92 bpm. Round warm bass on D, felt piano motif, gentle nylon guitar counter line, soft shaker and rim click, airy pad. Hopeful and homely, everyday warmth. No vocals, no drop, no tension, no dissonance, no dark tones, no fast hi hats." },
+  { "nome": "p-pad", "segundos": 20,
+    "prompt": "Very quiet warm string and pad chord in D major to sit under a speaking voice, one slow bright sustained chord and a soft low note, almost silent, calm and positive. No rhythm, no percussion, no melody, no vocals, no tension." }
+]

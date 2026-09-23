@@ -1,0 +1,49 @@
+{
+  "voz": "4r3G9XKliGgVZLKMgjik",
+  "modelo": "eleven_multilingual_v2",
+  "ajustes": {
+    "stability": 0.55,
+    "similarity_boost": 0.75,
+    "style": 0,
+    "use_speaker_boost": true
+  },
+  "pasta": "remotion/public/locucao-polishop",
+  "falas": [
+    {
+      "nome": "cena-01",
+      "texto": "Quem compra um eletrodoméstico quer usar tudo o que ele faz. Mas o manual fica na gaveta, e a maioria repete as mesmas duas receitas. Cliente que não aproveita o que comprou não volta. E às vezes deixa escrito, onde o próximo vai ler."
+    },
+    {
+      "nome": "cena-02",
+      "texto": "A Polishop já tinha atacado esse problema. Em 2023, imprimiu um QR code no próprio aparelho. Só que a tecnologia da época entregava um chatbot de receitas prontas, sem conversa de verdade. O engajamento não veio."
+    },
+    {
+      "nome": "cena-03",
+      "texto": "Em outubro de 2025, ela manteve a porta e trocou o motor. O mesmo QR code, agora abrindo uma conversa no WhatsApp com o Ei Ai Chef, um agente de inteligência artificial treinado nos produtos da marca. Sem baixar nada, sem cadastro."
+    },
+    {
+      "nome": "cena-05",
+      "texto": "Antes de responder, ele consulta os manuais técnicos das seis linhas. Sabe qual aparelho é o seu, ajuda na configuração e no cuidado do equipamento, e avisa quando a receita que você pediu não cabe nele."
+    },
+    {
+      "nome": "cena-06",
+      "texto": "E ele usa o WhatsApp inteiro. A foto dos ingredientes que sobraram na geladeira vira receita. Quando existe um vídeo gravado pela própria equipe da Polishop, ele manda o vídeo junto do passo a passo. E se a pergunta vem em áudio, a resposta volta em áudio."
+    },
+    {
+      "nome": "cena-07",
+      "texto": "E ele conversa como um chef, não como um catálogo. Dá opinião, avisa o ponto certo da carne, e comemora quando chega a foto do prato pronto."
+    },
+    {
+      "nome": "cena-08",
+      "texto": "De outubro de 2025 a setembro de 2026: onze mil e cem conversas, cento e quarenta mil, seiscentas e trinta mensagens, e duas mil, oitocentas e oitenta e oito fotos de ingredientes mandadas pelos próprios clientes."
+    },
+    {
+      "nome": "cena-08b",
+      "texto": "Trinta e cinco por cento dos clientes voltaram a conversar. E numa pesquisa de NPS, o agente alcançou noventa e quatro."
+    },
+    {
+      "nome": "cena-09",
+      "texto": "Um QR code impresso na fábrica transforma um produto na prateleira em uma conversa que continua. Sem campanha, sem e-mail, sem lembrete. E a Polishop já está levando esse modelo para a linha seguinte."
+    }
+  ]
+}

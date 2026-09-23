@@ -21,6 +21,20 @@ import {
   COMPLETO_FRAMES as SOLDIERS_FRAMES,
 } from "./soldiers/Completo";
 import {
+  Completo as PolishopCompleto,
+  COMPLETO_FRAMES as POLISHOP_FRAMES,
+} from "./polishop/Completo";
+import { Cena00 as P00, CENA00_FRAMES as P00_F } from "./polishop/Cena00";
+import { Cena01 as P01, CENA01_FRAMES as P01_F } from "./polishop/Cena01";
+import { Cena02 as P02, CENA02_FRAMES as P02_F } from "./polishop/Cena02";
+import { Cena03 as P03, CENA03_FRAMES as P03_F } from "./polishop/Cena03";
+import { Cena05 as P05, CENA05_FRAMES as P05_F } from "./polishop/Cena05";
+import { Cena06 as P06, CENA06_FRAMES as P06_F } from "./polishop/Cena06";
+import { Cena07 as P07, CENA07_FRAMES as P07_F } from "./polishop/Cena07";
+import { Cena08 as P08, CENA08_FRAMES as P08_F } from "./polishop/Cena08";
+import { Cena08B as P08B, CENA08B_FRAMES as P08B_F } from "./polishop/Cena08B";
+import { Cena09 as P09, CENA09_FRAMES as P09_F } from "./polishop/Cena09";
+import {
   Completo as YooperCompleto,
   COMPLETO_FRAMES as YOOPER_FRAMES,
 } from "./yooper/Completo";
@@ -43,6 +57,94 @@ const base = {
 
 export const RemotionRoot: React.FC = () => (
   <>
+    <Composition
+      id="PolishopCompleto"
+      component={PolishopCompleto}
+      durationInFrames={POLISHOP_FRAMES}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="PolishopCena00"
+      component={P00}
+      durationInFrames={P00_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="PolishopCena01"
+      component={P01}
+      durationInFrames={P01_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="PolishopCena02"
+      component={P02}
+      durationInFrames={P02_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="PolishopCena03"
+      component={P03}
+      durationInFrames={P03_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="PolishopCena05"
+      component={P05}
+      durationInFrames={P05_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="PolishopCena06"
+      component={P06}
+      durationInFrames={P06_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="PolishopCena07"
+      component={P07}
+      durationInFrames={P07_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="PolishopCena08"
+      component={P08}
+      durationInFrames={P08_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="PolishopCena08B"
+      component={P08B}
+      durationInFrames={P08B_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="PolishopCena09"
+      component={P09}
+      durationInFrames={P09_F}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
     <Composition
       id="YooperCompleto"
       component={YooperCompleto}
