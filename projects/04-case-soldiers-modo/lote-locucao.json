@@ -11,7 +11,7 @@
     {
       "nome": "cena-01",
       "texto": "Creatina é tudo igual, né? Num mercado de sete vírgula seis bilhões de reais, o que decide a próxima compra quase sempre é preço.",
-      "nota": "23/set: texto trocado para 'Creatina é tudo igual!' depois de recusadas as versoes com desdem. O arquivo em public/ e uma emenda: 0 a 2,15 s vem de um take desta voz no eleven_multilingual_v2 com next_text (take 2 de 8, -1,1 dB; o 'né?' vem do take 5 de outro lote, -3,2 dB, posto a 1,52 s), e dali em diante e o take aprovado desta fala. Regerar esta entrada sozinha desfaz a emenda."
+      "nota": "23/set: texto trocado para 'Creatina é tudo igual!' depois de recusadas as versoes com desdem. O arquivo em public/ e uma emenda: 0 a 2,15 s vem de um take desta voz no eleven_multilingual_v2 com next_text (take 2 de 8, -1,1 dB; o 'né?' vem do take 5 de outro lote, -3,2 dB, posto a 1,32 s, pausa de 0,14 s depois de 'igual'), e dali em diante e o take aprovado desta fala. Regerar esta entrada sozinha desfaz a emenda."
     },
     {
       "nome": "cena-02",

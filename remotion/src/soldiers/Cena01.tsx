@@ -102,14 +102,16 @@ const ESCOLHE = s(10.6);
  * "IGUAL," entra na tonica da palavra e leva o som forte. O "ne?" foi pedido
  * depois, com a entonacao aprovada: por isso ele e emendado no mesmo take (o
  * "ne?" vem do take 5, que sobe de 113 para 124 Hz, na altura em que o take 2
- * termina o "igual"), e nao um take novo da frase inteira. Com quatro tempos a
+ * termina o "igual"), e nao um take novo da frase inteira. A pausa entre
+ * "igual," e "ne?" e de 0,14 s: a primeira emenda tinha 0,32 s, a do take
+ * original, e o usuario ouviu como pausa longa demais. Com quatro tempos a
  * segunda linha nao cabia a 132 px, e o corpo desceu para 112.
  */
 const PALAVRAS: { texto: string; em: number }[] = [
   { texto: "CREATINA", em: s(1.08) },
   { texto: "É TUDO", em: s(1.52) },
   { texto: "IGUAL,", em: s(1.9) },
-  { texto: "NÉ?", em: s(2.58) },
+  { texto: "NÉ?", em: s(2.38) },
 ];
 
 const Estalo: React.FC<{ o: number; children: React.ReactNode }> = ({
