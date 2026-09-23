@@ -56,7 +56,13 @@ import { Cena09, CENA09_FRAMES } from "./Cena09";
 
 const NARRACAO_01_EM = s(0.7);
 
-const TRILHA_PADRAO: string | null = null;
+/**
+ * A trilha aprovada e o padrao. Enquanto ela nascia nula, o master horizontal
+ * saiu certo porque o render passava `--props`, e o corte vertical, que usa a
+ * mesma composicao, saiu sem musica (23/set). `--props '{"trilha":null}'`
+ * continua desligando para comparar candidatas.
+ */
+const TRILHA_PADRAO: string | null = "polishop/trilha.mp3";
 
 const trilhaEscolhida = (): string | null => {
   const p = getInputProps() as { trilha?: string | null };

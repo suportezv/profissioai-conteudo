@@ -70,7 +70,7 @@ import { useFormato } from "../formato";
  * sairia seria um retangulo vazio.
  */
 
-export const CENA06_FRAMES = s(16.3);
+export const CENA06_FRAMES = s(17.2);
 const AUDIO_EM = s(0.6);
 const MARGEM = 120;
 const m = modos.claro;

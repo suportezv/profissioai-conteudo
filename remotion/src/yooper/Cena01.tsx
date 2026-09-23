@@ -155,7 +155,12 @@ export const Cena01: React.FC = () => {
   const tabela = passo(f, TABELA_EM, TABELA_EM + s(1.0));
   const atualizado = passo(f, ATUALIZADO_EM, ATUALIZADO_EM + s(0.5));
   const completo = passo(f, COMPLETO_EM, COMPLETO_EM + s(0.6));
-  const cursor = janela(f, CURSOR_EM, CENA01_FRAMES, 8, 0) * (1 - recua * 0.9);
+  // no 16:9 o painel recua para textura atras da pergunta; no 9:16 ele sai
+  // inteiro, porque ali a pergunta cai em cima da tabela e o resto dela so
+  // atrapalhava a leitura (pedido do usuario, 23/set)
+  const recuo = vertical ? 1 : 0.84;
+  const cursor =
+    janela(f, CURSOR_EM, CENA01_FRAMES, 8, 0) * (1 - recua * (vertical ? 1 : 0.9));
   const [cx, cy] = posCursor(f, vertical ? CAMINHO_V : CAMINHO);
 
   const pergunta = janela(f, PERGUNTA_EM, CENA01_FRAMES, 12, 0);
@@ -170,7 +175,7 @@ export const Cena01: React.FC = () => {
 
       <AbsoluteFill
         style={{
-          opacity: painel * (1 - recua * 0.84),
+          opacity: painel * (1 - recua * recuo),
           transform: `scale(${interpolate(painel, [0, 1], [0.965, 1])})`,
         }}
       >

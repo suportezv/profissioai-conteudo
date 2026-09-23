@@ -56,7 +56,7 @@ import { useFormato } from "../formato";
  * identificados no relatorio de decupagem. So quem para no centro leva nome.
  */
 
-export const CENA03_FRAMES = s(16);
+export const CENA03_FRAMES = s(15.1);
 const AUDIO_EM = s(0.5);
 const MARGEM = 120;
 const m = modos.claro;
@@ -118,9 +118,13 @@ const CRESCE = s(8.5);
  * frase dela "E e isso" comeca em **12,48 s de cena**: o Scribe poe em 16,64 s
  * do bruto, o corte comeca em 2,16 s e o `startFrom` adianta outros 2,0 s.
  *
- * Ate la ela fica num leito audivel de 0,1, que da presenca sem competir. O
- * que vem depois e o fecho quente dela ("um super beijo, espero que a gente
- * esteja juntos"), e esse toca por cima, que e onde ele deve estar.
+ * **Ate la ela fica muda.** Antes havia um leito de 0,1 (e o murmurio de 0,06
+ * no comeco), e o usuario ouviu isso como a voz dela brigando com a locucao
+ * (23/set). O que vem depois e o fecho quente dela ("um super beijo, espero
+ * que a gente esteja juntos"), e esse toca sozinho, que e onde ele deve estar.
+ *
+ * **A cena acaba com a frase dela.** "juntos" termina em 19,16 s do bruto, que
+ * e 15,00 s de cena e tambem o fim do arquivo do clipe; a cena fecha em 15,1.
  */
 const PIETRA_SOBE = s(12.45);
 
@@ -192,11 +196,11 @@ export const Cena03: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
-  // a Pietra so sobe quando a narracao acaba (ver PIETRA_SOBE)
+  // a Pietra fica muda ate "E e isso" (ver PIETRA_SOBE) e entra inteira ali
   const vozPietra = interpolate(
     f,
-    [CRESCE, CRESCE + s(0.5), PIETRA_SOBE, PIETRA_SOBE + s(0.4)],
-    [0.06, 0.1, 0.1, 0.9],
+    [PIETRA_SOBE - s(0.15), PIETRA_SOBE + s(0.05)],
+    [0, 0.9],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
 
@@ -289,15 +293,18 @@ export const Cena03: React.FC = () => {
                 >
                   {/* A maioria dos clipes tem 6 s e a cena tem 16: sem o laco,
                       o video acabava e o cartao ficava parado no ultimo quadro,
-                      que lia como foto. O laco recomeca do ponto de corte. */}
+                      que lia como foto. O laco recomeca do ponto de corte.
+                      **A Pietra nao laca**: o clipe dela acaba em "espero que
+                      a gente esteja juntos" e a cena fecha ali; com laco ela
+                      recomecava a frase nos ultimos quadros. */}
                   <Loop
-                    durationInFrames={s(c.dura) - c.de - 2}
+                    durationInFrames={fim ? CENA03_FRAMES : s(c.dura) - c.de - 2}
                     layout="none"
                   >
                     <OffthreadVideo
                       src={staticFile("soldiers/" + c.arq)}
                       startFrom={c.de}
-                      volume={fim ? Math.max(murmurio, vozPietra) : murmurio}
+                      volume={fim ? vozPietra : murmurio}
                       style={{ width: "100%", height: "100%", objectFit: "cover" }}
                     />
                   </Loop>

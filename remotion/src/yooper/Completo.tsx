@@ -56,11 +56,21 @@ const LACUNA_04 = s(11);
 /** A lacuna que nao sai: o Clesio sobre governanca. */
 const LACUNA_05B = s(13);
 
-const TRILHA_PADRAO: string | null = null;
+/**
+ * A trilha aprovada, uma por corte: as bordas das secoes caem nos cortes de
+ * cena, entao o corte sem lacunas tem mapa proprio (`trilha/mapa-sem-lacunas`).
+ *
+ * **Ela e o padrao, nao uma prop.** Enquanto nascia nula, o master horizontal
+ * saiu certo porque o render passava `--props`, e o corte vertical, que usa a
+ * mesma composicao, saiu sem musica (23/set). Quem quiser comparar candidatas
+ * continua passando `--props '{"trilha":null}'`.
+ */
+const trilhaPadrao = (lacunas: boolean) =>
+  lacunas ? "yooper/trilha.mp3" : "yooper/trilha-sem-lacunas.mp3";
 
-const trilhaEscolhida = (): string | null => {
+const trilhaEscolhida = (lacunas: boolean): string | null => {
   const p = getInputProps() as { trilha?: string | null };
-  return p.trilha === undefined ? TRILHA_PADRAO : p.trilha;
+  return p.trilha === undefined ? trilhaPadrao(lacunas) : p.trilha;
 };
 
 const TRILHA_BASE = 0.24;
@@ -111,8 +121,8 @@ export const Completo: React.FC<{ lacunas?: boolean }> = ({
   lacunas = true,
 }) => (
   <AbsoluteFill style={{ backgroundColor: "#000" }}>
-    {trilhaEscolhida() ? (
-      <Audio src={staticFile(trilhaEscolhida() as string)} volume={volumeTrilha(framesDoCorte(lacunas))} />
+    {trilhaEscolhida(lacunas) ? (
+      <Audio src={staticFile(trilhaEscolhida(lacunas) as string)} volume={volumeTrilha(framesDoCorte(lacunas))} />
     ) : null}
 
     <Series>

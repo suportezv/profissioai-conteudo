@@ -135,20 +135,22 @@ const volumeTrilha = (total: number) => (f: number) => {
  * Os planos da sonora do Clesio, nos dois quadros. Mesmos tempos, cortados na
  * primeira palavra de cada oracao.
  *
- * No 9:16 a janela ja e um recorte apertado do plano deitado (31% da largura
- * do bruto), entao o punch-in do 16:9, que chega a 1,35, tirava o alto do
- * cabelo do quadro nos closes. Aqui o mais fechado e 1,15, e a alternancia
- * medio / close / abre / fecha continua a mesma.
+ * **O teto e 1,15 nos dois quadros.** O bruto e um iPhone de 2102 px, e o
+ * punch-in de ate 1,35 que o 16:9 tinha ampliava o rosto mais de 2,4x no
+ * master 4K: o usuario viu a queda de qualidade contra os clipes dos
+ * influenciadores, que vem de camera 4K (23/set). No 9:16 a janela ja e um
+ * recorte apertado do plano deitado, e o mesmo teto evita tirar o cabelo do
+ * quadro nos closes.
  */
 const PLANOS_04 = [
   // "A Soldier ja dominava a aquisicao do cliente": medio
-  { em: 0, zoom: 1.08, origem: "61% 55%" },
+  { em: 0, zoom: 1.0, origem: "61% 55%" },
   // "mas em um mercado tao comoditizado": close
-  { em: 2.92, zoom: 1.3, origem: "61% 18%" },
+  { em: 2.92, zoom: 1.12, origem: "61% 22%" },
   // "E o MODO e justamente essa peca": abre, entra a resposta
-  { em: 8.5, zoom: 1.15, origem: "61% 40%" },
+  { em: 8.5, zoom: 1.04, origem: "61% 40%" },
   // "e resolve esse problema": o mais fechado, o fecho
-  { em: 14.1, zoom: 1.35, origem: "61% 16%" },
+  { em: 14.1, zoom: 1.15, origem: "61% 20%" },
 ];
 const PLANOS_04_VERTICAL = [
   { em: 0, zoom: 1.0, origem: "61% 50%" },
