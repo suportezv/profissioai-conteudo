@@ -8,7 +8,7 @@ import {
   staticFile,
 } from "remotion";
 import { s } from "../anim";
-import { Placeholder } from "../Placeholder";
+import { Sonora } from "../Sonora";
 import { Cena01, CENA01_FRAMES } from "./Cena01";
 import { Cena02, CENA02_FRAMES } from "./Cena02";
 import { Cena03, CENA03_FRAMES } from "./Cena03";
@@ -22,8 +22,11 @@ import { Cena09, CENA09_FRAMES } from "./Cena09";
 /**
  * Corte de montagem do case MODO Soldiers, ponta a ponta.
  *
- * Uma unica lacuna: a **sonora do Clesio**, na cena 04, que e a unica fala
- * captada do filme. Todo o resto esta pronto, com material real.
+ * A **sonora do Clesio** entrou em 23/set, na cena 04, logo depois da fala da
+ * Pietra: e a unica fala captada do filme, e ela responde o que a categoria
+ * premia (recompra). Com ela o corte fecha em **120,0 s exatos**, e o espaco
+ * saiu das caudas das cenas depois da ultima fala (01, 02, 05, 06, 07, 09),
+ * nunca de dentro de uma narracao.
  *
  * ## A trilha entra por prop, e por isso comeca desligada
  *
@@ -41,8 +44,14 @@ import { Cena09, CENA09_FRAMES } from "./Cena09";
 /** Onde a narracao da cena 01 entra, contado do inicio do filme. */
 const NARRACAO_01_EM = s(1.0);
 
-/** A unica lacuna: a sonora do Clesio. */
-const LACUNA_04 = s(14);
+/**
+ * A sonora do Clesio, 15,4 s: `IMG_6269.mov` de 1,40 a 16,80 s, ou seja 0,16 s
+ * antes do "A Soldier" e 0,38 s depois de "problema", onde ele ja assentou as
+ * maos e nao ha gesto de fim de gravacao. O bruto e HLG 10-bit de iPhone a 60
+ * fps; a conversao para Rec.709 esta no `edl.json` do projeto.
+ */
+const SONORA_04 = s(15.4);
+const SONORA_04_EM = CENA01_FRAMES + CENA02_FRAMES + CENA03_FRAMES;
 
 /**
  * A trilha escolhida pelo usuario, ouvindo as candidatas: **D, pulso de
@@ -87,13 +96,11 @@ const SOMA_CENAS =
   CENA09_FRAMES;
 
 /**
- * Duracao do corte. As lacunas de sonora sao **opcionais**: a
- * composicao aprovada as mantem, e a previa sem elas usa o mesmo
- * componente com `lacunas={false}`, entao nao existe uma segunda
- * copia do corte para envelhecer sozinha.
+ * Duracao do corte. O parametro `lacunas` sobrou da fase em que a sonora do
+ * Clesio era um cartao de espera; com ela captada as duas composicoes
+ * registradas (`SoldiersCompleto` e `SoldiersSemLacunas`) sao o mesmo corte.
  */
-export const framesDoCorte = (lacunas = true) =>
-  SOMA_CENAS + (lacunas ? LACUNA_04 : 0);
+export const framesDoCorte = (_lacunas = true) => SOMA_CENAS + SONORA_04;
 
 export const COMPLETO_FRAMES = framesDoCorte(true);
 
@@ -112,7 +119,15 @@ const volumeTrilha = (total: number) => (f: number) => {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  return Math.min(entrada, leito) * saida;
+  // debaixo da unica fala captada a trilha desce mais, para a voz dele nao
+  // disputar com a batida; volta ao leito no corte para a cena 05
+  const sonora = interpolate(
+    f,
+    [SONORA_04_EM - s(0.4), SONORA_04_EM + s(0.3), SONORA_04_EM + SONORA_04 - s(0.3), SONORA_04_EM + SONORA_04 + s(0.4)],
+    [1, 0.6, 0.6, 1],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
+  return Math.min(entrada, leito) * saida * sonora;
 };
 
 export const Completo: React.FC<{ lacunas?: boolean }> = ({
@@ -136,17 +151,31 @@ export const Completo: React.FC<{ lacunas?: boolean }> = ({
         <Cena03 />
       </Series.Sequence>
 
-      {lacunas ? (
-        <Series.Sequence durationInFrames={LACUNA_04}>
-          <Placeholder
-            cena="04"
-            rotulo="Sonora a captar · a única do filme"
-            titulo="Clésio Souza, na Profissio"
-            detalhe="Pergunta que puxa: por que amarrar o acompanhamento à compra, em noventa dias cumulativos, em vez de vender uma assinatura à parte? A resposta é sobre recompra, que é o que a categoria premia, e prepara exatamente o mecanismo da cena seguinte."
-            origem="Captação: mesma gramática de luz do case da EITA, janela e plano médio, para os dois filmes parecerem a mesma série. Sem GC de dado técnico: número vai para lettering, nunca para a boca de ninguém."
-          />
-        </Series.Sequence>
-      ) : null}
+      {/* A sonora do Clesio: responde por que o MODO existe, e a resposta e
+          recompra, que e o criterio da categoria. Um plano por oracao, com
+          corte seco na primeira palavra de cada uma (Scribe no clipe). */}
+      <Series.Sequence durationInFrames={SONORA_04}>
+        <Sonora
+          arquivo="clesio-recompra-soldiers.mp4"
+          nome="Clésio Souza"
+          papel="Profissio.ai"
+          rotulo="O desafio da recompra"
+          gcEm={3.0}
+          gcDura={3.4}
+          // -13,4 LUFS no clipe contra -20,3 da narracao: 0,45 sao os -6,9 dB
+          volume={0.45}
+          planos={[
+            // "A Soldier ja dominava a aquisicao do cliente": medio
+            { em: 0, zoom: 1.08, origem: "61% 55%" },
+            // "mas em um mercado tao comoditizado": close
+            { em: 2.92, zoom: 1.3, origem: "61% 18%" },
+            // "E o MODO e justamente essa peca": abre, entra a resposta
+            { em: 8.5, zoom: 1.15, origem: "61% 40%" },
+            // "e resolve esse problema": o mais fechado, o fecho
+            { em: 14.1, zoom: 1.35, origem: "61% 16%" },
+          ]}
+        />
+      </Series.Sequence>
 
       <Series.Sequence durationInFrames={CENA05_FRAMES}>
         <Cena05 />

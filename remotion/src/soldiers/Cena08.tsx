@@ -67,7 +67,7 @@ const DADOS: Dado[] = [
     casas: 0,
     sufixo: "",
     titulo: "mensagens trocadas",
-    base: "05/ago a 18/set/2026 · só o MODO base",
+    base: "07/08/2026 a 21/09/2026 · só o MODO base",
   },
   {
     entra: s(4.7),

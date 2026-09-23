@@ -42,7 +42,7 @@ import { Sfx } from "../Sfx";
  * ilegivel.
  */
 
-export const CENA02_FRAMES = s(7.5);
+export const CENA02_FRAMES = s(7.3);
 const AUDIO_EM = s(0.6);
 const MARGEM = 120;
 const m = modos.claro;

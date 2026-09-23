@@ -44,7 +44,7 @@ import { Sfx } from "../Sfx";
  * concede, que e coisa diferente, e a cena 09 cuida da distincao.
  */
 
-export const CENA05_FRAMES = s(13);
+export const CENA05_FRAMES = s(12.2);
 const AUDIO_EM = s(0.6);
 const MARGEM = 120;
 const m = modos.claro;

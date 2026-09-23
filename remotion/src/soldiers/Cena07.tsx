@@ -53,7 +53,7 @@ import { Sfx } from "../Sfx";
  * terceiro, mesmo quando quem monta a peca somos nos.
  */
 
-export const CENA07_FRAMES = s(10);
+export const CENA07_FRAMES = s(9.7);
 const AUDIO_EM = s(0.6);
 const MARGEM = 120;
 const m = modos.claro;
@@ -271,7 +271,7 @@ export const Cena07: React.FC = () => {
               ...entra(base, 14),
             }}
           >
-            a mesma arquitetura, testada uma vez
+            a mesma arquitetura, testada de uma vez
           </div>
         </div>
       </AbsoluteFill>

@@ -69,7 +69,7 @@ import { Sfx } from "../Sfx";
  * sairia seria um retangulo vazio.
  */
 
-export const CENA06_FRAMES = s(18);
+export const CENA06_FRAMES = s(16.3);
 const AUDIO_EM = s(0.6);
 const MARGEM = 120;
 const m = modos.claro;

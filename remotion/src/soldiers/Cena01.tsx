@@ -51,7 +51,7 @@ import { Sfx } from "../Sfx";
  * rotulos dizem "CRE...", nunca uma marca legivel.
  */
 
-export const CENA01_FRAMES = s(12);
+export const CENA01_FRAMES = s(11.5);
 const AUDIO_EM = s(1.0);
 const MARGEM = 120;
 const m = modos.claro;
@@ -93,14 +93,20 @@ const ESCOLHE = s(10.6);
  * igualdade que a frase afirma fica visivel antes de ser ouvida. Escrita numa
  * linha so, viraria uma frase comprida qualquer.
  *
+ * **A frase e dita com desdem**, a pedido do usuario em 23/set: e a voz do
+ * mercado que o filme vai contrariar, entao ela sai seca e de pouco caso, e o
+ * ponto de exclamacao virou ponto final na tela. O take e do `eleven_v3` com a
+ * marca `[dismissive]`, emendado no arquivo aprovado em 2,15 s (logo antes de
+ * "Num mercado"), e por isso o resto da cena nao mudou de tempo.
+ *
  * Cada palavra entra com estalo curto (7 frames, escala 1,08 e desfoque
  * saindo), sincronizada com a locucao. As aspas entram junto da primeira e
  * fecham com a ultima, porque e citacao de mercado, nao fala da marca.
  */
 const PALAVRAS: { texto: string; em: number }[] = [
   { texto: "CREATINA", em: s(1.1) },
-  { texto: "É", em: s(1.8) },
-  { texto: "CREATINA!", em: s(2.0) },
+  { texto: "É", em: s(1.98) },
+  { texto: "CREATINA.", em: s(2.1) },
 ];
 
 const Estalo: React.FC<{ o: number; children: React.ReactNode }> = ({

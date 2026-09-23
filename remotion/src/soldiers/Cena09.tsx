@@ -56,7 +56,7 @@ import { Sfx } from "../Sfx";
  * caber no nosso fundo seria pior que trocar o fundo.
  */
 
-export const CENA09_FRAMES = s(7.6);
+export const CENA09_FRAMES = s(6.6);
 const AUDIO_EM = s(0.4);
 const MARGEM = 120;
 const m = modos.claro;

@@ -58,5 +58,23 @@
   "pessoa": "MC Bin Laden",
   "arquivo": "C0028-mc-bin-laden.mp4",
   "nota": "identificado pelo cliente em 22/set; abre a esteira da cena 03"
+ },
+ "IMG_6269": {
+  "pessoa": "Clésio Souza (Profissio.ai)",
+  "arquivo": "clesio-recompra-soldiers.mp4 (remotion/public/broll/)",
+  "origem": "Drive 1aajnSQl7D7Gs0Zaf_sAou_5bp3zanf2g, iPhone HEVC 10-bit HLG bt2020, 2102x1182, 60 fps",
+  "trechos": [
+   {
+    "de": "A Soldier já dominava",
+    "ate": "resolve esse problema",
+    "tempos_s": [
+     1.4,
+     16.8
+    ]
+   }
+  ],
+  "video": "colorspace=all=bt709:itrc=bt2020-10:iprimaries=bt2020:ispace=bt2020nc, colorchannelmixer rr=0.97 bb=1.03, fps=30. Medido: parede 230/216/202 (quente) e pele 174/122/113 antes do mixer; tonemap hable escurecia demais (pele 137/86/80).",
+  "audio": "highpass 80, -1.5 dB em 250 Hz, +2.5 dB em 3.5 kHz; nivel ajustado no componente (volume 0.45, -13.4 -> -20.3 LUFS). SNR medido ~45 dB, sem denoise.",
+  "confirmado": "usuario, 23/set/2026"
  }
 }

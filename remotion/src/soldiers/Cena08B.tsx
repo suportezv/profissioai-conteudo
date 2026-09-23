@@ -99,7 +99,8 @@ const BLOCO = 118;
 const VAO_BLOCO = 8;
 
 /** A base que vale para os dois numeros, e que difere da cena 08. */
-const BASE = "todos os agentes da Soldiers, com as personas · período e N a confirmar";
+/** Periodo confirmado pelo cliente em 23/set: o mesmo da cena 08. O N segue pendente. */
+const BASE = "todos os agentes da Soldiers, com as personas · 07/08/2026 a 21/09/2026 · N a confirmar";
 
 type Limiar = { pct: number; rotulo: string; em: number };
 
@@ -121,9 +122,9 @@ type Limiar = { pct: number; rotulo: string; em: number };
  * afirma.
  */
 const LIMIARES: Limiar[] = [
-  { pct: 50, rotulo: "há mais de 30 dias sem comprar", em: REAT_EM + s(0.3) },
-  { pct: 32, rotulo: "há mais de 60 dias", em: REAT_EM + s(4.0) },
-  { pct: 21, rotulo: "há mais de 90 dias", em: REAT_EM + s(4.8) },
+  { pct: 50, rotulo: "já estavam há mais de 30 dias sem comprar", em: REAT_EM + s(0.3) },
+  { pct: 31, rotulo: "já estavam há mais de 60 dias sem comprar", em: REAT_EM + s(4.0) },
+  { pct: 21, rotulo: "já estavam há mais de 90 dias sem comprar", em: REAT_EM + s(4.8) },
 ];
 
 /** Largura util da faixa de barras, em px de 1920. 100% ocupa isso. */

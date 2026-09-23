@@ -3,6 +3,7 @@ import {
   AbsoluteFill,
   Audio,
   Easing,
+  Loop,
   OffthreadVideo,
   Sequence,
   interpolate,
@@ -59,7 +60,8 @@ const AUDIO_EM = s(0.5);
 const MARGEM = 120;
 const m = modos.claro;
 
-type Clipe = { arq: string; de: number };
+/** `dura` e a duracao do arquivo em segundos, medida com ffprobe. */
+type Clipe = { arq: string; de: number; dura: number };
 
 /**
  * Os dezoito, na ordem da faixa. Os cinco primeiros sao os que abrem a cena,
@@ -73,24 +75,24 @@ type Clipe = { arq: string; de: number };
  * que nao se conserta depois.
  */
 const CLIPES: Clipe[] = [
-  { arq: "C0028-mc-bin-laden.mp4", de: 0 },
-  { arq: "C0001-gordelas.mp4", de: s(1.2) },
-  { arq: "C0002-seu-bolinha.mp4", de: s(1.5) },
-  { arq: "C0027.mp4", de: s(1.0) },
-  { arq: "C0021.mp4", de: s(1.0) },
-  { arq: "C0008.mp4", de: 0 },
-  { arq: "C0005-matheus-ueda.mp4", de: 0 },
-  { arq: "C0009.mp4", de: 0 },
-  { arq: "C0010.mp4", de: 0 },
-  { arq: "C0011.mp4", de: 0 },
-  { arq: "C0018.mp4", de: 0 },
-  { arq: "C0019.mp4", de: 0 },
-  { arq: "C0022.mp4", de: 0 },
-  { arq: "C0024.mp4", de: 0 },
-  { arq: "C0026.mp4", de: 0 },
-  { arq: "C0029.mp4", de: 0 },
-  { arq: "C0032.mp4", de: 0 },
-  { arq: "C0004-pietra.mp4", de: s(2.0) },
+  { arq: "C0028-mc-bin-laden.mp4", de: 0, dura: 6.03 },
+  { arq: "C0001-gordelas.mp4", de: s(1.2), dura: 10.11 },
+  { arq: "C0002-seu-bolinha.mp4", de: s(1.5), dura: 11.6 },
+  { arq: "C0027.mp4", de: s(1.0), dura: 8.61 },
+  { arq: "C0021.mp4", de: s(1.0), dura: 9.8 },
+  { arq: "C0008.mp4", de: 0, dura: 6 },
+  { arq: "C0005-matheus-ueda.mp4", de: 0, dura: 6.03 },
+  { arq: "C0009.mp4", de: 0, dura: 6 },
+  { arq: "C0010.mp4", de: 0, dura: 6 },
+  { arq: "C0011.mp4", de: 0, dura: 6 },
+  { arq: "C0018.mp4", de: 0, dura: 6 },
+  { arq: "C0019.mp4", de: 0, dura: 6 },
+  { arq: "C0022.mp4", de: 0, dura: 6 },
+  { arq: "C0024.mp4", de: 0, dura: 6 },
+  { arq: "C0026.mp4", de: 0, dura: 6 },
+  { arq: "C0029.mp4", de: 0, dura: 6 },
+  { arq: "C0032.mp4", de: 0, dura: 6 },
+  { arq: "C0004-pietra.mp4", de: s(2.0), dura: 17 },
 ];
 
 /** Geometria da faixa, em px de 1920. Cinco cartoes preenchem a area util. */
@@ -230,29 +232,20 @@ export const Cena03: React.FC = () => {
                     background: marca.tinta,
                   }}
                 >
-                  <OffthreadVideo
-                    src={staticFile("soldiers/" + c.arq)}
-                    startFrom={c.de}
-                    volume={fim ? Math.max(murmurio, vozPietra) : murmurio}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                  {fim && cresceu > 0.6 ? (
-                    <div
-                      style={{
-                        position: "absolute",
-                        left: 20,
-                        bottom: 20,
-                        fontSize: 24,
-                        fontWeight: 500,
-                        letterSpacing: "-0.84px",
-                        color: marca.branco,
-                        textShadow: "0 2px 14px rgba(16,18,24,0.7)",
-                        opacity: passo(f, CRESCE + s(0.6), CRESCE + s(0.9)),
-                      }}
-                    >
-                      Pietra
-                    </div>
-                  ) : null}
+                  {/* A maioria dos clipes tem 6 s e a cena tem 16: sem o laco,
+                      o video acabava e o cartao ficava parado no ultimo quadro,
+                      que lia como foto. O laco recomeca do ponto de corte. */}
+                  <Loop
+                    durationInFrames={s(c.dura) - c.de - 2}
+                    layout="none"
+                  >
+                    <OffthreadVideo
+                      src={staticFile("soldiers/" + c.arq)}
+                      startFrom={c.de}
+                      volume={fim ? Math.max(murmurio, vozPietra) : murmurio}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                  </Loop>
                 </div>
               </div>
             );
