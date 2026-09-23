@@ -1,5 +1,11 @@
 import React from "react";
-import { AbsoluteFill, OffthreadVideo, staticFile, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  OffthreadVideo,
+  staticFile,
+  useCurrentFrame,
+  interpolate,
+} from "remotion";
 import { marca } from "./marca";
 import { PlanoVertical, type Fala } from "./PlanoVertical";
 import { janela, entra, s } from "./anim";
@@ -80,6 +86,28 @@ export const Sonora: React.FC<{
    * cenas 02 e 07.
    */
   creditar?: boolean;
+  /**
+   * Os planos de uma sonora horizontal, cortados na fala: **punch-in de rede
+   * social**, cada oracao num enquadramento.
+   *
+   * O take da Anaclaudia da cena 02 foi gravado de longe: ela ocupa menos de
+   * um terco da altura, com parede, sofa e um quadro grande em volta. Um zoom
+   * fixo so aproximava; o pedido era **acompanhar o que ela fala**, e isso e
+   * corte seco na primeira palavra de cada oracao, alternando medio e close,
+   * com o mais fechado guardado para o fecho da frase. Dentro de cada plano a
+   * escala ainda deriva 3%, para nenhum deles ler como foto.
+   *
+   * **A aproximacao se faz movendo a origem do `scale`, nunca com
+   * `translate`.** O `objectFit: cover` preenche o quadro exatamente, entao
+   * deslocar descobre a borda e aparece faixa preta. A origem de cada plano e
+   * calculada para os olhos cairem onde o enquadramento pede
+   * (`O = (z*alvo_fonte - alvo_tela) / (z - 1)`) e presa dentro do quadro, o
+   * que garante que a janela nunca sai do video.
+   *
+   * O teto e 1,6x: o material e 1024x576, e acima disso a janela real no
+   * bruto fica abaixo de 640 px de largura e o rosto amolece.
+   */
+  planos?: { em: number; zoom: number; origem: string }[];
 }> = ({
   arquivo,
   nome,
@@ -91,10 +119,26 @@ export const Sonora: React.FC<{
   fala,
   volume = 1,
   creditar = true,
+  planos,
 }) => {
   const f = useCurrentFrame();
   const gc = creditar ? janela(f, s(gcEm), s(gcEm + gcDura), 14, 14) : 0;
   const rot = janela(f, s(0.3), s(3.6), 14, 12);
+
+  // o plano vigente e o ultimo cujo inicio ja passou; a deriva vai ate o
+  // proximo corte (ou ate 3 s, no ultimo plano)
+  const plano = (() => {
+    if (!planos || planos.length === 0) return undefined;
+    let i = 0;
+    for (let k = 0; k < planos.length; k++) if (f >= s(planos[k].em)) i = k;
+    const a = planos[i];
+    const ate = i + 1 < planos.length ? s(planos[i + 1].em) : s(a.em + 3);
+    const z = interpolate(f, [s(a.em), ate], [a.zoom, a.zoom * 1.03], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    });
+    return { z, origem: a.origem };
+  })();
 
   const video = (
     <OffthreadVideo
@@ -103,7 +147,14 @@ export const Sonora: React.FC<{
       style={
         vertical
           ? { height: "100%", width: "auto" }
-          : { width: "100%", height: "100%", objectFit: "cover" }
+          : {
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              ...(plano
+                ? { transform: `scale(${plano.z})`, transformOrigin: plano.origem }
+                : {}),
+            }
       }
     />
   );

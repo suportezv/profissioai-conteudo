@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  Img,
   Sequence,
   staticFile,
   useCurrentFrame,
@@ -59,8 +60,13 @@ const VERDE_CANAL = "#25D366";
 
 // ---------------------------------------------------------------- parte A --
 
-/** 0,6 s de respiro + 11,62 s de locucao + meio segundo de cauda. */
-export const CENA04A_FRAMES = s(12.7);
+/**
+ * 0,6 s de respiro + 11,62 s de locucao + 1,4 s para o avatar assentar.
+ *
+ * A cena ganhou 0,9 s em 23/set/2026: o avatar da EITA entra depois da ultima
+ * palavra, e nome de marca que aparece e some em meio segundo nao se le.
+ */
+export const CENA04A_FRAMES = s(13.6);
 const AUDIO_A_EM = s(0.6);
 
 /** O menu que todo bot de atendimento tem, e que a EITA nao e. */
@@ -70,7 +76,7 @@ const MENU = [
   "3 · Voltar ao menu anterior",
 ];
 
-/** As quatro fontes com que a EITA foi treinada. */
+/** As quatro fontes com que a IA foi treinada. */
 const FONTES = [
   { texto: "20 anos de consultório", em: s(3.4) },
   { texto: "o método dela", em: s(5.2) },
@@ -79,14 +85,69 @@ const FONTES = [
 ];
 
 const CONVERGE = s(10.4);
+const CURVAS_EM = s(10.8);
+const CURVAS_ATE = s(11.6);
+const AVATAR_EM = s(11.5);
+const NOME_EM = s(11.9);
 
-/** Uma fonte de treino: filete azul, texto, e a linha que corre para o centro. */
-const Fonte: React.FC<{ texto: string; o: number; puxa: number }> = ({
+/*
+ * ## Geometria do fecho: a lista tem que desaguar no avatar
+ *
+ * A versao anterior tinha a lista a esquerda com linhas correndo ate a borda,
+ * e um cartao azul "uma IA que responde como ela" solto embaixo, a direita. O
+ * usuario leu certo: **nada ali dizia que uma coisa e consequencia da outra**.
+ * As linhas nao chegavam a lugar nenhum e o cartao nao vinha de lugar nenhum.
+ *
+ * Agora cada fonte termina num ponto comum a x=800, e dali sai uma curva que
+ * converge no avatar da EITA, com um ponto correndo por ela. O avatar so entra
+ * quando as quatro curvas chegam: ele e o resultado do treino, e a ordem na
+ * tela e a ordem da causa.
+ */
+const LISTA_L = 120;
+const LISTA_FIM = 800;
+const ITEM_Y0 = 408;
+const ITEM_PASSO = 80;
+const AV_CX = 1440;
+const AV_CY = 470;
+const AV_TAM = 250;
+const CHEGADA: [number, number] = [AV_CX - AV_TAM / 2 - 28, AV_CY];
+
+const curva = (y: number) => {
+  const p0: [number, number] = [LISTA_FIM, y];
+  const p1: [number, number] = [LISTA_FIM + 230, y];
+  const p2: [number, number] = [CHEGADA[0] - 220, CHEGADA[1]];
+  return { p0, p1, p2, p3: CHEGADA };
+};
+
+const noBezier = (c: ReturnType<typeof curva>, k: number): [number, number] => {
+  const u = 1 - k;
+  const a = u * u * u, b = 3 * u * u * k, d = 3 * u * k * k, e = k * k * k;
+  return [
+    a * c.p0[0] + b * c.p1[0] + d * c.p2[0] + e * c.p3[0],
+    a * c.p0[1] + b * c.p1[1] + d * c.p2[1] + e * c.p3[1],
+  ];
+};
+
+/** Uma fonte de treino: filete azul, texto, e a linha que corre ate x=800. */
+const Fonte: React.FC<{ texto: string; o: number; puxa: number; y: number }> = ({
   texto,
   o,
   puxa,
+  y,
 }) => (
-  <div style={{ display: "flex", alignItems: "center", gap: 20, ...entra(o, 14) }}>
+  <div
+    style={{
+      position: "absolute",
+      left: LISTA_L,
+      width: LISTA_FIM - LISTA_L,
+      top: y - 22,
+      height: 44,
+      display: "flex",
+      alignItems: "center",
+      gap: 20,
+      ...entra(o, 14),
+    }}
+  >
     <div
       style={{
         width: 3,
@@ -102,6 +163,7 @@ const Fonte: React.FC<{ texto: string; o: number; puxa: number }> = ({
         fontWeight: 500,
         letterSpacing: "-1.33px",
         color: m.tinta,
+        whiteSpace: "nowrap",
       }}
     >
       {texto}
@@ -111,8 +173,9 @@ const Fonte: React.FC<{ texto: string; o: number; puxa: number }> = ({
     <div
       style={{
         flex: 1,
-        height: 1,
-        background: marca.linha,
+        height: 2,
+        background: marca.azul,
+        opacity: 0.55,
         transformOrigin: "left",
         transform: `scaleX(${puxa})`,
       }}
@@ -128,9 +191,21 @@ export const Cena04A: React.FC = () => {
   // o menu apaga antes de sair: ele e o contraexemplo, nao a resposta
   const morre = passo(f, s(2.2), s(3.0));
 
-  const rotulo2 = janela(f, s(3.0), CENA04A_FRAMES, 14, 10);
-  const puxa = passo(f, CONVERGE, CONVERGE + s(1.0));
-  const convergiu = janela(f, CONVERGE + s(0.4), CENA04A_FRAMES, 16, 10);
+  // a saida e uma so, do bloco inteiro: se cada elemento tambem saisse, as
+  // opacidades se multiplicariam e o avatar apagaria antes do corte
+  const rotulo2 = janela(f, s(3.0), CENA04A_FRAMES, 14, 6);
+  const puxa = passo(f, CONVERGE, CONVERGE + s(0.6));
+  const desenha = passo(f, CURVAS_EM, CURVAS_ATE);
+  const avatar = janela(f, AVATAR_EM, CENA04A_FRAMES, 12, 0);
+  // o avatar chega com um pequeno assentamento: 0,9 -> 1,03 -> 1
+  const escala =
+    f < AVATAR_EM
+      ? 0.9
+      : f < AVATAR_EM + 9
+        ? 0.9 + 0.13 * passo(f, AVATAR_EM, AVATAR_EM + 9)
+        : 1.03 - 0.03 * passo(f, AVATAR_EM + 9, AVATAR_EM + 16);
+  const nome = janela(f, NOME_EM, CENA04A_FRAMES, 11, 0);
+  const papel = janela(f, NOME_EM + 6, CENA04A_FRAMES, 11, 0);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -188,65 +263,117 @@ export const Cena04A: React.FC = () => {
         </AbsoluteFill>
       ) : null}
 
-      {/* --- com o que a EITA foi treinada --- */}
+      {/* --- com o que a IA foi treinada, e o que ela virou --- */}
       {rotulo2 > 0.001 ? (
-        <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
+        <AbsoluteFill style={{ opacity: rotulo2 }}>
           <div
             style={{
+              position: "absolute",
+              left: LISTA_L,
+              top: ITEM_Y0 - 110,
               fontSize: 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
               color: marca.azul,
-              opacity: rotulo2,
-              marginBottom: 48,
             }}
           >
-            A EITA foi treinada com
+            A IA foi treinada com
           </div>
 
+          {FONTES.map((fo, i) => (
+            <Fonte
+              key={fo.texto}
+              texto={fo.texto}
+              o={janela(f, fo.em, CENA04A_FRAMES, 14, 10)}
+              puxa={puxa}
+              y={ITEM_Y0 + i * ITEM_PASSO}
+            />
+          ))}
+
+          {/* as quatro curvas que desaguam no avatar, cada uma com um ponto
+              correndo por ela: o device de grafo da referencia */}
+          <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0 }}>
+            {FONTES.map((fo, i) => {
+              const c = curva(ITEM_Y0 + i * ITEM_PASSO);
+              const d = `M ${c.p0[0]} ${c.p0[1]} C ${c.p1[0]} ${c.p1[1]}, ${c.p2[0]} ${c.p2[1]}, ${c.p3[0]} ${c.p3[1]}`;
+              const k = passo(f, CURVAS_EM + i * 2, CURVAS_ATE + i * 2);
+              const [px, py] = noBezier(c, k);
+              return (
+                <g key={fo.texto}>
+                  <path
+                    d={d}
+                    fill="none"
+                    stroke={marca.azul}
+                    strokeWidth={2}
+                    opacity={0.55}
+                    pathLength={1}
+                    strokeDasharray={1}
+                    strokeDashoffset={1 - desenha}
+                  />
+                  {k > 0.001 && k < 0.999 ? (
+                    <circle cx={px} cy={py} r={6} fill={marca.azul} />
+                  ) : null}
+                </g>
+              );
+            })}
+          </svg>
+
+          {/* o resultado: o avatar da EITA, com o nome embaixo.
+
+              O avatar e a ilustracao que ja aparece no canto dos videos da
+              Anaclaudia (cenas 07 e 09), e nao o icone da lampada do logo:
+              assim o rosto apresentado aqui e o mesmo que o espectador
+              reencontra depois. Ele foi tirado da mediana de 44 quadros do
+              bruto `ana-0112-0134.mp4`: a ilustracao e fixa na tela e o fundo
+              atras dela se mexe com a camera, entao a mediana deixa o rosto
+              nitido e alisa o predio que aparece pelo disco translucido.
+              O icone da lampada ficou em `marca/eita-icone.png`. */}
           <div
             style={{
+              position: "absolute",
+              left: AV_CX - 260,
+              width: 520,
+              top: AV_CY - AV_TAM / 2,
               display: "flex",
               flexDirection: "column",
-              gap: 30,
-              opacity: rotulo2,
-            }}
-          >
-            {FONTES.map((fo) => (
-              <Fonte
-                key={fo.texto}
-                texto={fo.texto}
-                o={janela(f, fo.em, CENA04A_FRAMES, 14, 10)}
-                puxa={puxa}
-              />
-            ))}
-          </div>
-
-          {/* o ponto para onde as quatro linhas convergem */}
-          <div
-            style={{
-              marginTop: 52,
-              alignSelf: "flex-end",
-              display: "flex",
               alignItems: "center",
-              gap: 20,
-              padding: "20px 36px",
-              background: marca.azul,
-              borderRadius: marca.raio.painel,
-              boxShadow: marca.sombra.azul,
-              ...entra(convergiu, 16),
             }}
           >
+            <Img
+              src={staticFile("marca/eita-avatar.png")}
+              style={{
+                width: AV_TAM,
+                height: AV_TAM,
+                opacity: avatar,
+                transform: `scale(${escala})`,
+                filter: `drop-shadow(0 24px 48px rgba(16,18,24,0.18)) blur(${(1 - avatar) * 6}px)`,
+              }}
+            />
             <div
               style={{
-                fontSize: 44,
+                marginTop: 34,
+                fontSize: 64,
                 fontWeight: 500,
-                letterSpacing: "-1.54px",
-                color: marca.branco,
+                letterSpacing: "-2.24px",
+                lineHeight: 1,
+                color: m.tinta,
+                ...entra(nome, 14),
               }}
             >
-              uma IA que responde como ela
+              EITA
+            </div>
+            <div
+              style={{
+                marginTop: 12,
+                fontSize: 34,
+                fontWeight: 400,
+                letterSpacing: "-1.19px",
+                color: m.apoio,
+                ...entra(papel, 12),
+              }}
+            >
+              Mentora Virtual
             </div>
           </div>
         </AbsoluteFill>
@@ -256,7 +383,8 @@ export const Cena04A: React.FC = () => {
       {FONTES.map((fo) => (
         <Sfx key={fo.texto} som="pop" em={fo.em} volume={0.16} />
       ))}
-      <Sfx som="surge" em={CONVERGE} volume={0.2} />
+      <Sfx som="surge" em={CURVAS_EM} volume={0.2} />
+      <Sfx som="assenta" em={AVATAR_EM + 4} volume={0.3} />
     </AbsoluteFill>
   );
 };

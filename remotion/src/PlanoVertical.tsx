@@ -1,8 +1,10 @@
 import React from "react";
 import { AbsoluteFill, OffthreadVideo, staticFile, useCurrentFrame } from "remotion";
-import { janela, s } from "./anim";
+import { passo, s } from "./anim";
 import { interpolate } from "remotion";
 import { BalaoAudio } from "./BalaoAudio";
+import { wa } from "./whatsapp";
+import { Sfx } from "./Sfx";
 
 /**
  * Plano gravado na vertical ocupando um quadro 16:9, sem corte e sem barra.
@@ -35,12 +37,17 @@ export type Fala = {
   /** O envelope medido no proprio arquivo. */
   valores: number[];
   /**
-   * Onde o balao encosta, em coordenadas do quadro 1920x1080: o canto inferior
-   * direito dele. **Fica perto do celular dela**, porque balao solto no canto
-   * nao liga a imagem ao som; colado no aparelho, ele le como o audio que esta
-   * saindo dali.
+   * **A ponta do rabicho**, em coordenadas do quadro 1920x1080: o ponto do
+   * celular de onde o audio sai.
+   *
+   * Antes aqui ficava o canto do balao, e ele encostava ao lado do aparelho
+   * com o rabicho de mensagem do app, virado para cima. O usuario pediu o
+   * contrario, e com razao: o balao tem que **sair do celular**. Agora ele fica
+   * acima da ponta de cima do aparelho, com um rabicho pontudo descendo ate
+   * ela, e a entrada cresce a partir dessa ponta. Medido nos quadros do trecho
+   * em que o audio toca, porque ela mexe o celular.
    */
-  ancora: { x: number; y: number };
+  ponta: { x: number; y: number };
 };
 
 export const PlanoVertical: React.FC<{
@@ -51,7 +58,23 @@ export const PlanoVertical: React.FC<{
   const f = useCurrentFrame();
   const src = staticFile("broll/" + arquivo);
 
-  const entra = fala ? janela(f, s(fala.de - 0.5), s(fala.ate + 0.6), 12, 14) : 0;
+  // entrada de mensagem do app: cresce da ponta do rabicho, passa um pouco do
+  // tamanho e assenta (0 -> 1,06 -> 1), com a opacidade chegando antes
+  const POP = fala ? s(fala.de - 0.45) : 0;
+  const SAI = fala ? s(fala.ate + 0.5) : 0;
+  const escala = !fala
+    ? 0
+    : f < POP
+      ? 0
+      : f < POP + 8
+        ? 1.06 * passo(f, POP, POP + 8)
+        : f < POP + 13
+          ? 1.06 - 0.06 * passo(f, POP + 8, POP + 13)
+          : 1 - 0.08 * passo(f, SAI, SAI + 8);
+  const opac = !fala
+    ? 0
+    : Math.min(passo(f, POP, POP + 5), 1 - passo(f, SAI, SAI + 8));
+
   // linear, sem easing: mensagem de audio toca em velocidade constante, e a
   // curva suave da casa fazia o cabecote correr na frente da voz
   const progresso = fala
@@ -84,23 +107,42 @@ export const PlanoVertical: React.FC<{
         <OffthreadVideo src={src} style={{ height: "100%", width: "auto" }} />
       </AbsoluteFill>
 
-      {fala && entra > 0.001 ? (
+      {fala && opac > 0.001 ? (
         <div
           style={{
             position: "absolute",
-            right: 1920 - fala.ancora.x,
-            bottom: 1080 - fala.ancora.y,
+            // o canto de baixo-esquerdo do corpo fica 10 px a direita e 40 px
+            // acima da ponta: o rabicho cobre essa distancia
+            left: fala.ponta.x + 10,
+            bottom: 1080 - (fala.ponta.y - 40),
+            opacity: opac,
+            transform: `scale(${escala})`,
+            // a escala nasce na ponta do rabicho, que e o celular
+            transformOrigin: "-10px calc(100% + 40px)",
+            filter: "drop-shadow(0 18px 40px rgba(0,0,0,0.35))",
           }}
         >
           <BalaoAudio
             valores={fala.valores}
             progresso={progresso}
-            o={entra}
+            o={1}
             segundos={fala.ate - fala.de}
             escala={0.92}
+            cauda="base"
+            desliza={false}
           />
+          {/* o rabicho: pontudo, descendo da base do balao ate o celular */}
+          <svg
+            width={60}
+            height={50}
+            viewBox="-20 -6 60 50"
+            style={{ position: "absolute", left: -20, top: "calc(100% - 6px)", overflow: "visible" }}
+          >
+            <path d="M 0 0 L 34 0 Q 12 10 -10 40 Q 4 16 0 0 Z" fill={wa.balaoEntrada} />
+          </svg>
         </div>
       ) : null}
+      {fala ? <Sfx som="recebido" em={s(fala.de - 0.45)} volume={0.28} /> : null}
     </AbsoluteFill>
   );
 };

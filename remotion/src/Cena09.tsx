@@ -116,8 +116,9 @@ export const Cena09: React.FC = () => (
             de: 6.44,
             ate: 21.68,
             valores: ONDA_MISSAO,
-            // medido no frame: o celular fica em x 834..1213, y 859..960
-            ancora: { x: 1604, y: 832 },
+            // a ponta de cima do celular: o aparelho fica em x 834..1213,
+            // y 859..960 do quadro durante o trecho em que o audio toca
+            ponta: { x: 1195, y: 862 },
           }}
         />
       </Series.Sequence>

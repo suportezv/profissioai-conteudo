@@ -49,7 +49,15 @@ export const BalaoAudio: React.FC<{
   /** Duracao total do audio, em segundos. O contador anda ate ela. */
   segundos: number;
   escala?: number;
-}> = ({ valores, progresso, o, segundos, escala = 1 }) => {
+  /**
+   * Onde o rabicho fica. `topo` e o balao de conversa do app (canto de cima
+   * vivo); `base` e o balao que sai do celular por baixo, com o rabicho
+   * desenhado por quem o posiciona.
+   */
+  cauda?: "topo" | "base";
+  /** Se o proprio balao desliza ao entrar. Quem anima de fora desliga. */
+  desliza?: boolean;
+}> = ({ valores, progresso, o, segundos, escala = 1, cauda = "topo", desliza = true }) => {
   const tocando = progresso > 0 && progresso < 1;
   const decorrido = tocando ? progresso * segundos : progresso >= 1 ? segundos : 0;
   return (
@@ -57,13 +65,15 @@ export const BalaoAudio: React.FC<{
       style={{
         background: wa.balaoEntrada,
         borderRadius: 22 * escala,
-        borderTopLeftRadius: 6 * escala,
+        ...(cauda === "topo"
+          ? { borderTopLeftRadius: 6 * escala }
+          : { borderBottomLeftRadius: 4 * escala }),
         padding: `${20 * escala}px ${26 * escala}px ${14 * escala}px`,
         display: "flex",
         flexDirection: "column",
         gap: 8 * escala,
         opacity: o,
-        transform: `translateY(${interpolate(o, [0, 1], [18, 0])}px)`,
+        transform: desliza ? `translateY(${interpolate(o, [0, 1], [18, 0])}px)` : undefined,
         boxShadow: "0 18px 50px rgba(0,0,0,0.35)",
       }}
     >

@@ -192,6 +192,14 @@ export const Completo: React.FC = () => (
       {/* a sonora que abre o filme na voz dela: o GC entra depois da primeira
           oracao ("...que a conta nao fechava", que fecha em 2,89 s) e sai
           antes das ultimas palavras, para a frase terminar limpa */}
+      {/* O audio desta sonora foi refeito em 23/set/2026 a partir do bruto
+          (WhatsApp_Video_2026-09-22_at_13.51.14.mp4, trecho de 29,425 s), porque
+          o usuario o ouvia "estranho, comprimido". A causa estava medida: a
+          cadeia anterior subia a presenca em 9 dB num AAC de 64 kbps, o que
+          expoe o artefato do codec, e ainda passava por denoise, compressor e
+          expansor. A cadeia nova e so `highpass=90`, -1,5 dB em 250 Hz e +3 dB
+          largo em 3 kHz, com ganho estatico ate -18,7 LUFS. A dinamica voltou a
+          14 dB, a do bruto. O piso sobe para -43 dBFS, 10 dB abaixo da trilha. */}
       <Series.Sequence durationInFrames={CENA02_FRAMES}>
         <Sonora
           arquivo="ana-missao-set26.mp4"
@@ -200,6 +208,17 @@ export const Completo: React.FC = () => (
           rotulo="Por que ela começou"
           gcEm={3.0}
           gcDura={3.4}
+          // um plano por oracao, cortado na primeira palavra dela (Scribe)
+          planos={[
+            // "Eu percebi que a conta nao fechava": medio, apresenta ela
+            { em: 0, zoom: 1.15, origem: "73.8% 100%" },
+            // "e precisava levar o que eu aprendi": close
+            { em: 3.0, zoom: 1.45, origem: "67.3% 81.1%" },
+            // "em mais de vinte anos de consultorio": abre um pouco
+            { em: 4.84, zoom: 1.28, origem: "67.1% 92%" },
+            // "pro maior numero de pessoas possivel": o mais fechado, o fecho
+            { em: 6.42, zoom: 1.6, origem: "64.3% 75.5%" },
+          ]}
         />
       </Series.Sequence>
 
@@ -252,8 +271,10 @@ export const Completo: React.FC = () => (
             de: 2.62,
             ate: 6.68,
             valores: ONDA_OUVINDO,
-            // medido no frame: o celular dela fica em x 859..1061, y 720..834
-            ancora: { x: 1452, y: 806 },
+            // a ponta de cima do celular, medida nos quadros de 3,6 a 5,6 s do
+            // clipe (a janela em que o audio toca): fonte (820, 880) no plano
+            // de 1080x1294, que vai para o quadro por 0,8346x + 509,5
+            ponta: { x: 1190, y: 735 },
           }}
         />
       </Series.Sequence>
