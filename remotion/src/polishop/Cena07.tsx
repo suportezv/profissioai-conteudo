@@ -100,7 +100,7 @@ export const Cena07: React.FC = () => {
           <div style={{ position: "absolute", left: M, top: 236, width: 1080 - 2 * M }}>
             <div
               style={{
-                fontSize: 28,
+                fontSize: 30,
                 fontWeight: 500,
                 letterSpacing: "2px",
                 textTransform: "uppercase",
@@ -113,9 +113,9 @@ export const Cena07: React.FC = () => {
             <div
               style={{
                 marginTop: 22,
-                fontSize: 76,
+                fontSize: 84,
                 fontWeight: 500,
-                letterSpacing: "-2.66px",
+                letterSpacing: "-2.94px",
                 lineHeight: 1.18,
                 opacity: janela(f, s(1.58), CENA07_FRAMES, 11, 0),
               }}
@@ -127,9 +127,11 @@ export const Cena07: React.FC = () => {
             <div
               style={{
                 marginTop: 24,
-                fontSize: 34,
-                letterSpacing: "-1.19px",
+                fontSize: 40,
+                letterSpacing: "-1.4px",
                 lineHeight: 1.25,
+                // quebra depois de "pediu,", sem deixar "um chef faz" sozinho
+                maxWidth: 665,
                 color: m.apoio,
                 borderTop: "1px solid rgba(16,18,24,0.22)",
                 paddingTop: 18,
@@ -139,8 +141,8 @@ export const Cena07: React.FC = () => {
               ele dá opinião que ninguém pediu, e é isso que um chef faz
             </div>
           </div>
-          <div style={{ position: "absolute", left: M, top: 690 }}>
-            <Painel largura={1080 - M - seguro.direita} altura={642} o={tela}>
+          <div style={{ position: "absolute", left: M, top: 700 }}>
+            <Painel largura={1080 - 2 * M} altura={623} o={tela}>
               {conversa}
             </Painel>
           </div>

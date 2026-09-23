@@ -74,8 +74,9 @@ const TESE_EM = s(8.04);
  * prova da cena. A conversa e a mesma de 660 px do 16:9 em escala, para que a
  * quebra das frases dentro dos baloes seja identica nos dois cortes.
  */
-const CONVERSA_V_T = 640;
-const CONVERSA_V_ESCALA = 1.315;
+const CONVERSA_V_T = 634;
+/** 660 x 1,418 = 936: os baloes de 22 px saem com 31 px efetivos. */
+const CONVERSA_V_ESCALA = 1.418;
 
 /** A ultima mensagem cai depois da narracao, em silencio. */
 const SEM_ENTREGA_EM = s(11.3);
@@ -217,7 +218,9 @@ export const Cena02: React.FC = () => {
       <div
         style={{
           padding: 24,
-          height: 470,
+          // no 9:16 a coluna e mais baixa para a conversa, maior, fechar antes
+          // da faixa de interface do app; o rastro mais antigo sai por cima
+          height: vertical ? 420 : 470,
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
@@ -310,7 +313,7 @@ export const Cena02: React.FC = () => {
     >
       <div
         style={{
-          fontSize: vertical ? 28 : 24,
+          fontSize: vertical ? 30 : 24,
           fontWeight: 500,
           letterSpacing: "2px",
           textTransform: "uppercase",
@@ -324,10 +327,10 @@ export const Cena02: React.FC = () => {
       {tese > 0.001 ? (
         <div
           style={{
-            fontSize: vertical ? 76 : 52,
+            fontSize: vertical ? 88 : 52,
             fontWeight: 500,
-            letterSpacing: vertical ? "-2.66px" : "-1.82px",
-            lineHeight: vertical ? 1.14 : 1.2,
+            letterSpacing: vertical ? "-3.08px" : "-1.82px",
+            lineHeight: vertical ? 1.1 : 1.2,
             ...entra(tese, 18),
           }}
         >

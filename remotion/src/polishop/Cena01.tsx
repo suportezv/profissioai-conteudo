@@ -135,7 +135,7 @@ export const Cena01: React.FC = () => {
           >
             <div
               style={{
-                fontSize: vertical ? 28 : 22,
+                fontSize: vertical ? 30 : 22,
                 fontWeight: 500,
                 letterSpacing: "2px",
                 textTransform: "uppercase",
@@ -171,7 +171,7 @@ export const Cena01: React.FC = () => {
         >
           <div
             style={{
-              fontSize: vertical ? 28 : 24,
+              fontSize: vertical ? 30 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
@@ -206,8 +206,8 @@ export const Cena01: React.FC = () => {
                     color: acende > 0.5 ? marca.branco : m.apoio,
                     borderRadius: 12,
                     padding: vertical ? "20px 26px" : "18px 20px",
-                    fontSize: vertical ? 36 : 26,
-                    letterSpacing: vertical ? "-1.26px" : "-0.91px",
+                    fontSize: vertical ? 44 : 26,
+                    letterSpacing: vertical ? "-1.54px" : "-0.91px",
                     ...ent,
                     opacity: ent.opacity * (usada ? 1 : 0.42),
                   }}

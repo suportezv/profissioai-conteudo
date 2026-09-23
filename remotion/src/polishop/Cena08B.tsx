@@ -73,13 +73,13 @@ export const Cena08B: React.FC = () => {
   const faixa = vertical
     ? { paddingTop: seguro.topo, paddingBottom: 1920 - seguro.base, paddingLeft: M, paddingRight: M }
     : {};
-  const numero = vertical ? 210 : 168;
-  const numeroTr = vertical ? "-7.35px" : "-5.88px";
+  const numero = vertical ? 300 : 168;
+  const numeroTr = vertical ? "-10.5px" : "-5.88px";
   const rotulo = vertical ? 58 : 44;
   const rotuloTr = vertical ? "-2.03px" : "-1.54px";
   const base = vertical ? 32 : 25;
   const baseTr = vertical ? "-1.12px" : "-0.88px";
-  const coluna = vertical ? { flex: "none" as const, height: 390, maxWidth: 1080 - M - seguro.direita } : {};
+  const coluna = vertical ? { flex: "none" as const, height: 460, maxWidth: 1080 - M - seguro.direita } : {};
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -100,7 +100,7 @@ export const Cena08B: React.FC = () => {
       >
         {/* no 9:16 cada vaga existe mesmo antes do numero entrar, senao a
             coluna centrada pularia quando o segundo chegasse */}
-        {vertical && retorno <= 0.001 ? <div style={{ height: 390 }} /> : null}
+        {vertical && retorno <= 0.001 ? <div style={{ height: 460 }} /> : null}
         {retorno > 0.001 ? (
           <div
             style={{
@@ -142,7 +142,7 @@ export const Cena08B: React.FC = () => {
           </div>
         ) : null}
 
-        {vertical && nps <= 0.001 ? <div style={{ height: 390 }} /> : null}
+        {vertical && nps <= 0.001 ? <div style={{ height: 460 }} /> : null}
         {nps > 0.001 ? (
           <div
             style={{

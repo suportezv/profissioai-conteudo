@@ -9,6 +9,7 @@ import {
 } from "remotion";
 import { s } from "../anim";
 import { Sonora } from "../Sonora";
+import { useFormato } from "../formato";
 import { Cena01, CENA01_FRAMES } from "./Cena01";
 import { Cena02, CENA02_FRAMES } from "./Cena02";
 import { Cena03, CENA03_FRAMES } from "./Cena03";
@@ -130,9 +131,37 @@ const volumeTrilha = (total: number) => (f: number) => {
   return Math.min(entrada, leito) * saida * sonora;
 };
 
+/**
+ * Os planos da sonora do Clesio, nos dois quadros. Mesmos tempos, cortados na
+ * primeira palavra de cada oracao.
+ *
+ * No 9:16 a janela ja e um recorte apertado do plano deitado (31% da largura
+ * do bruto), entao o punch-in do 16:9, que chega a 1,35, tirava o alto do
+ * cabelo do quadro nos closes. Aqui o mais fechado e 1,15, e a alternancia
+ * medio / close / abre / fecha continua a mesma.
+ */
+const PLANOS_04 = [
+  // "A Soldier ja dominava a aquisicao do cliente": medio
+  { em: 0, zoom: 1.08, origem: "61% 55%" },
+  // "mas em um mercado tao comoditizado": close
+  { em: 2.92, zoom: 1.3, origem: "61% 18%" },
+  // "E o MODO e justamente essa peca": abre, entra a resposta
+  { em: 8.5, zoom: 1.15, origem: "61% 40%" },
+  // "e resolve esse problema": o mais fechado, o fecho
+  { em: 14.1, zoom: 1.35, origem: "61% 16%" },
+];
+const PLANOS_04_VERTICAL = [
+  { em: 0, zoom: 1.0, origem: "61% 50%" },
+  { em: 2.92, zoom: 1.1, origem: "61% 20%" },
+  { em: 8.5, zoom: 1.04, origem: "61% 40%" },
+  { em: 14.1, zoom: 1.15, origem: "61% 18%" },
+];
+
 export const Completo: React.FC<{ lacunas?: boolean }> = ({
   lacunas = true,
-}) => (
+}) => {
+  const { vertical } = useFormato();
+  return (
   <AbsoluteFill style={{ backgroundColor: "#000" }}>
     {trilhaEscolhida() ? (
       <Audio src={staticFile(trilhaEscolhida() as string)} volume={volumeTrilha(framesDoCorte(lacunas))} />
@@ -168,16 +197,7 @@ export const Completo: React.FC<{ lacunas?: boolean }> = ({
           // largura do bruto (medido nos quadros), e 66 de objectPosition poe
           // esse ponto no eixo da janela
           foco={66}
-          planos={[
-            // "A Soldier ja dominava a aquisicao do cliente": medio
-            { em: 0, zoom: 1.08, origem: "61% 55%" },
-            // "mas em um mercado tao comoditizado": close
-            { em: 2.92, zoom: 1.3, origem: "61% 18%" },
-            // "E o MODO e justamente essa peca": abre, entra a resposta
-            { em: 8.5, zoom: 1.15, origem: "61% 40%" },
-            // "e resolve esse problema": o mais fechado, o fecho
-            { em: 14.1, zoom: 1.35, origem: "61% 16%" },
-          ]}
+          planos={vertical ? PLANOS_04_VERTICAL : PLANOS_04}
         />
       </Series.Sequence>
 
@@ -210,4 +230,5 @@ export const Completo: React.FC<{ lacunas?: boolean }> = ({
       </Series.Sequence>
     </Series>
   </AbsoluteFill>
-);
+  );
+};

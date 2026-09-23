@@ -174,6 +174,12 @@ const Pote: React.FC<{
   silhueta?: number;
   precoPx?: number;
   rotuloPx?: number;
+  /**
+   * No 9:16 o pote deita: silhueta a esquerda, rotulo e preco a direita, e os
+   * dois cartoes empilham na largura util. Lado a lado a coluna de 456 px
+   * travava a silhueta em ~370 px de largura e o terco de baixo ficava vazio.
+   */
+  deitado?: boolean;
 }> = ({
   preco,
   o,
@@ -182,33 +188,22 @@ const Pote: React.FC<{
   silhueta = 230,
   precoPx = 68,
   rotuloPx = 28,
-}) => (
-  <div
-    style={{
-      flexGrow: 1,
-      background: marca.branco,
-      border: `1px solid ${escolhido ? marca.azul : marca.linha}`,
-      borderRadius: marca.raio.painel,
-      boxShadow: escolhido ? marca.sombra.azul : marca.sombra.painel,
-      padding: 40,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: 22,
-      ...entra(o, 22),
-    }}
-  >
-    <PoteSilhueta cor={escolhido ? marca.azul : "#C7CEDA"} altura={silhueta} />
+  deitado = false,
+}) => {
+  const rotulo = (
     <div
       style={{
         fontSize: rotuloPx,
         letterSpacing: `${(-rotuloPx * 0.035).toFixed(2)}px`,
+        lineHeight: deitado ? 1.2 : undefined,
         color: m.apoio,
-        textAlign: "center",
+        textAlign: deitado ? "left" : "center",
       }}
     >
       creatina monoidratada · 300 g
     </div>
+  );
+  const valor = (
     <div
       style={{
         fontSize: precoPx,
@@ -221,16 +216,52 @@ const Pote: React.FC<{
     >
       R$ {br(preco, 0)}
     </div>
-  </div>
-);
+  );
+  return (
+    <div
+      style={{
+        flexGrow: 1,
+        background: marca.branco,
+        border: `1px solid ${escolhido ? marca.azul : marca.linha}`,
+        borderRadius: marca.raio.painel,
+        boxShadow: escolhido ? marca.sombra.azul : marca.sombra.painel,
+        padding: deitado ? "40px 48px" : 40,
+        display: "flex",
+        flexDirection: deitado ? "row" : "column",
+        alignItems: "center",
+        gap: deitado ? 48 : 22,
+        ...entra(o, 22),
+      }}
+    >
+      <PoteSilhueta cor={escolhido ? marca.azul : "#C7CEDA"} altura={silhueta} />
+      {deitado ? (
+        <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+          {rotulo}
+          {valor}
+        </div>
+      ) : (
+        <>
+          {rotulo}
+          {valor}
+        </>
+      )}
+    </div>
+  );
+};
 
 /**
- * No 9:16 os dois potes seguem lado a lado, porque a comparacao e o argumento,
- * mas cada um e mais alto: a coluna estreita ganha a altura que o quadro tem.
+ * No 9:16 os dois potes empilham, um cartao deitado sobre o outro, cada um na
+ * largura util: a comparacao continua sendo a mesma silhueta com dois precos,
+ * e empilhados eles ocupam a altura que o quadro tem.
  */
-const TAM_POTE_VERTICAL = { silhueta: 440, precoPx: 96, rotuloPx: 30 };
-/** Onde o cursor pousa no 9:16: em cima do preco do pote da direita. */
-const CURSOR_V = { x: 800, y: 1180 };
+const TAM_POTE_VERTICAL = {
+  silhueta: 420,
+  precoPx: 150,
+  rotuloPx: 42,
+  deitado: true,
+};
+/** Onde o cursor pousa no 9:16: em cima do preco do pote de baixo. */
+const CURSOR_V = { x: 700, y: 1250 };
 
 export const Cena01: React.FC = () => {
   const f = useCurrentFrame();
@@ -303,7 +334,7 @@ export const Cena01: React.FC = () => {
           >
             <div
               style={{
-                fontSize: vertical ? 28 : 24,
+                fontSize: vertical ? 30 : 24,
                 fontWeight: 500,
                 letterSpacing: "2px",
                 textTransform: "uppercase",
@@ -320,7 +351,7 @@ export const Cena01: React.FC = () => {
                   ela e constatacao, com a duvida acima ela cobra resposta */}
               <div
                 style={{
-                  fontSize: vertical ? 28 : 30,
+                  fontSize: vertical ? 30 : 30,
                   fontWeight: 500,
                   letterSpacing: "2px",
                   textTransform: "uppercase",
@@ -381,7 +412,7 @@ export const Cena01: React.FC = () => {
         >
           <div
             style={{
-              fontSize: vertical ? 28 : 24,
+              fontSize: vertical ? 30 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
@@ -396,28 +427,50 @@ export const Cena01: React.FC = () => {
               // no 9:16 o "por ano" desce para baixo do numero
               flexDirection: vertical ? "column" : "row",
               alignItems: vertical ? "flex-start" : "baseline",
-              gap: vertical ? 12 : 24,
+              gap: vertical ? 16 : 24,
               ...entra(mercado, 22),
             }}
           >
+            {vertical ? (
+              /* no 9:16 o "R$" desce para 120 px: com ele no corpo do numero,
+                 "R$ 7,6 bi" a 280 passaria da largura util (1136 px) */
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: 16,
+                  lineHeight: 0.95,
+                  color: marca.azul,
+                  fontWeight: 500,
+                  fontVariantNumeric: "tabular-nums",
+                  textShadow: "0 20px 56px rgba(36,88,245,0.22)",
+                }}
+              >
+                <span style={{ fontSize: 120, letterSpacing: "-4.2px" }}>R$</span>
+                <span style={{ fontSize: 280, letterSpacing: "-9.8px" }}>
+                  {br(bilhoes, 1)} bi
+                </span>
+              </div>
+            ) : (
+              <div
+                style={{
+                  fontSize: 230,
+                  fontWeight: 500,
+                  letterSpacing: "-8.05px",
+                  lineHeight: 0.95,
+                  color: marca.azul,
+                  fontVariantNumeric: "tabular-nums",
+                  textShadow: "0 20px 56px rgba(36,88,245,0.22)",
+                }}
+              >
+                R$ {br(bilhoes, 1)} bi
+              </div>
+            )}
             <div
               style={{
-                fontSize: vertical ? 210 : 230,
+                fontSize: vertical ? 72 : 44,
                 fontWeight: 500,
-                letterSpacing: vertical ? "-7.35px" : "-8.05px",
-                lineHeight: 0.95,
-                color: marca.azul,
-                fontVariantNumeric: "tabular-nums",
-                textShadow: "0 20px 56px rgba(36,88,245,0.22)",
-              }}
-            >
-              R$ {br(bilhoes, 1)} bi
-            </div>
-            <div
-              style={{
-                fontSize: vertical ? 56 : 44,
-                fontWeight: 500,
-                letterSpacing: vertical ? "-1.96px" : "-1.54px",
+                letterSpacing: vertical ? "-2.52px" : "-1.54px",
                 color: m.apoio,
               }}
             >
@@ -429,25 +482,25 @@ export const Cena01: React.FC = () => {
               display: "flex",
               flexDirection: vertical ? "column" : "row",
               alignItems: vertical ? "flex-start" : "baseline",
-              gap: vertical ? 10 : 32,
+              gap: vertical ? 14 : 32,
               borderTop: "1px solid rgba(16,18,24,0.22)",
-              paddingTop: vertical ? 28 : 22,
+              paddingTop: vertical ? 32 : 22,
               maxWidth: 1180,
             }}
           >
             <div
               style={{
-                fontSize: vertical ? 56 : 46,
+                fontSize: vertical ? 84 : 46,
                 fontWeight: 500,
-                letterSpacing: vertical ? "-1.96px" : "-1.61px",
+                letterSpacing: vertical ? "-2.94px" : "-1.61px",
               }}
             >
               +15% em 2025
             </div>
             <div
               style={{
-                fontSize: vertical ? 28 : 26,
-                letterSpacing: vertical ? "-0.98px" : "-0.91px",
+                fontSize: vertical ? 36 : 26,
+                letterSpacing: vertical ? "-1.26px" : "-0.91px",
                 color: m.apoio,
               }}
             >
@@ -469,7 +522,7 @@ export const Cena01: React.FC = () => {
       >
         <div
           style={{
-            fontSize: vertical ? 28 : 24,
+            fontSize: vertical ? 30 : 24,
             fontWeight: 500,
             letterSpacing: "2px",
             textTransform: "uppercase",
@@ -481,7 +534,12 @@ export const Cena01: React.FC = () => {
         </div>
 
         <div
-          style={{ display: "flex", gap: vertical ? 24 : 40, alignItems: "stretch" }}
+          style={{
+            display: "flex",
+            flexDirection: vertical ? "column" : "row",
+            gap: vertical ? 24 : 40,
+            alignItems: "stretch",
+          }}
         >
           <Pote
             preco={119}

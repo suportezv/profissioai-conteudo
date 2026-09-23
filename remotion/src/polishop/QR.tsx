@@ -84,16 +84,18 @@ export const SOQUETE_Y = 481;
  *
  * - o cabecalho no alto da faixa segura, como antes;
  * - o motor no meio, na largura util inteira (72 a 1008);
- * - o aparelho embaixo, a esquerda, com o codigo na tampa;
+ * - o aparelho embaixo, a direita, com o codigo na tampa (imagem pode
+ *   encostar na coluna de botoes do app; texto nao);
  * - e o fio **sobe** do codigo ate o centro do painel, que e onde o soquete
  *   fica quando o motor antigo e desmontado. O painel e desenhado por cima do
  *   fio, entao enquanto ele existe so se ve o trecho entre o painel e a tampa,
  *   e quando ele se fecha o fio inteiro aparece chegando no soquete: a porta
  *   continua ligada ao lugar do motor, que e o argumento da cena 03.
  *
- * A direita do aparelho sobra uma coluna (540 a 940, fora dos 140 px de
- * botoes do app) que recebe a curva do engajamento na cena 02 e os tres
- * "sem" na cena 03.
+ * A esquerda do aparelho sobra uma coluna (72 a ~560) que recebe a curva do
+ * engajamento na cena 02 e os tres "sem" na cena 03, em corpo 40. Ela fica
+ * a esquerda de proposito: a direita, na metade de baixo, e a coluna de
+ * botoes do app, e "sem aprender aplicativo" em corpo 40 nao caberia ali.
  *
  * O fio sai do topo do codigo e nao do centro, porque o codigo e desenhado por
  * cima e o fio que some atras da etiqueta lia como risco solto.
@@ -134,11 +136,11 @@ const GEO_H: GeoPorta = {
   afW: AF_W,
 };
 
-const AF_L_V = 72;
-const AF_T_V = 1170;
-const AF_W_V = 420;
-const MOTOR_T_V = 490;
-const PAINEL_ALT_V = 620;
+const AF_L_V = 568;
+const AF_T_V = 1200;
+const AF_W_V = 440;
+const MOTOR_T_V = 500;
+const PAINEL_ALT_V = 660;
 const SOQUETE_Y_V = MOTOR_T_V + PAINEL_ALT_V / 2;
 /** Centro do codigo na tampa, e o topo dele (a etiqueta achatada tem ~36 px). */
 const CODIGO_X_V = AF_L_V + AF_W_V * (233 / 449);
@@ -174,15 +176,15 @@ export const menuTam = (vertical: boolean) =>
     ? {
         barra: "18px 26px",
         ponto: 16,
-        url: 22,
+        url: 26,
         urlPad: "9px 18px",
         pad: 38,
         gap: 16,
-        titulo: 32,
-        item: 32,
+        titulo: 36,
+        item: 36,
         itemPad: "17px 24px",
         itemRaio: 12,
-        campo: 30,
+        campo: 34,
       }
     : {
         barra: "14px 20px",

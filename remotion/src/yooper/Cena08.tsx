@@ -97,10 +97,16 @@ const DECISAO_EM = s(12.36);
  * autoria, que e texto longo e precisa de largura.
  */
 const V_BARRA = 936;
-const V_ROSTO = 140;
+const V_ROSTO = 160;
 /** Topo fixo de cada ato no 9:16, para o conteudo fechar centrado na faixa segura. */
-const V_TOPO_A = 540;
-const V_TOPO_B = 470;
+const V_TOPO_A = 330;
+const V_TOPO_B = 350;
+/**
+ * O "40 minutos" a 210 px nao cabe numa linha e quebra em duas; o "segundos"
+ * cabe em uma. A caixa guarda as duas linhas e assenta o texto na base, para
+ * a barra e o resto da coluna nao pularem na troca.
+ */
+const V_TEMPO = 194;
 
 export const Cena08: React.FC = () => {
   const f = useCurrentFrame();
@@ -170,7 +176,7 @@ export const Cena08: React.FC = () => {
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 <div
                   style={{
-                    fontSize: vertical ? 28 : 24,
+                    fontSize: vertical ? 30 : 24,
                     fontWeight: 500,
                     letterSpacing: "2px",
                     textTransform: "uppercase",
@@ -181,9 +187,9 @@ export const Cena08: React.FC = () => {
                 </div>
                 <div
                   style={{
-                    fontSize: vertical ? 44 : 34,
+                    fontSize: vertical ? 48 : 34,
                     fontWeight: 500,
-                    letterSpacing: vertical ? "-1.54px" : "-1.19px",
+                    letterSpacing: vertical ? "-1.68px" : "-1.19px",
                     lineHeight: vertical ? 1.18 : undefined,
                   }}
                 >
@@ -210,7 +216,7 @@ export const Cena08: React.FC = () => {
                 >
                   <div
                     style={{
-                      height: vertical ? 68 : 56,
+                      height: vertical ? 90 : 56,
                       width: interpolate(
                         encolhe,
                         [0, 1],
@@ -223,12 +229,19 @@ export const Cena08: React.FC = () => {
                   />
                   <div
                     style={{
-                      fontSize: vertical ? 96 : 66,
+                      fontSize: vertical ? V_TEMPO : 66,
                       fontWeight: 500,
-                      letterSpacing: vertical ? "-3.36px" : "-2.31px",
-                      lineHeight: vertical ? 1.05 : undefined,
+                      letterSpacing: vertical ? "-6.79px" : "-2.31px",
+                      lineHeight: vertical ? 0.98 : undefined,
                       color: encolhe > 0.5 ? marca.azul : m.tinta,
-                      whiteSpace: "nowrap",
+                      whiteSpace: vertical ? "normal" : "nowrap",
+                      ...(vertical
+                        ? {
+                            height: V_TEMPO * 0.98 * 2,
+                            display: "flex",
+                            alignItems: "flex-end",
+                          }
+                        : {}),
                     }}
                   >
                     {encolhe > 0.5 ? "segundos" : "40 minutos"}
@@ -243,18 +256,18 @@ export const Cena08: React.FC = () => {
                   display: "flex",
                   flexDirection: vertical ? "column" : "row",
                   alignItems: vertical ? "flex-start" : "center",
-                  gap: vertical ? 22 : 26,
+                  gap: vertical ? 24 : 26,
                   ...entra(freq, 16),
                 }}
               >
-                <div style={{ display: "flex", gap: vertical ? 18 : 12 }}>
+                <div style={{ display: "flex", gap: vertical ? 20 : 12 }}>
                   {Array.from({ length: 7 }).map((_, i) => (
                     <div
                       key={i}
                       style={{
-                        width: vertical ? 40 : 22,
-                        height: vertical ? 40 : 22,
-                        borderRadius: vertical ? 20 : 11,
+                        width: vertical ? 50 : 22,
+                        height: vertical ? 50 : 22,
+                        borderRadius: vertical ? 25 : 11,
                         background: i < pontos ? marca.azul : "transparent",
                         border: i < pontos ? "none" : `1px solid ${marca.linha}`,
                       }}
@@ -263,9 +276,9 @@ export const Cena08: React.FC = () => {
                 </div>
                 <div
                   style={{
-                    fontSize: vertical ? 54 : 40,
+                    fontSize: vertical ? 56 : 40,
                     fontWeight: 500,
-                    letterSpacing: vertical ? "-1.89px" : "-1.4px",
+                    letterSpacing: vertical ? "-1.96px" : "-1.4px",
                   }}
                 >
                   de semanal para diário
@@ -276,8 +289,8 @@ export const Cena08: React.FC = () => {
             {base > 0.001 ? (
               <div
                 style={{
-                  fontSize: vertical ? 30 : 26,
-                  letterSpacing: vertical ? "-1.05px" : "-0.91px",
+                  fontSize: vertical ? 34 : 26,
+                  letterSpacing: vertical ? "-1.19px" : "-0.91px",
                   color: m.apoio,
                   borderTop: "1px solid rgba(16,18,24,0.22)",
                   paddingTop: 16,
@@ -313,7 +326,7 @@ export const Cena08: React.FC = () => {
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 <div
                   style={{
-                    fontSize: vertical ? 28 : 24,
+                    fontSize: vertical ? 30 : 24,
                     fontWeight: 500,
                     letterSpacing: "2px",
                     textTransform: "uppercase",
@@ -324,9 +337,9 @@ export const Cena08: React.FC = () => {
                 </div>
                 <div
                   style={{
-                    fontSize: vertical ? 44 : 34,
+                    fontSize: vertical ? 48 : 34,
                     fontWeight: 500,
-                    letterSpacing: vertical ? "-1.54px" : "-1.19px",
+                    letterSpacing: vertical ? "-1.68px" : "-1.19px",
                   }}
                 >
                   ROAS faturado no mês
@@ -343,9 +356,9 @@ export const Cena08: React.FC = () => {
             >
               <div
                 style={{
-                  fontSize: vertical ? 240 : 200,
+                  fontSize: vertical ? 280 : 200,
                   fontWeight: 500,
-                  letterSpacing: vertical ? "-8.4px" : "-7px",
+                  letterSpacing: vertical ? "-9.8px" : "-7px",
                   lineHeight: 0.96,
                   color: marca.azul,
                   fontVariantNumeric: "tabular-nums",
@@ -369,8 +382,8 @@ export const Cena08: React.FC = () => {
                 >
                   <div
                     style={{
-                      fontSize: vertical ? 34 : 30,
-                      letterSpacing: vertical ? "-1.19px" : "-1.05px",
+                      fontSize: vertical ? 36 : 30,
+                      letterSpacing: vertical ? "-1.26px" : "-1.05px",
                       lineHeight: 1.35,
                       color: m.apoio,
                     }}
@@ -379,9 +392,9 @@ export const Cena08: React.FC = () => {
                   </div>
                   <div
                     style={{
-                      fontSize: vertical ? 38 : 32,
+                      fontSize: vertical ? 44 : 32,
                       fontWeight: 500,
-                      letterSpacing: vertical ? "-1.33px" : "-1.12px",
+                      letterSpacing: vertical ? "-1.54px" : "-1.12px",
                       lineHeight: 1.3,
                       borderLeft: `3px solid ${marca.azul}`,
                       paddingLeft: 20,
@@ -422,8 +435,8 @@ export const Cena08: React.FC = () => {
                 </div>
                 <div
                   style={{
-                    fontSize: vertical ? 30 : 26,
-                    letterSpacing: vertical ? "-1.05px" : "-0.91px",
+                    fontSize: vertical ? 34 : 26,
+                    letterSpacing: vertical ? "-1.19px" : "-0.91px",
                     color: marca.apoioAzul,
                   }}
                 >

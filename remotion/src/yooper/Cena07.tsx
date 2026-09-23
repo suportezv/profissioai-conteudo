@@ -99,13 +99,13 @@ const PONTO = 20;
 const VAO = 12;
 
 /**
- * No 9:16 o 75% e a frase ficam lado a lado no alto e a grade desce inteira
- * embaixo deles, maior: 12 colunas por 11 linhas, com a ultima linha a um
- * ponto de completa, que le como contagem e nao como sobra.
+ * No 9:16 o 75% e a frase empilham no alto e a grade desce inteira embaixo
+ * deles na largura util: 15 colunas por 9 linhas, com a ultima linha quase
+ * completa, que le como contagem e nao como sobra.
  */
-const COLUNAS_V = 12;
-const PONTO_V = 46;
-const VAO_V = 24;
+const COLUNAS_V = 15;
+const PONTO_V = 44;
+const VAO_V = 18;
 
 export const Cena07: React.FC = () => {
   const f = useCurrentFrame();
@@ -141,7 +141,7 @@ export const Cena07: React.FC = () => {
             position: "absolute",
             left: vertical ? M : MARGEM,
             top: vertical ? 236 : 128,
-            fontSize: vertical ? 28 : 24,
+            fontSize: vertical ? 30 : 24,
             fontWeight: 500,
             letterSpacing: "2px",
             textTransform: "uppercase",
@@ -172,9 +172,9 @@ export const Cena07: React.FC = () => {
             >
               <div
                 style={{
-                  fontSize: vertical ? 230 : 190,
+                  fontSize: vertical ? 270 : 190,
                   fontWeight: 500,
-                  letterSpacing: vertical ? "-8.05px" : "-6.65px",
+                  letterSpacing: vertical ? "-9.45px" : "-6.65px",
                   lineHeight: 1,
                   color: marca.azul,
                   fontVariantNumeric: "tabular-nums",
@@ -199,8 +199,8 @@ export const Cena07: React.FC = () => {
               {/* a base anda colada no numero, e onde ela falta isso esta escrito */}
               <div
                 style={{
-                  fontSize: vertical ? 30 : 26,
-                  letterSpacing: vertical ? "-1.05px" : "-0.91px",
+                  fontSize: vertical ? 32 : 26,
+                  letterSpacing: vertical ? "-1.12px" : "-0.91px",
                   color: m.apoio,
                   borderTop: "1px solid rgba(16,18,24,0.22)",
                   paddingTop: 16,
@@ -222,7 +222,7 @@ export const Cena07: React.FC = () => {
               ? {
                   // topo fixo: a regua da base entra depois, e centrada ela
                   // empurraria a grade inteira para cima
-                  padding: `300px ${M}px 0`,
+                  padding: `290px ${M}px 0`,
                   flexDirection: "column",
                   justifyContent: "flex-start",
                   alignItems: "flex-start",
@@ -241,15 +241,15 @@ export const Cena07: React.FC = () => {
           <div
             style={
               vertical
-                ? { display: "flex", flexDirection: "row", alignItems: "center", gap: 40 }
+                ? { display: "flex", flexDirection: "column", gap: 14 }
                 : { display: "flex", flexDirection: "column", gap: 18, width: 620 }
             }
           >
             <div
               style={{
-                fontSize: vertical ? 200 : 170,
+                fontSize: vertical ? 280 : 170,
                 fontWeight: 500,
-                letterSpacing: vertical ? "-7px" : "-5.95px",
+                letterSpacing: vertical ? "-9.8px" : "-5.95px",
                 lineHeight: 1,
                 color: marca.azul,
                 fontVariantNumeric: "tabular-nums",
@@ -260,9 +260,9 @@ export const Cena07: React.FC = () => {
             </div>
             <div
               style={{
-                fontSize: vertical ? 44 : 46,
+                fontSize: vertical ? 48 : 46,
                 fontWeight: 500,
-                letterSpacing: vertical ? "-1.54px" : "-1.61px",
+                letterSpacing: vertical ? "-1.68px" : "-1.61px",
                 lineHeight: 1.18,
               }}
             >
@@ -298,8 +298,8 @@ export const Cena07: React.FC = () => {
             {rodape > 0.001 ? (
               <div
                 style={{
-                  fontSize: vertical ? 30 : 26,
-                  letterSpacing: vertical ? "-1.05px" : "-0.91px",
+                  fontSize: vertical ? 32 : 26,
+                  letterSpacing: vertical ? "-1.12px" : "-0.91px",
                   color: m.apoio,
                   borderTop: "1px solid rgba(16,18,24,0.22)",
                   paddingTop: 16,

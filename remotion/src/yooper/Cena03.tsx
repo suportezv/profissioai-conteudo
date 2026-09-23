@@ -137,23 +137,26 @@ const GRADE_H = {
  * leitura continua a mesma: fontes, base, canal.
  */
 const V_CHIP_L = 72;
-const V_CHIP_W = 380;
-const V_NO_L = 656;
+const V_CHIP_W = 430;
+const V_NO_L = 698;
 const GRADE_V = {
   CHIP_L: V_CHIP_L,
   CHIP_W: V_CHIP_W,
   NO_L: V_NO_L,
-  NO_W: 284,
-  EIXO: 834,
-  LINHA_ALT: 104,
+  NO_W: 310,
+  EIXO: 842,
+  LINHA_ALT: 76,
   FAN_L: V_CHIP_L + V_CHIP_W,
   FAN_W: V_NO_L - V_CHIP_L - V_CHIP_W,
-  CHIP_FONTE: 42,
+  CHIP_FONTE: 44,
 };
 /** A conversa do 9:16: mesma largura base maior, em escala. */
-const V_PAINEL_T = 1104;
-const V_PAINEL_W = 690;
-const V_PAINEL_ESCALA = 1.25;
+const V_PAINEL_T = 1046;
+const V_PAINEL_W = 655;
+/** 655 x 1,43 = 936: os baloes de 21 px saem com 30 px efetivos. */
+const V_PAINEL_ESCALA = 1.43;
+/** Metade da altura do no no 9:16, com o corpo maior. */
+const V_NO_MEIO = 112;
 
 const Cilindro: React.FC = () => (
   <svg width="30" height="34" viewBox="0 0 30 34">
@@ -234,7 +237,7 @@ export const Cena03: React.FC = () => {
       >
         <div
           style={{
-            fontSize: vertical ? 28 : 24,
+            fontSize: vertical ? 30 : 24,
             fontWeight: 500,
             letterSpacing: "2px",
             textTransform: "uppercase",
@@ -246,9 +249,9 @@ export const Cena03: React.FC = () => {
         <div
           style={{
             marginTop: 18,
-            fontSize: vertical ? 64 : 54,
+            fontSize: vertical ? 84 : 54,
             fontWeight: 500,
-            letterSpacing: vertical ? "-2.24px" : "-1.89px",
+            letterSpacing: vertical ? "-2.94px" : "-1.89px",
             lineHeight: 1.18,
             maxWidth: vertical ? 936 : 940,
           }}
@@ -302,7 +305,7 @@ export const Cena03: React.FC = () => {
               style={{
                 position: "absolute",
                 left: CHIP_L,
-                top: y - (vertical ? 30 : 26),
+                top: y - (vertical ? 32 : 26),
                 width: CHIP_W,
                 display: "flex",
                 alignItems: "center",
@@ -323,7 +326,7 @@ export const Cena03: React.FC = () => {
                 style={{
                   fontSize: G.CHIP_FONTE,
                   fontWeight: 500,
-                  letterSpacing: vertical ? "-1.47px" : "-1.26px",
+                  letterSpacing: vertical ? "-1.54px" : "-1.26px",
                 }}
               >
                 {fo.texto}
@@ -353,7 +356,7 @@ export const Cena03: React.FC = () => {
           style={{
             position: "absolute",
             left: NO_L,
-            top: EIXO - 92,
+            top: EIXO - (vertical ? V_NO_MEIO : 92),
             width: NO_W,
             background: marca.azul,
             borderRadius: marca.raio.painel,
@@ -368,7 +371,7 @@ export const Cena03: React.FC = () => {
           <Cilindro />
           <div
             style={{
-              fontSize: 22,
+              fontSize: vertical ? 28 : 22,
               letterSpacing: "1.6px",
               textTransform: "uppercase",
               color: marca.apoioAzul,
@@ -378,9 +381,9 @@ export const Cena03: React.FC = () => {
           </div>
           <div
             style={{
-              fontSize: 42,
+              fontSize: vertical ? 56 : 42,
               fontWeight: 500,
-              letterSpacing: "-1.47px",
+              letterSpacing: vertical ? "-1.96px" : "-1.47px",
               color: marca.branco,
             }}
           >
@@ -411,9 +414,9 @@ export const Cena03: React.FC = () => {
           style={{
             position: "absolute",
             left: NO_L + NO_W / 2,
-            top: EIXO + 96,
+            top: EIXO + V_NO_MEIO,
             width: 1,
-            height: V_PAINEL_T - EIXO - 96,
+            height: V_PAINEL_T - EIXO - V_NO_MEIO,
             background: marca.linha,
             transformOrigin: "top",
             transform: `scaleY(${passo(f, PAINEL_EM, PAINEL_EM + 12)})`,
@@ -480,7 +483,7 @@ export const Cena03: React.FC = () => {
                 padding: 22,
                 // no 9:16 a coluna e mais baixa: a conversa mora embaixo do
                 // no e precisa fechar antes da faixa de interface do app
-                height: vertical ? 232 : 264,
+                height: vertical ? 214 : 264,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "flex-end",
@@ -511,7 +514,8 @@ export const Cena03: React.FC = () => {
                 <div
                   style={{
                     alignSelf: "flex-start",
-                    maxWidth: 480,
+                    // no 9:16 a resposta abre mais e fecha em tres linhas
+                    maxWidth: vertical ? 590 : 480,
                     background: wa.balaoEntrada,
                     borderRadius: 18,
                     borderTopLeftRadius: 5,

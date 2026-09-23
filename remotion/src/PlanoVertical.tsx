@@ -146,7 +146,7 @@ export const PlanoVertical: React.FC<{
               progresso={progresso}
               o={1}
               segundos={fala.ate - fala.de}
-              escala={1.15}
+              escala={1.4}
               cauda="baseDireita"
               desliza={false}
             />

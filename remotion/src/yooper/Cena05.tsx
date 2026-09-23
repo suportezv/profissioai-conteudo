@@ -79,13 +79,19 @@ const BOTAO_Y = 706;
  * governanca. O efeito sai da coluna e mora fixo embaixo da conversa, porque
  * empilhado no fim da lista ele desceria a cada acao nomeada.
  */
-const V_CHAT_T = 566;
-const V_CHAT_ESCALA = 1.36;
-const V_EFEITO_T = 1140;
-const V_RODAPE_T = 1356;
-/** O botao Confirmar no 9:16: centro dele na conversa (145, 339) em escala. */
+const V_CHAT_T = 540;
+/** 620 x 1,51 = 936: os baloes de 21 px saem com 32 px efetivos. */
+const V_CHAT_ESCALA = 1.51;
+/** Coluna de mensagens do 9:16, mais baixa: o vazio acima do cartao sai. */
+const V_CHAT_COLUNA = 270;
+const V_EFEITO_T = 1084;
+const V_RODAPE_T = 1316;
+/**
+ * O botao Confirmar no 9:16: o centro dele fica 63 px acima da base da
+ * conversa (72 de barra mais a coluna) e 145 px da borda esquerda, em escala.
+ */
 const V_BOTAO_X = 72 + 150 * V_CHAT_ESCALA;
-const V_BOTAO_Y = V_CHAT_T + 342 * V_CHAT_ESCALA;
+const V_BOTAO_Y = V_CHAT_T + (72 + V_CHAT_COLUNA - 60) * V_CHAT_ESCALA;
 
 export const Cena05: React.FC = () => {
   const f = useCurrentFrame();
@@ -123,7 +129,7 @@ export const Cena05: React.FC = () => {
     cartao > 0.001 ? (
       <div
         style={{
-          width: vertical ? 868 : 620,
+          width: vertical ? 936 : 620,
           background: marca.branco,
           border: `1px solid ${realce > 0.01 ? marca.azul : marca.linha}`,
           borderRadius: marca.raio.painel,
@@ -135,20 +141,27 @@ export const Cena05: React.FC = () => {
           ...entra(cartao, 16),
         }}
       >
-        <div style={{ fontFamily: UI, fontSize: vertical ? 24 : 18, color: dash.apoio }}>
+        <div style={{ fontFamily: UI, fontSize: vertical ? 30 : 18, color: dash.apoio }}>
           Meta de receita · setembro
         </div>
         <div
           style={{
             fontFamily: UI,
-            fontSize: vertical ? 62 : 46,
+            fontSize: vertical ? 72 : 46,
             color: mudou > 0.02 ? marca.azul : dash.tinta,
             fontVariantNumeric: "tabular-nums",
           }}
         >
           R$ {br(meta, 0)} mil
         </div>
-        <div style={{ height: 6, borderRadius: 3, background: dash.linha, overflow: "hidden" }}>
+        <div
+          style={{
+            height: vertical ? 10 : 6,
+            borderRadius: vertical ? 5 : 3,
+            background: dash.linha,
+            overflow: "hidden",
+          }}
+        >
           <div
             style={{
               height: "100%",
@@ -236,7 +249,7 @@ export const Cena05: React.FC = () => {
               padding: 22,
               // a coluna acompanha o conteudo: 470 px abriam um retangulo
               // preto vazio por cima do cartao de acao
-              height: 330,
+              height: vertical ? V_CHAT_COLUNA : 330,
               display: "flex",
               flexDirection: "column",
               justifyContent: "flex-end",
@@ -339,7 +352,7 @@ export const Cena05: React.FC = () => {
       >
         <div
           style={{
-            fontSize: vertical ? 28 : 24,
+            fontSize: vertical ? 30 : 24,
             fontWeight: 500,
             letterSpacing: "2px",
             textTransform: "uppercase",
@@ -367,16 +380,16 @@ export const Cena05: React.FC = () => {
                 <div
                   style={{
                     width: 3,
-                    height: vertical ? 38 : 30,
+                    height: vertical ? 44 : 30,
                     borderRadius: 2,
                     background: marca.azul,
                   }}
                 />
                 <div
                   style={{
-                    fontSize: vertical ? 52 : 42,
+                    fontSize: vertical ? 48 : 42,
                     fontWeight: 500,
-                    letterSpacing: vertical ? "-1.82px" : "-1.47px",
+                    letterSpacing: vertical ? "-1.68px" : "-1.47px",
                   }}
                 >
                   {a.texto}
@@ -412,17 +425,17 @@ export const Cena05: React.FC = () => {
         >
           <div
             style={{
-              fontSize: vertical ? 40 : 36,
+              fontSize: vertical ? 44 : 36,
               fontWeight: 500,
-              letterSpacing: vertical ? "-1.4px" : "-1.26px",
+              letterSpacing: vertical ? "-1.54px" : "-1.26px",
             }}
           >
             Nada muda sem confirmação explícita.
           </div>
           <div
             style={{
-              fontSize: vertical ? 26 : 24,
-              letterSpacing: vertical ? "-0.91px" : "-0.84px",
+              fontSize: vertical ? 30 : 24,
+              letterSpacing: vertical ? "-1.05px" : "-0.84px",
               color: m.apoio,
             }}
           >

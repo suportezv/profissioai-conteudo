@@ -207,8 +207,8 @@ export const Sonora: React.FC<{
           <div
             style={{
               position: "absolute",
-              left: 120,
-              bottom: 120,
+              left: M,
+              bottom: quadroVertical ? H - seguro.base : 120,
               display: "flex",
               gap: 24,
               alignItems: "stretch",
@@ -232,8 +232,8 @@ export const Sonora: React.FC<{
               </div>
               <div
                 style={{
-                  fontSize: 26,
-                  letterSpacing: "-0.91px",
+                  fontSize: quadroVertical ? 32 : 26,
+                  letterSpacing: quadroVertical ? "-1.12px" : "-0.91px",
                   color: marca.apoioEscuro,
                   lineHeight: 1.2,
                 }}
@@ -249,8 +249,8 @@ export const Sonora: React.FC<{
             style={{
               position: "absolute",
               right: 72,
-              top: 96,
-              fontSize: 24,
+              top: quadroVertical ? seguro.topo : 96,
+              fontSize: quadroVertical ? 30 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
@@ -284,7 +284,7 @@ export const Sonora: React.FC<{
               position: "absolute",
               left: M,
               top: quadroVertical ? seguro.topo : 120,
-              fontSize: quadroVertical ? 28 : 24,
+              fontSize: quadroVertical ? 30 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
@@ -339,8 +339,8 @@ export const Sonora: React.FC<{
             </div>
             <div
               style={{
-                fontSize: 26,
-                letterSpacing: "-0.91px",
+                fontSize: quadroVertical ? 32 : 26,
+                letterSpacing: quadroVertical ? "-1.12px" : "-0.91px",
                 color: marca.apoioEscuro,
                 lineHeight: 1.2,
               }}

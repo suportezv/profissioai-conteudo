@@ -90,9 +90,9 @@ export const Cena06: React.FC = () => {
       >
         <div
           style={{
-            fontSize: vertical ? 64 : 56,
+            fontSize: vertical ? 84 : 56,
             fontWeight: 500,
-            letterSpacing: vertical ? "-2.24px" : "-1.96px",
+            letterSpacing: vertical ? "-2.94px" : "-1.96px",
             lineHeight: 1.18,
             maxWidth: vertical ? undefined : 1240,
             ...entra(titulo, 14),
@@ -145,19 +145,19 @@ export const Cena06: React.FC = () => {
                   <div style={{ display: "flex", alignItems: "baseline", gap: 20 }}>
                     <div
                       style={{
-                        fontSize: 28,
+                        fontSize: 32,
                         fontWeight: 500,
                         color: ativo ? marca.azul : m.apoio,
-                        letterSpacing: "-0.98px",
+                        letterSpacing: "-1.12px",
                       }}
                     >
                       {e.n}
                     </div>
                     <div
                       style={{
-                        fontSize: 56,
+                        fontSize: 60,
                         fontWeight: 500,
-                        letterSpacing: "-1.96px",
+                        letterSpacing: "-2.1px",
                         lineHeight: 1.15,
                         color: ativo ? m.tinta : m.apoio,
                       }}
@@ -192,9 +192,9 @@ export const Cena06: React.FC = () => {
                 )}
                 <div
                   style={{
-                    fontSize: vertical ? 34 : 26,
-                    letterSpacing: vertical ? "-1.19px" : "-0.91px",
-                    lineHeight: vertical ? 1.4 : 1.5,
+                    fontSize: vertical ? 36 : 26,
+                    letterSpacing: vertical ? "-1.26px" : "-0.91px",
+                    lineHeight: vertical ? 1.35 : 1.5,
                     color: m.apoio,
                   }}
                 >
@@ -211,8 +211,8 @@ export const Cena06: React.FC = () => {
             <span
               key={n}
               style={{
-                fontSize: vertical ? 30 : 26,
-                letterSpacing: vertical ? "-1.05px" : "-0.91px",
+                fontSize: vertical ? 34 : 26,
+                letterSpacing: vertical ? "-1.19px" : "-0.91px",
                 color: m.apoio,
                 ...entra(janela(f, s(13.4) + i * 8, CENA06_FRAMES, 12, 0), 10),
               }}

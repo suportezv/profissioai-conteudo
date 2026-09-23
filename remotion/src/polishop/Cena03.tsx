@@ -118,7 +118,7 @@ export const Cena03: React.FC = () => {
   const [bx, by] = g.fioB;
   // o motor novo no 9:16: conversa em corpo de celular, nao de monitor
   const zt = vertical
-    ? { barra: "20px 28px", avatar: 62, nome: 32, pad: 28, col: 520 - 102 - 56, msg: 31, msgW: 800 }
+    ? { barra: "20px 28px", avatar: 64, nome: 34, pad: 28, col: 520 - 104 - 56, msg: 33, msgW: 820 }
     : { barra: "16px 24px", avatar: 46, nome: 23, pad: 24, col: 230, msg: 22, msgW: 620 };
 
   // o ano rola: a cena abre no 2023 da cena anterior
@@ -486,10 +486,10 @@ export const Cena03: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            // no 9:16 os tres "sem" descem para a coluna a direita do aparelho,
-            // empilhados, no lugar em que a cena 02 desenhou a curva
-            left: vertical ? 540 : MOTOR_L,
-            top: vertical ? 1200 : SOQUETE_Y + ZAP_ALT / 2 + 48,
+            // no 9:16 os tres "sem" descem para a coluna a esquerda do
+            // aparelho, empilhados, no lugar em que a cena 02 desenhou a curva
+            left: vertical ? 72 : MOTOR_L,
+            top: vertical ? 1215 : SOQUETE_Y + ZAP_ALT / 2 + 48,
             display: "flex",
             flexDirection: vertical ? "column" : undefined,
             alignItems: vertical ? "flex-start" : undefined,
@@ -504,9 +504,9 @@ export const Cena03: React.FC = () => {
                 border: `1px solid ${marca.linha}`,
                 background: marca.branco,
                 borderRadius: 999,
-                padding: vertical ? "14px 26px" : "12px 22px",
-                fontSize: vertical ? 30 : 24,
-                letterSpacing: vertical ? "-1.05px" : "-0.84px",
+                padding: vertical ? "14px 22px" : "12px 22px",
+                fontSize: vertical ? 40 : 24,
+                letterSpacing: vertical ? "-1.4px" : "-0.84px",
                 color: m.apoio,
                 opacity: passo(f, CHIPS_EM + i * 5, CHIPS_EM + i * 5 + 10),
               }}

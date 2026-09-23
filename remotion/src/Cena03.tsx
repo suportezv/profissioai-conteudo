@@ -319,7 +319,7 @@ export const Cena03: React.FC = () => {
               position: "absolute",
               left: M,
               top: seguro.topo,
-              fontSize: 28,
+              fontSize: 30,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",

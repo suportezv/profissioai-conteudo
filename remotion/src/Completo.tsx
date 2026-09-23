@@ -22,6 +22,7 @@ import { Cena08, CENA08_FRAMES } from "./Cena08";
 import { Cena09, CENA09_FRAMES } from "./Cena09";
 import { Sonora } from "./Sonora";
 import { ONDA_OUVINDO } from "./ondas";
+import { useFormato } from "./formato";
 
 /**
  * Corte de montagem do case, ponta a ponta.
@@ -168,7 +169,28 @@ const volumeTrilha = (f: number) => {
   return Math.min(entrada, leito) * saida;
 };
 
-export const Completo: React.FC = () => (
+/**
+ * Os planos da sonora da cena 02 no corte 9:16: os **mesmos cortes, nos mesmos
+ * tempos**, com zoom bem menor. A janela vertical ja e um close (607 px do
+ * bruto de 1920), e os 1,45x e 1,6x do 16:9 levavam o alto do cabelo para
+ * baixo do cabecalho do app. O teto aqui e 1,15x, e a alternancia entre medio
+ * e close continua marcando cada oracao.
+ *
+ * A origem fica **abaixo do rosto** (70 a 80% da altura) de proposito: sem
+ * zoom o rosto dela cai no meio do quadro e o quadro da parede ocupa o terco
+ * de cima; ampliando a partir de baixo, o rosto sobe para o terco de cima e o
+ * alto do cabelo continua bem abaixo dos 220 px do cabecalho.
+ */
+const PLANOS_ANA_VERTICAL = [
+  { em: 0, zoom: 1.04, origem: "50% 80%" },
+  { em: 3.0, zoom: 1.15, origem: "50% 80%" },
+  { em: 4.84, zoom: 1.09, origem: "50% 80%" },
+  { em: 6.42, zoom: 1.15, origem: "50% 70%" },
+];
+
+export const Completo: React.FC = () => {
+  const { vertical } = useFormato();
+  return (
   <AbsoluteFill style={{ backgroundColor: "#000" }}>
     {/* a trilha atravessa o filme inteiro, por baixo de tudo */}
     {trilhaEscolhida() ? (
@@ -211,7 +233,7 @@ export const Completo: React.FC = () => (
           // no 9:16 a janela vertical centra no rosto dela, em x ~1060 do bruto
           foco={57}
           // um plano por oracao, cortado na primeira palavra dela (Scribe)
-          planos={[
+          planos={vertical ? PLANOS_ANA_VERTICAL : [
             // "Eu percebi que a conta nao fechava": medio, apresenta ela
             { em: 0, zoom: 1.15, origem: "73.8% 100%" },
             // "e precisava levar o que eu aprendi": close
@@ -298,3 +320,4 @@ export const Completo: React.FC = () => (
     </Series>
   </AbsoluteFill>
 );
+};

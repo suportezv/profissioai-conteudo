@@ -36,13 +36,14 @@ const CORPO = 84;
  * tem que continuar valendo no vertical. As duas cenas leem o formato daqui e
  * nenhuma delas guarda posicao propria.
  *
- * Corpo 100 com tracking -3,5% (-3,5 px), sobrelinha 28 em caixa alta, logo a
- * partir de y=228: o bloco termina em ~454 e o painel do motor comeca em 490.
+ * Corpo 110 com tracking -3,5% (-3,85 px), sobrelinha 30 em caixa alta, logo
+ * de 260 a partir de y=226: o bloco termina em ~474 e o painel do motor
+ * comeca em 500.
  */
-const CORPO_V = 100;
+const CORPO_V = 110;
 const L_V = 72;
-const LOGO_TOPO_V = 228;
-const TOPO_V = 318;
+const LOGO_TOPO_V = 226;
+const TOPO_V = 326;
 
 /**
  * O último dígito do ano rolando, como um odômetro.
@@ -110,7 +111,7 @@ export const Cabecalho: React.FC<{
   const { vertical } = useFormato();
   const corpo = vertical ? CORPO_V : CORPO;
   const esq = vertical ? L_V : CABECALHO_L;
-  const sobre = vertical ? 28 : 24;
+  const sobre = vertical ? 30 : 24;
   return (
     <>
       <Img
@@ -119,7 +120,7 @@ export const Cabecalho: React.FC<{
           position: "absolute",
           left: esq,
           top: vertical ? LOGO_TOPO_V : 100,
-          width: vertical ? 230 : 210,
+          width: vertical ? 260 : 210,
           ...logo,
         }}
       />
@@ -131,7 +132,7 @@ export const Cabecalho: React.FC<{
           ...estilo,
         }}
       >
-        <div style={{ position: "relative", height: vertical ? 34 : 30 }}>
+        <div style={{ position: "relative", height: vertical ? 36 : 30 }}>
           <Sobrelinha texto="A primeira tentativa" o={velho} corpo={sobre} />
           <Sobrelinha texto="A virada" o={novo} sobe corpo={sobre} />
         </div>
@@ -140,7 +141,7 @@ export const Cabecalho: React.FC<{
             marginTop: 2,
             fontSize: corpo,
             fontWeight: 500,
-            letterSpacing: vertical ? "-3.5px" : "-2.94px",
+            letterSpacing: vertical ? "-3.85px" : "-2.94px",
             lineHeight: 1,
             display: "flex",
           }}

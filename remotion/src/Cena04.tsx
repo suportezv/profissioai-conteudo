@@ -140,13 +140,13 @@ const GEO_H: Geo = {
 const GEO_V: Geo = {
   vertical: true,
   listaL: 72,
-  listaFim: 960,
-  itemY0: 400,
-  itemPasso: 100,
+  listaFim: 1000,
+  itemY0: 370,
+  itemPasso: 104,
   avCx: 540,
-  avCy: 1060,
-  avTam: 300,
-  corpo: 44,
+  avCy: 1030,
+  avTam: 360,
+  corpo: 48,
 };
 
 /** Onde as curvas chegam: a esquerda do avatar no 16:9, em cima dele no 9:16. */
@@ -160,7 +160,7 @@ const chegada = (g: Geo): [number, number] =>
  * terminam em degrau (a de cima mais a direita), para as quatro curvas
  * descerem em faixas paralelas ate o avatar sem se cruzar.
  */
-const fimDa = (i: number, g: Geo) => (g.vertical ? g.listaFim - i * 44 : g.listaFim);
+const fimDa = (i: number, g: Geo) => (g.vertical ? g.listaFim - i * 28 : g.listaFim);
 
 const curva = (i: number, g: Geo) => {
   const c = chegada(g);
@@ -217,7 +217,7 @@ const Fonte: React.FC<{
       style={{
         fontSize: g.corpo,
         fontWeight: 500,
-        letterSpacing: g.vertical ? "-1.54px" : "-1.33px",
+        letterSpacing: g.vertical ? "-1.68px" : "-1.33px",
         color: m.tinta,
         whiteSpace: "nowrap",
       }}
@@ -289,7 +289,7 @@ export const Cena04A: React.FC = () => {
         >
           <div
             style={{
-              fontSize: vertical ? 28 : 24,
+              fontSize: vertical ? 30 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
@@ -305,9 +305,11 @@ export const Cena04A: React.FC = () => {
               opacity: menu * (1 - morre * 0.55),
               display: "flex",
               flexDirection: "column",
-              gap: 20,
+              gap: vertical ? 40 : 20,
               maxWidth: 1000,
-              padding: 48,
+              padding: vertical ? 56 : 48,
+              // no 9:16 o cartao ocupa a largura toda entre as margens
+              ...(vertical ? { alignSelf: "stretch" as const } : {}),
               background: marca.branco,
               border: `1px solid ${marca.linha}`,
               borderRadius: marca.raio.painel,
@@ -319,8 +321,8 @@ export const Cena04A: React.FC = () => {
               <div
                 key={linha}
                 style={{
-                  fontSize: vertical ? 44 : 40,
-                  letterSpacing: vertical ? "-1.54px" : "-1.4px",
+                  fontSize: vertical ? 52 : 40,
+                  letterSpacing: vertical ? "-1.82px" : "-1.4px",
                   color: m.apoio,
                   textDecoration: morre > 0.5 ? "line-through" : "none",
                 }}
@@ -340,7 +342,7 @@ export const Cena04A: React.FC = () => {
               position: "absolute",
               left: g.listaL,
               top: g.itemY0 - 110,
-              fontSize: vertical ? 28 : 24,
+              fontSize: vertical ? 30 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
@@ -424,9 +426,9 @@ export const Cena04A: React.FC = () => {
             <div
               style={{
                 marginTop: 34,
-                fontSize: vertical ? 80 : 64,
+                fontSize: vertical ? 96 : 64,
                 fontWeight: 500,
-                letterSpacing: vertical ? "-2.8px" : "-2.24px",
+                letterSpacing: vertical ? "-3.36px" : "-2.24px",
                 lineHeight: 1,
                 color: m.tinta,
                 ...entra(nome, 14),
@@ -437,9 +439,9 @@ export const Cena04A: React.FC = () => {
             <div
               style={{
                 marginTop: 12,
-                fontSize: vertical ? 40 : 34,
+                fontSize: vertical ? 44 : 34,
                 fontWeight: 400,
-                letterSpacing: vertical ? "-1.4px" : "-1.19px",
+                letterSpacing: vertical ? "-1.54px" : "-1.19px",
                 color: m.apoio,
                 ...entra(papel, 12),
               }}
@@ -494,13 +496,13 @@ export const Cena04B: React.FC = () => {
         }}
       >
         <div style={entra(icone, 18)}>
-          <IconeBalao cor={m.tinta} tam={vertical ? 160 : 132} />
+          <IconeBalao cor={m.tinta} tam={vertical ? 180 : 132} />
         </div>
         <div
           style={{
-            fontSize: vertical ? 46 : 40,
+            fontSize: vertical ? 48 : 40,
             fontWeight: 500,
-            letterSpacing: vertical ? "-1.61px" : "-1.4px",
+            letterSpacing: vertical ? "-1.68px" : "-1.4px",
             color: m.tinta,
             opacity: sobre * 0.72,
           }}
@@ -509,9 +511,9 @@ export const Cena04B: React.FC = () => {
         </div>
         <div
           style={{
-            fontSize: vertical ? 184 : 148,
+            fontSize: vertical ? 176 : 148,
             fontWeight: 500,
-            letterSpacing: vertical ? "-6.44px" : "-5.18px",
+            letterSpacing: vertical ? "-6.16px" : "-5.18px",
             lineHeight: 1,
             color: m.tinta,
             marginTop: -16,

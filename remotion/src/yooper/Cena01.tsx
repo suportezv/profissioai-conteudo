@@ -115,19 +115,20 @@ const CAMINHO: [number, number][] = [
  * Mesmos tempos, so outras coordenadas.
  */
 const CAMINHO_V: [number, number][] = [
-  [330, 1300],
-  [250, 480],
-  [700, 480],
-  [740, 660],
-  [560, 930],
-  [470, 1236],
-  [452, 1252],
+  [330, 1400],
+  [260, 560],
+  [700, 560],
+  [740, 790],
+  [560, 1040],
+  [470, 1318],
+  [452, 1334],
 ];
 
 /** Onde o painel fica no 9:16, e a escala que leva 820 px a largura util. */
-const PAINEL_V_T = 262;
-const PAINEL_V_LARGURA = 820;
-const PAINEL_V_ESCALA = 1.14;
+const PAINEL_V_T = 244;
+const PAINEL_V_LARGURA = 624;
+/** 624 x 1,5 = 936, a largura util; a tabela sai com 30 px efetivos. */
+const PAINEL_V_ESCALA = 1.5;
 
 const posCursor = (f: number, CAMINHO: [number, number][]) => {
   const t = interpolate(f, [CURSOR_EM, PARA_EM], [0, CAMINHO.length - 1], {
@@ -188,7 +189,10 @@ export const Cena01: React.FC = () => {
         >
           {/* no 9:16 os quatro cartoes viram grade 2x2 e o grafico ganha
               altura: o painel fica em pe em vez de encolher deitado */}
-          <MolduraDash largura={vertical ? PAINEL_V_LARGURA : 1440}>
+          <MolduraDash
+            largura={vertical ? PAINEL_V_LARGURA : 1440}
+            padding={vertical ? 28 : 40}
+          >
             <CabecalhoDash aceso={atualizado} />
             <div
               style={
@@ -206,7 +210,7 @@ export const Cena01: React.FC = () => {
                 />
               ))}
             </div>
-            <GraficoDash desenha={grafico} altura={vertical ? 300 : 172} />
+            <GraficoDash desenha={grafico} altura={vertical ? 130 : 172} />
             <TabelaDash preenche={tabela} />
           </MolduraDash>
         </div>
@@ -237,7 +241,7 @@ export const Cena01: React.FC = () => {
                   justifyContent: "flex-start",
                   flexDirection: "column",
                   gap: 64,
-                  padding: `660px ${M}px 0`,
+                  padding: `470px ${M}px 0`,
                 }
               : {
                   alignItems: "center",
@@ -249,13 +253,13 @@ export const Cena01: React.FC = () => {
         >
           <div
             style={{
-              fontSize: vertical ? 50 : 54,
+              fontSize: vertical ? 48 : 54,
               fontWeight: 400,
-              letterSpacing: vertical ? "-1.75px" : "-1.89px",
+              letterSpacing: vertical ? "-1.68px" : "-1.89px",
               lineHeight: 1.3,
               textAlign: vertical ? "left" : "center",
               color: m.apoio,
-              maxWidth: vertical ? 900 : 1240,
+              maxWidth: vertical ? 936 : 1240,
               ...entra(pergunta, 18),
             }}
           >
@@ -267,9 +271,9 @@ export const Cena01: React.FC = () => {
           {tese > 0.001 ? (
             <div
               style={{
-                fontSize: vertical ? 80 : 72,
+                fontSize: vertical ? 92 : 72,
                 fontWeight: 500,
-                letterSpacing: vertical ? "-2.8px" : "-2.52px",
+                letterSpacing: vertical ? "-3.22px" : "-2.52px",
                 lineHeight: 1.16,
                 textAlign: vertical ? "left" : "center",
                 maxWidth: vertical ? 936 : undefined,

@@ -77,8 +77,9 @@ const FECHO_EM = s(15.2);
  * 16:9 para a conversa fechar antes da faixa de interface do app; como ela
  * empilha de baixo para cima, o que sai e so o rastro mais antigo.
  */
-const V_CHAT_T = 690;
-const V_CHAT_ESCALA = 1.356;
+const V_CHAT_T = 724;
+/** 640 x 1,4625 = 936: os baloes de 21 px saem com 31 px efetivos. */
+const V_CHAT_ESCALA = 1.4625;
 
 const ONDA = [
   0.3, 0.55, 0.38, 0.72, 0.5, 0.88, 0.6, 0.42, 0.8, 0.55, 0.32, 0.68, 0.46,
@@ -302,7 +303,7 @@ export const Cena06: React.FC = () => {
       <div
         style={{
           padding: 22,
-          height: vertical ? 500 : 560,
+          height: vertical ? 402 : 560,
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
@@ -433,7 +434,7 @@ export const Cena06: React.FC = () => {
     >
       <div
         style={{
-          fontSize: vertical ? 28 : 24,
+          fontSize: vertical ? 30 : 24,
           fontWeight: 500,
           letterSpacing: "2px",
           textTransform: "uppercase",
@@ -447,9 +448,9 @@ export const Cena06: React.FC = () => {
       {tese > 0.001 ? (
         <div
           style={{
-            fontSize: vertical ? 88 : 62,
+            fontSize: vertical ? 100 : 62,
             fontWeight: 500,
-            letterSpacing: vertical ? "-3.08px" : "-2.17px",
+            letterSpacing: vertical ? "-3.5px" : "-2.17px",
             lineHeight: 1.16,
             ...entra(tese, 20),
           }}
@@ -464,8 +465,8 @@ export const Cena06: React.FC = () => {
       {fecho > 0.001 ? (
         <div
           style={{
-            fontSize: vertical ? 34 : 30,
-            letterSpacing: vertical ? "-1.19px" : "-1.05px",
+            fontSize: vertical ? 40 : 30,
+            letterSpacing: vertical ? "-1.4px" : "-1.05px",
             color: m.apoio,
             borderTop: "1px solid rgba(16,18,24,0.22)",
             paddingTop: 20,
@@ -474,7 +475,7 @@ export const Cena06: React.FC = () => {
         >
           42 relatórios enviados proativamente
           <br />
-          <span style={{ fontSize: vertical ? 26 : 24 }}>maio a 18/set/2026</span>
+          <span style={{ fontSize: vertical ? 30 : 24 }}>maio a 18/set/2026</span>
         </div>
       ) : null}
 

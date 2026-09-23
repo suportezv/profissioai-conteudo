@@ -107,9 +107,10 @@ const IconeChave: React.FC<{ cor: string; largura?: number }> = ({
 export const Cena05: React.FC = () => {
   const f = useCurrentFrame();
   /**
-   * No 9:16 a cena empilha na ordem da narracao: o cupom que vira chave, a
-   * frase embaixo dele, e a contagem dos dias com o "1 ano" na linha de baixo.
-   * O cupom cresce, porque o giro e o momento da cena e a coluna tem altura.
+   * No 9:16 a cena empilha na ordem da narracao: o cupom que vira chave, na
+   * largura util, a frase embaixo dele, e a contagem dos dias com o "1 ano" ao
+   * lado do numero e a legenda na linha de baixo. O cupom cresce, porque o giro
+   * e o momento da cena e a coluna tem altura.
    */
   const { vertical, M, H, seguro } = useFormato();
 
@@ -145,12 +146,12 @@ export const Cena05: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          gap: vertical ? 56 : 64,
+          gap: vertical ? 40 : 64,
         }}
       >
         <div
           style={{
-            fontSize: vertical ? 28 : 24,
+            fontSize: vertical ? 30 : 24,
             fontWeight: 500,
             letterSpacing: "2px",
             textTransform: "uppercase",
@@ -173,8 +174,9 @@ export const Cena05: React.FC = () => {
           <div style={{ perspective: 1400, ...entra(cupom, 20) }}>
             <div
               style={{
-                width: vertical ? 560 : 420,
-                height: vertical ? 320 : 240,
+                // no 9:16 o cartao toma a largura util
+                width: vertical ? 936 : 420,
+                height: vertical ? 400 : 240,
                 borderRadius: marca.raio.painel,
                 display: "flex",
                 flexDirection: "column",
@@ -199,19 +201,19 @@ export const Cena05: React.FC = () => {
                 }}
               >
                 {virou ? (
-                  <IconeChave cor={marca.branco} largura={vertical ? 320 : 240} />
+                  <IconeChave cor={marca.branco} largura={vertical ? 380 : 240} />
                 ) : (
                   <IconeCupom
                     cor="#C7CEDA"
                     fundo={marca.branco}
-                    largura={vertical ? 320 : 240}
+                    largura={vertical ? 380 : 240}
                   />
                 )}
                 <div
                   style={{
-                    fontSize: virou ? (vertical ? 52 : 40) : vertical ? 38 : 30,
+                    fontSize: virou ? (vertical ? 60 : 40) : vertical ? 44 : 30,
                     fontWeight: 500,
-                    letterSpacing: virou ? (vertical ? "-1.82px" : "-1.4px") : "2px",
+                    letterSpacing: virou ? (vertical ? "-2.1px" : "-1.4px") : "2px",
                     color: virou ? marca.branco : m.apoio,
                     textTransform: virou ? "none" : "uppercase",
                   }}
@@ -224,9 +226,9 @@ export const Cena05: React.FC = () => {
 
           <div
             style={{
-              fontSize: vertical ? 60 : 44,
+              fontSize: vertical ? 72 : 44,
               fontWeight: 500,
-              letterSpacing: vertical ? "-2.1px" : "-1.54px",
+              letterSpacing: vertical ? "-2.52px" : "-1.54px",
               lineHeight: vertical ? 1.18 : 1.25,
               opacity: janela(f, GIRA + s(0.8), CENA05_FRAMES, 10, 0),
             }}
@@ -241,19 +243,21 @@ export const Cena05: React.FC = () => {
         <div
           style={{
             display: "flex",
-            // no 9:16 numero, legenda e "1 ano" empilham: lado a lado a
-            // legenda entrava na coluna de botoes do app
-            flexDirection: vertical ? "column" : "row",
-            alignItems: vertical ? "flex-start" : "flex-end",
-            gap: vertical ? 14 : 28,
+            // no 9:16 o numero e o "1 ano" dividem a primeira linha e a
+            // legenda quebra para a de baixo (`order` + `flexWrap`): lado a
+            // lado com o numero ela entrava na coluna de botoes do app
+            flexWrap: vertical ? "wrap" : "nowrap",
+            alignItems: "flex-end",
+            columnGap: vertical ? 40 : 28,
+            rowGap: vertical ? 16 : 28,
             opacity: mostraDias,
           }}
         >
           <div
             style={{
-              fontSize: vertical ? 200 : 140,
+              fontSize: vertical ? 280 : 140,
               fontWeight: 500,
-              letterSpacing: vertical ? "-7px" : "-4.9px",
+              letterSpacing: vertical ? "-9.8px" : "-4.9px",
               lineHeight: 0.95,
               color: marca.azul,
               fontVariantNumeric: "tabular-nums",
@@ -266,15 +270,17 @@ export const Cena05: React.FC = () => {
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: 6,
+              gap: vertical ? 8 : 6,
               paddingBottom: vertical ? 0 : 22,
+              order: vertical ? 2 : 0,
+              flexBasis: vertical ? "100%" : undefined,
             }}
           >
             <div
               style={{
-                fontSize: vertical ? 40 : 36,
+                fontSize: vertical ? 48 : 36,
                 fontWeight: 500,
-                letterSpacing: vertical ? "-1.4px" : "-1.26px",
+                letterSpacing: vertical ? "-1.68px" : "-1.26px",
                 lineHeight: vertical ? 1.15 : undefined,
               }}
             >
@@ -282,8 +288,8 @@ export const Cena05: React.FC = () => {
             </div>
             <div
               style={{
-                fontSize: vertical ? 28 : 24,
-                letterSpacing: vertical ? "-0.98px" : "-0.84px",
+                fontSize: vertical ? 32 : 24,
+                letterSpacing: vertical ? "-1.12px" : "-0.84px",
                 color: m.apoio,
               }}
             >
@@ -298,16 +304,16 @@ export const Cena05: React.FC = () => {
               display: "flex",
               alignItems: "center",
               gap: 16,
-              paddingBottom: vertical ? 0 : 22,
+              paddingBottom: vertical ? 24 : 22,
               marginLeft: vertical ? 0 : 48,
-              marginTop: vertical ? 30 : 0,
+              order: vertical ? 1 : 0,
               ...entra(ano, 16),
             }}
           >
             <div
               style={{
                 width: 4,
-                height: vertical ? 112 : 92,
+                height: vertical ? 128 : 92,
                 background: marca.azul,
                 borderRadius: 2,
               }}
@@ -315,9 +321,9 @@ export const Cena05: React.FC = () => {
             <div>
               <div
                 style={{
-                  fontSize: vertical ? 88 : 72,
+                  fontSize: vertical ? 100 : 72,
                   fontWeight: 500,
-                  letterSpacing: vertical ? "-3.08px" : "-2.52px",
+                  letterSpacing: vertical ? "-3.5px" : "-2.52px",
                   lineHeight: 1.05,
                 }}
               >
@@ -325,8 +331,8 @@ export const Cena05: React.FC = () => {
               </div>
               <div
                 style={{
-                  fontSize: vertical ? 30 : 26,
-                  letterSpacing: vertical ? "-1.05px" : "-0.91px",
+                  fontSize: vertical ? 32 : 26,
+                  letterSpacing: vertical ? "-1.12px" : "-0.91px",
                   color: m.apoio,
                 }}
               >
@@ -347,7 +353,7 @@ export const Cena05: React.FC = () => {
                   display: "flex",
                   alignItems: "center",
                   gap: 10,
-                  padding: vertical ? "14px 20px" : "10px 18px",
+                  padding: vertical ? "14px 22px" : "10px 18px",
                   borderRadius: marca.raio.controle,
                   border: `1px solid ${marca.linha}`,
                   background: marca.branco,
@@ -364,8 +370,8 @@ export const Cena05: React.FC = () => {
                 />
                 <div
                   style={{
-                    fontSize: vertical ? 26 : 22,
-                    letterSpacing: vertical ? "-0.91px" : "-0.77px",
+                    fontSize: vertical ? 30 : 22,
+                    letterSpacing: vertical ? "-1.05px" : "-0.77px",
                     color: m.apoio,
                   }}
                 >

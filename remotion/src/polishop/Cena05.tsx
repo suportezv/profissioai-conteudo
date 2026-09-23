@@ -101,7 +101,7 @@ export const Cena05: React.FC = () => {
         >
           <div
             style={{
-              fontSize: vertical ? 28 : 24,
+              fontSize: vertical ? 30 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
@@ -113,7 +113,7 @@ export const Cena05: React.FC = () => {
           </div>
 
           <div
-            style={{ display: "flex", flexDirection: "column", gap: vertical ? 26 : 16, opacity: grupo }}
+            style={{ display: "flex", flexDirection: "column", gap: vertical ? 40 : 16, opacity: grupo }}
           >
             {LINHAS.map((l, i) => {
               const o = passo(f, MANUAIS_EM + i * 4, MANUAIS_EM + i * 4 + 11);
@@ -132,16 +132,16 @@ export const Cena05: React.FC = () => {
                   <div
                     style={{
                       width: 3,
-                      height: vertical ? 50 : 34,
+                      height: vertical ? 64 : 34,
                       borderRadius: 2,
                       background: aceso ? marca.azul : marca.linha,
                     }}
                   />
                   <div
                     style={{
-                      fontSize: vertical ? 56 : 40,
+                      fontSize: vertical ? 72 : 40,
                       fontWeight: 500,
-                      letterSpacing: vertical ? "-1.96px" : "-1.4px",
+                      letterSpacing: vertical ? "-2.52px" : "-1.4px",
                       color: aceso ? marca.azul : m.tinta,
                     }}
                   >
@@ -150,7 +150,7 @@ export const Cena05: React.FC = () => {
                   {aceso ? (
                     <div
                       style={{
-                        fontSize: vertical ? 26 : 22,
+                        fontSize: vertical ? 30 : 22,
                         letterSpacing: "1.6px",
                         textTransform: "uppercase",
                         color: marca.azul,
@@ -171,8 +171,8 @@ export const Cena05: React.FC = () => {
           {cuidado > 0.001 ? (
             <div
               style={{
-                fontSize: vertical ? 40 : 30,
-                letterSpacing: vertical ? "-1.4px" : "-1.05px",
+                fontSize: vertical ? 48 : 30,
+                letterSpacing: vertical ? "-1.68px" : "-1.05px",
                 lineHeight: vertical ? 1.25 : undefined,
                 maxWidth: vertical ? util : undefined,
                 color: m.apoio,
@@ -209,7 +209,7 @@ export const Cena05: React.FC = () => {
             <br />
             <span style={{ color: marca.azul }}>sabe dizer não.</span>
           </div>
-          <Painel largura={util} altura={400} o={recusa}>
+          <Painel largura={1080 - 2 * M} altura={520} o={recusa}>
             {pergunta > 0.001 ? (
               <Balao o={pergunta} saida>
                 dá pra fazer costela defumada aqui?
@@ -225,12 +225,14 @@ export const Cena05: React.FC = () => {
           </Painel>
           <div
             style={{
-              fontSize: 36,
-              letterSpacing: "-1.26px",
+              fontSize: 40,
+              letterSpacing: "-1.4px",
               color: m.apoio,
               borderTop: "1px solid rgba(16,18,24,0.22)",
               paddingTop: 20,
-              maxWidth: util,
+              // 570 px quebra em "um agente que so concorda / nao consultou
+              // nada", sem deixar "nada" sozinho na segunda linha
+              maxWidth: 570,
             }}
           >
             um agente que só concorda não consultou nada

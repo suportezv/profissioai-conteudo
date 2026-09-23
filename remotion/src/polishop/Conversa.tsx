@@ -16,11 +16,11 @@ import { useFormato } from "../formato";
  * O fator da conversa no 9:16.
  *
  * No vertical a conversa e o assunto do quadro, e ela tem que ler como um
- * celular na mao, nao como um print reduzido: tudo cresce 40% (corpo 22 vira
- * ~31, que e o tamanho de leitura de uma mensagem num Reels). No 16:9 o fator
+ * celular na mao, nao como um print reduzido: tudo cresce 50% (corpo 22 vira
+ * 33, que e o tamanho de leitura de uma mensagem num Reels). No 16:9 o fator
  * e 1, e cada numero abaixo sai identico ao de antes.
  */
-const useK = () => (useFormato().vertical ? 1.4 : 1);
+const useK = () => (useFormato().vertical ? 1.5 : 1);
 
 /** Duração real do clipe gerado, que é o que a barra de progresso anda. */
 const CLIPE_FRAMES = s(4);

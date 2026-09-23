@@ -108,9 +108,9 @@ export const Cena02: React.FC = () => {
   const NA_TAMPA = afimNaTampa(g.qrTam, g.afL, g.afT, g.afW);
   const [ax, ay] = g.fioA;
   const [bx, by] = g.fioB;
-  // a curva do engajamento: embaixo do painel no 16:9, a direita do aparelho
-  // no 9:16, na coluna que fica livre entre ele e os botoes do app
-  const cw = vertical ? 400 : 520;
+  // a curva do engajamento: embaixo do painel no 16:9, a esquerda do aparelho
+  // no 9:16, na coluna que fica livre ao lado dele
+  const cw = vertical ? 470 : 520;
 
   const logo = janela(f, LOGO_EM, CENA02_FRAMES, 12, 0);
   const ano = janela(f, ANO_EM, CENA02_FRAMES, 10, 0);
@@ -302,8 +302,8 @@ export const Cena02: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            left: vertical ? 540 : g.motorL,
-            top: vertical ? 1200 : undefined,
+            left: vertical ? 72 : g.motorL,
+            top: vertical ? 1240 : undefined,
             bottom: vertical ? undefined : 96,
             width: cw,
             ...entra(linha, 16),
@@ -329,8 +329,8 @@ export const Cena02: React.FC = () => {
           <div
             style={{
               marginTop: 10,
-              fontSize: vertical ? 34 : 28,
-              letterSpacing: vertical ? "-1.19px" : "-0.98px",
+              fontSize: vertical ? 40 : 28,
+              letterSpacing: vertical ? "-1.4px" : "-0.98px",
               color: marca.rosa,
               opacity: interpolate(desenha, [0.7, 1], [0, 1], {
                 extrapolateLeft: "clamp",

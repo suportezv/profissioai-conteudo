@@ -159,7 +159,7 @@ export const Cena06: React.FC = () => {
           <div style={{ position: "absolute", left: M, top: 236 }}>
             <div
               style={{
-                fontSize: 28,
+                fontSize: 30,
                 fontWeight: 500,
                 letterSpacing: "2px",
                 textTransform: "uppercase",
@@ -197,7 +197,8 @@ export const Cena06: React.FC = () => {
             })}
           </div>
           <div style={{ position: "absolute", left: M, top: 590 }}>
-            <Painel largura={1080 - M - seguro.direita} altura={742} o={tela}>
+            {/* barra de 111 px + 66 de respiro: o pe do painel cai em 1500 */}
+            <Painel largura={1080 - 2 * M} altura={733} o={tela}>
               {conversa}
             </Painel>
           </div>

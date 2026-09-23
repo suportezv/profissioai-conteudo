@@ -90,10 +90,10 @@ export const Cena09: React.FC = () => {
         <AbsoluteFill style={{ padding: vertical ? M : MARGEM, justifyContent: "center" }}>
           <div
             style={{
-              fontSize: vertical ? 92 : 72,
+              fontSize: vertical ? 108 : 72,
               fontWeight: 500,
-              letterSpacing: vertical ? "-3.22px" : "-2.52px",
-              lineHeight: vertical ? 1.12 : 1.16,
+              letterSpacing: vertical ? "-3.78px" : "-2.52px",
+              lineHeight: vertical ? 1.1 : 1.16,
               maxWidth: vertical ? 936 : 1400,
               ...entra(nega, 20),
             }}
@@ -183,9 +183,9 @@ export const Cena09: React.FC = () => {
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
             <div
               style={{
-                fontSize: 112,
+                fontSize: 136,
                 fontWeight: 500,
-                letterSpacing: "-3.92px",
+                letterSpacing: "-4.76px",
                 lineHeight: 1.1,
                 whiteSpace: "nowrap",
               }}
@@ -214,8 +214,8 @@ export const Cena09: React.FC = () => {
               />
               <div
                 style={{
-                  fontSize: 26,
-                  letterSpacing: "1.6px",
+                  fontSize: 30,
+                  letterSpacing: "2px",
                   textTransform: "uppercase",
                   color: m.apoio,
                   opacity: linha * (1 - aproxima),
@@ -228,9 +228,9 @@ export const Cena09: React.FC = () => {
 
             <div
               style={{
-                fontSize: 112,
+                fontSize: 136,
                 fontWeight: 500,
-                letterSpacing: "-3.92px",
+                letterSpacing: "-4.76px",
                 lineHeight: 1.1,
                 color: marca.azul,
                 whiteSpace: "nowrap",
@@ -258,23 +258,23 @@ export const Cena09: React.FC = () => {
               background: marca.tinta,
               borderRadius: marca.raio.arte,
               boxShadow: marca.sombra.painel,
-              padding: vertical ? "96px 80px" : "64px 100px",
+              padding: vertical ? "128px 96px" : "64px 100px",
               display: "flex",
               flexDirection: vertical ? "column" : "row",
               alignItems: "center",
-              gap: vertical ? 72 : 86,
+              gap: vertical ? 96 : 86,
             }}
           >
             {/* a arte final chegou em 22/set: o wordmark branco com alfa, que
                 e a aplicacao certa sobre a faixa escura */}
             <Img
               src={staticFile("marca-yooper/yooper-branco.png")}
-              style={{ width: vertical ? 520 : 400, height: "auto", display: "block" }}
+              style={{ width: vertical ? 600 : 400, height: "auto", display: "block" }}
             />
 
             <div
               style={{
-                width: vertical ? 420 : 1,
+                width: vertical ? 560 : 1,
                 height: vertical ? 1 : 130,
                 background: "rgba(255,255,255,0.22)",
               }}
@@ -282,7 +282,7 @@ export const Cena09: React.FC = () => {
 
             <Img
               src={staticFile("marca/profissio-ai-branco.svg")}
-              style={{ width: vertical ? 560 : 430, height: "auto", display: "block" }}
+              style={{ width: vertical ? 648 : 430, height: "auto", display: "block" }}
             />
           </div>
         </AbsoluteFill>

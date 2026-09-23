@@ -97,7 +97,7 @@ export const Cena08: React.FC = () => {
   const f = useCurrentFrame();
   const periodo = janela(f, PERIODO_EM, DADOS[0].entra + 10, 10, 10);
   // No 9:16 a cena ja era uma coluna: ela so cresce e se centra na faixa
-  // segura em vez do quadro. O numero vai a 210, que e o maior corpo que
+  // segura em vez do quadro. O numero vai a 260, que e o maior corpo que
   // "140.630" aguenta dentro da margem.
   const { vertical, M, seguro } = useFormato();
   const faixa = vertical
@@ -149,9 +149,9 @@ export const Cena08: React.FC = () => {
             >
               <div
                 style={{
-                  fontSize: vertical ? 210 : 190,
+                  fontSize: vertical ? 260 : 190,
                   fontWeight: 500,
-                  letterSpacing: vertical ? "-7.35px" : "-6.65px",
+                  letterSpacing: vertical ? "-9.1px" : "-6.65px",
                   lineHeight: 1,
                   color: marca.azul,
                   fontVariantNumeric: "tabular-nums",

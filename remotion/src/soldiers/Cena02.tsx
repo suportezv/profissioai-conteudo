@@ -89,19 +89,19 @@ const MARCA_BASE = 604;
  */
 const V = {
   rotuloEsqY: 300,
-  reguaY: 560,
+  reguaY: 520,
   /** A regua para em 3/4 da largura util: o que sobra a direita e o vazio. */
-  reguaFim: 72 + 700,
-  rotuloDirY: 860,
-  /** O logo cresce para 96 px: a caixa mede 139 + 72 de padding = 211. */
-  logo: 96,
-  marcaLarg: 211,
-  marcaCentro: 72 + 211 / 2,
-  marcaY: 1000,
-  /** Base da marca: 1000 + 96 de logo + 48 de padding. */
-  marcaBase: 1144,
+  reguaFim: 72 + 780,
+  rotuloDirY: 780,
+  /** O logo cresce para 140 px: a caixa mede 202 + 72 de padding = 274. */
+  logo: 140,
+  marcaLarg: 274,
+  marcaCentro: 72 + 274 / 2,
+  marcaY: 960,
+  /** Base da marca: 960 + 140 de logo + 48 de padding. */
+  marcaBase: 1148,
   posX: 72,
-  posY: 1290,
+  posY: 1330,
 };
 
 export const Cena02: React.FC = () => {
@@ -155,7 +155,7 @@ export const Cena02: React.FC = () => {
           left: G.margem,
           top: G.rotuloEsqY,
           width: 760,
-          fontSize: vertical ? 36 : 34,
+          fontSize: vertical ? 46 : 34,
           fontWeight: 500,
           letterSpacing: "2px",
           textTransform: "uppercase",
@@ -175,7 +175,7 @@ export const Cena02: React.FC = () => {
           left: G.posX,
           top: G.rotuloDirY,
           width: 700,
-          fontSize: vertical ? 36 : 34,
+          fontSize: vertical ? 46 : 34,
           fontWeight: 500,
           letterSpacing: "2px",
           textTransform: "uppercase",
@@ -233,9 +233,9 @@ export const Cena02: React.FC = () => {
             />
             <div
               style={{
-                fontSize: vertical ? 34 : 32,
+                fontSize: vertical ? 40 : 32,
                 fontWeight: 500,
-                letterSpacing: vertical ? "-1.19px" : "-1.12px",
+                letterSpacing: vertical ? "-1.4px" : "-1.12px",
                 whiteSpace: "nowrap",
               }}
             >
@@ -251,7 +251,7 @@ export const Cena02: React.FC = () => {
           position: "absolute",
           left: G.posX,
           top: G.posY,
-          fontSize: vertical ? 84 : 62,
+          fontSize: vertical ? 104 : 62,
           fontWeight: 500,
           letterSpacing: "3px",
           textTransform: "uppercase",

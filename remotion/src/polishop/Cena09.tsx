@@ -143,7 +143,7 @@ const FIO_CONV = 460;
  *   pouso continua saindo de `afimNaTampa` com a escala da foto, entao o
  *   codigo cai no emissor da foto em qualquer tamanho.
  * - **A fileira continua uma fileira so**, de ponta a ponta da margem, porque
- *   e a leitura de prateleira que diz "toda unidade". Cinco de 170 px; o
+ *   e a leitura de prateleira que diz "toda unidade". Cinco de 180 px; o
  *   codigo em cada tampa fica do tamanho que ele ja tinha no 16:9.
  * - **As mensagens sobem em escada**, cada uma pendurada no fio por um
  *   risco: quatro mensagens nao cabem lado a lado em 1080 px, e a escada
@@ -151,31 +151,34 @@ const FIO_CONV = 460;
  *   ultima cortada pela borda. A borda de cima nao serve para cortar, porque
  *   ali fica a interface do app.
  */
-const G_L_V = 260;
-const G_T_V = 820;
-const G_W_V = 560;
-const G_TAM_V = 240;
+const G_L_V = 240;
+const G_T_V = 800;
+const G_W_V = 600;
+const G_TAM_V = 280;
 /** Centro horizontal do codigo na tampa, onde o fio desce. */
 const CODIGO_X_V = G_L_V + G_W_V * (233 / 449);
 const PLANA_V = afimPlana(Math.round(CODIGO_X_V - G_TAM_V / 2), 300);
 const NA_TAMPA_V = afimNaTampa(G_TAM_V, G_L_V, G_T_V, G_W_V);
-/** Topo da etiqueta achatada (~48 px de altura neste tamanho). */
-const CODIGO_TOPO_V = alturaDoCodigo(G_T_V, G_W_V) - 26;
+/** Topo da etiqueta achatada (~51 px de altura neste tamanho). */
+const CODIGO_TOPO_V = alturaDoCodigo(G_T_V, G_W_V) - 28;
 
-const P_W_V = 170;
-const P_GAP_V = 20;
-const P_L_V = 75;
-const P_T_V = 1000;
-const P_TAM_V = 100;
-const FIO_CONV_V = 860;
+/** Cinco de 180 com 9 de folga: a foto ja tem margem transparente. */
+const P_W_V = 180;
+const P_GAP_V = 9;
+const P_L_V = 72;
+const P_T_V = 1010;
+const P_TAM_V = 106;
+const FIO_CONV_V = 880;
 
 /** A escada: x e topo de cada mensagem no 9:16. A ultima passa da borda. */
 const MENSAGENS_V = [
-  { x: 110, y: 728 },
-  { x: 250, y: 596 },
-  { x: 400, y: 464 },
-  { x: 790, y: 332 },
+  { x: 100, y: 740 },
+  { x: 240, y: 605 },
+  { x: 390, y: 470 },
+  { x: 760, y: 335 },
 ];
+/** Altura de uma mensagem (data mais balao), de onde o risco desce. */
+const MSG_ALT_V = 113;
 
 export const Cena09: React.FC = () => {
   const f = useCurrentFrame();
@@ -323,10 +326,10 @@ export const Cena09: React.FC = () => {
                   return o < 0.004 ? null : (
                     <line
                       key={i}
-                      x1={p.x + 22}
-                      y1={p.y + 104}
-                      x2={p.x + 22}
-                      y2={p.y + 104 + (fconv - p.y - 104) * o}
+                      x1={p.x + 24}
+                      y1={p.y + MSG_ALT_V}
+                      x2={p.x + 24}
+                      y2={p.y + MSG_ALT_V + (fconv - p.y - MSG_ALT_V) * o}
                       stroke={marca.azul}
                       strokeWidth="2"
                       opacity={0.5}
@@ -353,7 +356,7 @@ export const Cena09: React.FC = () => {
               >
                 <div
                   style={{
-                    fontSize: vertical ? 24 : 19,
+                    fontSize: vertical ? 30 : 19,
                     letterSpacing: "1.4px",
                     textTransform: "uppercase",
                     color: m.apoio,
@@ -370,7 +373,7 @@ export const Cena09: React.FC = () => {
                     borderBottomLeftRadius: 5,
                     padding: vertical ? "15px 22px" : "12px 18px",
                     fontFamily: UI,
-                    fontSize: vertical ? 30 : 21,
+                    fontSize: vertical ? 34 : 21,
                     color: m.tinta,
                     whiteSpace: "nowrap",
                     boxShadow: marca.sombra.painel,
@@ -436,6 +439,10 @@ export const Cena09: React.FC = () => {
                 top: pt + pw * AF_RAZAO + (vertical ? 60 : 54),
                 display: "flex",
                 gap: 16,
+                // no 9:16 os tres riscados em corpo 40 quebram em duas linhas,
+                // fora da coluna de botoes do app
+                flexWrap: vertical ? "wrap" : undefined,
+                maxWidth: vertical ? W - M - seguro.direita : undefined,
                 ...entra(riscos, 14),
               }}
             >
@@ -450,8 +457,8 @@ export const Cena09: React.FC = () => {
                       background: marca.branco,
                       borderRadius: 999,
                       padding: vertical ? "14px 26px" : "12px 24px",
-                      fontSize: vertical ? 30 : 26,
-                      letterSpacing: vertical ? "-1.05px" : "-0.91px",
+                      fontSize: vertical ? 40 : 26,
+                      letterSpacing: vertical ? "-1.4px" : "-0.91px",
                       color: m.apoio,
                     }}
                   >
@@ -492,17 +499,17 @@ export const Cena09: React.FC = () => {
         >
           <Img
             src={staticFile("marca-polishop/polishop.png")}
-            style={{ width: vertical ? 340 : 260, opacity: passo(f, FECHO_EM, FECHO_EM + 10) }}
+            style={{ width: vertical ? 380 : 260, opacity: passo(f, FECHO_EM, FECHO_EM + 10) }}
           />
           <div
             style={{
-              fontSize: vertical ? 88 : 64,
+              fontSize: vertical ? 96 : 64,
               fontWeight: 500,
-              letterSpacing: vertical ? "-3.08px" : "-2.24px",
+              letterSpacing: vertical ? "-3.36px" : "-2.24px",
               lineHeight: 1.18,
-              // no 9:16, 800 px quebra em "ja esta levando / essa inovacao /
+              // no 9:16, 870 px quebra em "ja esta levando / essa inovacao /
               // para a linha fitness", tres linhas de peso parecido
-              maxWidth: vertical ? 800 : 1400,
+              maxWidth: vertical ? 870 : 1400,
               opacity: passo(f, FECHO_EM + s(0.7), FECHO_EM + s(1.0)),
             }}
           >

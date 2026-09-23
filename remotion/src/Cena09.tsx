@@ -100,18 +100,18 @@ const Assinatura: React.FC = () => {
               branco apareceria sobre a superficie #F4F6F9. */}
           <Img
             src={staticFile("marca/eita-mentora-virtual.png")}
-            style={{ height: vertical ? 340 : 290, width: "auto" }}
+            style={{ height: vertical ? 420 : 290, width: "auto" }}
           />
           <div
             style={
               vertical
-                ? { width: 240, height: 1, background: marca.linha }
+                ? { width: 320, height: 1, background: marca.linha }
                 : { width: 1, height: 200, background: marca.linha }
             }
           />
           <Img
             src={staticFile("marca/profissio-ai-escuro.svg")}
-            style={{ width: vertical ? 600 : 500, height: "auto" }}
+            style={{ width: vertical ? 760 : 500, height: "auto" }}
           />
         </div>
       </AbsoluteFill>

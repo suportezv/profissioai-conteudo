@@ -126,19 +126,19 @@ const PIETRA_SOBE = s(12.45);
 
 /**
  * A esteira no 9:16. Os clipes de opt-in foram gravados **em pe**, entao aqui
- * o cartao fica mais perto do formato do proprio video: 440 de largura por 960
+ * o cartao fica mais perto do formato do proprio video: 440 de largura por 990
  * de altura, dois e pouco cabendo no quadro. A faixa sangra ate as bordas (e
  * imagem, pode sangrar), a curva e os tempos sao os mesmos, e a freada termina
- * com a Pietra centrada, que cresce para 680. A pergunta desce para baixo da
+ * com a Pietra centrada, que cresce para 700. A pergunta desce para baixo da
  * faixa, na faixa segura, em vez de dividir a largura com o cartao.
  */
 const V = {
   larg: 440,
   vao: 16,
   topo: 300,
-  altura: 960,
-  cresce: 680,
-  perguntaY: 1300,
+  altura: 990,
+  cresce: 700,
+  perguntaY: 1318,
 };
 const PASSO_V = V.larg + V.vao;
 const FAIXA_INI_V = 72;
@@ -218,14 +218,14 @@ export const Cena03: React.FC = () => {
         <div
           style={{
             marginLeft: vertical ? M : 0,
-            fontSize: vertical ? 28 : 24,
+            fontSize: vertical ? 30 : 24,
             fontWeight: 500,
             letterSpacing: "2px",
             textTransform: "uppercase",
             color: marca.azul,
             opacity: rotulo,
-            // 220 + 28 de corpo + 52 poe a faixa em V.topo
-            marginBottom: vertical ? 45 : 30,
+            // 220 + a linha de 30 px + 44 poe a faixa em V.topo
+            marginBottom: vertical ? 44 : 30,
           }}
         >
           Quem já falava com o cliente
@@ -340,10 +340,10 @@ export const Cena03: React.FC = () => {
             left: M,
             top: V.perguntaY,
             width: W - M - seguro.direita,
-            fontSize: 48,
+            fontSize: 54,
             fontWeight: 500,
-            letterSpacing: "-1.68px",
-            lineHeight: 1.24,
+            letterSpacing: "-1.89px",
+            lineHeight: 1.18,
             color: m.tinta,
             opacity: pergunta,
             filter: `blur(${(1 - pergunta) * 6}px)`,
