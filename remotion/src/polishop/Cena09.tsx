@@ -438,10 +438,11 @@ export const Cena09: React.FC = () => {
                 left: vertical ? M : P_L,
                 top: pt + pw * AF_RAZAO + (vertical ? 60 : 54),
                 display: "flex",
-                gap: 16,
-                // no 9:16 os tres riscados em corpo 40 quebram em duas linhas,
-                // fora da coluna de botoes do app
-                flexWrap: vertical ? "wrap" : undefined,
+                gap: vertical ? 12 : 16,
+                // no 9:16 os tres riscados ficam numa linha so (pedido do
+                // usuario, 23/set): corpo 36 e respiro menor, para caberem nos
+                // 868 px antes da coluna de botoes do app
+                flexWrap: vertical ? "nowrap" : undefined,
                 maxWidth: vertical ? W - M - seguro.direita : undefined,
                 ...entra(riscos, 14),
               }}
@@ -456,9 +457,10 @@ export const Cena09: React.FC = () => {
                       border: `1px solid ${marca.linha}`,
                       background: marca.branco,
                       borderRadius: 999,
-                      padding: vertical ? "14px 26px" : "12px 24px",
-                      fontSize: vertical ? 40 : 26,
-                      letterSpacing: vertical ? "-1.4px" : "-0.91px",
+                      padding: vertical ? "12px 20px" : "12px 24px",
+                      fontSize: vertical ? 36 : 26,
+                      letterSpacing: vertical ? "-1.26px" : "-0.91px",
+                      whiteSpace: "nowrap",
                       color: m.apoio,
                     }}
                   >
