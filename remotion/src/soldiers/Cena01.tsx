@@ -86,27 +86,25 @@ const CURSOR_CHEGA = s(9.9);
 const ESCOLHE = s(10.6);
 
 /**
- * A frase de efeito que abre o filme, em tres tempos.
+ * A frase de efeito que abre o filme, em tres tempos: "Creatina / e tudo /
+ * igual!".
  *
- * Ela e uma **repeticao**, e e por isso que empilha em duas linhas: com
- * "CREATINA" em cima e "CREATINA" embaixo, no mesmo corpo e no mesmo peso, a
- * igualdade que a frase afirma fica visivel antes de ser ouvida. Escrita numa
- * linha so, viraria uma frase comprida qualquer.
+ * **O texto mudou em 23/set**, depois de o usuario recusar as tres versoes de
+ * "Creatina e creatina" com desdem. A frase agora diz a tese do mercado com
+ * todas as letras, entao a sobrelinha deixou de ser "Tudo igual?" (repetiria a
+ * frase) e passou a dizer de quem e a fala. O take e da voz Lair no
+ * `eleven_multilingual_v2`, com os ajustes do filme e `next_text` apontando
+ * para "Num mercado...", emendado no arquivo aprovado em 2,15 s: o resto da
+ * cena nao mudou de tempo. Dos oito takes, todos transcritos certo, ficou o de
+ * mediana de f0 mais alta (124 Hz contra 101 da frase seguinte) e o unico que
+ * sustenta a altura em "igual" em vez de cair nele.
  *
- * **A frase e dita com desdem**, a pedido do usuario em 23/set: e a voz do
- * mercado que o filme vai contrariar, entao ela sai seca e de pouco caso, e o
- * ponto de exclamacao virou ponto final na tela. O take e do `eleven_v3` com a
- * marca `[dismissive]`, emendado no arquivo aprovado em 2,15 s (logo antes de
- * "Num mercado"), e por isso o resto da cena nao mudou de tempo.
- *
- * Cada palavra entra com estalo curto (7 frames, escala 1,08 e desfoque
- * saindo), sincronizada com a locucao. As aspas entram junto da primeira e
- * fecham com a ultima, porque e citacao de mercado, nao fala da marca.
+ * "IGUAL!" entra na tonica da palavra e leva o som forte.
  */
 const PALAVRAS: { texto: string; em: number }[] = [
-  { texto: "CREATINA", em: s(1.1) },
-  { texto: "É", em: s(1.98) },
-  { texto: "CREATINA.", em: s(2.1) },
+  { texto: "CREATINA", em: s(1.08) },
+  { texto: "É TUDO", em: s(1.52) },
+  { texto: "IGUAL!", em: s(1.9) },
 ];
 
 const Estalo: React.FC<{ o: number; children: React.ReactNode }> = ({
@@ -292,7 +290,7 @@ export const Cena01: React.FC = () => {
                   opacity: passo(f, s(0.6), s(0.6) + 8),
                 }}
               >
-                Tudo igual?
+                O que o mercado diz
               </div>
             <div
               style={{
