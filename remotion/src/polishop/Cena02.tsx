@@ -13,6 +13,7 @@ import { Superficie } from "../Superficie";
 import { UI } from "../whatsapp";
 import { janela, entra, passo, s } from "../anim";
 import { Sfx } from "../Sfx";
+import { Cabecalho } from "./Cabecalho";
 import {
   QR,
   QR_L,
@@ -89,7 +90,7 @@ import {
  * navegador quando o aparelho ocupou a coluna da esquerda.
  */
 
-export const CENA02_FRAMES = s(15.2);
+export const CENA02_FRAMES = s(15.0);
 const AUDIO_EM = s(0.4);
 const m = modos.claro;
 
@@ -142,42 +143,18 @@ export const Cena02: React.FC = () => {
         <Audio src={staticFile("locucao-polishop/cena-02.mp3")} />
       </Sequence>
 
-      {/* a marca entra na palavra: "A Polishop ja tinha atacado esse problema" */}
-      <Img
-        src={staticFile("marca-polishop/polishop.png")}
-        style={{
-          position: "absolute",
-          left: 120,
-          top: 100,
-          width: 210,
-          ...entra(logo, 14),
-        }}
+      {/* A marca entra na palavra: "A Polishop ja tinha atacado esse problema".
+          O bloco inteiro vem do `Cabecalho`, que a cena 03 tambem usa: ele
+          atravessa o corte entre as duas e por isso nao pode existir em duas
+          copias. O ano fica com o odometro parado no 3, e nao escrito como
+          texto, para o corte nao perder o kerning do par "23". */}
+      <Cabecalho
+        logo={entra(logo, 14)}
+        estilo={entra(ano, 16)}
+        rola={0}
+        velho={1}
+        novo={0}
       />
-
-      <div style={{ position: "absolute", left: 120, top: 200, ...entra(ano, 16) }}>
-        <div
-          style={{
-            fontSize: 24,
-            fontWeight: 500,
-            letterSpacing: "2px",
-            textTransform: "uppercase",
-            color: marca.azul,
-          }}
-        >
-          A primeira tentativa
-        </div>
-        <div
-          style={{
-            marginTop: 8,
-            fontSize: 84,
-            fontWeight: 500,
-            letterSpacing: "-2.94px",
-            lineHeight: 1,
-          }}
-        >
-          2023
-        </div>
-      </div>
 
       {/* o aparelho sobe para receber o codigo */}
       {aparelho > 0.001 ? (

@@ -38,7 +38,7 @@ import { Sfx } from "../Sfx";
  * razão inteira, sem rótulo inventado para o denominador.
  */
 
-export const CENA08B_FRAMES = s(8.9);
+export const CENA08B_FRAMES = s(8.6);
 const AUDIO_EM = s(0.4);
 const MARGEM = 120;
 const m = modos.claro;

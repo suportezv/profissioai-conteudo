@@ -52,7 +52,8 @@ def roda(args):
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("mapa", help='JSON: [{"stem":"a","inicio":0,"fim":12,"ganho":0.5}]')
+    ap.add_argument("mapa", help='JSON: [{"stem":"a","inicio":0,"fim":12,'
+                                 '"ganho":0.5,"corte":1600}]')
     ap.add_argument("saida")
     ap.add_argument("--pasta", default=".", help="onde estao os stems")
     ap.add_argument("--cruzamento", type=float, default=1.4,
@@ -76,11 +77,16 @@ def main():
         ent = a.cruzamento if s["inicio"] > 0 else 0.8
         sai = a.cruzamento if s["fim"] < total else 2.0
         entradas += ["-stream_loop", "-1", "-i", caminho]
+        # `corte` e a densidade da secao: um passa-baixa tira o brilho e a
+        # percussao de cima sem mudar tom nem andamento, que e o que garante
+        # que as secoes continuem soando como a mesma peca.
+        corte = s.get("corte")
+        passa = ("lowpass=f=%d," % int(corte)) if corte else ""
         filtros.append(
-            "[%d:a]atrim=0:%.3f,asetpts=N/SR/TB,"
+            "[%d:a]atrim=0:%.3f,asetpts=N/SR/TB,%s"
             "afade=t=in:st=0:d=%.3f,afade=t=out:st=%.3f:d=%.3f,"
             "volume=%.4f,adelay=%d:all=1[s%d]"
-            % (i, dura, ent, max(0.0, dura - sai), sai,
+            % (i, dura, passa, ent, max(0.0, dura - sai), sai,
                float(s.get("ganho", 1.0)), int(ini * 1000), i)
         )
         rotulos.append("[s%d]" % i)
@@ -99,7 +105,8 @@ def main():
     print("%s  %.2fs  %d secoes" % (a.saida, float(out), len(secoes)))
     for s in secoes:
         print("  %6.1f a %6.1f  %-16s ganho %.2f"
-              % (s["inicio"], s["fim"], s["stem"], s.get("ganho", 1.0)))
+              % (s["inicio"], s["fim"], s["stem"], s.get("ganho", 1.0))
+              + ("  passa-baixa %d Hz" % s["corte"] if s.get("corte") else ""))
 
 
 if __name__ == "__main__":

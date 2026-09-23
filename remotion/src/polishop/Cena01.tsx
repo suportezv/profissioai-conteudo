@@ -14,13 +14,12 @@ import { Sfx } from "../Sfx";
 /**
  * Cena 01 do case Polishop: o produto subutilizado.
  *
- * 13,2 s. Toca a **segunda metade** da locução da cena 01; a primeira frase
+ * 9,0 s. Toca a **segunda metade** da locução da cena 01; a primeira frase
  * ficou na abertura, onde a imagem mostra a caixa sendo aberta.
  *
- * Marcas de palavra, já descontados os 3,4 s que ficaram na abertura e somado
- * o atraso de 0,3 s: "manual" 1,00 · "gaveta" 1,86 · "a maioria repete" 3,08 ·
- * "duas receitas" 4,56 · "Cliente que não aproveita" 6,10 · "não volta" 7,92 ·
- * "deixa escrito" 9,08 · "onde o próximo vai ler" 10,94.
+ * Marcas de palavra, já descontados os 3,23 s que ficaram na abertura e somado
+ * o atraso de 0,3 s: "manual" 0,87 · "gaveta" 1,65 · "a maioria repete" 2,71 ·
+ * "duas" 4,17 · "Cliente que não aproveita" 5,67 · "não volta" 7,55.
  *
  * ## A grade de funções é o argumento, e ela carrega informação que a fala não
  *
@@ -31,26 +30,29 @@ import { Sfx } from "../Sfx";
  * As duas acesas são batata e frango, que é o que de fato todo mundo faz, e
  * elas acendem **no frame em que a voz diz "duas"**.
  *
- * ## A avaliação de duas estrelas fecha o custo
+ * ## A avaliação de duas estrelas saiu em 23/set/2026, com a frase dela
  *
- * A frase "e às vezes deixa escrito, onde o próximo vai ler" é sobre dinheiro,
- * não sobre sentimento: uma avaliação ruim afasta o comprador seguinte. Por
- * isso o cartão não é um emoji triste, é **uma avaliação de loja**, com
- * estrelas, data e o texto de alguém que desistiu do aparelho. O texto é
- * recriado, como todo o resto da peça.
+ * O filme precisava fechar em dois minutos e a quarta frase da narração, "e às
+ * vezes deixa escrito, onde o próximo vai ler", era o corte mais barato: 4,2 s
+ * por um beat ilustrativo. **A cena não perde o argumento**, porque quem o
+ * carrega é a grade de dezesseis funções com duas acesas, que é onde o
+ * espectador conta em vez de acreditar.
+ *
+ * O cartão de avaliação está no histórico do repositório se a montagem mudar:
+ * era uma avaliação de loja recriada, com estrelas, data e o texto de alguém
+ * que desistiu do aparelho.
  */
 
-export const CENA01_FRAMES = s(13.2);
+export const CENA01_FRAMES = s(9.0);
 const AUDIO_EM = s(0.3);
 const MARGEM = 120;
 const m = modos.claro;
 
-const MANUAL_EM = s(0.9);
-const GAVETA_EM = s(1.86);
-const GRADE_EM = s(3.0);
-const DUAS_EM = s(4.5);
-const CUSTO_EM = s(6.1);
-const AVALIACAO_EM = s(9.0);
+const MANUAL_EM = s(0.87);
+const GAVETA_EM = s(1.65);
+const GRADE_EM = s(2.7);
+const DUAS_EM = s(4.17);
+const CUSTO_EM = s(5.67);
 
 /**
  * As dezesseis funções. As duas primeiras são as que ficam acesas, e são as
@@ -93,9 +95,8 @@ export const Cena01: React.FC = () => {
   const manual = janela(f, MANUAL_EM, GRADE_EM + 8, 10, 10);
   // o manual desce e some: e o gesto de guardar, nao um fade
   const guarda = passo(f, GAVETA_EM, GAVETA_EM + s(0.7));
-  const grade = janela(f, GRADE_EM, AVALIACAO_EM, 12, 12);
-  const custo = janela(f, CUSTO_EM, AVALIACAO_EM, 10, 12);
-  const aval = janela(f, AVALIACAO_EM, CENA01_FRAMES, 12, 0);
+  const grade = janela(f, GRADE_EM, CENA01_FRAMES, 12, 0);
+  const custo = janela(f, CUSTO_EM, CENA01_FRAMES, 10, 0);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -219,53 +220,8 @@ export const Cena01: React.FC = () => {
         </AbsoluteFill>
       ) : null}
 
-      {/* a avaliacao: o custo e do proximo comprador, nao do arrependido */}
-      {aval > 0.001 ? (
-        <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center", gap: 44 }}>
-          <div
-            style={{
-              width: 980,
-              background: marca.branco,
-              border: `1px solid ${marca.linha}`,
-              borderRadius: marca.raio.painel,
-              boxShadow: marca.sombra.painel,
-              padding: "34px 40px",
-              display: "flex",
-              flexDirection: "column",
-              gap: 16,
-              ...entra(aval, 20),
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              {[0, 1, 2, 3, 4].map((i) => (
-                <Estrela key={i} cheia={i < 2} />
-              ))}
-              <div style={{ marginLeft: 14, fontSize: 22, color: m.apoio }}>
-                avaliação de compra
-              </div>
-            </div>
-            <div style={{ fontSize: 32, letterSpacing: "-1.12px", lineHeight: 1.4 }}>
-              “Comprei animada, mas só uso pra batata. Não entendi metade dos
-              botões e o manual não ajudou.”
-            </div>
-          </div>
-
-          <div
-            style={{
-              fontSize: 30,
-              letterSpacing: "-1.05px",
-              color: m.apoio,
-              ...entra(aval, 14),
-            }}
-          >
-            E o próximo comprador lê isso antes de decidir.
-          </div>
-        </AbsoluteFill>
-      ) : null}
-
       <Sfx som="apaga" em={GAVETA_EM} volume={0.2} />
       <Sfx som="assenta" em={DUAS_EM} volume={0.26} />
-      <Sfx som="surge" em={AVALIACAO_EM} volume={0.18} />
     </AbsoluteFill>
   );
 };

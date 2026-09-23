@@ -44,17 +44,17 @@ import { Painel, Balao } from "./Conversa";
  * continua fora de questão.
  */
 
-export const CENA05_FRAMES = s(15.2);
+export const CENA05_FRAMES = s(11.2);
 const AUDIO_EM = s(0.4);
 const MARGEM = 120;
 const m = modos.claro;
 
 const MANUAIS_EM = s(2.5);
-const MEU_EM = s(5.26);
-const CUIDADO_EM = s(7.34);
-const RECUSA_EM = s(10.6);
-const NAO_CABE_EM = s(11.6);
-const RESPOSTA_EM = s(12.3);
+const MEU_EM = s(5.0);
+const CUIDADO_EM = s(5.6);
+const RECUSA_EM = s(7.0);
+const NAO_CABE_EM = s(8.0);
+const RESPOSTA_EM = s(8.5);
 
 /** As cinco linhas que o material do cliente nomeia. */
 const LINHAS = [

@@ -33,7 +33,7 @@ import {
  * 1,28 · "transforma" 2,40 · "um produto" 2,96 · "na prateleira" 3,56 · "em
  * uma conversa" 4,06 · "continua" 5,00 · "Sem campanha" 6,20 · "sem e-mail"
  * 7,26 · "sem lembrete" 8,26 · "a Polishop" 9,96 · "essa inovação" 11,44 ·
- * "para a linha seguinte" 12,00 · "fitness" 13,52.
+ * "para a linha" 12,56 · "fitness" 13,68.
  *
  * ## A faixa foi regravada em 23/set/2026 por causa da pronúncia da marca
  *
@@ -93,19 +93,19 @@ import {
  * claro a Profissio.ai entra na versão escura.
  */
 
-export const CENA09_FRAMES = s(17.2);
+export const CENA09_FRAMES = s(17.4);
 const AUDIO_EM = s(0.4);
 const m = modos.claro;
 
-const QR_EM = s(0.46);
-const FIO_EM = s(1.28);
-const APARELHO_EM = s(2.25);
-const FUNDE_EM = s(2.95);
-const PRATELEIRA_EM = s(3.6);
-const CONVERSA_EM = s(4.1);
-const RISCOS_EM = s(6.2);
-const FECHO_EM = s(9.96);
-const ASSINA_EM = s(14.0);
+const QR_EM = s(0.48);
+const FIO_EM = s(1.26);
+const APARELHO_EM = s(2.6);
+const FUNDE_EM = s(3.2);
+const PRATELEIRA_EM = s(3.9);
+const CONVERSA_EM = s(4.9);
+const RISCOS_EM = s(7.04);
+const FECHO_EM = s(10.3);
+const ASSINA_EM = s(14.7);
 
 const RISCOS = ["sem campanha", "sem e-mail", "sem lembrete"];
 
@@ -413,11 +413,11 @@ export const Cena09: React.FC = () => {
           >
             já está levando essa inovação
             <br />
-            para a linha seguinte:{" "}
+            para a linha{" "}
             <span
               style={{
                 color: marca.azul,
-                opacity: passo(f, FECHO_EM + s(3.5), FECHO_EM + s(3.75)),
+                opacity: passo(f, FECHO_EM + s(3.38), FECHO_EM + s(3.6)),
               }}
             >
               fitness

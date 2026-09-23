@@ -39,7 +39,7 @@ import { Sfx } from "../Sfx";
  * números. O dado continua no formulário escrito.
  */
 
-export const CENA08_FRAMES = s(16.2);
+export const CENA08_FRAMES = s(12.6);
 const AUDIO_EM = s(0.4);
 const MARGEM = 120;
 const m = modos.claro;
@@ -57,23 +57,23 @@ type Dado = {
 
 const DADOS: Dado[] = [
   {
-    entra: s(4.5),
-    sai: s(6.6),
+    entra: s(4.8),
+    sai: s(7.0),
     alvo: 11.1,
     casas: 3,
     titulo: "conversas",
     base: "out/2025 a 18/set/2026",
   },
   {
-    entra: s(6.6),
-    sai: s(9.9),
+    entra: s(7.0),
+    sai: s(9.4),
     alvo: 140.63,
     casas: 3,
     titulo: "mensagens trocadas",
     base: "88,6% em texto · 9,1% em áudio",
   },
   {
-    entra: s(9.9),
+    entra: s(9.4),
     sai: CENA08_FRAMES,
     alvo: 2.888,
     casas: 3,

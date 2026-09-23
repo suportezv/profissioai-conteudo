@@ -11,7 +11,7 @@
   "falas": [
     {
       "nome": "cena-01",
-      "texto": "Quem compra um eletrodoméstico quer usar tudo o que ele faz. Mas o manual fica na gaveta, e a maioria repete as mesmas duas receitas. Cliente que não aproveita o que comprou não volta. E às vezes deixa escrito, onde o próximo vai ler."
+      "texto": "Quem compra um eletrodoméstico quer usar tudo o que ele faz. Mas o manual fica na gaveta, e a maioria repete as mesmas duas receitas. Cliente que não aproveita o que comprou não volta."
     },
     {
       "nome": "cena-02",
@@ -23,19 +23,24 @@
     },
     {
       "nome": "cena-05",
-      "texto": "Antes de responder, ele consulta os manuais técnicos das seis linhas. Sabe qual aparelho é o seu, ajuda na configuração e no cuidado do equipamento, e avisa quando a receita que você pediu não cabe nele."
+      "texto": "Antes de responder, ele consulta os manuais técnicos das seis linhas. Sabe qual aparelho é o seu, e avisa quando a receita que você pediu não cabe nele."
     },
     {
-      "nome": "cena-06",
-      "texto": "E ele usa o WhatsApp inteiro. A foto dos ingredientes que sobraram na geladeira vira receita. Quando existe um vídeo gravado pela própria equipe da Polishop, ele manda o vídeo junto do passo a passo. E se a pergunta vem em áudio, a resposta volta em áudio."
+      "nome": "cena-06a",
+      "texto": "E ele usa o WhatsApp inteiro. A foto dos ingredientes que sobraram na geladeira vira receita."
+    },
+    {
+      "nome": "cena-06b",
+      "texto": "A Polishop grava as próprias receitas em vídeo, e quando existe uma, ele manda o vídeo junto do passo a passo. E se a pergunta vem em áudio, a resposta volta em áudio.",
+      "nota": "Faixa separada de proposito. A marca sai no registro alto de inicio de fala: no meio de um paragrafo longo a voz declina e 'Polishop' saia em 108 Hz contra os 143 Hz da cena 02, que e a aprovada. Este take mede 149 Hz."
     },
     {
       "nome": "cena-07",
-      "texto": "E ele conversa como um chef, não como um catálogo. Dá opinião, avisa o ponto certo da carne, e comemora quando chega a foto do prato pronto."
+      "texto": "E ele conversa como um chef, não como um catálogo. Dá opinião, e comemora quando chega a foto do prato pronto."
     },
     {
       "nome": "cena-08",
-      "texto": "De outubro de 2025 a setembro de 2026: onze mil e cem conversas, cento e quarenta mil, seiscentas e trinta mensagens, e duas mil, oitocentas e oitenta e oito fotos de ingredientes mandadas pelos próprios clientes."
+      "texto": "De outubro de 2025 a setembro de 2026: onze mil e cem conversas, cento e quarenta mil mensagens, e quase três mil fotos de ingredientes."
     },
     {
       "nome": "cena-08b",
@@ -43,8 +48,8 @@
     },
     {
       "nome": "cena-09",
-      "texto": "Um QR code impresso na fábrica transforma um produto na prateleira em uma conversa que continua. Sem campanha, sem e-mail, sem lembrete. E a Pólishópi já está levando essa inovação para a linha seguinte: fitness.",
-      "nota": "Grafia fonetica da marca: `Pólishópi`. O acento poe a tonica na primeira silaba e o `i` final e a vogal de apoio que o portugues brasileiro poe depois da oclusiva. Escolhida por medida contra a palavra aprovada na cena 02, ver o cabecalho do Cena09.tsx. Nunca copiar esta grafia para lettering."
+      "texto": "Um QR code impresso na fábrica transforma um produto na prateleira em uma conversa que continua. Sem campanha, sem e-mail, sem lembrete. A Polishop já está levando essa inovação para a linha fitness.",
+      "nota": "A frase que cita a marca comeca uma oracao nova, pelo mesmo motivo da cena 06. Este take mede 148 Hz contra os 143 Hz da referencia. A grafia fonetica `Pólishópi`, tentada antes, foi abandonada: ela acertava a tonica e nao o registro, que era o problema real."
     }
   ]
 }

@@ -8,7 +8,6 @@ import {
   staticFile,
 } from "remotion";
 import { s } from "../anim";
-import { Placeholder } from "../Placeholder";
 import { Cena00, CENA00_FRAMES } from "./Cena00";
 import { Cena01, CENA01_FRAMES } from "./Cena01";
 import { Cena02, CENA02_FRAMES } from "./Cena02";
@@ -23,20 +22,29 @@ import { Cena09, CENA09_FRAMES } from "./Cena09";
 /**
  * Corte de montagem do case Polishop A.IChef, ponta a ponta.
  *
- * Uma lacuna: **a sonora da Polishop**, na cena 04, e ela é removível. O resto
- * está montado com a locução real e motion pronto.
+ * ## A lacuna da sonora saiu, e o filme foi apertado para 2:00
  *
- * ## Por que a sonora é dessa pessoa e sobre esse assunto
+ * A cena 04 era um cartão de 11 s reservando a sonora da Polishop. Em
+ * 23/set/2026 o usuário mandou tirá-la e fechar o filme em dois minutos, que é
+ * o teto do formulário. Os 11 s do cartão não bastavam: faltavam mais 14,6 s.
  *
- * O case tem uma pergunta que nenhuma cena de motion responde: **por que
- * revisitar em 2025 um projeto que não engajou em 2023, em vez de enterrar.**
- * É o coração da história e só uma pessoa da Polishop pode contar. Testemunha
- * existe para cobrir o buraco que o júri vai procurar.
+ * **As caudas já estavam apertadas** (0,7 a 0,9 s por cena) e o silêncio dentro
+ * das faixas somava só 2,8 s, então o corte tinha que sair de palavra. Quatro
+ * frases saíram, escolhidas por já estarem ditas na tela:
  *
- * Ela é removível pela mesma arquitetura do case anterior: a cena 03 fecha uma
- * afirmação completa, a 05 abre outra, e nada que a sonora diz é pressuposto
- * depois. Tirar é apagar este `Series.Sequence`, sem retimar nada, e o filme
- * fecha 11 s mais curto.
+ * - cena 01, "e às vezes deixa escrito, onde o próximo vai ler" (−4,2 s). Sai
+ *   com ela o cartão de avaliação de duas estrelas; a grade de dezesseis
+ *   funções com duas acesas continua provando a tese sozinha.
+ * - cena 05, "ajuda na configuração e no cuidado do equipamento" (−4,6 s). A
+ *   linha de apoio na tela já dizia isso, e agora **ela carrega informação que
+ *   a voz não carrega**, que é onde lettering vale a pena.
+ * - cena 07, "avisa o ponto certo da carne" (−2,5 s).
+ * - cena 08, os números longos por extenso viraram "cento e quarenta mil
+ *   mensagens" e "quase três mil fotos" (−3,5 s). **A tela mantém 140.630 e
+ *   2.888 exatos**: quem julga lê o número, a voz só precisa dar a ordem de
+ *   grandeza.
+ *
+ * Nenhuma cena saiu e nenhum critério da categoria ficou sem resposta.
  *
  * ## A trilha nasce nula
  *
@@ -47,9 +55,6 @@ import { Cena09, CENA09_FRAMES } from "./Cena09";
  */
 
 const NARRACAO_01_EM = s(0.7);
-
-/** A única lacuna: a sonora da Polishop. */
-const LACUNA_04 = s(11);
 
 const TRILHA_PADRAO: string | null = null;
 
@@ -67,7 +72,6 @@ export const COMPLETO_FRAMES =
   CENA01_FRAMES +
   CENA02_FRAMES +
   CENA03_FRAMES +
-  LACUNA_04 +
   CENA05_FRAMES +
   CENA06_FRAMES +
   CENA07_FRAMES +
@@ -111,17 +115,6 @@ export const Completo: React.FC = () => (
       </Series.Sequence>
       <Series.Sequence durationInFrames={CENA03_FRAMES}>
         <Cena03 />
-      </Series.Sequence>
-
-      {/* REMOVIVEL: apagar este bloco tira a cena 04 inteira, sem retimar nada */}
-      <Series.Sequence durationInFrames={LACUNA_04}>
-        <Placeholder
-          cena="04"
-          rotulo="Sonora a captar · removível"
-          titulo="Alguém da Polishop que estava na decisão de 2025"
-          detalhe="Pergunta que puxa: o QR code de 2023 não engajou. Por que vocês voltaram nele em vez de começar outra coisa? É a única pergunta do case que nenhuma cena de motion responde, e é o coração da história."
-          origem="Se a captação não acontecer, esta cena sai inteira e o filme fecha 11 s mais curto. A cena 03 fecha uma afirmação completa e a 05 abre outra, então nada é retimado."
-        />
       </Series.Sequence>
 
       <Series.Sequence durationInFrames={CENA05_FRAMES}>

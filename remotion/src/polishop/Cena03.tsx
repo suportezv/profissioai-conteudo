@@ -24,6 +24,7 @@ import {
   SOQUETE_Y,
 } from "./QR";
 import { Airfryer, AF_L, AF_T, AF_W, afimNaTampa, css } from "./Airfryer";
+import { Cabecalho } from "./Cabecalho";
 import { AvatarChef } from "./Conversa";
 
 /**
@@ -81,7 +82,7 @@ import { AvatarChef } from "./Conversa";
  * frase cita a linha e não uma capacidade em litros.
  */
 
-export const CENA03_FRAMES = s(15.9);
+export const CENA03_FRAMES = s(15.7);
 const AUDIO_EM = s(0.4);
 const m = modos.claro;
 
@@ -110,37 +111,6 @@ const NA_TAMPA = afimNaTampa(QR_TAM, AF_L, AF_T, AF_W);
 /** Altura do painel antigo, e a do soquete dentro dele. */
 const PAINEL_ALT = SOQUETE_Y - MOTOR_T + 245;
 const ZAP_ALT = 356;
-
-/**
- * O último dígito do ano rolando, como um odômetro.
- *
- * A coluna inteira existe sempre e o que muda é o deslocamento: animar o
- * conteúdo do texto faria o dígito **trocar**, e trocar não é rolar. O 4 no
- * meio não é enfeite, é o que prova que a coluna andou em vez de piscar.
- */
-const Odometro: React.FC<{ p: number; corpo: number }> = ({ p, corpo }) => (
-  <span
-    style={{
-      display: "inline-block",
-      height: corpo,
-      overflow: "hidden",
-      verticalAlign: "top",
-    }}
-  >
-    <span
-      style={{
-        display: "block",
-        transform: `translateY(${-p * 2 * corpo}px)`,
-      }}
-    >
-      {[3, 4, 5].map((d) => (
-        <span key={d} style={{ display: "block", height: corpo, lineHeight: 1 }}>
-          {d}
-        </span>
-      ))}
-    </span>
-  </span>
-);
 
 export const Cena03: React.FC = () => {
   const f = useCurrentFrame();
@@ -189,57 +159,17 @@ export const Cena03: React.FC = () => {
         <Audio src={staticFile("locucao-polishop/cena-03.mp3")} />
       </Sequence>
 
-      <Img
-        src={staticFile("marca-polishop/polishop.png")}
-        style={{ position: "absolute", left: 120, top: 100, width: 210 }}
+      {/* `entra(1, …)` parece inofensivo e nao e: a cena 02 aplica `entra` no
+          bloco e ele deixa um `filter: blur(0px)`, que cria camada propria e
+          muda o antialias do texto. Sem a mesma chamada aqui, o corte troca o
+          desenho das letras. Passar os dois pelo mesmo caminho e o que iguala. */}
+      <Cabecalho
+        logo={entra(1, 14)}
+        estilo={entra(1, 16)}
+        rola={rola}
+        velho={rotuloVelho}
+        novo={rotuloNovo}
       />
-
-      <div style={{ position: "absolute", left: 120, top: 200 }}>
-        <div style={{ position: "relative", height: 30, width: 520 }}>
-          <div
-            style={{
-              position: "absolute",
-              fontSize: 24,
-              fontWeight: 500,
-              letterSpacing: "2px",
-              textTransform: "uppercase",
-              whiteSpace: "nowrap",
-              color: marca.azul,
-              opacity: rotuloVelho,
-            }}
-          >
-            A primeira tentativa
-          </div>
-          <div
-            style={{
-              position: "absolute",
-              fontSize: 24,
-              fontWeight: 500,
-              letterSpacing: "2px",
-              textTransform: "uppercase",
-              whiteSpace: "nowrap",
-              color: marca.azul,
-              opacity: rotuloNovo,
-              transform: `translateY(${(1 - rotuloNovo) * 10}px)`,
-            }}
-          >
-            A virada
-          </div>
-        </div>
-        <div
-          style={{
-            marginTop: 2,
-            fontSize: 84,
-            fontWeight: 500,
-            letterSpacing: "-2.94px",
-            lineHeight: 1,
-            display: "flex",
-          }}
-        >
-          <span>202</span>
-          <Odometro p={rola} corpo={84} />
-        </div>
-      </div>
 
       {/* a porta: mesmo aparelho, mesmo adesivo, mesmo pixel da cena 02 */}
       <Airfryer esq={AF_L} topo={AF_T} larg={AF_W} />

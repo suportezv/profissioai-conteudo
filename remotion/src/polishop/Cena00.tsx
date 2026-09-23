@@ -32,7 +32,7 @@ import { passo, s } from "../anim";
  * cozinha quente e caixa aberta aqui, superfície clara e manual guardado lá.
  */
 
-export const CENA00_FRAMES = s(4.6);
+export const CENA00_FRAMES = s(4.2);
 const NARRACAO_EM = s(0.7);
 /** Onde o clipe começa, em segundos do arquivo de origem (24 fps). */
 const DE = 1.2;

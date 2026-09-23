@@ -36,16 +36,16 @@ import { Painel, Balao, BalaoFoto, Digitando } from "./Conversa";
  * que qualquer número nesta posição do filme.
  */
 
-export const CENA07_FRAMES = s(10.4);
+export const CENA07_FRAMES = s(7.8);
 const AUDIO_EM = s(0.4);
 const MARGEM = 120;
 const m = modos.claro;
 
 const TELA_EM = s(0.5);
-const PERGUNTA_EM = s(1.6);
-const OPINIAO_EM = s(3.9);
-const FOTO_EM = s(6.7);
-const FESTA_EM = s(8.2);
+const PERGUNTA_EM = s(1.5);
+const OPINIAO_EM = s(2.9);
+const FOTO_EM = s(4.6);
+const FESTA_EM = s(5.8);
 
 export const Cena07: React.FC = () => {
   const f = useCurrentFrame();
