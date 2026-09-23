@@ -63,8 +63,8 @@ const DADOS: Dado[] = [
   {
     entra: s(1.5),
     sai: s(4.7),
-    alvo: 151.034,
-    casas: 3,
+    alvo: 151034,
+    casas: 0,
     sufixo: "",
     titulo: "mensagens trocadas",
     base: "05/ago a 18/set/2026 · só o MODO base",
