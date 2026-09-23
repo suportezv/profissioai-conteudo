@@ -1,5 +1,8 @@
 # Projeto 01: Funil Automático (motion)
 
+> ⚠️ **Escrito na identidade anterior (rosa `#E255A0` + fundos aurora), aposentada em 17/set/2026 pela revisão 3 da marca.** Antes de produzir, reconverter para os tokens novos: acento **azul `#2458F5`**, superfície chapada num dos três modos (escuro `#101218`, claro `#F4F6F9`, azul `#2458F5`), tinta `#101218`, Sora peso 500 e tracking -3,5%. Ver `CLAUDE.md`, seção "Identidade visual, revisão 3".
+
+
 **Pilar**: D (Central de Ajuda em vídeo), cruzado com B (dor do eixo Vendas).
 **Feature**: Aba Funil, classificação automática de leads.
 **Formato**: motion graphic vertical, sem locução na v1. Áudio e pós na etapa seguinte.

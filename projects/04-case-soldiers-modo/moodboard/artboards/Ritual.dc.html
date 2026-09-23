@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Cena 06, o ritual diário</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap">
+<style>
+body{margin:0;font-family:"Sora",system-ui,sans-serif;background:#F4F6F9;color:#101218}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1000px; box-sizing: border-box; padding: 72px; background: #F4F6F9; background-image: radial-gradient(62% 58% at 92% 8%, rgba(36,88,245,0.18), transparent 66%), radial-gradient(55% 54% at 5% 28%, rgba(36,88,245,0.11), transparent 66%); display: flex; flex-direction: column; gap: 32px;">
+
+  <div style="display: flex; justify-content: space-between; align-items: baseline;">
+    <div style="font-size: 20px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: #2458F5;">Cena 06 · o coração do filme</div>
+    <div style="font-size: 19px; letter-spacing: -0.66px; color: #59616E;">1:00 a 1:18 · 12,8 s de locução</div>
+  </div>
+
+  <div style="font-size: 44px; font-weight: 500; letter-spacing: -1.54px; line-height: 1.22; max-width: 1180px;">O agente pergunta a que horas o cliente toma o suplemento, e passa a aparecer <span style="color: #2458F5;">nesse horário, todo dia</span>, na voz de quem ele escolheu.</div>
+
+  <div style="display: flex; gap: 20px; align-items: flex-start;">
+    <sc-for list="{{dias}}" as="d" hint-placeholder-count="5">
+      <div style="flex-grow: 1; background: #0B141A; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 14px; opacity: {{d.op}};">
+        <div style="display: flex; justify-content: space-between; align-items: baseline;">
+          <div style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #8696A0;">{{d.dia}}</div>
+          <div style="font-family: Arial, Helvetica, sans-serif; font-size: 20px; font-weight: 600; color: #E9EDEF;">7:00</div>
+        </div>
+        <div style="background: #1F2C33; border-radius: 14px; border-top-left-radius: 4px; padding: 14px; display: flex; align-items: center; gap: 10px;">
+          <div style="width: 30px; height: 30px; border-radius: 15px; background: #00A884; flex-shrink: 0;"></div>
+          <div style="display: flex; align-items: center; gap: 3px; height: 26px;">
+            <sc-for list="{{d.ondas}}" as="h" hint-placeholder-count="12">
+              <div style="width: 3px; border-radius: 2px; height: {{h.alt}}; background: {{h.cor}};"></div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #8696A0; align-self: flex-end;">0:14</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display: flex; gap: 24px;">
+    <div style="flex-grow: 1; background: #FFFFFF; border: 1px solid #DFE3EB; border-radius: 20px; padding: 32px; box-shadow: 0 28px 70px -20px rgba(16,18,24,0.26);">
+      <div style="font-size: 17px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: #59616E; margin-bottom: 14px;">Como a repetição vira forma</div>
+      <div style="font-size: 20px; letter-spacing: -0.7px; line-height: 1.55;">O relógio e o balão ficam <strong>fixos</strong>. O que muda é só o fundo: a luz do dia e o dia da semana. Cinco repetições em 6 s, cada uma mais curta que a anterior, para a cena acelerar sem cortar.</div>
+    </div>
+    <div style="flex-grow: 1; background: #FFFFFF; border: 1px solid #DFE3EB; border-radius: 20px; padding: 32px; box-shadow: 0 28px 70px -20px rgba(16,18,24,0.26);">
+      <div style="font-size: 17px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: #59616E; margin-bottom: 14px;">O que não pode acontecer</div>
+      <div style="font-size: 20px; letter-spacing: -0.7px; line-height: 1.55;">Nenhuma voz de influenciador é gerada. A clonagem é <strong>assunto</strong> do filme, não recurso de edição: o que se ouve são os arquivos que as pessoas gravaram.</div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 20px; align-items: stretch; margin-top: auto;">
+    <div style="width: 3px; background: #2458F5; border-radius: 2px;"></div>
+    <div style="font-size: 21px; letter-spacing: -0.74px; line-height: 1.5;"><strong>Se só uma cena sobreviver ao corte, é esta.</strong> Alguém escolhe um horário e, a partir daí, uma pessoa que admira aparece nesse horário todo dia. É a definição de relacionamento na categoria.</div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var perfis = [
+      [0.4,0.8,0.5,1,0.7,0.45,0.9,0.6,0.35,0.8,0.5,0.25],
+      [0.5,0.9,0.4,0.7,1,0.6,0.35,0.85,0.55,0.7,0.4,0.3],
+      [0.35,0.7,0.95,0.5,0.8,0.4,0.65,1,0.45,0.6,0.8,0.35],
+      [0.6,0.45,0.85,0.7,0.4,0.95,0.55,0.7,0.9,0.4,0.6,0.3],
+      [0.45,0.85,0.6,0.95,0.5,0.75,0.4,0.9,0.65,0.5,0.75,0.4]
+    ];
+    var nomes = ['seg', 'ter', 'qua', 'qui', 'sex'];
+    var tocadas = [12, 9, 6, 4, 2];
+    var dias = nomes.map(function (n, i) {
+      return {
+        dia: n,
+        op: String(0.45 + i * 0.1375),
+        ondas: perfis[i].map(function (v, j) {
+          return {
+            alt: Math.round(5 + v * 20) + 'px',
+            cor: j < tocadas[i] ? '#53BDEB' : '#8696A0'
+          };
+        })
+      };
+    });
+    return { dias: dias };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+[
+  {
+    "nome": "abertura-corredor",
+    "duracao": 8,
+    "prompt": "Cinematic slow dolly push down the aisle of a long dark empty open plan office at night. Rows of empty desks and chairs on both sides, all monitors switched off. At the far end, one single desk lamp is on, and on that desk a phone lies face up, its screen glowing faintly. Nobody is present. Deep blue darkness, one warm pool of light, soft volumetric haze, anamorphic lens flare, shallow depth of field, 35mm film grain, photographic realism."
+  },
+  {
+    "nome": "abertura-celular",
+    "duracao": 8,
+    "prompt": "Extreme close up, macro lens, a phone lying face up on a dark wooden desk at night, screen glowing soft blue white, nobody touching it. Behind it, heavy bokeh of a rain streaked window with distant city lights. Very slow rack focus from the rain bokeh onto the phone. Almost black frame, one soft key light, 35mm film grain, photographic realism, cinematic."
+  }
+]

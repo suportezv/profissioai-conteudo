@@ -1,0 +1,12 @@
+[
+  {
+    "nome": "abertura-analista",
+    "duracao": 8,
+    "prompt": "Cinematic medium close up, gentle handheld, inside a bright modern marketing agency meeting room in Brazil. A Brazilian analyst in smart casual clothes stands and presents, gesturing with both hands, engaged and confident, explaining to colleagues seated off camera. A large wall display glows softly behind them, its content out of focus and unreadable. Soft daylight from a window. Shallow depth of field, slow handheld drift toward the face, photographic realism, natural skin tones."
+  },
+  {
+    "nome": "abertura-dados",
+    "duracao": 8,
+    "prompt": "Cinematic slow lateral dolly across a large wall mounted display inside a bright modern meeting room. The screen fills most of the frame showing colourful dashboard charts and bar graphs, soft and out of focus so nothing is readable. Blurred silhouettes of seated people in the dark foreground. Warm daylight spill from the left, shallow depth of field, photographic realism."
+  }
+]

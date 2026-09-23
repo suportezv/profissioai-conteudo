@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Roteiro cena a cena</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap">
+<style>
+body{margin:0;font-family:"Sora",system-ui,sans-serif;background:#F4F6F9;color:#101218}
+</style>
+</helmet>
+<div style="width: 1800px; height: 2740px; box-sizing: border-box; padding: 80px; background: #F4F6F9; background-image: radial-gradient(48% 22% at 92% 3%, rgba(36,88,245,0.16), transparent 66%), radial-gradient(44% 20% at 6% 60%, rgba(36,88,245,0.10), transparent 66%); display: flex; flex-direction: column; gap: 34px;">
+
+  <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="font-size: 20px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: #2458F5;">Roteiro cena a cena</div>
+      <div style="font-size: 52px; font-weight: 500; letter-spacing: -1.82px; line-height: 1.1;">MODO Soldiers</div>
+    </div>
+    <div style="text-align: right; display: flex; flex-direction: column; gap: 6px;">
+      <div style="font-size: 20px; letter-spacing: -0.7px; color: #59616E;">2:00 · 16:9 · nove cenas</div>
+      <div style="font-size: 20px; letter-spacing: -0.7px; color: #59616E;">75,1 s de locução medidos</div>
+    </div>
+  </div>
+
+  <div style="height: 1px; background: rgba(16,18,24,0.22);"></div>
+
+  <sc-for list="{{cenas}}" as="c" hint-placeholder-count="9">
+    <div style="display: flex; gap: 32px; align-items: stretch; background: {{c.fundo}}; border: 1px solid {{c.borda}}; border-radius: 20px; padding: 30px 34px; box-shadow: 0 24px 60px -24px rgba(16,18,24,0.22);">
+
+      <div style="width: 150px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px;">
+        <div style="font-size: 52px; font-weight: 500; letter-spacing: -1.82px; line-height: 1; color: {{c.numero}};">{{c.n}}</div>
+        <div style="font-size: 18px; letter-spacing: -0.63px; color: {{c.apoio}};">{{c.tempo}}</div>
+        <div style="font-size: 15px; letter-spacing: 1px; text-transform: uppercase; color: {{c.apoio}}; margin-top: 6px;">{{c.fonte}}</div>
+      </div>
+
+      <div style="width: 1px; background: {{c.regua}};"></div>
+
+      <div style="width: 430px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px;">
+        <div style="font-size: 15px; letter-spacing: 1px; text-transform: uppercase; color: {{c.apoio}};">Na tela</div>
+        <div style="font-size: 19px; letter-spacing: -0.66px; line-height: 1.5; color: {{c.tinta}};">{{c.tela}}</div>
+        <div style="font-size: 16px; letter-spacing: -0.56px; line-height: 1.45; color: {{c.apoio}}; margin-top: 4px;">{{c.lettering}}</div>
+      </div>
+
+      <div style="width: 1px; background: {{c.regua}};"></div>
+
+      <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 10px;">
+        <div style="font-size: 15px; letter-spacing: 1px; text-transform: uppercase; color: {{c.apoio}};">{{c.quem}}</div>
+        <div style="font-size: 25px; font-weight: 500; letter-spacing: -0.88px; line-height: 1.42; color: {{c.tinta}};">{{c.fala}}</div>
+      </div>
+
+    </div>
+  </sc-for>
+
+  <div style="display: flex; gap: 24px; margin-top: 6px;">
+    <div style="flex-grow: 1; display: flex; gap: 18px; align-items: stretch;">
+      <div style="width: 3px; background: #BE3F84; border-radius: 2px;"></div>
+      <div style="font-size: 19px; letter-spacing: -0.66px; line-height: 1.5;"><strong>A cena 09 é a mais delicada do filme.</strong> A categoria pede resultado de recompra e o case ainda não tem: os primeiros 90 dias vencem em novembro. A cena declara a janela em vez de prometer o que não existe.</div>
+    </div>
+    <div style="flex-grow: 1; display: flex; gap: 18px; align-items: stretch;">
+      <div style="width: 3px; background: #2458F5; border-radius: 2px;"></div>
+      <div style="font-size: 19px; letter-spacing: -0.66px; line-height: 1.5;"><strong>A cena 04 é a única a captar.</strong> Pergunta que puxa: qual foi a parte difícil de fazer sete personas soarem como sete pessoas, e não como o mesmo agente com nomes diferentes?</div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1800,"height":2740}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var brutas = [
+      {
+        n: '01', tempo: '0:00 a 0:11', fonte: 'motion', quem: 'Narração Profissio',
+        tela: 'Dois potes de suplemento iguais lado a lado na superfície clara, só o preço muda entre eles. O preço de um cai, e o cursor escolhe esse. Seco e sem graça, de propósito.',
+        lettering: 'R$ 7,6 bi/ano · +15% em 2025 · fonte BRASNUTRI',
+        fala: 'Creatina é creatina. Num mercado de sete vírgula seis bilhões de reais, o que decide a próxima compra quase sempre é preço.'
+      },
+      {
+        n: '02', tempo: '0:11 a 0:20', fonte: 'motion', quem: 'Narração Profissio',
+        tela: 'A jornada de compra desenhada como régua de 1px: anúncio, site, checkout, entrega. Depois da entrega, a régua simplesmente acaba. O vazio segura 3 s.',
+        lettering: 'o pós-venda, em caixa alta, sozinho no vazio',
+        fala: 'A Soldiers foi procurar vantagem onde ninguém estava olhando: o que acontece depois que o cliente compra.'
+      },
+      {
+        n: '03', tempo: '0:20 a 0:36', fonte: 'clipes reais', quem: 'Narração + som ambiente',
+        tela: 'Grade de rostos: os vídeos de opt-in reais dos influenciadores, vários ao mesmo tempo, com áudio baixo por baixo da narração. Um deles cresce e fica.',
+        lettering: 'nome de cada influenciador no canto do seu clipe, pequeno',
+        fala: 'Quem convence o cliente da Soldiers não é um anúncio. É alguém que ele já segue, já escuta e já confia. A pergunta foi: e se essa pessoa continuasse por perto depois da venda?'
+      },
+      {
+        n: '04', tempo: '0:36 a 0:50', fonte: 'a captar', quem: 'Sonora Clésio Souza',
+        tela: 'Clésio, ambiente de trabalho da Profissio, plano médio. Mesma gramática de luz do case da EITA, para os dois filmes parecerem a mesma série.',
+        lettering: 'Clésio Souza · Profissio',
+        fala: 'A parte difícil, dita por quem construiu. Única fala captada do filme.'
+      },
+      {
+        n: '05', tempo: '0:50 a 1:02', fonte: 'motion', quem: 'Narração Profissio',
+        tela: 'Um cupom de desconto vira uma chave: o mesmo objeto, girando em 3D, muda de função. Depois, contador de 90 dias, e uma segunda compra empilhando mais 90 em cima.',
+        lettering: 'cupom = chave · 90 dias por compra, cumulativos',
+        fala: 'O cupom do influenciador deixou de ser desconto e virou chave. Qualquer compra, de qualquer valor, abre noventa dias de acompanhamento. Cada nova compra soma mais noventa.'
+      },
+      {
+        n: '06', tempo: '1:02 a 1:19', fonte: 'motion', quem: 'Narração Profissio',
+        tela: 'O coração do filme. O agente pergunta o horário, o cliente responde, e então o mesmo relógio marca o mesmo horário em dias diferentes, com o balão de áudio chegando toda vez. Repetição como forma.',
+        lettering: '~600 lembretes por dia · no horário que o cliente escolheu',
+        fala: 'E o vínculo não se sustenta na compra, se sustenta no dia. O agente pergunta a que horas o cliente toma o suplemento, e passa a aparecer nesse horário, todo dia, na voz de quem ele escolheu.'
+      },
+      {
+        n: '07', tempo: '1:19 a 1:29', fonte: 'motion', quem: 'Narração Profissio',
+        tela: 'Sete cartões de persona em sequência sobre a mesma grade. Construído sem os nomes: o primeiro é o MODO base, os outros seis ficam como posição marcada até a Soldiers liberar nome e imagem.',
+        lettering: 'MODO no primeiro cartão · os nomes entram depois da aprovação',
+        fala: 'São sete personas rodando ao mesmo tempo, cada uma com o vocabulário e as gírias do seu influenciador, sobre a mesma arquitetura.'
+      },
+      {
+        n: '08', tempo: '1:29 a 1:45', fonte: 'motion', quem: 'Narração Profissio',
+        tela: 'Números em motion, um por vez, com base e período colados em cada um. Quatro números, sem o mapa: 151.034 mensagens, 495 por dia, ~600 lembretes, NPS 95.',
+        lettering: '151.034 mensagens · 05/ago a 18/set/2026 · só o MODO base · NPS 95, amostra reduzida',
+        fala: 'Em dois meses: cento e cinquenta e um mil mensagens trocadas, quatrocentas e noventa e cinco pessoas por dia, e quase seiscentos lembretes disparados a cada vinte e quatro horas.'
+      },
+      {
+        n: '09', tempo: '1:45 a 2:00', fonte: 'motion', quem: 'Narração Profissio',
+        tela: 'Cartão da tese, depois os lockups Soldiers e Profissio lado a lado.',
+        lettering: 'primeira leva de 90 dias vence em nov/2026',
+        fala: 'A recompra começa a ser medida em novembro. O hábito que vai sustentá-la já está de pé.'
+      }
+    ];
+    return {
+      cenas: brutas.map(function (c) {
+        var captar = c.fonte === 'a captar';
+        var coracao = c.n === '06';
+        return Object.assign({}, c, {
+          fundo: captar ? '#101218' : (coracao ? '#2458F5' : '#FFFFFF'),
+          borda: captar ? '#101218' : (coracao ? '#2458F5' : '#DFE3EB'),
+          tinta: (captar || coracao) ? '#FFFFFF' : '#101218',
+          numero: captar ? '#FFFFFF' : (coracao ? '#FFFFFF' : '#2458F5'),
+          apoio: captar ? '#AAB3C4' : (coracao ? '#E1E9FF' : '#59616E'),
+          regua: (captar || coracao) ? 'rgba(255,255,255,0.28)' : '#DFE3EB'
+        });
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

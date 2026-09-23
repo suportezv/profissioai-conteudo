@@ -1,0 +1,11 @@
+[
+  { "stem": "w-abre",  "inicio":   0.0, "fim":  14.2, "ganho": 0.60 },
+  { "stem": "w-medio", "inicio":  14.2, "fim":  27.7, "ganho": 0.78 },
+  { "stem": "w-alto",  "inicio":  27.7, "fim":  44.0, "ganho": 0.70 },
+  { "stem": "w-pad",   "inicio":  44.0, "fim":  55.0, "ganho": 0.46 },
+  { "stem": "w-alto",  "inicio":  55.0, "fim":  69.4, "ganho": 0.72 },
+  { "stem": "w-pad",   "inicio":  69.4, "fim":  82.4, "ganho": 0.46 },
+  { "stem": "w-alto",  "inicio":  82.4, "fim":  99.2, "ganho": 0.82 },
+  { "stem": "w-cheio", "inicio":  99.2, "fim": 132.6, "ganho": 0.84 },
+  { "stem": "w-medio", "inicio": 132.6, "fim": 144.0, "ganho": 0.66 }
+]

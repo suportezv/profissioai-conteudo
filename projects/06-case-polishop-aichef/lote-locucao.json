@@ -1,0 +1,60 @@
+{
+  "voz": "4r3G9XKliGgVZLKMgjik",
+  "modelo": "eleven_multilingual_v2",
+  "ajustes": {
+    "stability": 0.55,
+    "similarity_boost": 0.75,
+    "style": 0,
+    "use_speaker_boost": true
+  },
+  "pasta": "remotion/public/locucao-polishop",
+  "falas": [
+    {
+      "nome": "cena-01",
+      "texto": "Quem compra um eletrodoméstico quer usar tudo o que ele faz. Mas o manual fica na gaveta, e a maioria repete as mesmas duas receitas. Cliente que não aproveita o que comprou não volta."
+    },
+    {
+      "nome": "cena-02",
+      "texto": "A Polishop já tinha atacado esse problema. Em 2023, imprimiu um QR code no próprio aparelho. Só que a tecnologia da época entregava um chatbot de receitas prontas, sem conversa de verdade. O engajamento não veio."
+    },
+    {
+      "nome": "cena-03",
+      "texto": "Em outubro de 2025, ela manteve a porta e trocou o motor. O mesmo QR code, agora abrindo uma conversa no WhatsApp com o Ei Ai Chef, um agente de inteligência artificial treinado nos produtos da marca. Sem baixar nada, sem cadastro."
+    },
+    {
+      "nome": "cena-05",
+      "texto": "Antes de responder, ele consulta os manuais técnicos das seis linhas. Sabe qual aparelho é o seu, e avisa quando a receita que você pediu não cabe nele."
+    },
+    {
+      "nome": "cena-06a",
+      "texto": "E ele usa o WhatsApp inteiro. A foto dos ingredientes que sobraram na geladeira vira receita."
+    },
+    {
+      "nome": "cena-06b",
+      "texto": "A Polishop grava as próprias receitas em vídeo, e quando existe uma, ele manda o vídeo junto do passo a passo. E se a pergunta vem em áudio, a resposta volta em áudio.",
+      "nota": "Faixa separada de proposito. A marca sai no registro alto de inicio de fala: no meio de um paragrafo longo a voz declina e 'Polishop' saia em 108 Hz contra os 143 Hz da cena 02, que e a aprovada. Este take mede 149 Hz."
+    },
+    {
+      "nome": "cena-07",
+      "texto": "E ele conversa como um chef, não como um catálogo. Dá opinião, e comemora quando chega a foto do prato pronto."
+    },
+    {
+      "nome": "cena-08",
+      "texto": "De outubro de 2025 a setembro de 2026: onze mil e cem conversas, cento e quarenta mil mensagens, e quase três mil fotos de ingredientes."
+    },
+    {
+      "nome": "cena-08b",
+      "texto": "Trinta e cinco por cento dos clientes voltaram a conversar. E numa pesquisa de NPS, o agente alcançou noventa e três."
+    },
+    {
+      "nome": "cena-09a",
+      "texto": "Um QR code impresso na fábrica transforma um produto na prateleira em uma conversa que continua. Sem campanha, sem e-mail, sem lembrete.",
+      "nota": "Nao foi regerada: e o take aprovado de cena-09 cortado em 8,05 s, no silencio entre a segunda e a terceira oracao."
+    },
+    {
+      "nome": "cena-09b",
+      "texto": "A Polishop já está levando essa inovação para a linha fitness.",
+      "nota": "Faixa separada pelo mesmo motivo da 06b: a marca tem que nascer em inicio de fala. Dez takes gerados, todos com transcricao igual ao pedido; escolhido o de f0 mais perto da referencia da cena 02."
+    }
+  ]
+}
