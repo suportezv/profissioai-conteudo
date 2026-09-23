@@ -164,6 +164,10 @@ export const Completo: React.FC<{ lacunas?: boolean }> = ({
           gcDura={3.4}
           // -13,4 LUFS no clipe contra -20,3 da narracao: 0,45 sao os -6,9 dB
           volume={0.45}
+          // no 9:16 a janela vertical centra nele: o rosto fica a ~60% da
+          // largura do bruto (medido nos quadros), e 66 de objectPosition poe
+          // esse ponto no eixo da janela
+          foco={66}
           planos={[
             // "A Soldier ja dominava a aquisicao do cliente": medio
             { em: 0, zoom: 1.08, origem: "61% 55%" },

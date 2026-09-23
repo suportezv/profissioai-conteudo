@@ -9,6 +9,7 @@ import {
 import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { janela, entra, conta, br, passo, s, tiquesDaContagem } from "../anim";
+import { useFormato } from "../formato";
 import { Sfx } from "../Sfx";
 
 /**
@@ -97,8 +98,19 @@ const COLUNAS = 19;
 const PONTO = 20;
 const VAO = 12;
 
+/**
+ * No 9:16 o 75% e a frase ficam lado a lado no alto e a grade desce inteira
+ * embaixo deles, maior: 12 colunas por 11 linhas, com a ultima linha a um
+ * ponto de completa, que le como contagem e nao como sobra.
+ */
+const COLUNAS_V = 12;
+const PONTO_V = 46;
+const VAO_V = 24;
+
 export const Cena07: React.FC = () => {
   const f = useCurrentFrame();
+  const { vertical, M } = useFormato();
+  const ponto = vertical ? PONTO_V : PONTO;
 
   const periodo = janela(f, PERIODO_EM, GRADE_EM, 10, 10);
   const grade = janela(f, GRADE_EM, CENA07_FRAMES, 13, 0);
@@ -127,9 +139,9 @@ export const Cena07: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            left: MARGEM,
-            top: 128,
-            fontSize: 24,
+            left: vertical ? M : MARGEM,
+            top: vertical ? 236 : 128,
+            fontSize: vertical ? 28 : 24,
             fontWeight: 500,
             letterSpacing: "2px",
             textTransform: "uppercase",
@@ -148,14 +160,21 @@ export const Cena07: React.FC = () => {
         return (
           <AbsoluteFill
             key={d.titulo}
-            style={{ padding: MARGEM, justifyContent: "center" }}
+            style={{ padding: vertical ? M : MARGEM, justifyContent: "center" }}
           >
-            <div style={{ display: "flex", flexDirection: "column", gap: 20, ...entra(o, 24) }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: vertical ? 24 : 20,
+                ...entra(o, 24),
+              }}
+            >
               <div
                 style={{
-                  fontSize: 190,
+                  fontSize: vertical ? 230 : 190,
                   fontWeight: 500,
-                  letterSpacing: "-6.65px",
+                  letterSpacing: vertical ? "-8.05px" : "-6.65px",
                   lineHeight: 1,
                   color: marca.azul,
                   fontVariantNumeric: "tabular-nums",
@@ -167,11 +186,12 @@ export const Cena07: React.FC = () => {
               </div>
               <div
                 style={{
-                  fontSize: 52,
+                  fontSize: vertical ? 66 : 52,
                   fontWeight: 500,
-                  letterSpacing: "-1.82px",
+                  letterSpacing: vertical ? "-2.31px" : "-1.82px",
                   lineHeight: 1.15,
-                  maxWidth: 1200,
+                  // no 9:16 a metade de baixo evita a coluna de botoes do app
+                  maxWidth: vertical ? 868 : 1200,
                 }}
               >
                 {d.titulo}
@@ -179,12 +199,12 @@ export const Cena07: React.FC = () => {
               {/* a base anda colada no numero, e onde ela falta isso esta escrito */}
               <div
                 style={{
-                  fontSize: 26,
-                  letterSpacing: "-0.91px",
+                  fontSize: vertical ? 30 : 26,
+                  letterSpacing: vertical ? "-1.05px" : "-0.91px",
                   color: m.apoio,
                   borderTop: "1px solid rgba(16,18,24,0.22)",
                   paddingTop: 16,
-                  maxWidth: 900,
+                  maxWidth: vertical ? 868 : 900,
                 }}
               >
                 {d.base}
@@ -197,20 +217,39 @@ export const Cena07: React.FC = () => {
       {/* o 75%: a proporcao e a base no mesmo desenho */}
       {grade > 0.001 ? (
         <AbsoluteFill
-          style={{
-            padding: MARGEM,
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 90,
-            ...entra(grade, 24),
-          }}
+          style={
+            vertical
+              ? {
+                  // topo fixo: a regua da base entra depois, e centrada ela
+                  // empurraria a grade inteira para cima
+                  padding: `300px ${M}px 0`,
+                  flexDirection: "column",
+                  justifyContent: "flex-start",
+                  alignItems: "flex-start",
+                  gap: 56,
+                  ...entra(grade, 24),
+                }
+              : {
+                  padding: MARGEM,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 90,
+                  ...entra(grade, 24),
+                }
+          }
         >
-          <div style={{ display: "flex", flexDirection: "column", gap: 18, width: 620 }}>
+          <div
+            style={
+              vertical
+                ? { display: "flex", flexDirection: "row", alignItems: "center", gap: 40 }
+                : { display: "flex", flexDirection: "column", gap: 18, width: 620 }
+            }
+          >
             <div
               style={{
-                fontSize: 170,
+                fontSize: vertical ? 200 : 170,
                 fontWeight: 500,
-                letterSpacing: "-5.95px",
+                letterSpacing: vertical ? "-7px" : "-5.95px",
                 lineHeight: 1,
                 color: marca.azul,
                 fontVariantNumeric: "tabular-nums",
@@ -221,9 +260,9 @@ export const Cena07: React.FC = () => {
             </div>
             <div
               style={{
-                fontSize: 46,
+                fontSize: vertical ? 44 : 46,
                 fontWeight: 500,
-                letterSpacing: "-1.61px",
+                letterSpacing: vertical ? "-1.54px" : "-1.61px",
                 lineHeight: 1.18,
               }}
             >
@@ -239,17 +278,17 @@ export const Cena07: React.FC = () => {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: `repeat(${COLUNAS}, ${PONTO}px)`,
-                gap: VAO,
+                gridTemplateColumns: `repeat(${vertical ? COLUNAS_V : COLUNAS}, ${ponto}px)`,
+                gap: vertical ? VAO_V : VAO,
               }}
             >
               {Array.from({ length: TOTAL }).map((_, i) => (
                 <div
                   key={i}
                   style={{
-                    width: PONTO,
-                    height: PONTO,
-                    borderRadius: PONTO / 2,
+                    width: ponto,
+                    height: ponto,
+                    borderRadius: ponto / 2,
                     background: i < acesos ? marca.azul : "transparent",
                     border: i < acesos ? "none" : `1px solid ${marca.linha}`,
                   }}
@@ -259,8 +298,8 @@ export const Cena07: React.FC = () => {
             {rodape > 0.001 ? (
               <div
                 style={{
-                  fontSize: 26,
-                  letterSpacing: "-0.91px",
+                  fontSize: vertical ? 30 : 26,
+                  letterSpacing: vertical ? "-1.05px" : "-0.91px",
                   color: m.apoio,
                   borderTop: "1px solid rgba(16,18,24,0.22)",
                   paddingTop: 16,

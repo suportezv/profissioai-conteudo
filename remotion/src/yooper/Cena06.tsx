@@ -12,6 +12,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { wa, UI } from "../whatsapp";
 import { janela, entra, passo, s } from "../anim";
+import { useFormato } from "../formato";
 import { Sfx } from "../Sfx";
 import { dash } from "./Painel";
 
@@ -69,6 +70,15 @@ const TESE_EM = s(10.62);
 const PERGUNTA_AUDIO_EM = s(12.3);
 const RESPOSTA_AUDIO_EM = s(14.2);
 const FECHO_EM = s(15.2);
+
+/**
+ * No 9:16 a frase sobe para o alto e a conversa, que e a prova, ocupa o resto
+ * do quadro em escala. A coluna de mensagens fica um pouco mais baixa que no
+ * 16:9 para a conversa fechar antes da faixa de interface do app; como ela
+ * empilha de baixo para cima, o que sai e so o rastro mais antigo.
+ */
+const V_CHAT_T = 690;
+const V_CHAT_ESCALA = 1.356;
 
 const ONDA = [
   0.3, 0.55, 0.38, 0.72, 0.5, 0.88, 0.6, 0.42, 0.8, 0.55, 0.32, 0.68, 0.46,
@@ -243,6 +253,7 @@ const BalaoAudioWa: React.FC<{
 
 export const Cena06: React.FC = () => {
   const f = useCurrentFrame();
+  const { vertical, M } = useFormato();
 
   const tela = janela(f, TELA_EM, CENA06_FRAMES, 12, 0);
   const tese = janela(f, TESE_EM, CENA06_FRAMES, 11, 0);
@@ -261,6 +272,215 @@ export const Cena06: React.FC = () => {
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
 
+  const conversa = (
+    <div style={{ flexShrink: 0, ...entra(tela, 22) }}>
+    <div
+      style={{
+        width: 640,
+        background: wa.fundoChat,
+        borderRadius: marca.raio.arte,
+        overflow: "hidden",
+        boxShadow: marca.sombra.painel,
+      }}
+    >
+      <div
+        style={{
+          background: wa.barra,
+          padding: "15px 22px",
+          display: "flex",
+          alignItems: "center",
+          gap: 14,
+        }}
+      >
+        <Img
+          src={staticFile("marca-yooper/yoodash-avatar.png")}
+          style={{ width: 44, height: 44, borderRadius: 22, display: "block", objectFit: "cover" }}
+        />
+        <div style={{ fontFamily: UI, fontSize: 21, color: wa.texto }}>Yoodash</div>
+      </div>
+
+      <div
+        style={{
+          padding: 22,
+          height: vertical ? 500 : 560,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          gap: 12,
+          overflow: "hidden",
+        }}
+      >
+        {dig(ALERTA_EM) > 0.001 ? <Digitando o={dig(ALERTA_EM)} /> : null}
+        {msg(ALERTA_EM) > 0.001 ? (
+          <BalaoAgente o={msg(ALERTA_EM)} hora="8:12">
+            <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" style={{ flexShrink: 0, marginTop: 3 }}>
+                <path d="M12 3l10 18H2L12 3z" fill="none" stroke="#F2B441" strokeWidth="2" strokeLinejoin="round" />
+                <rect x="11" y="9" width="2" height="6" rx="1" fill="#F2B441" />
+                <rect x="11" y="17" width="2" height="2" rx="1" fill="#F2B441" />
+              </svg>
+              <div style={{ fontFamily: UI, fontSize: 21, color: wa.texto, lineHeight: 1.4 }}>
+                Três produtos entram em risco de ruptura nos próximos seis dias.
+              </div>
+            </div>
+          </BalaoAgente>
+        ) : null}
+
+        {dig(RELATORIO_EM) > 0.001 ? <Digitando o={dig(RELATORIO_EM)} /> : null}
+        {msg(RELATORIO_EM) > 0.001 ? (
+          <BalaoAgente o={msg(RELATORIO_EM)} hora="9:00">
+            <div
+              style={{
+                background: "rgba(255,255,255,0.07)",
+                borderRadius: 12,
+                padding: "14px 16px",
+                display: "flex",
+                alignItems: "center",
+                gap: 14,
+              }}
+            >
+              <div
+                style={{
+                  width: 42,
+                  height: 50,
+                  borderRadius: 6,
+                  background: "#C0392B",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontFamily: UI,
+                  fontSize: 14,
+                  color: "#FFFFFF",
+                  flexShrink: 0,
+                }}
+              >
+                PDF
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <div style={{ fontFamily: UI, fontSize: 20, color: wa.texto }}>
+                  Relatório da semana
+                </div>
+                <div style={{ fontFamily: UI, fontSize: 15, color: wa.apoio }}>
+                  8 a 14 de setembro
+                </div>
+              </div>
+            </div>
+          </BalaoAgente>
+        ) : null}
+
+        {dig(PROJECAO_EM) > 0.001 ? <Digitando o={dig(PROJECAO_EM)} /> : null}
+        {msg(PROJECAO_EM) > 0.001 ? (
+          <BalaoAgente o={msg(PROJECAO_EM)} hora="9:41">
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <div style={{ fontFamily: UI, fontSize: 21, color: wa.texto, lineHeight: 1.4 }}>
+                No ritmo atual, setembro fecha acima da meta.
+              </div>
+              {/* as barras ocupam a largura inteira do balao: paradas na
+                  metade esquerda elas liam como grafico cortado */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                  gap: 6,
+                  height: 78,
+                  width: "100%",
+                }}
+              >
+                {[0.26, 0.34, 0.3, 0.45, 0.4, 0.52, 0.47, 0.6, 0.55, 0.68,
+                  0.63, 0.76, 0.82, 0.9, 1].map((v, i) => {
+                  const p = passo(
+                    f,
+                    PROJECAO_EM + 4 + i * 1.6,
+                    PROJECAO_EM + 11 + i * 1.6,
+                  );
+                  return (
+                    <div
+                      key={i}
+                      style={{
+                        flex: 1,
+                        height: 76 * v * p,
+                        borderRadius: 3,
+                        background: i >= 12 ? wa.verde : wa.apoio,
+                        opacity: i >= 12 ? 0.95 : 0.55,
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          </BalaoAgente>
+        ) : null}
+
+        {audioPergunta > 0.001 ? (
+          <BalaoAudioWa o={audioPergunta} progresso={1} hora="10:04" saida />
+        ) : null}
+        {dig(RESPOSTA_AUDIO_EM) > 0.001 ? <Digitando o={dig(RESPOSTA_AUDIO_EM)} /> : null}
+        {audioResposta > 0.001 ? (
+          <BalaoAudioWa o={audioResposta} progresso={progRe} hora="10:05" />
+        ) : null}
+      </div>
+    </div>
+    </div>
+  );
+
+  const coluna = (
+    <div
+      style={
+        vertical
+          ? { display: "flex", flexDirection: "column", gap: 28 }
+          : { display: "flex", flexDirection: "column", gap: 30, flex: 1 }
+      }
+    >
+      <div
+        style={{
+          fontSize: vertical ? 28 : 24,
+          fontWeight: 500,
+          letterSpacing: "2px",
+          textTransform: "uppercase",
+          color: marca.azul,
+          opacity: janela(f, s(0.56), CENA06_FRAMES, 10, 0),
+        }}
+      >
+        E antecipa
+      </div>
+
+      {tese > 0.001 ? (
+        <div
+          style={{
+            fontSize: vertical ? 88 : 62,
+            fontWeight: 500,
+            letterSpacing: vertical ? "-3.08px" : "-2.17px",
+            lineHeight: 1.16,
+            ...entra(tese, 20),
+          }}
+        >
+          Sem ninguém
+          <br />
+          <span style={{ color: marca.azul }}>pedir.</span>
+        </div>
+      ) : null}
+
+      {/* o dado colado na frase que ele sustenta */}
+      {fecho > 0.001 ? (
+        <div
+          style={{
+            fontSize: vertical ? 34 : 30,
+            letterSpacing: vertical ? "-1.19px" : "-1.05px",
+            color: m.apoio,
+            borderTop: "1px solid rgba(16,18,24,0.22)",
+            paddingTop: 20,
+            ...entra(fecho, 16),
+          }}
+        >
+          42 relatórios enviados proativamente
+          <br />
+          <span style={{ fontSize: vertical ? 26 : 24 }}>maio a 18/set/2026</span>
+        </div>
+      ) : null}
+
+    </div>
+  );
+
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
       <Superficie modo="claro" halo />
@@ -268,213 +488,38 @@ export const Cena06: React.FC = () => {
         <Audio src={staticFile("locucao-yooper/cena-06.mp3")} />
       </Sequence>
 
-      <AbsoluteFill
-        style={{
-          padding: MARGEM,
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 76,
-        }}
-      >
-        <div style={{ flexShrink: 0, ...entra(tela, 22) }}>
-        <div
+      {vertical ? (
+        <>
+          {/* 9:16: a frase no alto, a conversa grande embaixo dela */}
+          <div style={{ position: "absolute", left: M, top: 236, right: M }}>
+            {coluna}
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              left: M,
+              top: V_CHAT_T,
+              transform: `scale(${V_CHAT_ESCALA})`,
+              transformOrigin: "left top",
+            }}
+          >
+            {conversa}
+          </div>
+        </>
+      ) : (
+        <AbsoluteFill
           style={{
-            width: 640,
-            background: wa.fundoChat,
-            borderRadius: marca.raio.arte,
-            overflow: "hidden",
-            boxShadow: marca.sombra.painel,
+            padding: MARGEM,
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 76,
           }}
         >
-          <div
-            style={{
-              background: wa.barra,
-              padding: "15px 22px",
-              display: "flex",
-              alignItems: "center",
-              gap: 14,
-            }}
-          >
-            <Img
-              src={staticFile("marca-yooper/yoodash-avatar.png")}
-              style={{ width: 44, height: 44, borderRadius: 22, display: "block", objectFit: "cover" }}
-            />
-            <div style={{ fontFamily: UI, fontSize: 21, color: wa.texto }}>Yoodash</div>
-          </div>
+          {conversa}
 
-          <div
-            style={{
-              padding: 22,
-              height: 560,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-              gap: 12,
-              overflow: "hidden",
-            }}
-          >
-            {dig(ALERTA_EM) > 0.001 ? <Digitando o={dig(ALERTA_EM)} /> : null}
-            {msg(ALERTA_EM) > 0.001 ? (
-              <BalaoAgente o={msg(ALERTA_EM)} hora="8:12">
-                <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                  <svg width="22" height="22" viewBox="0 0 24 24" style={{ flexShrink: 0, marginTop: 3 }}>
-                    <path d="M12 3l10 18H2L12 3z" fill="none" stroke="#F2B441" strokeWidth="2" strokeLinejoin="round" />
-                    <rect x="11" y="9" width="2" height="6" rx="1" fill="#F2B441" />
-                    <rect x="11" y="17" width="2" height="2" rx="1" fill="#F2B441" />
-                  </svg>
-                  <div style={{ fontFamily: UI, fontSize: 21, color: wa.texto, lineHeight: 1.4 }}>
-                    Três produtos entram em risco de ruptura nos próximos seis dias.
-                  </div>
-                </div>
-              </BalaoAgente>
-            ) : null}
-
-            {dig(RELATORIO_EM) > 0.001 ? <Digitando o={dig(RELATORIO_EM)} /> : null}
-            {msg(RELATORIO_EM) > 0.001 ? (
-              <BalaoAgente o={msg(RELATORIO_EM)} hora="9:00">
-                <div
-                  style={{
-                    background: "rgba(255,255,255,0.07)",
-                    borderRadius: 12,
-                    padding: "14px 16px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 14,
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 42,
-                      height: 50,
-                      borderRadius: 6,
-                      background: "#C0392B",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontFamily: UI,
-                      fontSize: 14,
-                      color: "#FFFFFF",
-                      flexShrink: 0,
-                    }}
-                  >
-                    PDF
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                    <div style={{ fontFamily: UI, fontSize: 20, color: wa.texto }}>
-                      Relatório da semana
-                    </div>
-                    <div style={{ fontFamily: UI, fontSize: 15, color: wa.apoio }}>
-                      8 a 14 de setembro
-                    </div>
-                  </div>
-                </div>
-              </BalaoAgente>
-            ) : null}
-
-            {dig(PROJECAO_EM) > 0.001 ? <Digitando o={dig(PROJECAO_EM)} /> : null}
-            {msg(PROJECAO_EM) > 0.001 ? (
-              <BalaoAgente o={msg(PROJECAO_EM)} hora="9:41">
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  <div style={{ fontFamily: UI, fontSize: 21, color: wa.texto, lineHeight: 1.4 }}>
-                    No ritmo atual, setembro fecha acima da meta.
-                  </div>
-                  {/* as barras ocupam a largura inteira do balao: paradas na
-                      metade esquerda elas liam como grafico cortado */}
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-end",
-                      gap: 6,
-                      height: 78,
-                      width: "100%",
-                    }}
-                  >
-                    {[0.26, 0.34, 0.3, 0.45, 0.4, 0.52, 0.47, 0.6, 0.55, 0.68,
-                      0.63, 0.76, 0.82, 0.9, 1].map((v, i) => {
-                      const p = passo(
-                        f,
-                        PROJECAO_EM + 4 + i * 1.6,
-                        PROJECAO_EM + 11 + i * 1.6,
-                      );
-                      return (
-                        <div
-                          key={i}
-                          style={{
-                            flex: 1,
-                            height: 76 * v * p,
-                            borderRadius: 3,
-                            background: i >= 12 ? wa.verde : wa.apoio,
-                            opacity: i >= 12 ? 0.95 : 0.55,
-                          }}
-                        />
-                      );
-                    })}
-                  </div>
-                </div>
-              </BalaoAgente>
-            ) : null}
-
-            {audioPergunta > 0.001 ? (
-              <BalaoAudioWa o={audioPergunta} progresso={1} hora="10:04" saida />
-            ) : null}
-            {dig(RESPOSTA_AUDIO_EM) > 0.001 ? <Digitando o={dig(RESPOSTA_AUDIO_EM)} /> : null}
-            {audioResposta > 0.001 ? (
-              <BalaoAudioWa o={audioResposta} progresso={progRe} hora="10:05" />
-            ) : null}
-          </div>
-        </div>
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 30, flex: 1 }}>
-          <div
-            style={{
-              fontSize: 24,
-              fontWeight: 500,
-              letterSpacing: "2px",
-              textTransform: "uppercase",
-              color: marca.azul,
-              opacity: janela(f, s(0.56), CENA06_FRAMES, 10, 0),
-            }}
-          >
-            E antecipa
-          </div>
-
-          {tese > 0.001 ? (
-            <div
-              style={{
-                fontSize: 62,
-                fontWeight: 500,
-                letterSpacing: "-2.17px",
-                lineHeight: 1.16,
-                ...entra(tese, 20),
-              }}
-            >
-              Sem ninguém
-              <br />
-              <span style={{ color: marca.azul }}>pedir.</span>
-            </div>
-          ) : null}
-
-          {/* o dado colado na frase que ele sustenta */}
-          {fecho > 0.001 ? (
-            <div
-              style={{
-                fontSize: 30,
-                letterSpacing: "-1.05px",
-                color: m.apoio,
-                borderTop: "1px solid rgba(16,18,24,0.22)",
-                paddingTop: 20,
-                ...entra(fecho, 16),
-              }}
-            >
-              42 relatórios enviados proativamente
-              <br />
-              <span style={{ fontSize: 24 }}>maio a 18/set/2026</span>
-            </div>
-          ) : null}
-
-        </div>
-      </AbsoluteFill>
+          {coluna}
+        </AbsoluteFill>
+      )}
 
       <Sfx som="recebido" em={ALERTA_EM} volume={0.18} />
       <Sfx som="recebido" em={RELATORIO_EM} volume={0.18} />

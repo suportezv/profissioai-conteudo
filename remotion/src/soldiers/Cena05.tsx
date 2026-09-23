@@ -11,6 +11,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { janela, entra, conta, br, s, SUAVE, tiquesDaContagem } from "../anim";
 import { Sfx } from "../Sfx";
+import { useFormato } from "../formato";
 
 /**
  * Cena 05 do case Soldiers: o cupom vira chave.
@@ -58,11 +59,12 @@ const PASSO_CONTA = s(0.7);
 const ANO_EM = s(10.6);
 
 /** O cupom: entalhes nas laterais e picote do canhoto. */
-const IconeCupom: React.FC<{ cor: string; fundo: string }> = ({
+const IconeCupom: React.FC<{ cor: string; fundo: string; largura?: number }> = ({
   cor,
   fundo,
+  largura = 240,
 }) => (
-  <svg viewBox="0 0 168 100" style={{ width: 240, height: "auto" }}>
+  <svg viewBox="0 0 168 100" style={{ width: largura, height: "auto" }}>
     <rect x="10" y="10" width="148" height="80" rx="10" fill={cor} />
     {/* os entalhes sao furos na cor do cartao, nao formas proprias */}
     <circle cx="10" cy="50" r="12" fill={fundo} />
@@ -83,8 +85,11 @@ const IconeCupom: React.FC<{ cor: string; fundo: string }> = ({
 );
 
 /** A chave: anel, haste e dois dentes. */
-const IconeChave: React.FC<{ cor: string }> = ({ cor }) => (
-  <svg viewBox="0 0 168 100" style={{ width: 240, height: "auto" }}>
+const IconeChave: React.FC<{ cor: string; largura?: number }> = ({
+  cor,
+  largura = 240,
+}) => (
+  <svg viewBox="0 0 168 100" style={{ width: largura, height: "auto" }}>
     <circle
       cx="44"
       cy="50"
@@ -101,6 +106,12 @@ const IconeChave: React.FC<{ cor: string }> = ({ cor }) => (
 
 export const Cena05: React.FC = () => {
   const f = useCurrentFrame();
+  /**
+   * No 9:16 a cena empilha na ordem da narracao: o cupom que vira chave, a
+   * frase embaixo dele, e a contagem dos dias com o "1 ano" na linha de baixo.
+   * O cupom cresce, porque o giro e o momento da cena e a coluna tem altura.
+   */
+  const { vertical, M, H, seguro } = useFormato();
 
   const cupom = janela(f, ENTRA_CUPOM, CENA05_FRAMES, 11, 0);
   const giro = interpolate(f, [GIRA, GIRA + s(1.0)], [0, 180], {
@@ -128,16 +139,18 @@ export const Cena05: React.FC = () => {
 
       <AbsoluteFill
         style={{
-          padding: MARGEM,
+          padding: vertical
+            ? `${seguro.topo}px ${M}px ${H - seguro.base}px`
+            : MARGEM,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          gap: 64,
+          gap: vertical ? 56 : 64,
         }}
       >
         <div
           style={{
-            fontSize: 24,
+            fontSize: vertical ? 28 : 24,
             fontWeight: 500,
             letterSpacing: "2px",
             textTransform: "uppercase",
@@ -148,13 +161,20 @@ export const Cena05: React.FC = () => {
           A decisão que liga tudo à compra
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 64 }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: vertical ? "column" : "row",
+            alignItems: vertical ? "flex-start" : "center",
+            gap: vertical ? 40 : 64,
+          }}
+        >
           {/* o retangulo que gira: um so objeto, duas funcoes */}
           <div style={{ perspective: 1400, ...entra(cupom, 20) }}>
             <div
               style={{
-                width: 420,
-                height: 240,
+                width: vertical ? 560 : 420,
+                height: vertical ? 320 : 240,
                 borderRadius: marca.raio.painel,
                 display: "flex",
                 flexDirection: "column",
@@ -179,15 +199,19 @@ export const Cena05: React.FC = () => {
                 }}
               >
                 {virou ? (
-                  <IconeChave cor={marca.branco} />
+                  <IconeChave cor={marca.branco} largura={vertical ? 320 : 240} />
                 ) : (
-                  <IconeCupom cor="#C7CEDA" fundo={marca.branco} />
+                  <IconeCupom
+                    cor="#C7CEDA"
+                    fundo={marca.branco}
+                    largura={vertical ? 320 : 240}
+                  />
                 )}
                 <div
                   style={{
-                    fontSize: virou ? 40 : 30,
+                    fontSize: virou ? (vertical ? 52 : 40) : vertical ? 38 : 30,
                     fontWeight: 500,
-                    letterSpacing: virou ? "-1.4px" : "2px",
+                    letterSpacing: virou ? (vertical ? "-1.82px" : "-1.4px") : "2px",
                     color: virou ? marca.branco : m.apoio,
                     textTransform: virou ? "none" : "uppercase",
                   }}
@@ -200,10 +224,10 @@ export const Cena05: React.FC = () => {
 
           <div
             style={{
-              fontSize: 44,
+              fontSize: vertical ? 60 : 44,
               fontWeight: 500,
-              letterSpacing: "-1.54px",
-              lineHeight: 1.25,
+              letterSpacing: vertical ? "-2.1px" : "-1.54px",
+              lineHeight: vertical ? 1.18 : 1.25,
               opacity: janela(f, GIRA + s(0.8), CENA05_FRAMES, 10, 0),
             }}
           >
@@ -217,16 +241,19 @@ export const Cena05: React.FC = () => {
         <div
           style={{
             display: "flex",
-            alignItems: "flex-end",
-            gap: 28,
+            // no 9:16 numero, legenda e "1 ano" empilham: lado a lado a
+            // legenda entrava na coluna de botoes do app
+            flexDirection: vertical ? "column" : "row",
+            alignItems: vertical ? "flex-start" : "flex-end",
+            gap: vertical ? 14 : 28,
             opacity: mostraDias,
           }}
         >
           <div
             style={{
-              fontSize: 140,
+              fontSize: vertical ? 200 : 140,
               fontWeight: 500,
-              letterSpacing: "-4.9px",
+              letterSpacing: vertical ? "-7px" : "-4.9px",
               lineHeight: 0.95,
               color: marca.azul,
               fontVariantNumeric: "tabular-nums",
@@ -240,16 +267,23 @@ export const Cena05: React.FC = () => {
               display: "flex",
               flexDirection: "column",
               gap: 6,
-              paddingBottom: 22,
+              paddingBottom: vertical ? 0 : 22,
             }}
           >
-            <div style={{ fontSize: 36, fontWeight: 500, letterSpacing: "-1.26px" }}>
+            <div
+              style={{
+                fontSize: vertical ? 40 : 36,
+                fontWeight: 500,
+                letterSpacing: vertical ? "-1.4px" : "-1.26px",
+                lineHeight: vertical ? 1.15 : undefined,
+              }}
+            >
               dias de acompanhamento
             </div>
             <div
               style={{
-                fontSize: 24,
-                letterSpacing: "-0.84px",
+                fontSize: vertical ? 28 : 24,
+                letterSpacing: vertical ? "-0.98px" : "-0.84px",
                 color: m.apoio,
               }}
             >
@@ -264,17 +298,38 @@ export const Cena05: React.FC = () => {
               display: "flex",
               alignItems: "center",
               gap: 16,
-              paddingBottom: 22,
-              marginLeft: 48,
+              paddingBottom: vertical ? 0 : 22,
+              marginLeft: vertical ? 0 : 48,
+              marginTop: vertical ? 30 : 0,
               ...entra(ano, 16),
             }}
           >
-            <div style={{ width: 4, height: 92, background: marca.azul, borderRadius: 2 }} />
+            <div
+              style={{
+                width: 4,
+                height: vertical ? 112 : 92,
+                background: marca.azul,
+                borderRadius: 2,
+              }}
+            />
             <div>
-              <div style={{ fontSize: 72, fontWeight: 500, letterSpacing: "-2.52px", lineHeight: 1.05 }}>
+              <div
+                style={{
+                  fontSize: vertical ? 88 : 72,
+                  fontWeight: 500,
+                  letterSpacing: vertical ? "-3.08px" : "-2.52px",
+                  lineHeight: 1.05,
+                }}
+              >
                 1 ano
               </div>
-              <div style={{ fontSize: 26, letterSpacing: "-0.91px", color: m.apoio }}>
+              <div
+                style={{
+                  fontSize: vertical ? 30 : 26,
+                  letterSpacing: vertical ? "-1.05px" : "-0.91px",
+                  color: m.apoio,
+                }}
+              >
                 com 4 compras
               </div>
             </div>
@@ -292,7 +347,7 @@ export const Cena05: React.FC = () => {
                   display: "flex",
                   alignItems: "center",
                   gap: 10,
-                  padding: "10px 18px",
+                  padding: vertical ? "14px 20px" : "10px 18px",
                   borderRadius: marca.raio.controle,
                   border: `1px solid ${marca.linha}`,
                   background: marca.branco,
@@ -307,7 +362,13 @@ export const Cena05: React.FC = () => {
                     background: aceso > 0.5 ? marca.azul : marca.linha,
                   }}
                 />
-                <div style={{ fontSize: 22, letterSpacing: "-0.77px", color: m.apoio }}>
+                <div
+                  style={{
+                    fontSize: vertical ? 26 : 22,
+                    letterSpacing: vertical ? "-0.91px" : "-0.77px",
+                    color: m.apoio,
+                  }}
+                >
                   {i + 1}ª compra
                 </div>
               </div>

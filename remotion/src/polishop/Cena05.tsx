@@ -11,6 +11,7 @@ import { Superficie } from "../Superficie";
 import { janela, entra, passo, s } from "../anim";
 import { Sfx } from "../Sfx";
 import { Painel, Balao } from "./Conversa";
+import { useFormato } from "../formato";
 
 /**
  * Cena 05 do case Polishop: o que o agente sabe antes de responder.
@@ -67,6 +68,15 @@ const LINHAS = [
 
 export const Cena05: React.FC = () => {
   const f = useCurrentFrame();
+  // No 9:16 os dois atos empilham na faixa segura: a lista de manuais ja era
+  // uma coluna e so cresce; a recusa troca "conversa a esquerda, tese a
+  // direita" por tese em cima e conversa embaixo, porque a tese e o que se le
+  // primeiro e a conversa e a prova dela.
+  const { vertical, M, seguro } = useFormato();
+  const faixa = vertical
+    ? { paddingTop: seguro.topo, paddingBottom: 1920 - seguro.base, paddingLeft: M, paddingRight: M }
+    : {};
+  const util = 1080 - M - seguro.direita;
 
   const rotulo = janela(f, s(0.5), RECUSA_EM, 10, 10);
   const grupo = janela(f, MANUAIS_EM, RECUSA_EM, 12, 10);
@@ -86,10 +96,12 @@ export const Cena05: React.FC = () => {
 
       {/* ato A: os seis manuais, e qual deles e o seu */}
       {rotulo > 0.001 ? (
-        <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center", gap: 44 }}>
+        <AbsoluteFill
+          style={{ padding: MARGEM, justifyContent: "center", gap: vertical ? 56 : 44, ...faixa }}
+        >
           <div
             style={{
-              fontSize: 24,
+              fontSize: vertical ? 28 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
@@ -100,7 +112,9 @@ export const Cena05: React.FC = () => {
             Antes de responder, ele consulta o manual
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 16, opacity: grupo }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: vertical ? 26 : 16, opacity: grupo }}
+          >
             {LINHAS.map((l, i) => {
               const o = passo(f, MANUAIS_EM + i * 4, MANUAIS_EM + i * 4 + 11);
               const aceso = l.meu && meu > 0.5;
@@ -118,16 +132,16 @@ export const Cena05: React.FC = () => {
                   <div
                     style={{
                       width: 3,
-                      height: 34,
+                      height: vertical ? 50 : 34,
                       borderRadius: 2,
                       background: aceso ? marca.azul : marca.linha,
                     }}
                   />
                   <div
                     style={{
-                      fontSize: 40,
+                      fontSize: vertical ? 56 : 40,
                       fontWeight: 500,
-                      letterSpacing: "-1.4px",
+                      letterSpacing: vertical ? "-1.96px" : "-1.4px",
                       color: aceso ? marca.azul : m.tinta,
                     }}
                   >
@@ -136,13 +150,13 @@ export const Cena05: React.FC = () => {
                   {aceso ? (
                     <div
                       style={{
-                        fontSize: 22,
+                        fontSize: vertical ? 26 : 22,
                         letterSpacing: "1.6px",
                         textTransform: "uppercase",
                         color: marca.azul,
                         border: `1px solid ${marca.azul}`,
                         borderRadius: 999,
-                        padding: "6px 14px",
+                        padding: vertical ? "8px 18px" : "6px 14px",
                         opacity: meu,
                       }}
                     >
@@ -157,8 +171,10 @@ export const Cena05: React.FC = () => {
           {cuidado > 0.001 ? (
             <div
               style={{
-                fontSize: 30,
-                letterSpacing: "-1.05px",
+                fontSize: vertical ? 40 : 30,
+                letterSpacing: vertical ? "-1.4px" : "-1.05px",
+                lineHeight: vertical ? 1.25 : undefined,
+                maxWidth: vertical ? util : undefined,
                 color: m.apoio,
                 borderTop: "1px solid rgba(16,18,24,0.22)",
                 paddingTop: 20,
@@ -171,8 +187,59 @@ export const Cena05: React.FC = () => {
         </AbsoluteFill>
       ) : null}
 
+      {/* ato B no 9:16: tese em cima, conversa embaixo, a linha de apoio no pe */}
+      {vertical && recusa > 0.001 ? (
+        <AbsoluteFill
+          style={{
+            ...faixa,
+            justifyContent: "center",
+            gap: 40,
+            ...entra(recusa, 22),
+          }}
+        >
+          <div
+            style={{
+              fontSize: 84,
+              fontWeight: 500,
+              letterSpacing: "-2.94px",
+              lineHeight: 1.18,
+            }}
+          >
+            Ele também
+            <br />
+            <span style={{ color: marca.azul }}>sabe dizer não.</span>
+          </div>
+          <Painel largura={util} altura={400} o={recusa}>
+            {pergunta > 0.001 ? (
+              <Balao o={pergunta} saida>
+                dá pra fazer costela defumada aqui?
+              </Balao>
+            ) : null}
+            {resposta > 0.001 ? (
+              <Balao o={resposta}>
+                Nessa não dá: defumar pede tempo longo em temperatura baixa com
+                fumaça, e a sua air fryer não tem esse modo. Posso te dar uma
+                costela na pressão e finalizar na air fryer pra dourar?
+              </Balao>
+            ) : null}
+          </Painel>
+          <div
+            style={{
+              fontSize: 36,
+              letterSpacing: "-1.26px",
+              color: m.apoio,
+              borderTop: "1px solid rgba(16,18,24,0.22)",
+              paddingTop: 20,
+              maxWidth: util,
+            }}
+          >
+            um agente que só concorda não consultou nada
+          </div>
+        </AbsoluteFill>
+      ) : null}
+
       {/* ato B: a recusa, que e a prova de que ele leu o manual */}
-      {recusa > 0.001 ? (
+      {!vertical && recusa > 0.001 ? (
         <AbsoluteFill
           style={{
             padding: MARGEM,

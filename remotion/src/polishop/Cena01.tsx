@@ -10,6 +10,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { janela, entra, passo, s } from "../anim";
 import { Sfx } from "../Sfx";
+import { useFormato } from "../formato";
 
 /**
  * Cena 01 do case Polishop: o produto subutilizado.
@@ -91,6 +92,14 @@ const Estrela: React.FC<{ cheia: boolean }> = ({ cheia }) => (
 
 export const Cena01: React.FC = () => {
   const f = useCurrentFrame();
+  // No 9:16 a grade vira duas colunas de oito, e a altura passa a ser o
+  // argumento: dezesseis funcoes empilhadas com duas acesas no alto se contam
+  // melhor que numa faixa. Tudo centrado na faixa segura (220 a 1500), nao no
+  // quadro, porque o baixo do quadro e do app.
+  const { vertical, M, seguro } = useFormato();
+  const faixa = vertical
+    ? { paddingTop: seguro.topo, paddingBottom: 1920 - seguro.base, paddingLeft: M, paddingRight: M }
+    : {};
 
   const manual = janela(f, MANUAL_EM, GRADE_EM + 8, 10, 10);
   // o manual desce e some: e o gesto de guardar, nao um fade
@@ -107,26 +116,26 @@ export const Cena01: React.FC = () => {
 
       {/* o manual indo para a gaveta */}
       {manual > 0.001 ? (
-        <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
+        <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", ...faixa }}>
           <div
             style={{
-              width: 420,
-              height: 540,
+              width: vertical ? 600 : 420,
+              height: vertical ? 780 : 540,
               background: marca.branco,
               border: `1px solid ${marca.linha}`,
               borderRadius: marca.raio.painel,
               boxShadow: marca.sombra.painel,
-              padding: 44,
+              padding: vertical ? 60 : 44,
               display: "flex",
               flexDirection: "column",
-              gap: 18,
+              gap: vertical ? 26 : 18,
               opacity: manual * (1 - guarda),
-              transform: `translateY(${guarda * 320}px) rotate(${guarda * -4}deg)`,
+              transform: `translateY(${guarda * (vertical ? 480 : 320)}px) rotate(${guarda * -4}deg)`,
             }}
           >
             <div
               style={{
-                fontSize: 22,
+                fontSize: vertical ? 28 : 22,
                 fontWeight: 500,
                 letterSpacing: "2px",
                 textTransform: "uppercase",
@@ -139,8 +148,8 @@ export const Cena01: React.FC = () => {
               <div
                 key={i}
                 style={{
-                  height: 8,
-                  borderRadius: 4,
+                  height: vertical ? 11 : 8,
+                  borderRadius: vertical ? 6 : 4,
                   background: marca.linha,
                   width: `${[100, 92, 96, 60, 100, 88, 94, 72, 100, 90, 48][i]}%`,
                 }}
@@ -152,10 +161,17 @@ export const Cena01: React.FC = () => {
 
       {/* a grade de funcoes: o espectador conta em vez de acreditar */}
       {grade > 0.001 ? (
-        <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center", gap: 48 }}>
+        <AbsoluteFill
+          style={{
+            padding: MARGEM,
+            justifyContent: "center",
+            gap: 48,
+            ...faixa,
+          }}
+        >
           <div
             style={{
-              fontSize: 24,
+              fontSize: vertical ? 28 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
@@ -169,8 +185,8 @@ export const Cena01: React.FC = () => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: 18,
+              gridTemplateColumns: vertical ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
+              gap: vertical ? 16 : 18,
               opacity: grade,
             }}
           >
@@ -189,9 +205,9 @@ export const Cena01: React.FC = () => {
                     background: acende > 0.5 ? marca.azul : marca.branco,
                     color: acende > 0.5 ? marca.branco : m.apoio,
                     borderRadius: 12,
-                    padding: "18px 20px",
-                    fontSize: 26,
-                    letterSpacing: "-0.91px",
+                    padding: vertical ? "20px 26px" : "18px 20px",
+                    fontSize: vertical ? 36 : 26,
+                    letterSpacing: vertical ? "-1.26px" : "-0.91px",
                     ...ent,
                     opacity: ent.opacity * (usada ? 1 : 0.42),
                   }}
@@ -202,13 +218,20 @@ export const Cena01: React.FC = () => {
             })}
           </div>
 
-          {custo > 0.001 ? (
+          {/* no 9:16 a frase existe desde o inicio, transparente: a coluna e
+              centrada, e sem a vaga dela a grade pularia 130 px para cima
+              quando a frase entrasse */}
+          {custo > 0.001 || vertical ? (
             <div
               style={{
-                fontSize: 46,
+                fontSize: vertical ? 64 : 46,
                 fontWeight: 500,
-                letterSpacing: "-1.61px",
-                lineHeight: 1.2,
+                letterSpacing: vertical ? "-2.24px" : "-1.61px",
+                lineHeight: vertical ? 1.18 : 1.2,
+                // 810 px quebra em "Cliente que nao aproveita / o que
+                // comprou", sem deixar o "o" pendurado no fim da linha, e fica
+                // fora da coluna de botoes do app
+                maxWidth: vertical ? 810 : undefined,
                 ...entra(custo, 16),
               }}
             >

@@ -13,29 +13,10 @@ import { Superficie } from "../Superficie";
 import { UI } from "../whatsapp";
 import { janela, entra, passo, s } from "../anim";
 import { Sfx } from "../Sfx";
+import { useFormato } from "../formato";
 import { Cabecalho } from "./Cabecalho";
-import {
-  QR,
-  QR_L,
-  QR_T,
-  QR_TAM,
-  MOTOR_L,
-  MOTOR_T,
-  MOTOR_W,
-  FIO_Y,
-  FIO_L,
-  SOQUETE_Y,
-} from "./QR";
-import {
-  Airfryer,
-  AF_L,
-  AF_T,
-  AF_W,
-  afimNaTampa,
-  afimPlana,
-  afimEntre,
-  css,
-} from "./Airfryer";
+import { QR, geoPorta, menuTam } from "./QR";
+import { Airfryer, afimNaTampa, afimPlana, afimEntre, css } from "./Airfryer";
 
 /**
  * Cena 02 do case Polishop: a tentativa de 2023, que não funcionou.
@@ -116,11 +97,20 @@ const MENU = [
 /** A curva do engajamento: sobe pouco no lançamento e fica rente ao chão. */
 const CURVA = [0.05, 0.42, 0.68, 0.51, 0.3, 0.19, 0.13, 0.1, 0.08, 0.07, 0.06, 0.05];
 
-const PLANA = afimPlana(QR_L, QR_T);
-const NA_TAMPA = afimNaTampa(QR_TAM, AF_L, AF_T, AF_W);
-
 export const Cena02: React.FC = () => {
   const f = useCurrentFrame();
+  // no 9:16 a cena empilha: cabecalho, motor, e o aparelho embaixo com o fio
+  // subindo ate o soquete. A geometria mora no `QR.tsx`, dividida com a 03.
+  const { vertical, W, H } = useFormato();
+  const g = geoPorta(vertical);
+  const mt = menuTam(vertical);
+  const PLANA = afimPlana(g.qrL, g.qrT);
+  const NA_TAMPA = afimNaTampa(g.qrTam, g.afL, g.afT, g.afW);
+  const [ax, ay] = g.fioA;
+  const [bx, by] = g.fioB;
+  // a curva do engajamento: embaixo do painel no 16:9, a direita do aparelho
+  // no 9:16, na coluna que fica livre entre ele e os botoes do app
+  const cw = vertical ? 400 : 520;
 
   const logo = janela(f, LOGO_EM, CENA02_FRAMES, 12, 0);
   const ano = janela(f, ANO_EM, CENA02_FRAMES, 10, 0);
@@ -159,9 +149,9 @@ export const Cena02: React.FC = () => {
       {/* o aparelho sobe para receber o codigo */}
       {aparelho > 0.001 ? (
         <Airfryer
-          esq={AF_L}
-          topo={AF_T}
-          larg={AF_W}
+          esq={g.afL}
+          topo={g.afT}
+          larg={g.afW}
           o={aparelho}
           sobe={(1 - aparelho) * 34}
         />
@@ -178,8 +168,8 @@ export const Cena02: React.FC = () => {
             position: "absolute",
             left: 0,
             top: 0,
-            width: QR_TAM,
-            height: QR_TAM,
+            width: g.qrTam,
+            height: g.qrTam,
             background: marca.branco,
             borderRadius: 12,
             border: `1px solid ${cola > 0.6 ? "transparent" : marca.linha}`,
@@ -192,21 +182,21 @@ export const Cena02: React.FC = () => {
             opacity: qr,
           }}
         >
-          <QR tamanho={QR_TAM * 0.84} revela={passo(f, QR_EM, QR_EM + s(0.9))} />
+          <QR tamanho={g.qrTam * 0.84} revela={passo(f, QR_EM, QR_EM + s(0.9))} />
         </div>
       ) : null}
 
       {/* o fio do adesivo para o que ha atras dele */}
       <svg
-        width={1920}
-        height={1080}
+        width={W}
+        height={H}
         style={{ position: "absolute", left: 0, top: 0, pointerEvents: "none" }}
       >
         <line
-          x1={FIO_L}
-          y1={FIO_Y}
-          x2={FIO_L + (MOTOR_L - FIO_L) * fio}
-          y2={FIO_Y + (SOQUETE_Y - FIO_Y) * fio}
+          x1={ax}
+          y1={ay}
+          x2={ax + (bx - ax) * fio}
+          y2={ay + (by - ay) * fio}
           stroke={marca.linha}
           strokeWidth="1"
         />
@@ -217,9 +207,12 @@ export const Cena02: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            left: MOTOR_L,
-            top: MOTOR_T,
-            width: MOTOR_W,
+            left: g.motorL,
+            top: g.motorT,
+            width: g.motorW,
+            // no 9:16 a altura e fixa e igual a da cena 03, onde o painel e
+            // desmontado: no 16:9 a altura natural ja batia com a de la
+            height: vertical ? g.painelAlt : undefined,
             background: marca.branco,
             border: `1px solid ${marca.linha}`,
             borderRadius: marca.raio.painel,
@@ -233,14 +226,17 @@ export const Cena02: React.FC = () => {
             style={{
               background: "#EDEFF3",
               borderBottom: `1px solid ${marca.linha}`,
-              padding: "14px 20px",
+              padding: mt.barra,
               display: "flex",
               alignItems: "center",
               gap: 10,
             }}
           >
             {["#D9DDE4", "#D9DDE4", "#D9DDE4"].map((c, i) => (
-              <div key={i} style={{ width: 12, height: 12, borderRadius: 6, background: c }} />
+              <div
+                key={i}
+                style={{ width: mt.ponto, height: mt.ponto, borderRadius: mt.ponto / 2, background: c }}
+              />
             ))}
             <div
               style={{
@@ -248,9 +244,9 @@ export const Cena02: React.FC = () => {
                 marginLeft: 12,
                 background: marca.branco,
                 borderRadius: 8,
-                padding: "7px 14px",
+                padding: mt.urlPad,
                 fontFamily: UI,
-                fontSize: 16,
+                fontSize: mt.url,
                 color: "#8A93A1",
               }}
             >
@@ -258,8 +254,8 @@ export const Cena02: React.FC = () => {
             </div>
           </div>
 
-          <div style={{ padding: 30, display: "flex", flexDirection: "column", gap: 14 }}>
-            <div style={{ fontFamily: UI, fontSize: 21, color: "#4A5364" }}>
+          <div style={{ padding: mt.pad, display: "flex", flexDirection: "column", gap: mt.gap }}>
+            <div style={{ fontFamily: UI, fontSize: mt.titulo, color: "#4A5364" }}>
               Escolha uma opção:
             </div>
             {MENU.map((item, i) => {
@@ -269,10 +265,10 @@ export const Cena02: React.FC = () => {
                   key={item}
                   style={{
                     border: `1px solid ${marca.linha}`,
-                    borderRadius: 10,
-                    padding: "14px 18px",
+                    borderRadius: mt.itemRaio,
+                    padding: mt.itemPad,
                     fontFamily: UI,
-                    fontSize: 21,
+                    fontSize: mt.item,
                     color: "#4A5364",
                     ...entra(o, 8),
                   }}
@@ -287,10 +283,10 @@ export const Cena02: React.FC = () => {
               style={{
                 marginTop: 6,
                 border: `1px dashed ${marca.linha}`,
-                borderRadius: 10,
-                padding: "14px 18px",
+                borderRadius: mt.itemRaio,
+                padding: mt.itemPad,
                 fontFamily: UI,
-                fontSize: 20,
+                fontSize: mt.campo,
                 color: "#A7AEBA",
                 opacity: janela(f, SEM_CONVERSA_EM, CENA02_FRAMES, 10, 0),
               }}
@@ -306,16 +302,17 @@ export const Cena02: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            left: MOTOR_L,
-            bottom: 96,
-            width: 520,
+            left: vertical ? 540 : g.motorL,
+            top: vertical ? 1200 : undefined,
+            bottom: vertical ? undefined : 96,
+            width: cw,
             ...entra(linha, 16),
           }}
         >
-          <svg width="520" height="130">
+          <svg width={cw} height="130">
             <path
               d={CURVA.map((v, i) => {
-                const x = (i / (CURVA.length - 1)) * 520;
+                const x = (i / (CURVA.length - 1)) * cw;
                 const y = 122 - v * 106;
                 return `${i === 0 ? "M" : "L"} ${x.toFixed(1)} ${y.toFixed(1)}`;
               }).join(" ")}
@@ -327,13 +324,13 @@ export const Cena02: React.FC = () => {
               strokeDasharray={900}
               strokeDashoffset={900 * (1 - desenha)}
             />
-            <line x1="0" y1="122" x2="520" y2="122" stroke={marca.linha} strokeWidth="1" />
+            <line x1="0" y1="122" x2={cw} y2="122" stroke={marca.linha} strokeWidth="1" />
           </svg>
           <div
             style={{
               marginTop: 10,
-              fontSize: 28,
-              letterSpacing: "-0.98px",
+              fontSize: vertical ? 34 : 28,
+              letterSpacing: vertical ? "-1.19px" : "-0.98px",
               color: marca.rosa,
               opacity: interpolate(desenha, [0.7, 1], [0, 1], {
                 extrapolateLeft: "clamp",

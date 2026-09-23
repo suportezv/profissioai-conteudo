@@ -13,6 +13,7 @@ import { PlanoVertical } from "./PlanoVertical";
 import { ONDA_MISSAO } from "./ondas";
 import { janela, entra, s } from "./anim";
 import { Sfx } from "./Sfx";
+import { useFormato } from "./formato";
 
 /**
  * Cena 09 do case: a missao dita pelo proprio produto, e os lockups.
@@ -70,31 +71,47 @@ const m = modos.claro;
 const Assinatura: React.FC = () => {
   const f = useCurrentFrame();
   const o = janela(f, 0, ASSINA_FRAMES, 18, 0);
+  // no 9:16 os dois lockups empilham, com a regua deitada entre eles, e o
+  // conjunto centra na faixa segura
+  const { vertical, H, M, seguro } = useFormato();
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
       <Superficie modo="claro" halo />
       <AbsoluteFill
         style={{
-          padding: MARGEM,
+          padding: vertical ? `${seguro.topo}px ${M}px ${H - seguro.base}px` : MARGEM,
           alignItems: "center",
           justifyContent: "center",
           ...entra(o, 20),
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 88 }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: vertical ? 80 : 88,
+            ...(vertical ? { flexDirection: "column" as const } : {}),
+          }}
+        >
           {/* a EITA aparece como ela e, sem reestilizar: e a marca da cliente,
               nao um elemento da Profissio. O PNG ja vem com fundo
               transparente e foi aparado ate o conteudo, senao um retangulo
               branco apareceria sobre a superficie #F4F6F9. */}
           <Img
             src={staticFile("marca/eita-mentora-virtual.png")}
-            style={{ height: 290, width: "auto" }}
+            style={{ height: vertical ? 340 : 290, width: "auto" }}
           />
-          <div style={{ width: 1, height: 200, background: marca.linha }} />
+          <div
+            style={
+              vertical
+                ? { width: 240, height: 1, background: marca.linha }
+                : { width: 1, height: 200, background: marca.linha }
+            }
+          />
           <Img
             src={staticFile("marca/profissio-ai-escuro.svg")}
-            style={{ width: 500, height: "auto" }}
+            style={{ width: vertical ? 600 : 500, height: "auto" }}
           />
         </div>
       </AbsoluteFill>
@@ -119,6 +136,11 @@ export const Cena09: React.FC = () => (
             // a ponta de cima do celular: o aparelho fica em x 834..1213,
             // y 859..960 do quadro durante o trecho em que o audio toca
             ponta: { x: 1195, y: 862 },
+            // no 9:16 o plano ocupa o quadro. A janela fica um pouco a direita
+            // da borda (17%, x 60 a 788 do bruto) porque aqui ela vira o rosto
+            // ate x 800 perto de 6,5 s; a ponta do celular sai do quadro, entao
+            // o rabicho toca a borda de cima dele onde ela ainda aparece
+            vertical: { foco: 17, ponta: { x: 990, y: 1545 } },
           }}
         />
       </Series.Sequence>

@@ -10,6 +10,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { janela, entra, conta, br, s, tiquesDaContagem } from "../anim";
 import { Sfx } from "../Sfx";
+import { useFormato } from "../formato";
 
 /**
  * Cena 08 do case Polishop: o volume.
@@ -95,6 +96,13 @@ const DADOS: Dado[] = [
 export const Cena08: React.FC = () => {
   const f = useCurrentFrame();
   const periodo = janela(f, PERIODO_EM, DADOS[0].entra + 10, 10, 10);
+  // No 9:16 a cena ja era uma coluna: ela so cresce e se centra na faixa
+  // segura em vez do quadro. O numero vai a 210, que e o maior corpo que
+  // "140.630" aguenta dentro da margem.
+  const { vertical, M, seguro } = useFormato();
+  const faixa = vertical
+    ? { paddingTop: seguro.topo, paddingBottom: 1920 - seguro.base, paddingLeft: M, paddingRight: M }
+    : {};
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -104,12 +112,12 @@ export const Cena08: React.FC = () => {
       </Sequence>
 
       {periodo > 0.001 ? (
-        <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
+        <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center", ...faixa }}>
           <div
             style={{
-              fontSize: 64,
+              fontSize: vertical ? 84 : 64,
               fontWeight: 500,
-              letterSpacing: "-2.24px",
+              letterSpacing: vertical ? "-2.94px" : "-2.24px",
               lineHeight: 1.18,
               ...entra(periodo, 20),
             }}
@@ -127,13 +135,23 @@ export const Cena08: React.FC = () => {
         if (o <= 0.001) return null;
         const v = conta(f, d.entra, d.entra + s(1.1), d.alvo);
         return (
-          <AbsoluteFill key={d.titulo} style={{ padding: MARGEM, justifyContent: "center" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 20, ...entra(o, 24) }}>
+          <AbsoluteFill
+            key={d.titulo}
+            style={{ padding: MARGEM, justifyContent: "center", ...faixa }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: vertical ? 24 : 20,
+                ...entra(o, 24),
+              }}
+            >
               <div
                 style={{
-                  fontSize: 190,
+                  fontSize: vertical ? 210 : 190,
                   fontWeight: 500,
-                  letterSpacing: "-6.65px",
+                  letterSpacing: vertical ? "-7.35px" : "-6.65px",
                   lineHeight: 1,
                   color: marca.azul,
                   fontVariantNumeric: "tabular-nums",
@@ -144,9 +162,9 @@ export const Cena08: React.FC = () => {
               </div>
               <div
                 style={{
-                  fontSize: 52,
+                  fontSize: vertical ? 64 : 52,
                   fontWeight: 500,
-                  letterSpacing: "-1.82px",
+                  letterSpacing: vertical ? "-2.24px" : "-1.82px",
                   lineHeight: 1.15,
                 }}
               >
@@ -154,12 +172,13 @@ export const Cena08: React.FC = () => {
               </div>
               <div
                 style={{
-                  fontSize: 26,
-                  letterSpacing: "-0.91px",
+                  fontSize: vertical ? 34 : 26,
+                  letterSpacing: vertical ? "-1.19px" : "-0.91px",
+                  lineHeight: vertical ? 1.3 : undefined,
                   color: m.apoio,
                   borderTop: "1px solid rgba(16,18,24,0.22)",
                   paddingTop: 16,
-                  maxWidth: 1000,
+                  maxWidth: vertical ? 1080 - M - seguro.direita : 1000,
                 }}
               >
                 {d.base}

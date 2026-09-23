@@ -52,9 +52,11 @@ export const BalaoAudio: React.FC<{
   /**
    * Onde o rabicho fica. `topo` e o balao de conversa do app (canto de cima
    * vivo); `base` e o balao que sai do celular por baixo, com o rabicho
-   * desenhado por quem o posiciona.
+   * desenhado por quem o posiciona. `baseDireita` e o mesmo balao espelhado,
+   * com o canto vivo embaixo a direita, para quando ele sai do celular para a
+   * esquerda (corte 9:16 do case EITA).
    */
-  cauda?: "topo" | "base";
+  cauda?: "topo" | "base" | "baseDireita";
   /** Se o proprio balao desliza ao entrar. Quem anima de fora desliga. */
   desliza?: boolean;
 }> = ({ valores, progresso, o, segundos, escala = 1, cauda = "topo", desliza = true }) => {
@@ -67,7 +69,9 @@ export const BalaoAudio: React.FC<{
         borderRadius: 22 * escala,
         ...(cauda === "topo"
           ? { borderTopLeftRadius: 6 * escala }
-          : { borderBottomLeftRadius: 4 * escala }),
+          : cauda === "baseDireita"
+            ? { borderBottomRightRadius: 4 * escala }
+            : { borderBottomLeftRadius: 4 * escala }),
         padding: `${20 * escala}px ${26 * escala}px ${14 * escala}px`,
         display: "flex",
         flexDirection: "column",

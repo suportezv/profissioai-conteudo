@@ -10,6 +10,17 @@ import {
 import { marca } from "../marca";
 import { wa, UI } from "../whatsapp";
 import { entra, s } from "../anim";
+import { useFormato } from "../formato";
+
+/**
+ * O fator da conversa no 9:16.
+ *
+ * No vertical a conversa e o assunto do quadro, e ela tem que ler como um
+ * celular na mao, nao como um print reduzido: tudo cresce 40% (corpo 22 vira
+ * ~31, que e o tamanho de leitura de uma mensagem num Reels). No 16:9 o fator
+ * e 1, e cada numero abaixo sai identico ao de antes.
+ */
+const useK = () => (useFormato().vertical ? 1.4 : 1);
 
 /** Duração real do clipe gerado, que é o que a barra de progresso anda. */
 const CLIPE_FRAMES = s(4);
@@ -67,44 +78,47 @@ export const Painel: React.FC<{
   altura: number;
   o: number;
   children: React.ReactNode;
-}> = ({ largura, altura, o, children }) => (
-  <div
-    style={{
-      width: largura,
-      background: wa.fundoChat,
-      borderRadius: marca.raio.arte,
-      overflow: "hidden",
-      boxShadow: marca.sombra.painel,
-      ...entra(o, 20),
-    }}
-  >
+}> = ({ largura, altura, o, children }) => {
+  const k = useK();
+  return (
     <div
       style={{
-        background: wa.barra,
-        padding: "15px 22px",
-        display: "flex",
-        alignItems: "center",
-        gap: 14,
-      }}
-    >
-      <AvatarChef tam={44} />
-      <div style={{ fontFamily: UI, fontSize: 22, color: wa.texto }}>AIChef</div>
-    </div>
-    <div
-      style={{
-        padding: 22,
-        height: altura,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-end",
-        gap: 12,
+        width: largura,
+        background: wa.fundoChat,
+        borderRadius: marca.raio.arte,
         overflow: "hidden",
+        boxShadow: marca.sombra.painel,
+        ...entra(o, 20),
       }}
     >
-      {children}
+      <div
+        style={{
+          background: wa.barra,
+          padding: `${15 * k}px ${22 * k}px`,
+          display: "flex",
+          alignItems: "center",
+          gap: 14 * k,
+        }}
+      >
+        <AvatarChef tam={44 * k} />
+        <div style={{ fontFamily: UI, fontSize: 22 * k, color: wa.texto }}>AIChef</div>
+      </div>
+      <div
+        style={{
+          padding: 22 * k,
+          height: altura,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          gap: 12 * k,
+          overflow: "hidden",
+        }}
+      >
+        {children}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export const Balao: React.FC<{
   o: number;
@@ -112,38 +126,41 @@ export const Balao: React.FC<{
   largura?: number;
   children: React.ReactNode;
   hora?: string;
-}> = ({ o, saida, largura = 520, children, hora }) => (
-  <div
-    style={{
-      alignSelf: saida ? "flex-end" : "flex-start",
-      maxWidth: largura,
-      background: saida ? wa.balaoSaida : wa.balaoEntrada,
-      borderRadius: 18,
-      borderTopLeftRadius: saida ? 18 : 5,
-      borderTopRightRadius: saida ? 5 : 18,
-      padding: "13px 17px",
-      fontFamily: UI,
-      fontSize: 22,
-      color: wa.texto,
-      lineHeight: 1.4,
-      ...entra(o, 12),
-    }}
-  >
-    {children}
-    {hora ? (
-      <div
-        style={{
-          fontSize: 15,
-          color: wa.apoio,
-          textAlign: "right",
-          marginTop: 4,
-        }}
-      >
-        {hora}
-      </div>
-    ) : null}
-  </div>
-);
+}> = ({ o, saida, largura = 520, children, hora }) => {
+  const k = useK();
+  return (
+    <div
+      style={{
+        alignSelf: saida ? "flex-end" : "flex-start",
+        maxWidth: largura * k,
+        background: saida ? wa.balaoSaida : wa.balaoEntrada,
+        borderRadius: 18 * k,
+        borderTopLeftRadius: (saida ? 18 : 5) * k,
+        borderTopRightRadius: (saida ? 5 : 18) * k,
+        padding: `${13 * k}px ${17 * k}px`,
+        fontFamily: UI,
+        fontSize: 22 * k,
+        color: wa.texto,
+        lineHeight: 1.4,
+        ...entra(o, 12),
+      }}
+    >
+      {children}
+      {hora ? (
+        <div
+          style={{
+            fontSize: 15 * k,
+            color: wa.apoio,
+            textAlign: "right",
+            marginTop: 4 * k,
+          }}
+        >
+          {hora}
+        </div>
+      ) : null}
+    </div>
+  );
+};
 
 /** Foto mandada dentro de um balão, como o app mostra. */
 export const BalaoFoto: React.FC<{
@@ -151,58 +168,62 @@ export const BalaoFoto: React.FC<{
   arquivo: string;
   saida?: boolean;
   legenda?: string;
-}> = ({ o, arquivo, saida, legenda }) => (
-  <div
-    style={{
-      alignSelf: saida ? "flex-end" : "flex-start",
-      background: saida ? wa.balaoSaida : wa.balaoEntrada,
-      borderRadius: 18,
-      borderTopRightRadius: saida ? 5 : 18,
-      borderTopLeftRadius: saida ? 18 : 5,
-      padding: 6,
-      ...entra(o, 12),
-    }}
-  >
-    <Img
-      src={staticFile(`polishop/${arquivo}`)}
+}> = ({ o, arquivo, saida, legenda }) => {
+  const k = useK();
+  return (
+    <div
       style={{
-        width: 300,
-        height: 300,
-        objectFit: "cover",
-        borderRadius: 14,
-        display: "block",
+        alignSelf: saida ? "flex-end" : "flex-start",
+        background: saida ? wa.balaoSaida : wa.balaoEntrada,
+        borderRadius: 18 * k,
+        borderTopRightRadius: (saida ? 5 : 18) * k,
+        borderTopLeftRadius: (saida ? 18 : 5) * k,
+        padding: 6 * k,
+        ...entra(o, 12),
       }}
-    />
-    {legenda ? (
-      <div
+    >
+      <Img
+        src={staticFile(`polishop/${arquivo}`)}
         style={{
-          fontFamily: UI,
-          fontSize: 21,
-          color: wa.texto,
-          padding: "10px 12px 4px",
-          maxWidth: 300,
-          lineHeight: 1.35,
+          width: 300 * k,
+          height: 300 * k,
+          objectFit: "cover",
+          borderRadius: 14 * k,
+          display: "block",
         }}
-      >
-        {legenda}
-      </div>
-    ) : null}
-  </div>
-);
+      />
+      {legenda ? (
+        <div
+          style={{
+            fontFamily: UI,
+            fontSize: 21 * k,
+            color: wa.texto,
+            padding: `${10 * k}px ${12 * k}px ${4 * k}px`,
+            maxWidth: 300 * k,
+            lineHeight: 1.35,
+          }}
+        >
+          {legenda}
+        </div>
+      ) : null}
+    </div>
+  );
+};
 
 /** Os três pontinhos. Mensagem que aparece do nada lê como cartão de motion. */
 export const Digitando: React.FC<{ o: number }> = ({ o }) => {
   const f = useCurrentFrame();
+  const k = useK();
   return (
     <div
       style={{
         background: wa.balaoEntrada,
-        borderRadius: 18,
-        borderTopLeftRadius: 5,
-        padding: "16px 20px",
+        borderRadius: 18 * k,
+        borderTopLeftRadius: 5 * k,
+        padding: `${16 * k}px ${20 * k}px`,
         alignSelf: "flex-start",
         display: "flex",
-        gap: 7,
+        gap: 7 * k,
         ...entra(o, 8),
       }}
     >
@@ -213,12 +234,12 @@ export const Digitando: React.FC<{ o: number }> = ({ o }) => {
           <div
             key={i}
             style={{
-              width: 9,
-              height: 9,
-              borderRadius: 5,
+              width: 9 * k,
+              height: 9 * k,
+              borderRadius: 5 * k,
               background: wa.apoio,
               opacity: 0.45 + sobe * 0.55,
-              transform: `translateY(${-sobe * 4}px)`,
+              transform: `translateY(${-sobe * 4 * k}px)`,
             }}
           />
         );
@@ -243,28 +264,30 @@ export const BalaoAudio: React.FC<{
   o: number;
   progresso: number;
   saida?: boolean;
-}> = ({ o, progresso, saida }) => (
+}> = ({ o, progresso, saida }) => {
+  const k = useK();
+  return (
   <div
     style={{
       alignSelf: saida ? "flex-end" : "flex-start",
-      width: 430,
+      width: 430 * k,
       background: saida ? wa.balaoSaida : wa.balaoEntrada,
-      borderRadius: 18,
-      borderTopLeftRadius: saida ? 18 : 5,
-      borderTopRightRadius: saida ? 5 : 18,
-      padding: "14px 18px 8px",
+      borderRadius: 18 * k,
+      borderTopLeftRadius: (saida ? 18 : 5) * k,
+      borderTopRightRadius: (saida ? 5 : 18) * k,
+      padding: `${14 * k}px ${18 * k}px ${8 * k}px`,
       display: "flex",
       flexDirection: "column",
-      gap: 2,
+      gap: 2 * k,
       ...entra(o, 12),
     }}
   >
-    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 14 * k }}>
       <div
         style={{
-          width: 50,
-          height: 50,
-          borderRadius: 25,
+          width: 50 * k,
+          height: 50 * k,
+          borderRadius: 25 * k,
           background: wa.verde,
           flexShrink: 0,
           display: "flex",
@@ -272,19 +295,19 @@ export const BalaoAudio: React.FC<{
           justifyContent: "center",
         }}
       >
-        <svg width="16" height="19" viewBox="0 0 12 14">
+        <svg width={16 * k} height={19 * k} viewBox="0 0 12 14">
           <rect x="0" y="0" width="4" height="14" fill={wa.fundoChat} />
           <rect x="8" y="0" width="4" height="14" fill={wa.fundoChat} />
         </svg>
       </div>
-      <div style={{ flex: 1, display: "flex", alignItems: "center", gap: 3, height: 44 }}>
+      <div style={{ flex: 1, display: "flex", alignItems: "center", gap: 3 * k, height: 44 * k }}>
         {ONDA.map((v, i) => (
           <div
             key={i}
             style={{
               flex: 1,
-              height: 6 + v * 36,
-              borderRadius: 2,
+              height: (6 + v * 36) * k,
+              borderRadius: 2 * k,
               background: i / ONDA.length <= progresso ? wa.lido : wa.apoio,
               opacity: i / ONDA.length <= progresso ? 0.95 : 0.4,
             }}
@@ -295,7 +318,7 @@ export const BalaoAudio: React.FC<{
     <div
       style={{
         fontFamily: UI,
-        fontSize: 15,
+        fontSize: 15 * k,
         color: wa.apoio,
         display: "flex",
         justifyContent: "space-between",
@@ -305,7 +328,8 @@ export const BalaoAudio: React.FC<{
       <span>{saida ? "19:42" : "19:42"}</span>
     </div>
   </div>
-);
+  );
+};
 
 /**
  * Cartão de vídeo, como o app mostra um mp4 recebido.
@@ -338,6 +362,8 @@ export const BalaoVideo: React.FC<{
   em: number;
 }> = ({ o, titulo, dura, em }) => {
   const f = useCurrentFrame();
+  const k = useK();
+  const { vertical } = useFormato();
   const decorrido = Math.max(0, f - em);
   const toca = interpolate(decorrido, [12, 22], [1, 0], {
     extrapolateLeft: "clamp",
@@ -350,17 +376,20 @@ export const BalaoVideo: React.FC<{
       style={{
         alignSelf: "flex-start",
         background: wa.balaoEntrada,
-        borderRadius: 18,
-        borderTopLeftRadius: 5,
-        padding: 6,
+        borderRadius: 18 * k,
+        borderTopLeftRadius: 5 * k,
+        padding: 6 * k,
         ...entra(o, 12),
       }}
     >
+      {/* No 9:16 o video chega em pe, 4:5, como chega um video gravado no
+          celular: o clipe 16:9 e recortado no cesto, que fica no centro do
+          quadro de origem, e nao reduzido dentro do balao. */}
       <div
         style={{
-          width: 330,
-          height: 186,
-          borderRadius: 14,
+          width: vertical ? 420 : 330,
+          height: vertical ? 525 : 186,
+          borderRadius: 14 * k,
           background: "#16232A",
           position: "relative",
           overflow: "hidden",
@@ -394,16 +423,16 @@ export const BalaoVideo: React.FC<{
         >
           <div
             style={{
-              width: 62,
-              height: 62,
-              borderRadius: 31,
+              width: 62 * k,
+              height: 62 * k,
+              borderRadius: 31 * k,
               background: "rgba(255,255,255,0.22)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <svg width="22" height="26" viewBox="0 0 22 26">
+            <svg width={22 * k} height={26 * k} viewBox="0 0 22 26">
               <path d="M3 2l17 11L3 24z" fill={wa.texto} />
             </svg>
           </div>
@@ -411,10 +440,10 @@ export const BalaoVideo: React.FC<{
         <div
           style={{
             position: "absolute",
-            left: 12,
-            right: 12,
-            bottom: 12,
-            height: 3,
+            left: 12 * k,
+            right: 12 * k,
+            bottom: 12 * k,
+            height: 3 * k,
             borderRadius: 2,
             background: "rgba(255,255,255,0.22)",
             overflow: "hidden",
@@ -426,12 +455,12 @@ export const BalaoVideo: React.FC<{
       <div
         style={{
           fontFamily: UI,
-          fontSize: 20,
+          fontSize: 20 * k,
           color: wa.texto,
-          padding: "10px 12px 4px",
+          padding: `${10 * k}px ${12 * k}px ${4 * k}px`,
           display: "flex",
           justifyContent: "space-between",
-          gap: 16,
+          gap: 16 * k,
         }}
       >
         <span>{titulo}</span>

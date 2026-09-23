@@ -11,6 +11,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { janela, entra, passo, s } from "../anim";
 import { Sfx } from "../Sfx";
+import { useFormato } from "../formato";
 
 /**
  * Cena 02 do case Soldiers: o pos-venda e terra de ninguem.
@@ -76,12 +77,63 @@ const POS_Y = 700;
  */
 const MARCA_CENTRO = 1300;
 const MARCA_LARG = 182;
-const MARCA_X = MARCA_CENTRO - MARCA_LARG / 2;
 const MARCA_Y = 480;
 const MARCA_BASE = 604;
 
+/**
+ * Geometria do 9:16. A comparacao deixa de ser lado a lado e vira **em cima e
+ * embaixo**: a jornada que o mercado olhava ocupa a metade de cima, com a
+ * regua acabando na entrega antes da borda direita (o vazio continua sendo o
+ * argumento), e a decisao da Soldiers ocupa a de baixo, com a marca, a seta e
+ * o pos-venda no mesmo eixo vertical do 16:9.
+ */
+const V = {
+  rotuloEsqY: 300,
+  reguaY: 560,
+  /** A regua para em 3/4 da largura util: o que sobra a direita e o vazio. */
+  reguaFim: 72 + 700,
+  rotuloDirY: 860,
+  /** O logo cresce para 96 px: a caixa mede 139 + 72 de padding = 211. */
+  logo: 96,
+  marcaLarg: 211,
+  marcaCentro: 72 + 211 / 2,
+  marcaY: 1000,
+  /** Base da marca: 1000 + 96 de logo + 48 de padding. */
+  marcaBase: 1144,
+  posX: 72,
+  posY: 1290,
+};
+
 export const Cena02: React.FC = () => {
   const f = useCurrentFrame();
+  const { vertical, M, W, H } = useFormato();
+  // mesmas contas do 16:9, com a geometria do quadro em que esta
+  const G = vertical
+    ? {
+        margem: M,
+        rotuloEsqY: V.rotuloEsqY,
+        rotuloDirY: V.rotuloDirY,
+        reguaY: V.reguaY,
+        reguaFim: V.reguaFim,
+        posX: V.posX,
+        posY: V.posY,
+        marcaCentro: V.marcaCentro,
+        marcaY: V.marcaY,
+        marcaBase: V.marcaBase,
+      }
+    : {
+        margem: MARGEM,
+        rotuloEsqY: 360,
+        rotuloDirY: 360,
+        reguaY: REGUA_Y,
+        reguaFim: REGUA_FIM,
+        posX: POS_X,
+        posY: POS_Y,
+        marcaCentro: MARCA_CENTRO,
+        marcaY: MARCA_Y,
+        marcaBase: MARCA_BASE,
+      };
+  const marcaX = G.marcaCentro - (vertical ? V.marcaLarg : MARCA_LARG) / 2;
   const regua = passo(f, s(0.5), s(2.2));
   const rotuloEsq = janela(f, ROTULO_ESQ, CENA02_FRAMES, 10, 0);
   const rotuloDir = janela(f, ROTULO_DIR, CENA02_FRAMES, 10, 0);
@@ -100,10 +152,10 @@ export const Cena02: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          left: MARGEM,
-          top: 360,
+          left: G.margem,
+          top: G.rotuloEsqY,
           width: 760,
-          fontSize: 34,
+          fontSize: vertical ? 36 : 34,
           fontWeight: 500,
           letterSpacing: "2px",
           textTransform: "uppercase",
@@ -120,10 +172,10 @@ export const Cena02: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          left: POS_X,
-          top: 360,
+          left: G.posX,
+          top: G.rotuloDirY,
           width: 700,
-          fontSize: 34,
+          fontSize: vertical ? 36 : 34,
           fontWeight: 500,
           letterSpacing: "2px",
           textTransform: "uppercase",
@@ -141,9 +193,9 @@ export const Cena02: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          left: MARGEM,
-          top: REGUA_Y,
-          width: REGUA_FIM - MARGEM,
+          left: G.margem,
+          top: G.reguaY,
+          width: G.reguaFim - G.margem,
           height: 1,
           background: "rgba(16,18,24,0.22)",
           transformOrigin: "left",
@@ -153,14 +205,14 @@ export const Cena02: React.FC = () => {
       {ETAPAS.map((e, i) => {
         const o = janela(f, e.em, CENA02_FRAMES, 8, 0);
         const x =
-          MARGEM + ((REGUA_FIM - MARGEM) / ETAPAS.length) * (i + 0.5);
+          G.margem + ((G.reguaFim - G.margem) / ETAPAS.length) * (i + 0.5);
         return (
           <div
             key={e.nome}
             style={{
               position: "absolute",
               left: x,
-              top: REGUA_Y,
+              top: G.reguaY,
               transform: "translateX(-50%)",
               display: "flex",
               flexDirection: "column",
@@ -181,9 +233,9 @@ export const Cena02: React.FC = () => {
             />
             <div
               style={{
-                fontSize: 32,
+                fontSize: vertical ? 34 : 32,
                 fontWeight: 500,
-                letterSpacing: "-1.12px",
+                letterSpacing: vertical ? "-1.19px" : "-1.12px",
                 whiteSpace: "nowrap",
               }}
             >
@@ -197,9 +249,9 @@ export const Cena02: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          left: POS_X,
-          top: POS_Y,
-          fontSize: 62,
+          left: G.posX,
+          top: G.posY,
+          fontSize: vertical ? 84 : 62,
           fontWeight: 500,
           letterSpacing: "3px",
           textTransform: "uppercase",
@@ -215,8 +267,8 @@ export const Cena02: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          left: MARCA_X,
-          top: MARCA_Y,
+          left: marcaX,
+          top: G.marcaY,
           background: marca.tinta,
           borderRadius: marca.raio.painel,
           padding: "24px 36px",
@@ -228,30 +280,30 @@ export const Cena02: React.FC = () => {
       >
         <Img
           src={staticFile("marca-soldiers/soldiers-branco.png")}
-          style={{ height: 76, width: "auto", display: "block" }}
+          style={{ height: vertical ? V.logo : 76, width: "auto", display: "block" }}
         />
       </div>
 
       {seta > 0.001 ? (
         <svg
           style={{ position: "absolute", left: 0, top: 0 }}
-          width="1920"
-          height="1080"
+          width={vertical ? W : 1920}
+          height={vertical ? H : 1080}
         >
           {/* reta, da base da marca ate a palavra: nao tem como sair torta */}
           <line
-            x1={MARCA_CENTRO}
-            y1={MARCA_BASE + 14}
-            x2={MARCA_CENTRO}
-            y2={POS_Y - 26}
+            x1={G.marcaCentro}
+            y1={G.marcaBase + 14}
+            x2={G.marcaCentro}
+            y2={G.posY - 26}
             stroke={marca.azul}
             strokeWidth="3"
             strokeLinecap="round"
-            strokeDasharray={POS_Y - 26 - (MARCA_BASE + 14)}
-            strokeDashoffset={(1 - seta) * (POS_Y - 26 - (MARCA_BASE + 14))}
+            strokeDasharray={G.posY - 26 - (G.marcaBase + 14)}
+            strokeDashoffset={(1 - seta) * (G.posY - 26 - (G.marcaBase + 14))}
           />
           <path
-            d={`M ${MARCA_CENTRO - 13} ${POS_Y - 40} L ${MARCA_CENTRO} ${POS_Y - 24} L ${MARCA_CENTRO + 13} ${POS_Y - 40}`}
+            d={`M ${G.marcaCentro - 13} ${G.posY - 40} L ${G.marcaCentro} ${G.posY - 24} L ${G.marcaCentro + 13} ${G.posY - 40}`}
             fill="none"
             stroke={marca.azul}
             strokeWidth="3"

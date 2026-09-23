@@ -5,6 +5,7 @@ import { interpolate } from "remotion";
 import { BalaoAudio } from "./BalaoAudio";
 import { wa } from "./whatsapp";
 import { Sfx } from "./Sfx";
+import { useFormato } from "./formato";
 
 /**
  * Plano gravado na vertical ocupando um quadro 16:9, sem corte e sem barra.
@@ -48,6 +49,24 @@ export type Fala = {
    * em que o audio toca, porque ela mexe o celular.
    */
   ponta: { x: number; y: number };
+  /**
+   * O mesmo plano no quadro 9:16, onde ele deixa de ser um plano no meio de
+   * laterais desfocadas e **ocupa o quadro inteiro**: o bruto e 1080x1294, e o
+   * `cover` amplia 1,4838x e corta uma janela de 728 px da largura dele.
+   *
+   * `foco` e onde essa janela fica, em % da folga horizontal (0 = colada a
+   * esquerda). O bruto traz a ilustracao da EITA fixa no canto de cima a
+   * direita (x 750 a 966 do bruto), e a janela e escolhida para **ou deixar a
+   * ilustracao inteira de fora, ou nao cortar o rosto dela**: disco cortado ao
+   * meio le como defeito, nao como enquadramento.
+   *
+   * `ponta` e a ponta do rabicho **medida no quadro 1080x1920 recortado**, e
+   * nao convertida da do 16:9: ancora e do plano, nao da cena. Com a janela a
+   * esquerda a ponta de cima do celular fica rente a borda direita, entao no
+   * 9:16 o balao sai do celular **para a esquerda e para cima**, espelhado, e
+   * fica fora da coluna de botoes do app.
+   */
+  vertical?: { foco: number; ponta: { x: number; y: number } };
 };
 
 export const PlanoVertical: React.FC<{
@@ -57,6 +76,7 @@ export const PlanoVertical: React.FC<{
 }> = ({ arquivo, fala }) => {
   const f = useCurrentFrame();
   const src = staticFile("broll/" + arquivo);
+  const { vertical, H } = useFormato();
 
   // entrada de mensagem do app: cresce da ponta do rabicho, passa um pouco do
   // tamanho e assenta (0 -> 1,06 -> 1), com a opacidade chegando antes
@@ -83,6 +103,77 @@ export const PlanoVertical: React.FC<{
         extrapolateRight: "clamp",
       })
     : 0;
+
+  if (vertical) {
+    const cfg = fala?.vertical;
+    const ponta = cfg?.ponta ?? { x: 540, y: 1300 };
+    /**
+     * Distancia entre a ponta do rabicho e o canto de baixo-direito do corpo.
+     * Curta de proposito: no 9:16 o celular fica logo abaixo do queixo dela, e
+     * um rabicho longo empurraria o balao para cima do rosto.
+     */
+    const RECUO = { x: 60, y: 50 };
+    return (
+      <AbsoluteFill style={{ backgroundColor: "#000" }}>
+        {/* o plano ocupa o quadro: sem copia desfocada, sem barra */}
+        <OffthreadVideo
+          src={src}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: `${cfg?.foco ?? 50}% 50%`,
+          }}
+        />
+
+        {fala && opac > 0.001 ? (
+          <div
+            style={{
+              position: "absolute",
+              // o canto de baixo-direito do corpo fica RECUO a esquerda e
+              // acima da ponta: o rabicho cobre essa distancia
+              right: 1080 - (ponta.x - RECUO.x),
+              bottom: H - (ponta.y - RECUO.y),
+              opacity: opac,
+              transform: `scale(${escala})`,
+              // a escala nasce na ponta do rabicho, que e o celular
+              transformOrigin: `calc(100% + ${RECUO.x}px) calc(100% + ${RECUO.y}px)`,
+              filter: "drop-shadow(0 18px 40px rgba(0,0,0,0.35))",
+            }}
+          >
+            <BalaoAudio
+              valores={fala.valores}
+              progresso={progresso}
+              o={1}
+              segundos={fala.ate - fala.de}
+              escala={1.15}
+              cauda="baseDireita"
+              desliza={false}
+            />
+            {/* o rabicho: pontudo, descendo da base do balao ate o celular */}
+            <svg
+              width={RECUO.x + 60}
+              height={RECUO.y + 10}
+              viewBox={`-50 -4 ${RECUO.x + 60} ${RECUO.y + 10}`}
+              // a origem do desenho e o canto de baixo-direito do corpo
+              style={{
+                position: "absolute",
+                left: "calc(100% - 50px)",
+                top: "calc(100% - 4px)",
+                overflow: "visible",
+              }}
+            >
+              <path
+                d={`M -46 0 L -2 0 Q ${RECUO.x * 0.5} ${RECUO.y * 0.25} ${RECUO.x} ${RECUO.y} Q ${RECUO.x * 0.1} ${RECUO.y * 0.55} -46 0 Z`}
+                fill={wa.balaoEntrada}
+              />
+            </svg>
+          </div>
+        ) : null}
+        {fala ? <Sfx som="recebido" em={s(fala.de - 0.45)} volume={0.28} /> : null}
+      </AbsoluteFill>
+    );
+  }
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>

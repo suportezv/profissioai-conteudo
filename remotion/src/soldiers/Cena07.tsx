@@ -11,6 +11,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { janela, entra, passo, s } from "../anim";
 import { Sfx } from "../Sfx";
+import { useFormato } from "../formato";
 
 /**
  * Cena 07 do case Soldiers: sete personas sobre a mesma arquitetura.
@@ -96,8 +97,20 @@ const PRIMEIRO = s(1.0);
 const PASSO_ENTRE = 9;
 const LIGA = s(6.2);
 
+/**
+ * No 9:16 os sete viram grade: o MODO base numa faixa inteira em cima, porque e
+ * ele que vem na assinatura e os outros seis se apoiam nele, e as seis personas
+ * em duas fileiras de tres. A ordem de entrada e a mesma do 16:9 (base primeiro,
+ * depois as seis na ordem da lista), e a linha que liga todos fica embaixo da
+ * grade. A arte das personas e em pe e o cartao ficou mais largo que no 16:9,
+ * entao a foto ancora no topo: o recorte ja foi feito pela cabeca, e cortar o
+ * alto dela seria desfazer isso.
+ */
+const V = { base: 280, cartao: 380, vao: 16 };
+
 export const Cena07: React.FC = () => {
   const f = useCurrentFrame();
+  const { vertical, M, H, seguro } = useFormato();
   const liga = passo(f, LIGA, LIGA + s(0.9));
   const base = janela(f, s(6.6), CENA07_FRAMES, 10, 0);
 
@@ -110,16 +123,18 @@ export const Cena07: React.FC = () => {
 
       <AbsoluteFill
         style={{
-          padding: MARGEM,
+          padding: vertical
+            ? `${seguro.topo}px ${M}px ${H - seguro.base}px`
+            : MARGEM,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          gap: 48,
+          gap: vertical ? 36 : 48,
         }}
       >
         <div
           style={{
-            fontSize: 24,
+            fontSize: vertical ? 28 : 24,
             fontWeight: 500,
             letterSpacing: "2px",
             textTransform: "uppercase",
@@ -130,7 +145,13 @@ export const Cena07: React.FC = () => {
           Sete personas ao mesmo tempo
         </div>
 
-        <div style={{ display: "flex", gap: 14 }}>
+        <div
+          style={{
+            display: "flex",
+            gap: vertical ? V.vao : 14,
+            flexWrap: vertical ? "wrap" : "nowrap",
+          }}
+        >
           {PERSONAS.map((p, i) => {
             const o = janela(f, PRIMEIRO + i * PASSO_ENTRE, CENA07_FRAMES, 8, 0);
             return (
@@ -138,12 +159,17 @@ export const Cena07: React.FC = () => {
                 key={p.nome}
                 style={{
                   flexGrow: 1,
-                  flexBasis: 0,
+                  // no 9:16 o base ocupa a faixa inteira e os outros, um terco
+                  flexBasis: vertical
+                    ? p.base
+                      ? "100%"
+                      : `calc((100% - ${2 * V.vao}px) / 3)`
+                    : 0,
                   background: MODO_FUNDO,
                   border: `1px solid ${p.base ? MODO_AMARELO : MODO_BORDA}`,
                   borderRadius: marca.raio.painel,
                   boxShadow: marca.sombra.painel,
-                  height: 400,
+                  height: vertical ? (p.base ? V.base : V.cartao) : 400,
                   position: "relative",
                   overflow: "hidden",
                   ...entra(o, 18),
@@ -158,7 +184,12 @@ export const Cena07: React.FC = () => {
                       width: "100%",
                       height: "100%",
                       objectFit: p.encaixe ?? "cover",
-                      objectPosition: p.encaixe === "contain" ? "center 38%" : "center",
+                      objectPosition:
+                        p.encaixe === "contain"
+                          ? "center 38%"
+                          : vertical
+                            ? "center top"
+                            : "center",
                     }}
                   />
                 ) : (
@@ -194,9 +225,9 @@ export const Cena07: React.FC = () => {
                 <div
                   style={{
                     position: "absolute",
-                    left: 16,
-                    right: 16,
-                    bottom: 18,
+                    left: vertical ? 18 : 16,
+                    right: vertical ? 18 : 16,
+                    bottom: vertical ? 22 : 18,
                     display: "flex",
                     flexDirection: "column",
                     gap: 8,
@@ -207,8 +238,8 @@ export const Cena07: React.FC = () => {
                       alignSelf: "flex-start",
                       border: `1px solid ${p.base ? "#3a3a3a" : "#4c471f"}`,
                       borderRadius: 999,
-                      padding: "5px 12px",
-                      fontSize: 13,
+                      padding: vertical ? "6px 14px" : "5px 12px",
+                      fontSize: vertical ? 16 : 13,
                       fontWeight: 500,
                       letterSpacing: "1px",
                       textTransform: "uppercase",
@@ -219,7 +250,7 @@ export const Cena07: React.FC = () => {
                   </div>
                   <div
                     style={{
-                      fontSize: 15,
+                      fontSize: vertical ? 18 : 15,
                       fontWeight: 700,
                       letterSpacing: "1px",
                       color: MODO_AMARELO,
@@ -229,7 +260,9 @@ export const Cena07: React.FC = () => {
                   </div>
                   <div
                     style={{
-                      fontSize: 22,
+                      // 24 e o teto: "VITOR ZANELATO" na coluna da direita
+                      // tem que acabar antes da coluna de botoes do app
+                      fontSize: vertical ? 24 : 22,
                       fontWeight: 700,
                       letterSpacing: "-0.5px",
                       lineHeight: 1.1,
@@ -245,16 +278,16 @@ export const Cena07: React.FC = () => {
         </div>
 
         {/* a linha que liga os sete: so existe depois que todos entraram */}
-        <div style={{ position: "relative", height: 58 }}>
+        <div style={{ position: "relative", height: vertical ? 70 : 58 }}>
           <div
             style={{
               position: "absolute",
               top: 0,
-              left: "7%",
-              width: "86%",
+              left: vertical ? 0 : "7%",
+              width: vertical ? "100%" : "86%",
               height: 1,
               background: "rgba(16,18,24,0.22)",
-              transformOrigin: "center",
+              transformOrigin: vertical ? "left" : "center",
               transform: `scaleX(${liga})`,
             }}
           />
@@ -264,9 +297,10 @@ export const Cena07: React.FC = () => {
               top: 20,
               left: 0,
               right: 0,
-              textAlign: "center",
-              fontSize: 30,
-              letterSpacing: "-1.05px",
+              // no 9:16 a legenda alinha a esquerda, como o resto do quadro
+              textAlign: vertical ? "left" : "center",
+              fontSize: vertical ? 34 : 30,
+              letterSpacing: vertical ? "-1.19px" : "-1.05px",
               color: m.apoio,
               ...entra(base, 14),
             }}

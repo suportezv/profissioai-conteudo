@@ -12,6 +12,7 @@ import { Superficie } from "./Superficie";
 import { janela, entra, passo, s } from "./anim";
 import { Sfx } from "./Sfx";
 import { IconeBalao } from "./Icones";
+import { useFormato } from "./formato";
 
 /**
  * Cena 04 do case: o desafio tecnico, dito pela Profissio.
@@ -103,20 +104,72 @@ const NOME_EM = s(11.9);
  * quando as quatro curvas chegam: ele e o resultado do treino, e a ordem na
  * tela e a ordem da causa.
  */
-const LISTA_L = 120;
-const LISTA_FIM = 800;
-const ITEM_Y0 = 408;
-const ITEM_PASSO = 80;
-const AV_CX = 1440;
-const AV_CY = 470;
-const AV_TAM = 250;
-const CHEGADA: [number, number] = [AV_CX - AV_TAM / 2 - 28, AV_CY];
+/**
+ * A geometria do grafo, uma por formato.
+ *
+ * No 16:9 a lista fica a esquerda e as curvas correm para a direita ate o
+ * avatar. **No 9:16 o grafo fica em pe**: a lista ocupa o alto, as linhas
+ * correm ate a direita da lista e as quatro curvas descem convergindo no alto
+ * do avatar, que assenta no meio do quadro com o nome embaixo. A causa
+ * continua em cima da consequencia, agora no sentido da leitura.
+ */
+type Geo = {
+  vertical: boolean;
+  listaL: number;
+  listaFim: number;
+  itemY0: number;
+  itemPasso: number;
+  avCx: number;
+  avCy: number;
+  avTam: number;
+  corpo: number;
+};
 
-const curva = (y: number) => {
-  const p0: [number, number] = [LISTA_FIM, y];
-  const p1: [number, number] = [LISTA_FIM + 230, y];
-  const p2: [number, number] = [CHEGADA[0] - 220, CHEGADA[1]];
-  return { p0, p1, p2, p3: CHEGADA };
+const GEO_H: Geo = {
+  vertical: false,
+  listaL: 120,
+  listaFim: 800,
+  itemY0: 408,
+  itemPasso: 80,
+  avCx: 1440,
+  avCy: 470,
+  avTam: 250,
+  corpo: 38,
+};
+
+const GEO_V: Geo = {
+  vertical: true,
+  listaL: 72,
+  listaFim: 960,
+  itemY0: 400,
+  itemPasso: 100,
+  avCx: 540,
+  avCy: 1060,
+  avTam: 300,
+  corpo: 44,
+};
+
+/** Onde as curvas chegam: a esquerda do avatar no 16:9, em cima dele no 9:16. */
+const chegada = (g: Geo): [number, number] =>
+  g.vertical
+    ? [g.avCx, g.avCy - g.avTam / 2 - 28]
+    : [g.avCx - g.avTam / 2 - 28, g.avCy];
+
+/**
+ * Onde a linha da fonte `i` termina. No 16:9 e um ponto comum; no 9:16 elas
+ * terminam em degrau (a de cima mais a direita), para as quatro curvas
+ * descerem em faixas paralelas ate o avatar sem se cruzar.
+ */
+const fimDa = (i: number, g: Geo) => (g.vertical ? g.listaFim - i * 44 : g.listaFim);
+
+const curva = (i: number, g: Geo) => {
+  const c = chegada(g);
+  const y = g.itemY0 + i * g.itemPasso;
+  const fim = fimDa(i, g);
+  const p0: [number, number] = [fim, y];
+  const p1: [number, number] = g.vertical ? [fim, y + (c[1] - y) * 0.62] : [fim + 230, y];
+  const p2: [number, number] = g.vertical ? [c[0], c[1] - 170] : [c[0] - 220, c[1]];
+  return { p0, p1, p2, p3: c };
 };
 
 const noBezier = (c: ReturnType<typeof curva>, k: number): [number, number] => {
@@ -129,17 +182,20 @@ const noBezier = (c: ReturnType<typeof curva>, k: number): [number, number] => {
 };
 
 /** Uma fonte de treino: filete azul, texto, e a linha que corre ate x=800. */
-const Fonte: React.FC<{ texto: string; o: number; puxa: number; y: number }> = ({
-  texto,
-  o,
-  puxa,
-  y,
-}) => (
+const Fonte: React.FC<{
+  texto: string;
+  o: number;
+  puxa: number;
+  y: number;
+  g: Geo;
+  /** Onde a linha termina, em x do quadro. */
+  fim: number;
+}> = ({ texto, o, puxa, y, g, fim }) => (
   <div
     style={{
       position: "absolute",
-      left: LISTA_L,
-      width: LISTA_FIM - LISTA_L,
+      left: g.listaL,
+      width: fim - g.listaL,
       top: y - 22,
       height: 44,
       display: "flex",
@@ -159,9 +215,9 @@ const Fonte: React.FC<{ texto: string; o: number; puxa: number; y: number }> = (
     />
     <div
       style={{
-        fontSize: 38,
+        fontSize: g.corpo,
         fontWeight: 500,
-        letterSpacing: "-1.33px",
+        letterSpacing: g.vertical ? "-1.54px" : "-1.33px",
         color: m.tinta,
         whiteSpace: "nowrap",
       }}
@@ -207,6 +263,9 @@ export const Cena04A: React.FC = () => {
   const nome = janela(f, NOME_EM, CENA04A_FRAMES, 11, 0);
   const papel = janela(f, NOME_EM + 6, CENA04A_FRAMES, 11, 0);
 
+  const { vertical, W, H, M, seguro } = useFormato();
+  const g = vertical ? GEO_V : GEO_H;
+
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
       <Superficie modo="claro" halo />
@@ -217,10 +276,20 @@ export const Cena04A: React.FC = () => {
 
       {/* --- o que eles NAO fizeram --- */}
       {menu > 0.001 ? (
-        <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
+        <AbsoluteFill
+          style={
+            vertical
+              ? {
+                  // no 9:16 o cartao centra na faixa segura, nao no quadro
+                  padding: `${seguro.topo}px ${M}px ${H - seguro.base}px`,
+                  justifyContent: "center",
+                }
+              : { padding: MARGEM, justifyContent: "center" }
+          }
+        >
           <div
             style={{
-              fontSize: 24,
+              fontSize: vertical ? 28 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
@@ -250,8 +319,8 @@ export const Cena04A: React.FC = () => {
               <div
                 key={linha}
                 style={{
-                  fontSize: 40,
-                  letterSpacing: "-1.4px",
+                  fontSize: vertical ? 44 : 40,
+                  letterSpacing: vertical ? "-1.54px" : "-1.4px",
                   color: m.apoio,
                   textDecoration: morre > 0.5 ? "line-through" : "none",
                 }}
@@ -269,9 +338,9 @@ export const Cena04A: React.FC = () => {
           <div
             style={{
               position: "absolute",
-              left: LISTA_L,
-              top: ITEM_Y0 - 110,
-              fontSize: 24,
+              left: g.listaL,
+              top: g.itemY0 - 110,
+              fontSize: vertical ? 28 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
@@ -287,15 +356,17 @@ export const Cena04A: React.FC = () => {
               texto={fo.texto}
               o={janela(f, fo.em, CENA04A_FRAMES, 14, 10)}
               puxa={puxa}
-              y={ITEM_Y0 + i * ITEM_PASSO}
+              y={g.itemY0 + i * g.itemPasso}
+              g={g}
+              fim={fimDa(i, g)}
             />
           ))}
 
           {/* as quatro curvas que desaguam no avatar, cada uma com um ponto
               correndo por ela: o device de grafo da referencia */}
-          <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0 }}>
+          <svg width={W} height={H} style={{ position: "absolute", left: 0, top: 0 }}>
             {FONTES.map((fo, i) => {
-              const c = curva(ITEM_Y0 + i * ITEM_PASSO);
+              const c = curva(i, g);
               const d = `M ${c.p0[0]} ${c.p0[1]} C ${c.p1[0]} ${c.p1[1]}, ${c.p2[0]} ${c.p2[1]}, ${c.p3[0]} ${c.p3[1]}`;
               const k = passo(f, CURVAS_EM + i * 2, CURVAS_ATE + i * 2);
               const [px, py] = noBezier(c, k);
@@ -332,9 +403,9 @@ export const Cena04A: React.FC = () => {
           <div
             style={{
               position: "absolute",
-              left: AV_CX - 260,
+              left: g.avCx - 260,
               width: 520,
-              top: AV_CY - AV_TAM / 2,
+              top: g.avCy - g.avTam / 2,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -343,8 +414,8 @@ export const Cena04A: React.FC = () => {
             <Img
               src={staticFile("marca/eita-avatar.png")}
               style={{
-                width: AV_TAM,
-                height: AV_TAM,
+                width: g.avTam,
+                height: g.avTam,
                 opacity: avatar,
                 transform: `scale(${escala})`,
                 filter: `drop-shadow(0 24px 48px rgba(16,18,24,0.18)) blur(${(1 - avatar) * 6}px)`,
@@ -353,9 +424,9 @@ export const Cena04A: React.FC = () => {
             <div
               style={{
                 marginTop: 34,
-                fontSize: 64,
+                fontSize: vertical ? 80 : 64,
                 fontWeight: 500,
-                letterSpacing: "-2.24px",
+                letterSpacing: vertical ? "-2.8px" : "-2.24px",
                 lineHeight: 1,
                 color: m.tinta,
                 ...entra(nome, 14),
@@ -366,9 +437,9 @@ export const Cena04A: React.FC = () => {
             <div
               style={{
                 marginTop: 12,
-                fontSize: 34,
+                fontSize: vertical ? 40 : 34,
                 fontWeight: 400,
-                letterSpacing: "-1.19px",
+                letterSpacing: vertical ? "-1.4px" : "-1.19px",
                 color: m.apoio,
                 ...entra(papel, 12),
               }}
@@ -403,6 +474,7 @@ export const Cena04B: React.FC = () => {
   const icone = janela(f, ICONE_EM, CENA04B_FRAMES, 12, 0);
   const sobre = janela(f, ICONE_EM + s(0.2), CENA04B_FRAMES, 14, 0);
   const palavra = janela(f, PALAVRA_EM, CENA04B_FRAMES, 12, 0);
+  const { vertical, H, M, seguro } = useFormato();
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte }}>
@@ -412,15 +484,23 @@ export const Cena04B: React.FC = () => {
         <Audio src={staticFile("locucao/cena-04b.mp3")} />
       </Sequence>
 
-      <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center", gap: 28 }}>
+      <AbsoluteFill
+        style={{
+          // no 9:16 o bloco centra na faixa segura e cresce: e a tela inteira
+          // dizendo uma palavra so
+          padding: vertical ? `${seguro.topo}px ${M}px ${H - seguro.base}px` : MARGEM,
+          justifyContent: "center",
+          gap: 28,
+        }}
+      >
         <div style={entra(icone, 18)}>
-          <IconeBalao cor={m.tinta} tam={132} />
+          <IconeBalao cor={m.tinta} tam={vertical ? 160 : 132} />
         </div>
         <div
           style={{
-            fontSize: 40,
+            fontSize: vertical ? 46 : 40,
             fontWeight: 500,
-            letterSpacing: "-1.4px",
+            letterSpacing: vertical ? "-1.61px" : "-1.4px",
             color: m.tinta,
             opacity: sobre * 0.72,
           }}
@@ -429,9 +509,9 @@ export const Cena04B: React.FC = () => {
         </div>
         <div
           style={{
-            fontSize: 148,
+            fontSize: vertical ? 184 : 148,
             fontWeight: 500,
-            letterSpacing: "-5.18px",
+            letterSpacing: vertical ? "-6.44px" : "-5.18px",
             lineHeight: 1,
             color: m.tinta,
             marginTop: -16,

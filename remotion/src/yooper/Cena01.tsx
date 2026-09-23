@@ -11,6 +11,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { UI } from "../whatsapp";
 import { janela, entra, passo, s } from "../anim";
+import { useFormato } from "../formato";
 import { Sfx } from "../Sfx";
 import {
   CabecalhoDash,
@@ -107,7 +108,28 @@ const CAMINHO: [number, number][] = [
   [828, 742],
 ];
 
-const posCursor = (f: number) => {
+/**
+ * No 9:16 o painel e outro desenho (cartoes em grade 2x2, grafico mais alto,
+ * tudo em escala maior), entao o ponteiro precisa de um caminho proprio que
+ * passe pelos mesmos lugares: tabela, cartoes, grafico, e para na tabela.
+ * Mesmos tempos, so outras coordenadas.
+ */
+const CAMINHO_V: [number, number][] = [
+  [330, 1300],
+  [250, 480],
+  [700, 480],
+  [740, 660],
+  [560, 930],
+  [470, 1236],
+  [452, 1252],
+];
+
+/** Onde o painel fica no 9:16, e a escala que leva 820 px a largura util. */
+const PAINEL_V_T = 262;
+const PAINEL_V_LARGURA = 820;
+const PAINEL_V_ESCALA = 1.14;
+
+const posCursor = (f: number, CAMINHO: [number, number][]) => {
   const t = interpolate(f, [CURSOR_EM, PARA_EM], [0, CAMINHO.length - 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -124,6 +146,7 @@ const posCursor = (f: number) => {
 
 export const Cena01: React.FC = () => {
   const f = useCurrentFrame();
+  const { vertical, M } = useFormato();
 
   const painel = passo(f, PAINEL_EM, PAINEL_EM + 14);
   const recua = passo(f, PARA_EM, PARA_EM + s(0.8));
@@ -132,7 +155,7 @@ export const Cena01: React.FC = () => {
   const atualizado = passo(f, ATUALIZADO_EM, ATUALIZADO_EM + s(0.5));
   const completo = passo(f, COMPLETO_EM, COMPLETO_EM + s(0.6));
   const cursor = janela(f, CURSOR_EM, CENA01_FRAMES, 8, 0) * (1 - recua * 0.9);
-  const [cx, cy] = posCursor(f);
+  const [cx, cy] = posCursor(f, vertical ? CAMINHO_V : CAMINHO);
 
   const pergunta = janela(f, PERGUNTA_EM, CENA01_FRAMES, 12, 0);
   const tese = janela(f, TESE_EM, CENA01_FRAMES, 12, 0);
@@ -150,10 +173,30 @@ export const Cena01: React.FC = () => {
           transform: `scale(${interpolate(painel, [0, 1], [0.965, 1])})`,
         }}
       >
-        <div style={{ position: "absolute", left: PAINEL_L, top: PAINEL_T }}>
-          <MolduraDash largura={1440}>
+        <div
+          style={
+            vertical
+              ? {
+                  position: "absolute",
+                  left: M,
+                  top: PAINEL_V_T,
+                  transform: `scale(${PAINEL_V_ESCALA})`,
+                  transformOrigin: "left top",
+                }
+              : { position: "absolute", left: PAINEL_L, top: PAINEL_T }
+          }
+        >
+          {/* no 9:16 os quatro cartoes viram grade 2x2 e o grafico ganha
+              altura: o painel fica em pe em vez de encolher deitado */}
+          <MolduraDash largura={vertical ? PAINEL_V_LARGURA : 1440}>
             <CabecalhoDash aceso={atualizado} />
-            <div style={{ display: "flex", gap: 20 }}>
+            <div
+              style={
+                vertical
+                  ? { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }
+                  : { display: "flex", gap: 20 }
+              }
+            >
               {TILES.map((t, i) => (
                 <TileDash
                   key={t.rotulo}
@@ -163,7 +206,7 @@ export const Cena01: React.FC = () => {
                 />
               ))}
             </div>
-            <GraficoDash desenha={grafico} altura={172} />
+            <GraficoDash desenha={grafico} altura={vertical ? 300 : 172} />
             <TabelaDash preenche={tabela} />
           </MolduraDash>
         </div>
@@ -183,43 +226,58 @@ export const Cena01: React.FC = () => {
       {/* a pergunta que o painel nao responde, e a tese */}
       {pergunta > 0.001 ? (
         <AbsoluteFill
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-            gap: 56,
-          }}
+          style={
+            vertical
+              ? {
+                  // no 9:16 a pergunta e a tese alinham a esquerda, na grade da
+                  // marca, e quebram pela largura em vez da quebra do 16:9
+                  // e crescem para baixo de um topo fixo, para a pergunta nao
+                  // subir quando a tese entra
+                  alignItems: "flex-start",
+                  justifyContent: "flex-start",
+                  flexDirection: "column",
+                  gap: 64,
+                  padding: `660px ${M}px 0`,
+                }
+              : {
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  gap: 56,
+                }
+          }
         >
           <div
             style={{
-              fontSize: 54,
+              fontSize: vertical ? 50 : 54,
               fontWeight: 400,
-              letterSpacing: "-1.89px",
+              letterSpacing: vertical ? "-1.75px" : "-1.89px",
               lineHeight: 1.3,
-              textAlign: "center",
+              textAlign: vertical ? "left" : "center",
               color: m.apoio,
-              maxWidth: 1240,
+              maxWidth: vertical ? 900 : 1240,
               ...entra(pergunta, 18),
             }}
           >
             “então, eu aumento o investimento
-            <br />
+            {vertical ? " " : <br />}
             em prospecção ou não?”
           </div>
 
           {tese > 0.001 ? (
             <div
               style={{
-                fontSize: 72,
+                fontSize: vertical ? 80 : 72,
                 fontWeight: 500,
-                letterSpacing: "-2.52px",
+                letterSpacing: vertical ? "-2.8px" : "-2.52px",
                 lineHeight: 1.16,
-                textAlign: "center",
+                textAlign: vertical ? "left" : "center",
+                maxWidth: vertical ? 936 : undefined,
                 ...entra(tese, 20),
               }}
             >
               Ler um dado e <span style={{ color: marca.azul }}>decidir</span> com ele
-              <br />
+              {vertical ? " " : <br />}
               são duas habilidades diferentes.
             </div>
           ) : null}

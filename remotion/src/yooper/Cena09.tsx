@@ -12,6 +12,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { janela, entra, passo, s } from "../anim";
 import { Sfx } from "../Sfx";
+import { useFormato } from "../formato";
 
 /**
  * Cena 09 do case Yooper: a tese e a assinatura.
@@ -54,6 +55,13 @@ const ASSINA_EM = s(7.7);
 
 export const Cena09: React.FC = () => {
   const f = useCurrentFrame();
+  /**
+   * No 9:16 a distancia fica **vertical**: "uma pergunta" em cima, "uma
+   * decisao" embaixo, e o vao pontilhado entre as duas encolhe na altura. E a
+   * mesma frase sobre espaco, desenhada no eixo que o quadro tem de sobra; na
+   * horizontal as duas palavras a 78 px nao caberiam lado a lado com o vao.
+   */
+  const { vertical, M } = useFormato();
 
   const nega = janela(f, NEGA_EM, EIXOS_EM + s(0.4), 11, 11);
   const eixos = janela(f, EIXOS_EM, ASSINA_EM, 11, 10);
@@ -79,25 +87,25 @@ export const Cena09: React.FC = () => {
       </Sequence>
 
       {nega > 0.001 ? (
-        <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
+        <AbsoluteFill style={{ padding: vertical ? M : MARGEM, justifyContent: "center" }}>
           <div
             style={{
-              fontSize: 72,
+              fontSize: vertical ? 92 : 72,
               fontWeight: 500,
-              letterSpacing: "-2.52px",
-              lineHeight: 1.16,
-              maxWidth: 1400,
+              letterSpacing: vertical ? "-3.22px" : "-2.52px",
+              lineHeight: vertical ? 1.12 : 1.16,
+              maxWidth: vertical ? 936 : 1400,
               ...entra(nega, 20),
             }}
           >
             O valor não está em automatizar
-            <br />
+            {vertical ? " " : <br />}
             uma resposta.
           </div>
         </AbsoluteFill>
       ) : null}
 
-      {eixos > 0.001 ? (
+      {eixos > 0.001 && !vertical ? (
         <AbsoluteFill
           style={{
             alignItems: "center",
@@ -163,38 +171,118 @@ export const Cena09: React.FC = () => {
         </AbsoluteFill>
       ) : null}
 
+      {eixos > 0.001 && vertical ? (
+        <AbsoluteFill
+          style={{
+            padding: `0 ${M}px`,
+            alignItems: "flex-start",
+            justifyContent: "center",
+            opacity: eixos,
+          }}
+        >
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+            <div
+              style={{
+                fontSize: 112,
+                fontWeight: 500,
+                letterSpacing: "-3.92px",
+                lineHeight: 1.1,
+                whiteSpace: "nowrap",
+              }}
+            >
+              uma pergunta
+            </div>
+
+            {/* o vao, agora na altura: quem anda continua sendo ele */}
+            <div
+              style={{
+                height: desloca,
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 22,
+                paddingLeft: 28,
+              }}
+            >
+              <div
+                style={{
+                  height: "100%",
+                  width: 0,
+                  borderLeft: `2px dashed ${marca.linha}`,
+                  transform: `scaleY(${linha})`,
+                }}
+              />
+              <div
+                style={{
+                  fontSize: 26,
+                  letterSpacing: "1.6px",
+                  textTransform: "uppercase",
+                  color: m.apoio,
+                  opacity: linha * (1 - aproxima),
+                  whiteSpace: "nowrap",
+                }}
+              >
+                distância
+              </div>
+            </div>
+
+            <div
+              style={{
+                fontSize: 112,
+                fontWeight: 500,
+                letterSpacing: "-3.92px",
+                lineHeight: 1.1,
+                color: marca.azul,
+                whiteSpace: "nowrap",
+              }}
+            >
+              uma decisão
+            </div>
+          </div>
+        </AbsoluteFill>
+      ) : null}
+
       {assina > 0.001 ? (
         <AbsoluteFill
           style={{
-            padding: MARGEM,
+            padding: vertical ? M : MARGEM,
             alignItems: "center",
             justifyContent: "center",
             ...entra(assina, 20),
           }}
         >
+          {/* no 9:16 as duas marcas empilham na mesma faixa escura, com a
+              regua entre elas deitada */}
           <div
             style={{
               background: marca.tinta,
               borderRadius: marca.raio.arte,
               boxShadow: marca.sombra.painel,
-              padding: "64px 100px",
+              padding: vertical ? "96px 80px" : "64px 100px",
               display: "flex",
+              flexDirection: vertical ? "column" : "row",
               alignItems: "center",
-              gap: 86,
+              gap: vertical ? 72 : 86,
             }}
           >
             {/* a arte final chegou em 22/set: o wordmark branco com alfa, que
                 e a aplicacao certa sobre a faixa escura */}
             <Img
               src={staticFile("marca-yooper/yooper-branco.png")}
-              style={{ width: 400, height: "auto", display: "block" }}
+              style={{ width: vertical ? 520 : 400, height: "auto", display: "block" }}
             />
 
-            <div style={{ width: 1, height: 130, background: "rgba(255,255,255,0.22)" }} />
+            <div
+              style={{
+                width: vertical ? 420 : 1,
+                height: vertical ? 1 : 130,
+                background: "rgba(255,255,255,0.22)",
+              }}
+            />
 
             <Img
               src={staticFile("marca/profissio-ai-branco.svg")}
-              style={{ width: 430, height: "auto", display: "block" }}
+              style={{ width: vertical ? 560 : 430, height: "auto", display: "block" }}
             />
           </div>
         </AbsoluteFill>

@@ -12,6 +12,7 @@ import { Superficie } from "../Superficie";
 import { janela, entra, passo, s } from "../anim";
 import { Sfx } from "../Sfx";
 import { Painel, Balao, BalaoFoto, BalaoVideo, BalaoAudio, Digitando } from "./Conversa";
+import { useFormato } from "../formato";
 
 /**
  * Cena 06 do case Polishop: o agente usando o WhatsApp inteiro.
@@ -89,6 +90,50 @@ export const Cena06: React.FC = () => {
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
 
+  const { vertical, M, seguro } = useFormato();
+
+  // A conversa e a mesma nos dois quadros: so o painel em volta dela muda.
+  const conversa = (
+    <>
+      {v(FOTO_EM) > 0.001 ? (
+        <BalaoFoto
+          o={v(FOTO_EM)}
+          arquivo="ingredientes.jpg"
+          saida
+          legenda="sobrou isso aqui, dá pra fazer o quê?"
+        />
+      ) : null}
+      {dig(RECEITA_EM) > 0.001 ? <Digitando o={dig(RECEITA_EM)} /> : null}
+      {v(RECEITA_EM) > 0.001 ? (
+        <Balao o={v(RECEITA_EM)}>
+          Com isso dá frango assado com legumes na air fryer. 25 minutos,
+          200 graus, virando na metade.
+        </Balao>
+      ) : null}
+
+      {dig(VIDEO_EM) > 0.001 ? <Digitando o={dig(VIDEO_EM)} /> : null}
+      {v(VIDEO_EM) > 0.001 ? (
+        <BalaoVideo o={v(VIDEO_EM)} titulo="Frango na air fryer" dura="1:12" em={VIDEO_EM} />
+      ) : null}
+      {v(PASSOS_EM) > 0.001 ? (
+        <Balao o={v(PASSOS_EM)}>
+          1. Tempere e deixe 10 min<br />
+          2. Cesta a 200 graus<br />
+          3. Vire aos 12 min<br />
+          4. Legumes nos últimos 8
+        </Balao>
+      ) : null}
+
+      {v(AUDIO_SAI_EM) > 0.001 ? (
+        <BalaoAudio o={v(AUDIO_SAI_EM)} progresso={1} saida />
+      ) : null}
+      {dig(AUDIO_VOLTA_EM) > 0.001 ? <Digitando o={dig(AUDIO_VOLTA_EM)} /> : null}
+      {v(AUDIO_VOLTA_EM) > 0.001 ? (
+        <BalaoAudio o={v(AUDIO_VOLTA_EM)} progresso={progAudio} />
+      ) : null}
+    </>
+  );
+
   const rotulos = [
     { texto: "foto vira receita", em: FOTO_EM },
     { texto: "vídeo da própria casa", em: VIDEO_EM },
@@ -105,46 +150,66 @@ export const Cena06: React.FC = () => {
         <Audio src={staticFile("locucao-polishop/cena-06b.mp3")} />
       </Sequence>
 
+      {vertical ? (
+        <>
+          {/* No 9:16 a conversa vira o celular do quadro e os tres recursos
+              ficam em cima dela, em posicao fixa: cada rotulo entra embaixo
+              do anterior sem empurrar nada, e o painel termina na borda da
+              faixa segura, que e onde a mensagem mais nova aparece. */}
+          <div style={{ position: "absolute", left: M, top: 236 }}>
+            <div
+              style={{
+                fontSize: 28,
+                fontWeight: 500,
+                letterSpacing: "2px",
+                textTransform: "uppercase",
+                color: marca.azul,
+                opacity: janela(f, s(0.6), CENA06_FRAMES, 10, 0),
+              }}
+            >
+              O WhatsApp inteiro
+            </div>
+            {rotulos.map((r, i) => {
+              const o = janela(f, r.em, CENA06_FRAMES, 11, 0);
+              if (o <= 0.001) return null;
+              return (
+                <div
+                  key={r.texto}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    top: 58 + i * 76,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 20,
+                    whiteSpace: "nowrap",
+                    ...entra(o, 14),
+                  }}
+                >
+                  <div
+                    style={{ width: 3, height: 44, borderRadius: 2, background: marca.azul }}
+                  />
+                  <div style={{ fontSize: 54, fontWeight: 500, letterSpacing: "-1.89px" }}>
+                    {r.texto}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div style={{ position: "absolute", left: M, top: 590 }}>
+            <Painel largura={1080 - M - seguro.direita} altura={742} o={tela}>
+              {conversa}
+            </Painel>
+          </div>
+        </>
+      ) : null}
+
+      {!vertical ? (
       <AbsoluteFill
         style={{ padding: MARGEM, flexDirection: "row", alignItems: "center", gap: 76 }}
       >
         <Painel largura={700} altura={600} o={tela}>
-          {v(FOTO_EM) > 0.001 ? (
-            <BalaoFoto
-              o={v(FOTO_EM)}
-              arquivo="ingredientes.jpg"
-              saida
-              legenda="sobrou isso aqui, dá pra fazer o quê?"
-            />
-          ) : null}
-          {dig(RECEITA_EM) > 0.001 ? <Digitando o={dig(RECEITA_EM)} /> : null}
-          {v(RECEITA_EM) > 0.001 ? (
-            <Balao o={v(RECEITA_EM)}>
-              Com isso dá frango assado com legumes na air fryer. 25 minutos,
-              200 graus, virando na metade.
-            </Balao>
-          ) : null}
-
-          {dig(VIDEO_EM) > 0.001 ? <Digitando o={dig(VIDEO_EM)} /> : null}
-          {v(VIDEO_EM) > 0.001 ? (
-            <BalaoVideo o={v(VIDEO_EM)} titulo="Frango na air fryer" dura="1:12" em={VIDEO_EM} />
-          ) : null}
-          {v(PASSOS_EM) > 0.001 ? (
-            <Balao o={v(PASSOS_EM)}>
-              1. Tempere e deixe 10 min<br />
-              2. Cesta a 200 graus<br />
-              3. Vire aos 12 min<br />
-              4. Legumes nos últimos 8
-            </Balao>
-          ) : null}
-
-          {v(AUDIO_SAI_EM) > 0.001 ? (
-            <BalaoAudio o={v(AUDIO_SAI_EM)} progresso={1} saida />
-          ) : null}
-          {dig(AUDIO_VOLTA_EM) > 0.001 ? <Digitando o={dig(AUDIO_VOLTA_EM)} /> : null}
-          {v(AUDIO_VOLTA_EM) > 0.001 ? (
-            <BalaoAudio o={v(AUDIO_VOLTA_EM)} progresso={progAudio} />
-          ) : null}
+          {conversa}
         </Painel>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 34, flex: 1 }}>
@@ -185,6 +250,7 @@ export const Cena06: React.FC = () => {
           })}
         </div>
       </AbsoluteFill>
+      ) : null}
 
       <Sfx som="pop" em={FOTO_EM} volume={0.16} />
       <Sfx som="recebido" em={RECEITA_EM} volume={0.18} />

@@ -11,6 +11,7 @@ import { Superficie } from "./Superficie";
 import { janela, entra, s } from "./anim";
 import { interpolate } from "remotion";
 import { Sfx } from "./Sfx";
+import { useFormato } from "./formato";
 
 /**
  * Cena 06 do case: as tres escolhas.
@@ -67,6 +68,10 @@ export const Cena06: React.FC = () => {
   // enquanto a voz dizia outra: trocar locucao obriga a reler o lettering da
   // cena, nao so a remedir os tempos.
   const titulo = janela(f, s(0.6), CENA06_FRAMES, 14, 0);
+  // No 9:16 os tres cartoes lado a lado virariam colunas de 290 px; empilhados
+  // eles ocupam a largura, com o numero na mesma linha do titulo, e o bloco
+  // inteiro mora na faixa segura, do titulo no alto aos tres "nao" embaixo.
+  const { vertical, H, M, seguro } = useFormato();
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -77,7 +82,7 @@ export const Cena06: React.FC = () => {
 
       <AbsoluteFill
         style={{
-          padding: MARGEM,
+          padding: vertical ? `${seguro.topo}px ${M}px ${H - seguro.base}px` : MARGEM,
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -85,11 +90,11 @@ export const Cena06: React.FC = () => {
       >
         <div
           style={{
-            fontSize: 56,
+            fontSize: vertical ? 64 : 56,
             fontWeight: 500,
-            letterSpacing: "-1.96px",
+            letterSpacing: vertical ? "-2.24px" : "-1.96px",
             lineHeight: 1.18,
-            maxWidth: 1240,
+            maxWidth: vertical ? undefined : 1240,
             ...entra(titulo, 14),
           }}
         >
@@ -97,7 +102,13 @@ export const Cena06: React.FC = () => {
           para o sucesso do produto
         </div>
 
-        <div style={{ display: "flex", gap: 32 }}>
+        <div
+          style={
+            vertical
+              ? { display: "flex", flexDirection: "column", gap: 28 }
+              : { display: "flex", gap: 32 }
+          }
+        >
           {ESCOLHAS.map((e) => {
             const vivo = janela(f, e.acende, CENA06_FRAMES, 16, 0);
             // o cartao aceso e o ultimo que entrou; os anteriores recuam
@@ -114,11 +125,11 @@ export const Cena06: React.FC = () => {
                   // o cartao aceso sobe: a sombra tingida de azul o separa do
                   // fundo mais que a borda sozinha, agora que o fundo se mexe
                   boxShadow: ativo ? marca.sombra.azul : marca.sombra.painel,
-                  padding: 44,
+                  padding: vertical ? "40px 40px" : 44,
                   display: "flex",
                   flexDirection: "column",
-                  gap: 18,
-                  minHeight: 340,
+                  gap: vertical ? 14 : 18,
+                  minHeight: vertical ? undefined : 340,
                   ...entra(vivo, 22),
                   // o cartao aceso sobe 8px por cima da entrada padrao: `entra`
                   // ja escreve um translateY, entao os dois vao juntos aqui,
@@ -128,32 +139,62 @@ export const Cena06: React.FC = () => {
                   }px)`,
                 }}
               >
+                {vertical ? (
+                  // no 9:16 o numero anda na linha do titulo, para o cartao
+                  // nao gastar altura com uma linha de dois caracteres
+                  <div style={{ display: "flex", alignItems: "baseline", gap: 20 }}>
+                    <div
+                      style={{
+                        fontSize: 28,
+                        fontWeight: 500,
+                        color: ativo ? marca.azul : m.apoio,
+                        letterSpacing: "-0.98px",
+                      }}
+                    >
+                      {e.n}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: 56,
+                        fontWeight: 500,
+                        letterSpacing: "-1.96px",
+                        lineHeight: 1.15,
+                        color: ativo ? m.tinta : m.apoio,
+                      }}
+                    >
+                      {e.titulo}
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <div
+                      style={{
+                        fontSize: 24,
+                        fontWeight: 500,
+                        color: ativo ? marca.azul : m.apoio,
+                        letterSpacing: "-0.84px",
+                      }}
+                    >
+                      {e.n}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: 46,
+                        fontWeight: 500,
+                        letterSpacing: "-1.61px",
+                        lineHeight: 1.2,
+                        color: ativo ? m.tinta : m.apoio,
+                      }}
+                    >
+                      {e.titulo}
+                    </div>
+                  </>
+                )}
                 <div
                   style={{
-                    fontSize: 24,
-                    fontWeight: 500,
-                    color: ativo ? marca.azul : m.apoio,
-                    letterSpacing: "-0.84px",
-                  }}
-                >
-                  {e.n}
-                </div>
-                <div
-                  style={{
-                    fontSize: 46,
-                    fontWeight: 500,
-                    letterSpacing: "-1.61px",
-                    lineHeight: 1.2,
-                    color: ativo ? m.tinta : m.apoio,
-                  }}
-                >
-                  {e.titulo}
-                </div>
-                <div
-                  style={{
-                    fontSize: 26,
-                    letterSpacing: "-0.91px",
-                    lineHeight: 1.5,
+                    fontSize: vertical ? 34 : 26,
+                    letterSpacing: vertical ? "-1.19px" : "-0.91px",
+                    lineHeight: vertical ? 1.4 : 1.5,
                     color: m.apoio,
                   }}
                 >
@@ -165,13 +206,13 @@ export const Cena06: React.FC = () => {
         </div>
 
         {/* o limite do produto, com tempo de tela e sem dramatizar */}
-        <div style={{ display: "flex", gap: 40, alignItems: "center" }}>
+        <div style={{ display: "flex", gap: vertical ? 32 : 40, alignItems: "center" }}>
           {NAOS.map((n, i) => (
             <span
               key={n}
               style={{
-                fontSize: 26,
-                letterSpacing: "-0.91px",
+                fontSize: vertical ? 30 : 26,
+                letterSpacing: vertical ? "-1.05px" : "-0.91px",
                 color: m.apoio,
                 ...entra(janela(f, s(13.4) + i * 8, CENA06_FRAMES, 12, 0), 10),
               }}

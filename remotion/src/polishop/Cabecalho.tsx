@@ -1,6 +1,7 @@
 import React from "react";
 import { Img, staticFile } from "remotion";
 import { marca } from "../marca";
+import { useFormato } from "../formato";
 
 /**
  * O cabeçalho da coluna esquerda: marca, sobrelinha e ano.
@@ -28,24 +29,40 @@ import { marca } from "../marca";
 const CORPO = 84;
 
 /**
+ * O mesmo cabecalho no 9:16, maior e empurrado para dentro da faixa segura.
+ *
+ * Mora aqui dentro, e nao em cada cena, pelo motivo do topo deste arquivo: as
+ * cenas 02 e 03 cortam uma na outra com o cabecalho no mesmo pixel, e isso
+ * tem que continuar valendo no vertical. As duas cenas leem o formato daqui e
+ * nenhuma delas guarda posicao propria.
+ *
+ * Corpo 100 com tracking -3,5% (-3,5 px), sobrelinha 28 em caixa alta, logo a
+ * partir de y=228: o bloco termina em ~454 e o painel do motor comeca em 490.
+ */
+const CORPO_V = 100;
+const L_V = 72;
+const LOGO_TOPO_V = 228;
+const TOPO_V = 318;
+
+/**
  * O último dígito do ano rolando, como um odômetro.
  *
  * A coluna inteira existe sempre e o que muda é o deslocamento: animar o
  * conteúdo do texto faria o dígito **trocar**, e trocar não é rolar. O 4 no
  * meio não é enfeite, é o que prova que a coluna andou em vez de piscar.
  */
-const Odometro: React.FC<{ p: number }> = ({ p }) => (
+const Odometro: React.FC<{ p: number; corpo: number }> = ({ p, corpo }) => (
   <span
     style={{
       display: "inline-block",
-      height: CORPO,
+      height: corpo,
       overflow: "hidden",
       verticalAlign: "top",
     }}
   >
-    <span style={{ display: "block", transform: `translateY(${-p * 2 * CORPO}px)` }}>
+    <span style={{ display: "block", transform: `translateY(${-p * 2 * corpo}px)` }}>
       {[3, 4, 5].map((d) => (
-        <span key={d} style={{ display: "block", height: CORPO, lineHeight: 1 }}>
+        <span key={d} style={{ display: "block", height: corpo, lineHeight: 1 }}>
           {d}
         </span>
       ))}
@@ -53,15 +70,16 @@ const Odometro: React.FC<{ p: number }> = ({ p }) => (
   </span>
 );
 
-const Sobrelinha: React.FC<{ texto: string; o: number; sobe?: boolean }> = ({
-  texto,
-  o,
-  sobe,
-}) => (
+const Sobrelinha: React.FC<{
+  texto: string;
+  o: number;
+  sobe?: boolean;
+  corpo?: number;
+}> = ({ texto, o, sobe, corpo = 24 }) => (
   <div
     style={{
       position: "absolute",
-      fontSize: 24,
+      fontSize: corpo,
       fontWeight: 500,
       letterSpacing: "2px",
       textTransform: "uppercase",
@@ -88,30 +106,49 @@ export const Cabecalho: React.FC<{
   /** Opacidade e deslocamento do bloco inteiro, para a entrada da cena 02. */
   estilo?: React.CSSProperties;
   logo?: React.CSSProperties;
-}> = ({ rola = 0, velho = 1, novo = 0, estilo, logo }) => (
-  <>
-    <Img
-      src={staticFile("marca-polishop/polishop.png")}
-      style={{ position: "absolute", left: CABECALHO_L, top: 100, width: 210, ...logo }}
-    />
-    <div style={{ position: "absolute", left: CABECALHO_L, top: CABECALHO_TOPO, ...estilo }}>
-      <div style={{ position: "relative", height: 30 }}>
-        <Sobrelinha texto="A primeira tentativa" o={velho} />
-        <Sobrelinha texto="A virada" o={novo} sobe />
-      </div>
+}> = ({ rola = 0, velho = 1, novo = 0, estilo, logo }) => {
+  const { vertical } = useFormato();
+  const corpo = vertical ? CORPO_V : CORPO;
+  const esq = vertical ? L_V : CABECALHO_L;
+  const sobre = vertical ? 28 : 24;
+  return (
+    <>
+      <Img
+        src={staticFile("marca-polishop/polishop.png")}
+        style={{
+          position: "absolute",
+          left: esq,
+          top: vertical ? LOGO_TOPO_V : 100,
+          width: vertical ? 230 : 210,
+          ...logo,
+        }}
+      />
       <div
         style={{
-          marginTop: 2,
-          fontSize: CORPO,
-          fontWeight: 500,
-          letterSpacing: "-2.94px",
-          lineHeight: 1,
-          display: "flex",
+          position: "absolute",
+          left: esq,
+          top: vertical ? TOPO_V : CABECALHO_TOPO,
+          ...estilo,
         }}
       >
-        <span>202</span>
-        <Odometro p={rola} />
+        <div style={{ position: "relative", height: vertical ? 34 : 30 }}>
+          <Sobrelinha texto="A primeira tentativa" o={velho} corpo={sobre} />
+          <Sobrelinha texto="A virada" o={novo} sobe corpo={sobre} />
+        </div>
+        <div
+          style={{
+            marginTop: 2,
+            fontSize: corpo,
+            fontWeight: 500,
+            letterSpacing: vertical ? "-3.5px" : "-2.94px",
+            lineHeight: 1,
+            display: "flex",
+          }}
+        >
+          <span>202</span>
+          <Odometro p={rola} corpo={corpo} />
+        </div>
       </div>
-    </div>
-  </>
-);
+    </>
+  );
+};

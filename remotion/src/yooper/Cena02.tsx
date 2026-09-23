@@ -11,6 +11,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { wa, UI } from "../whatsapp";
 import { janela, entra, passo, s } from "../anim";
+import { useFormato } from "../formato";
 import { Sfx } from "../Sfx";
 
 /**
@@ -68,6 +69,14 @@ const TELA_EM = s(0.5);
 const ROTULO_EM = s(2.56);
 const CHECKS_EM = s(4.34);
 const TESE_EM = s(8.04);
+/**
+ * No 9:16 o texto sobe para o alto e a conversa ocupa o resto, maior: ela e a
+ * prova da cena. A conversa e a mesma de 660 px do 16:9 em escala, para que a
+ * quebra das frases dentro dos baloes seja identica nos dois cortes.
+ */
+const CONVERSA_V_T = 640;
+const CONVERSA_V_ESCALA = 1.315;
+
 /** A ultima mensagem cai depois da narracao, em silencio. */
 const SEM_ENTREGA_EM = s(11.3);
 
@@ -167,6 +176,172 @@ export const Cena02: React.FC = () => {
   const rotulo = janela(f, ROTULO_EM, CENA02_FRAMES, 10, 0);
   const tese = janela(f, TESE_EM, CENA02_FRAMES, 12, 0);
   const pisca = f % 32 < 17 ? 1 : 0;
+  const { vertical, M } = useFormato();
+
+  const conversa = (
+    <div
+      style={{
+        width: 660,
+        flexShrink: 0,
+        background: wa.fundoChat,
+        borderRadius: marca.raio.arte,
+        overflow: "hidden",
+        boxShadow: marca.sombra.painel,
+        ...entra(tela, 22),
+      }}
+    >
+      {/* o cargo, nao um nome: a cena nao precisa de culpado */}
+      <div
+        style={{
+          background: wa.barra,
+          padding: "16px 24px",
+          display: "flex",
+          alignItems: "center",
+          gap: 16,
+        }}
+      >
+        {/* o contato padrao do proprio app: circulo cinza com a silhueta.
+            Um disco cinza chapado lê como imagem que nao carregou, e foi
+            assim que ele foi lido no corte anterior. Aqui e uma pessoa sem
+            foto, que e o que a cena precisa: o analista nao tem marca. */}
+        <svg width="46" height="46" viewBox="0 0 46 46">
+          <circle cx="23" cy="23" r="23" fill="#4A5860" />
+          <circle cx="23" cy="18" r="7.4" fill="#C9D2D6" />
+          <path d="M9.5 41a13.5 13.5 0 0 1 27 0z" fill="#C9D2D6" />
+        </svg>
+        <div style={{ fontFamily: UI, fontSize: 23, color: wa.texto }}>
+          Analista de mídia
+        </div>
+      </div>
+
+      <div
+        style={{
+          padding: 24,
+          height: 470,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          gap: 12,
+          overflow: "hidden",
+        }}
+      >
+        {MSGS.map((msg) => {
+          const o = janela(f, msg.em, CENA02_FRAMES, 9, 0);
+          if (o <= 0.001) return null;
+          const oDia =
+            msg.dia && msg.diaEm !== undefined
+              ? janela(f, msg.diaEm, CENA02_FRAMES, 8, 0)
+              : 0;
+          const oCheck =
+            msg.checkEm !== undefined ? passo(f, msg.checkEm, msg.checkEm + 7) : 0;
+          const semEntrega = msg.checkEm === undefined;
+          return (
+            <React.Fragment key={msg.hora}>
+              {oDia > 0.001 ? <MarcaDia o={oDia} texto={msg.dia as string} /> : null}
+              <div
+                style={{
+                  alignSelf: "flex-end",
+                  maxWidth: 470,
+                  background: wa.balaoSaida,
+                  borderRadius: 18,
+                  borderTopRightRadius: 5,
+                  padding: "13px 17px",
+                  fontFamily: UI,
+                  fontSize: 22,
+                  color: wa.texto,
+                  lineHeight: 1.35,
+                  ...entra(o, 12),
+                }}
+              >
+                {msg.texto}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                    gap: 8,
+                    marginTop: 5,
+                  }}
+                >
+                  <span style={{ fontSize: 15, color: wa.apoio }}>{msg.hora}</span>
+                  {/* a ultima entra ja com um check: ela nunca chegou */}
+                  <div style={{ opacity: semEntrega ? o : oCheck }}>
+                    <Checks cor={wa.apoio} dois={!semEntrega} />
+                  </div>
+                </div>
+              </div>
+            </React.Fragment>
+          );
+        })}
+      </div>
+
+      {/* o campo vazio: ninguem esta digitando do outro lado */}
+      <div
+        style={{
+          background: wa.teclado,
+          padding: "16px 24px",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <div
+          style={{
+            flex: 1,
+            background: wa.tecla,
+            borderRadius: 22,
+            padding: "12px 18px",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <div style={{ width: 2, height: 22, background: wa.apoio, opacity: pisca }} />
+        </div>
+      </div>
+    </div>
+  );
+
+  const coluna = (
+    <div
+      style={
+        vertical
+          ? { display: "flex", flexDirection: "column", gap: 28 }
+          : { display: "flex", flexDirection: "column", gap: 30, flex: 1 }
+      }
+    >
+      <div
+        style={{
+          fontSize: vertical ? 28 : 24,
+          fontWeight: 500,
+          letterSpacing: "2px",
+          textTransform: "uppercase",
+          color: marca.azul,
+          opacity: rotulo,
+        }}
+      >
+        O caminho de sempre
+      </div>
+
+      {tese > 0.001 ? (
+        <div
+          style={{
+            fontSize: vertical ? 76 : 52,
+            fontWeight: 500,
+            letterSpacing: vertical ? "-2.66px" : "-1.82px",
+            lineHeight: vertical ? 1.14 : 1.2,
+            ...entra(tese, 18),
+          }}
+        >
+          Funciona.
+          <br />
+          <span style={{ color: marca.azul }}>
+            Depende de alguém
+            <br />
+            estar disponível.
+          </span>
+        </div>
+      ) : null}
+    </div>
+  );
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -175,169 +350,38 @@ export const Cena02: React.FC = () => {
         <Audio src={staticFile("locucao-yooper/cena-02.mp3")} />
       </Sequence>
 
-      <AbsoluteFill
-        style={{
-          padding: MARGEM,
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 84,
-        }}
-      >
-        <div
+      {vertical ? (
+        <>
+          {/* 9:16: a frase no alto, a conversa grande embaixo dela */}
+          <div style={{ position: "absolute", left: M, top: 236, right: M }}>
+            {coluna}
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              left: M,
+              top: CONVERSA_V_T,
+              transform: `scale(${CONVERSA_V_ESCALA})`,
+              transformOrigin: "left top",
+            }}
+          >
+            {conversa}
+          </div>
+        </>
+      ) : (
+        <AbsoluteFill
           style={{
-            width: 660,
-            flexShrink: 0,
-            background: wa.fundoChat,
-            borderRadius: marca.raio.arte,
-            overflow: "hidden",
-            boxShadow: marca.sombra.painel,
-            ...entra(tela, 22),
+            padding: MARGEM,
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 84,
           }}
         >
-          {/* o cargo, nao um nome: a cena nao precisa de culpado */}
-          <div
-            style={{
-              background: wa.barra,
-              padding: "16px 24px",
-              display: "flex",
-              alignItems: "center",
-              gap: 16,
-            }}
-          >
-            {/* o contato padrao do proprio app: circulo cinza com a silhueta.
-                Um disco cinza chapado lê como imagem que nao carregou, e foi
-                assim que ele foi lido no corte anterior. Aqui e uma pessoa sem
-                foto, que e o que a cena precisa: o analista nao tem marca. */}
-            <svg width="46" height="46" viewBox="0 0 46 46">
-              <circle cx="23" cy="23" r="23" fill="#4A5860" />
-              <circle cx="23" cy="18" r="7.4" fill="#C9D2D6" />
-              <path d="M9.5 41a13.5 13.5 0 0 1 27 0z" fill="#C9D2D6" />
-            </svg>
-            <div style={{ fontFamily: UI, fontSize: 23, color: wa.texto }}>
-              Analista de mídia
-            </div>
-          </div>
+          {conversa}
 
-          <div
-            style={{
-              padding: 24,
-              height: 470,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-              gap: 12,
-              overflow: "hidden",
-            }}
-          >
-            {MSGS.map((msg) => {
-              const o = janela(f, msg.em, CENA02_FRAMES, 9, 0);
-              if (o <= 0.001) return null;
-              const oDia =
-                msg.dia && msg.diaEm !== undefined
-                  ? janela(f, msg.diaEm, CENA02_FRAMES, 8, 0)
-                  : 0;
-              const oCheck =
-                msg.checkEm !== undefined ? passo(f, msg.checkEm, msg.checkEm + 7) : 0;
-              const semEntrega = msg.checkEm === undefined;
-              return (
-                <React.Fragment key={msg.hora}>
-                  {oDia > 0.001 ? <MarcaDia o={oDia} texto={msg.dia as string} /> : null}
-                  <div
-                    style={{
-                      alignSelf: "flex-end",
-                      maxWidth: 470,
-                      background: wa.balaoSaida,
-                      borderRadius: 18,
-                      borderTopRightRadius: 5,
-                      padding: "13px 17px",
-                      fontFamily: UI,
-                      fontSize: 22,
-                      color: wa.texto,
-                      lineHeight: 1.35,
-                      ...entra(o, 12),
-                    }}
-                  >
-                    {msg.texto}
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "flex-end",
-                        gap: 8,
-                        marginTop: 5,
-                      }}
-                    >
-                      <span style={{ fontSize: 15, color: wa.apoio }}>{msg.hora}</span>
-                      {/* a ultima entra ja com um check: ela nunca chegou */}
-                      <div style={{ opacity: semEntrega ? o : oCheck }}>
-                        <Checks cor={wa.apoio} dois={!semEntrega} />
-                      </div>
-                    </div>
-                  </div>
-                </React.Fragment>
-              );
-            })}
-          </div>
-
-          {/* o campo vazio: ninguem esta digitando do outro lado */}
-          <div
-            style={{
-              background: wa.teclado,
-              padding: "16px 24px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <div
-              style={{
-                flex: 1,
-                background: wa.tecla,
-                borderRadius: 22,
-                padding: "12px 18px",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <div style={{ width: 2, height: 22, background: wa.apoio, opacity: pisca }} />
-            </div>
-          </div>
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 30, flex: 1 }}>
-          <div
-            style={{
-              fontSize: 24,
-              fontWeight: 500,
-              letterSpacing: "2px",
-              textTransform: "uppercase",
-              color: marca.azul,
-              opacity: rotulo,
-            }}
-          >
-            O caminho de sempre
-          </div>
-
-          {tese > 0.001 ? (
-            <div
-              style={{
-                fontSize: 52,
-                fontWeight: 500,
-                letterSpacing: "-1.82px",
-                lineHeight: 1.2,
-                ...entra(tese, 18),
-              }}
-            >
-              Funciona.
-              <br />
-              <span style={{ color: marca.azul }}>
-                Depende de alguém
-                <br />
-                estar disponível.
-              </span>
-            </div>
-          ) : null}
-        </div>
-      </AbsoluteFill>
+          {coluna}
+        </AbsoluteFill>
+      )}
 
       {MSGS.map((msg) => (
         <React.Fragment key={msg.hora}>

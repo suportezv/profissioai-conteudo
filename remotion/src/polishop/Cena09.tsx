@@ -14,6 +14,7 @@ import { UI } from "../whatsapp";
 import { janela, entra, passo, s } from "../anim";
 import { Sfx } from "../Sfx";
 import { QR } from "./QR";
+import { useFormato } from "../formato";
 import {
   Airfryer,
   AF_RAZAO,
@@ -134,8 +135,57 @@ const P_T = 620;
 const P_TAM = 92;
 const FIO_CONV = 460;
 
+/**
+ * A mesma cena no 9:16, que e outra geometria e nao a de cima reduzida.
+ *
+ * - **Ato 1 vira vertical.** O cartao nasce no alto, o fio desce dele ate o
+ *   topo do codigo na tampa e o aparelho grande fica centrado embaixo. O
+ *   pouso continua saindo de `afimNaTampa` com a escala da foto, entao o
+ *   codigo cai no emissor da foto em qualquer tamanho.
+ * - **A fileira continua uma fileira so**, de ponta a ponta da margem, porque
+ *   e a leitura de prateleira que diz "toda unidade". Cinco de 170 px; o
+ *   codigo em cada tampa fica do tamanho que ele ja tinha no 16:9.
+ * - **As mensagens sobem em escada**, cada uma pendurada no fio por um
+ *   risco: quatro mensagens nao cabem lado a lado em 1080 px, e a escada
+ *   guarda as duas leituras do 16:9, o tempo andando para a direita e a
+ *   ultima cortada pela borda. A borda de cima nao serve para cortar, porque
+ *   ali fica a interface do app.
+ */
+const G_L_V = 260;
+const G_T_V = 820;
+const G_W_V = 560;
+const G_TAM_V = 240;
+/** Centro horizontal do codigo na tampa, onde o fio desce. */
+const CODIGO_X_V = G_L_V + G_W_V * (233 / 449);
+const PLANA_V = afimPlana(Math.round(CODIGO_X_V - G_TAM_V / 2), 300);
+const NA_TAMPA_V = afimNaTampa(G_TAM_V, G_L_V, G_T_V, G_W_V);
+/** Topo da etiqueta achatada (~48 px de altura neste tamanho). */
+const CODIGO_TOPO_V = alturaDoCodigo(G_T_V, G_W_V) - 26;
+
+const P_W_V = 170;
+const P_GAP_V = 20;
+const P_L_V = 75;
+const P_T_V = 1000;
+const P_TAM_V = 100;
+const FIO_CONV_V = 860;
+
+/** A escada: x e topo de cada mensagem no 9:16. A ultima passa da borda. */
+const MENSAGENS_V = [
+  { x: 110, y: 728 },
+  { x: 250, y: 596 },
+  { x: 400, y: 464 },
+  { x: 790, y: 332 },
+];
+
 export const Cena09: React.FC = () => {
   const f = useCurrentFrame();
+  const { vertical, W, H, M, seguro } = useFormato();
+  const pw = vertical ? P_W_V : P_W;
+  const pgap = vertical ? P_GAP_V : P_GAP;
+  const pl = vertical ? P_L_V : P_L;
+  const pt = vertical ? P_T_V : P_T;
+  const ptam = vertical ? P_TAM_V : P_TAM;
+  const fconv = vertical ? FIO_CONV_V : FIO_CONV;
 
   const qr = passo(f, QR_EM, QR_EM + s(0.5));
   const fio = passo(f, FIO_EM, APARELHO_EM);
@@ -152,7 +202,9 @@ export const Cena09: React.FC = () => {
   const fecho = janela(f, FECHO_EM, ASSINA_EM, 12, 10);
   const assina = janela(f, ASSINA_EM, CENA09_FRAMES, 12, 0);
 
-  const matriz = afimEntre(PLANA, NA_TAMPA, funde);
+  const matriz = vertical
+    ? afimEntre(PLANA_V, NA_TAMPA_V, funde)
+    : afimEntre(PLANA, NA_TAMPA, funde);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -176,22 +228,33 @@ export const Cena09: React.FC = () => {
       {/* ato 1: o fio encontra o aparelho e os dois se fundem */}
       {ato1 > 0.004 ? (
         <AbsoluteFill style={{ opacity: ato1 }}>
-          <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0 }}>
-            <line
-              x1={460}
-              y1={FIO_Y}
-              x2={460 + (CODIGO_L - 460) * fio}
-              y2={FIO_Y}
-              stroke={marca.azul}
-              strokeWidth="2"
-            />
+          <svg width={W} height={H} style={{ position: "absolute", left: 0, top: 0 }}>
+            {vertical ? (
+              <line
+                x1={CODIGO_X_V}
+                y1={560}
+                x2={CODIGO_X_V}
+                y2={560 + (CODIGO_TOPO_V - 560) * fio}
+                stroke={marca.azul}
+                strokeWidth="2"
+              />
+            ) : (
+              <line
+                x1={460}
+                y1={FIO_Y}
+                x2={460 + (CODIGO_L - 460) * fio}
+                y2={FIO_Y}
+                stroke={marca.azul}
+                strokeWidth="2"
+              />
+            )}
           </svg>
 
           {aparelho > 0.001 ? (
             <Airfryer
-              esq={G_L}
-              topo={G_T}
-              larg={G_W}
+              esq={vertical ? G_L_V : G_L}
+              topo={vertical ? G_T_V : G_T}
+              larg={vertical ? G_W_V : G_W}
               o={aparelho}
               sobe={(1 - aparelho) * 26}
             />
@@ -202,8 +265,8 @@ export const Cena09: React.FC = () => {
               position: "absolute",
               left: 0,
               top: 0,
-              width: G_TAM,
-              height: G_TAM,
+              width: vertical ? G_TAM_V : G_TAM,
+              height: vertical ? G_TAM_V : G_TAM,
               background: marca.branco,
               borderRadius: 12,
               border: `1px solid ${funde > 0.6 ? "transparent" : marca.linha}`,
@@ -216,7 +279,7 @@ export const Cena09: React.FC = () => {
               opacity: qr,
             }}
           >
-            <QR tamanho={G_TAM * 0.84} />
+            <QR tamanho={(vertical ? G_TAM_V : G_TAM) * 0.84} />
           </div>
         </AbsoluteFill>
       ) : null}
@@ -225,9 +288,9 @@ export const Cena09: React.FC = () => {
       {ato2 > 0.004 ? (
         <AbsoluteFill style={{ opacity: ato2 }}>
           {/* o fio unico, que sai pela direita */}
-          <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0 }}>
+          <svg width={W} height={H} style={{ position: "absolute", left: 0, top: 0 }}>
             {Array.from({ length: P_N }).map((_, i) => {
-              const cx = P_L + i * (P_W + P_GAP) + P_W / 2;
+              const cx = pl + i * (pw + pgap) + pw / 2;
               const abre = passo(
                 f,
                 CONVERSA_EM + i * 3,
@@ -236,7 +299,7 @@ export const Cena09: React.FC = () => {
               return (
                 <path
                   key={i}
-                  d={`M ${cx} ${P_T + 30} C ${cx} ${FIO_CONV + 60}, ${cx} ${FIO_CONV + 40}, ${cx + 0} ${FIO_CONV}`}
+                  d={`M ${cx} ${pt + 30} C ${cx} ${fconv + 60}, ${cx} ${fconv + 40}, ${cx + 0} ${fconv}`}
                   fill="none"
                   stroke={marca.azul}
                   strokeWidth="2"
@@ -245,13 +308,32 @@ export const Cena09: React.FC = () => {
               );
             })}
             <line
-              x1={P_L + P_W / 2}
-              y1={FIO_CONV}
-              x2={P_L + P_W / 2 + (1920 - P_L - P_W / 2) * passo(f, CONVERSA_EM, CONVERSA_EM + s(2.6))}
-              y2={FIO_CONV}
+              x1={pl + pw / 2}
+              y1={fconv}
+              x2={pl + pw / 2 + (W - pl - pw / 2) * passo(f, CONVERSA_EM, CONVERSA_EM + s(2.6))}
+              y2={fconv}
               stroke={marca.azul}
               strokeWidth="2"
             />
+            {/* no 9:16 cada mensagem da escada pende do fio por um risco */}
+            {vertical
+              ? MENSAGENS_V.map((p, i) => {
+                  const em = CONVERSA_EM + s(0.7) + i * s(0.42);
+                  const o = passo(f, em, em + 11);
+                  return o < 0.004 ? null : (
+                    <line
+                      key={i}
+                      x1={p.x + 22}
+                      y1={p.y + 104}
+                      x2={p.x + 22}
+                      y2={p.y + 104 + (fconv - p.y - 104) * o}
+                      stroke={marca.azul}
+                      strokeWidth="2"
+                      opacity={0.5}
+                    />
+                  );
+                })
+              : null}
           </svg>
 
           {/* as quatro mensagens, com data: "continua" sao onze meses */}
@@ -264,14 +346,14 @@ export const Cena09: React.FC = () => {
                 key={msg.data}
                 style={{
                   position: "absolute",
-                  left: msg.x,
-                  top: FIO_CONV - 118,
+                  left: vertical ? MENSAGENS_V[i].x : msg.x,
+                  top: vertical ? MENSAGENS_V[i].y : FIO_CONV - 118,
                   ...entra(o, 12),
                 }}
               >
                 <div
                   style={{
-                    fontSize: 19,
+                    fontSize: vertical ? 24 : 19,
                     letterSpacing: "1.4px",
                     textTransform: "uppercase",
                     color: m.apoio,
@@ -286,9 +368,9 @@ export const Cena09: React.FC = () => {
                     border: `1px solid ${marca.linha}`,
                     borderRadius: 16,
                     borderBottomLeftRadius: 5,
-                    padding: "12px 18px",
+                    padding: vertical ? "15px 22px" : "12px 18px",
                     fontFamily: UI,
-                    fontSize: 21,
+                    fontSize: vertical ? 30 : 21,
                     color: m.tinta,
                     whiteSpace: "nowrap",
                     boxShadow: marca.sombra.painel,
@@ -304,27 +386,27 @@ export const Cena09: React.FC = () => {
           {Array.from({ length: P_N }).map((_, i) => {
             const em = PRATELEIRA_EM + i * 3;
             const o = passo(f, em, em + 12);
-            const esq = P_L + i * (P_W + P_GAP);
+            const esq = pl + i * (pw + pgap);
             return (
               <div key={i} style={{ opacity: o }}>
-                <Airfryer esq={esq} topo={P_T} larg={P_W} sobe={(1 - o) * 16} />
+                <Airfryer esq={esq} topo={pt} larg={pw} sobe={(1 - o) * 16} />
                 <div
                   style={{
                     position: "absolute",
                     left: 0,
                     top: 0,
-                    width: P_TAM,
-                    height: P_TAM,
+                    width: ptam,
+                    height: ptam,
                     background: marca.branco,
                     borderRadius: 6,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     transformOrigin: "0 0",
-                    transform: css(afimNaTampa(P_TAM, esq, P_T, P_W)),
+                    transform: css(afimNaTampa(ptam, esq, pt, pw)),
                   }}
                 >
-                  <QR tamanho={P_TAM * 0.84} />
+                  <QR tamanho={ptam * 0.84} />
                 </div>
               </div>
             );
@@ -334,10 +416,11 @@ export const Cena09: React.FC = () => {
           <div
             style={{
               position: "absolute",
-              left: P_L - 40,
-              top: P_T + P_W * AF_RAZAO + 10,
+              // no 9:16 a regua vai de margem a margem em vez de sobrar 40 px
+              left: vertical ? M : P_L - 40,
+              top: pt + pw * AF_RAZAO + 10,
               width:
-                (P_N * P_W + (P_N - 1) * P_GAP + 80) *
+                (vertical ? W - 2 * M : P_N * P_W + (P_N - 1) * P_GAP + 80) *
                 passo(f, PRATELEIRA_EM, PRATELEIRA_EM + s(0.8)),
               height: 2,
               background: marca.linha,
@@ -349,8 +432,8 @@ export const Cena09: React.FC = () => {
             <div
               style={{
                 position: "absolute",
-                left: P_L,
-                top: P_T + P_W * AF_RAZAO + 54,
+                left: vertical ? M : P_L,
+                top: pt + pw * AF_RAZAO + (vertical ? 60 : 54),
                 display: "flex",
                 gap: 16,
                 ...entra(riscos, 14),
@@ -366,9 +449,9 @@ export const Cena09: React.FC = () => {
                       border: `1px solid ${marca.linha}`,
                       background: marca.branco,
                       borderRadius: 999,
-                      padding: "12px 24px",
-                      fontSize: 26,
-                      letterSpacing: "-0.91px",
+                      padding: vertical ? "14px 26px" : "12px 24px",
+                      fontSize: vertical ? 30 : 26,
+                      letterSpacing: vertical ? "-1.05px" : "-0.91px",
                       color: m.apoio,
                     }}
                   >
@@ -400,22 +483,26 @@ export const Cena09: React.FC = () => {
             flexDirection: "column",
             alignItems: "flex-start",
             justifyContent: "center",
-            padding: "0 120px",
-            gap: 40,
+            padding: vertical
+              ? `${seguro.topo}px ${M}px ${H - seguro.base}px`
+              : "0 120px",
+            gap: vertical ? 56 : 40,
             ...entra(fecho, 20),
           }}
         >
           <Img
             src={staticFile("marca-polishop/polishop.png")}
-            style={{ width: 260, opacity: passo(f, FECHO_EM, FECHO_EM + 10) }}
+            style={{ width: vertical ? 340 : 260, opacity: passo(f, FECHO_EM, FECHO_EM + 10) }}
           />
           <div
             style={{
-              fontSize: 64,
+              fontSize: vertical ? 88 : 64,
               fontWeight: 500,
-              letterSpacing: "-2.24px",
+              letterSpacing: vertical ? "-3.08px" : "-2.24px",
               lineHeight: 1.18,
-              maxWidth: 1400,
+              // no 9:16, 800 px quebra em "ja esta levando / essa inovacao /
+              // para a linha fitness", tres linhas de peso parecido
+              maxWidth: vertical ? 800 : 1400,
               opacity: passo(f, FECHO_EM + s(0.7), FECHO_EM + s(1.0)),
             }}
           >
@@ -442,24 +529,36 @@ export const Cena09: React.FC = () => {
             alignItems: "center",
             justifyContent: "center",
             opacity: assina,
+            // no 9:16 o centro e o da faixa segura, nao o do quadro
+            paddingTop: vertical ? seguro.topo : undefined,
+            paddingBottom: vertical ? H - seguro.base : undefined,
           }}
         >
+          {/* No 9:16 as duas marcas empilham e a regua deita: lado a lado
+              elas so caberiam em 380 px cada, menores que no 16:9. */}
           <div
             style={{
               display: "flex",
+              flexDirection: vertical ? "column" : undefined,
               alignItems: "center",
-              gap: 96,
+              gap: vertical ? 80 : 96,
               transform: `translateY(${interpolate(assina, [0, 1], [14, 0])}px)`,
             }}
           >
             <Img
               src={staticFile("marca-polishop/polishop.png")}
-              style={{ width: 400, display: "block" }}
+              style={{ width: vertical ? 520 : 400, display: "block" }}
             />
-            <div style={{ width: 1, height: 150, background: marca.linha }} />
+            <div
+              style={{
+                width: vertical ? 200 : 1,
+                height: vertical ? 1 : 150,
+                background: marca.linha,
+              }}
+            />
             <Img
               src={staticFile("marca/profissio-ai-escuro.svg")}
-              style={{ width: 430, height: "auto", display: "block" }}
+              style={{ width: vertical ? 540 : 430, height: "auto", display: "block" }}
             />
           </div>
         </AbsoluteFill>

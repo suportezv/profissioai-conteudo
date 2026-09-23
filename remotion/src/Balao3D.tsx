@@ -2,6 +2,7 @@ import React from "react";
 import { interpolate } from "remotion";
 import { wa, UI } from "./whatsapp";
 import { SUAVE } from "./anim";
+import { useFormato } from "./formato";
 
 /**
  * A mensagem saindo da tela, em 3D.
@@ -19,7 +20,10 @@ import { SUAVE } from "./anim";
  * Nenhuma conversa real entra na peca: tudo aqui e recriado.
  */
 
-/** Onde o display esta no quadro de 1920x1080, medido no frame do clipe. */
+/**
+ * Onde o display esta no quadro, medido no frame do clipe. No 9:16 a ancora e
+ * outra medida, no quadro 1080x1920: ancora e do plano recortado, nao da cena.
+ */
 export type Ancora = { x: number; y: number };
 
 type Props = {
@@ -35,6 +39,12 @@ type Props = {
    * zero: a mensagem so aparecia depois de comecar a subir.
    */
   opacidade?: number;
+  /**
+   * Quanto o balao sobe do display ate assentar, em px. No 9:16 o display
+   * fica na metade de baixo do quadro e o campo precisa subir mais para
+   * assentar no meio da faixa segura.
+   */
+  sobe?: number;
 };
 
 export const Balao3D: React.FC<Props> = ({
@@ -43,7 +53,10 @@ export const Balao3D: React.FC<Props> = ({
   children,
   deriva = 0,
   opacidade = 1,
+  sobe = 210,
 }) => {
+  // o palco da perspectiva e o quadro inteiro, no formato que ele tiver
+  const { W, H } = useFormato();
   const e = (de: number, para: number) =>
     interpolate(levanta, [0, 1], [de, para], {
       extrapolateLeft: "clamp",
@@ -57,8 +70,8 @@ export const Balao3D: React.FC<Props> = ({
         position: "absolute",
         left: 0,
         top: 0,
-        width: 1920,
-        height: 1080,
+        width: W,
+        height: H,
         // a perspectiva nasce no display, nao no centro do quadro: e de la que
         // a mensagem levanta
         perspective: 1600,
@@ -73,7 +86,7 @@ export const Balao3D: React.FC<Props> = ({
           transformStyle: "preserve-3d",
           transform: [
             `translate(-50%, -50%)`,
-            `translateY(${e(0, -210) - deriva * 26}px)`,
+            `translateY(${e(0, -sobe) - deriva * 26}px)`,
             // o estado final e **reto**: a inclinacao residual de -2 e 6 graus
             // lia como lettering torto, nao como perspectiva. O 3D esta na
             // saida do plano da tela, nao em deixar a peca de banda.

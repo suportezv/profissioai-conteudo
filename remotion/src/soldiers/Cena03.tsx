@@ -14,6 +14,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { janela, passo, s } from "../anim";
 import { Sfx } from "../Sfx";
+import { useFormato } from "../formato";
 
 /**
  * Cena 03 do case Soldiers: o vinculo que a marca ja tinha.
@@ -123,6 +124,26 @@ const CRESCE = s(8.5);
  */
 const PIETRA_SOBE = s(12.45);
 
+/**
+ * A esteira no 9:16. Os clipes de opt-in foram gravados **em pe**, entao aqui
+ * o cartao fica mais perto do formato do proprio video: 440 de largura por 960
+ * de altura, dois e pouco cabendo no quadro. A faixa sangra ate as bordas (e
+ * imagem, pode sangrar), a curva e os tempos sao os mesmos, e a freada termina
+ * com a Pietra centrada, que cresce para 680. A pergunta desce para baixo da
+ * faixa, na faixa segura, em vez de dividir a largura com o cartao.
+ */
+const V = {
+  larg: 440,
+  vao: 16,
+  topo: 300,
+  altura: 960,
+  cresce: 680,
+  perguntaY: 1300,
+};
+const PASSO_V = V.larg + V.vao;
+const FAIXA_INI_V = 72;
+const FAIXA_FIM_V = (1080 - V.larg) / 2 - ULTIMO * PASSO_V;
+
 /** A entrada escalonada dos cinco primeiros, que e como a cena abre. */
 const ENTRADAS = [s(0.8), s(1.2), s(1.6), s(2.0), s(2.4)];
 
@@ -131,11 +152,34 @@ const ROLAGEM = Easing.bezier(0.65, 0, 0.25, 1);
 
 export const Cena03: React.FC = () => {
   const f = useCurrentFrame();
+  const { vertical, M, W, seguro } = useFormato();
+  // a mesma esteira nos dois quadros; so a geometria muda
+  const G = vertical
+    ? {
+        larg: V.larg,
+        passo: PASSO_V,
+        ini: FAIXA_INI_V,
+        fim: FAIXA_FIM_V,
+        desloca: 0,
+        cresceLeft: (W - V.cresce) / 2,
+        cresceLarg: V.cresce,
+        limite: W + 40,
+      }
+    : {
+        larg: LARG,
+        passo: PASSO_CARTAO,
+        ini: FAIXA_INI,
+        fim: FAIXA_FIM,
+        desloca: MARGEM,
+        cresceLeft: 420,
+        cresceLarg: 600,
+        limite: 1680,
+      };
   const rotulo = janela(f, s(0.5), CRESCE, 10, 9);
   const cresceu = passo(f, CRESCE, CRESCE + s(0.9));
   const pergunta = janela(f, s(12.2), CENA03_FRAMES, 11, 0);
 
-  const faixaX = interpolate(f, [ROLA_INI, ROLA_FIM], [FAIXA_INI, FAIXA_FIM], {
+  const faixaX = interpolate(f, [ROLA_INI, ROLA_FIM], [G.ini, G.fim], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: ROLAGEM,
@@ -163,16 +207,25 @@ export const Cena03: React.FC = () => {
         <Audio src={staticFile("locucao-soldiers/cena-03.mp3")} />
       </Sequence>
 
-      <AbsoluteFill style={{ padding: MARGEM }}>
+      <AbsoluteFill
+        style={{
+          // no 9:16 a faixa sangra pelas laterais; so a sobrelinha tem margem
+          padding: vertical
+            ? `${seguro.topo}px 0 ${1920 - V.topo - V.altura}px`
+            : MARGEM,
+        }}
+      >
         <div
           style={{
-            fontSize: 24,
+            marginLeft: vertical ? M : 0,
+            fontSize: vertical ? 28 : 24,
             fontWeight: 500,
             letterSpacing: "2px",
             textTransform: "uppercase",
             color: marca.azul,
             opacity: rotulo,
-            marginBottom: 30,
+            // 220 + 28 de corpo + 52 poe a faixa em V.topo
+            marginBottom: vertical ? 45 : 30,
           }}
         >
           Quem já falava com o cliente
@@ -183,15 +236,17 @@ export const Cena03: React.FC = () => {
         <div style={{ position: "relative", flexGrow: 1, overflow: "hidden" }}>
           {CLIPES.map((c, i) => {
             const fim = i === ULTIMO;
-            const x = faixaX - MARGEM + i * PASSO_CARTAO;
+            const x = faixaX - G.desloca + i * G.passo;
 
             // quem cresce sai da faixa e assume o centro da area util
-            const left = fim ? interpolate(cresceu, [0, 1], [x, 420]) : x;
-            const larg = fim ? interpolate(cresceu, [0, 1], [LARG, 600]) : LARG;
+            const left = fim ? interpolate(cresceu, [0, 1], [x, G.cresceLeft]) : x;
+            const larg = fim
+              ? interpolate(cresceu, [0, 1], [G.larg, G.cresceLarg])
+              : G.larg;
 
             // fora da faixa nao monta: segura o custo do render e garante que
             // nada seja desenhado onde o recorte nao alcanca
-            if (left > 1680 || left + larg < -40) return null;
+            if (left > G.limite || left + larg < -40) return null;
 
             // os cinco primeiros entram escalonados, que e como a cena abre.
             // **Os outros ficam invisiveis ate a esteira andar**: com opacidade
@@ -252,7 +307,7 @@ export const Cena03: React.FC = () => {
           })}
 
           {/* a pergunta da cena, no espaco que o cartao centralizado deixou */}
-          {pergunta > 0.001 ? (
+          {pergunta > 0.001 && !vertical ? (
             <div
               style={{
                 position: "absolute",
@@ -275,6 +330,30 @@ export const Cena03: React.FC = () => {
           ) : null}
         </div>
       </AbsoluteFill>
+
+      {/* no 9:16 a pergunta mora embaixo da faixa, longe da coluna de botoes
+          do app que cobre a direita da metade de baixo */}
+      {pergunta > 0.001 && vertical ? (
+        <div
+          style={{
+            position: "absolute",
+            left: M,
+            top: V.perguntaY,
+            width: W - M - seguro.direita,
+            fontSize: 48,
+            fontWeight: 500,
+            letterSpacing: "-1.68px",
+            lineHeight: 1.24,
+            color: m.tinta,
+            opacity: pergunta,
+            filter: `blur(${(1 - pergunta) * 6}px)`,
+            transform: `translateY(${(1 - pergunta) * 18}px)`,
+          }}
+        >
+          E se essa pessoa continuasse por perto{" "}
+          <span style={{ color: marca.azul }}>depois da venda?</span>
+        </div>
+      ) : null}
 
       {ENTRADAS.map((t, i) => (
         <Sfx key={`e${i}`} som="pop" em={t} volume={0.12} />

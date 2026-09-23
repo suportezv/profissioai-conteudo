@@ -11,6 +11,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { janela, entra, conta, br, passo, s } from "../anim";
 import { Sfx } from "../Sfx";
+import { useFormato } from "../formato";
 
 /**
  * Cena 08B do case Polishop: satisfação e volta.
@@ -65,6 +66,20 @@ export const Cena08B: React.FC = () => {
     extrapolateRight: "clamp",
   });
   const mostraNps = passo(f, NPS_EM + s(0.3), NPS_EM + s(0.45));
+  // No 9:16 os dois numeros empilham, retorno em cima e NPS embaixo, na
+  // ordem em que a locucao os diz. Cada um guarda o proprio lugar: o de baixo
+  // entra aos 4,1 s e nao pode empurrar o de cima.
+  const { vertical, M, seguro } = useFormato();
+  const faixa = vertical
+    ? { paddingTop: seguro.topo, paddingBottom: 1920 - seguro.base, paddingLeft: M, paddingRight: M }
+    : {};
+  const numero = vertical ? 210 : 168;
+  const numeroTr = vertical ? "-7.35px" : "-5.88px";
+  const rotulo = vertical ? 58 : 44;
+  const rotuloTr = vertical ? "-2.03px" : "-1.54px";
+  const base = vertical ? 32 : 25;
+  const baseTr = vertical ? "-1.12px" : "-0.88px";
+  const coluna = vertical ? { flex: "none" as const, height: 390, maxWidth: 1080 - M - seguro.direita } : {};
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -74,15 +89,34 @@ export const Cena08B: React.FC = () => {
       </Sequence>
 
       <AbsoluteFill
-        style={{ padding: MARGEM, flexDirection: "row", alignItems: "center", gap: 90 }}
+        style={{
+          padding: MARGEM,
+          flexDirection: vertical ? "column" : "row",
+          alignItems: vertical ? "stretch" : "center",
+          justifyContent: vertical ? "center" : undefined,
+          gap: vertical ? 80 : 90,
+          ...faixa,
+        }}
       >
+        {/* no 9:16 cada vaga existe mesmo antes do numero entrar, senao a
+            coluna centrada pularia quando o segundo chegasse */}
+        {vertical && retorno <= 0.001 ? <div style={{ height: 390 }} /> : null}
         {retorno > 0.001 ? (
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 16, ...entra(retorno, 22) }}>
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              gap: 16,
+              ...coluna,
+              ...entra(retorno, 22),
+            }}
+          >
             <div
               style={{
-                fontSize: 168,
+                fontSize: numero,
                 fontWeight: 500,
-                letterSpacing: "-5.88px",
+                letterSpacing: numeroTr,
                 lineHeight: 1,
                 color: marca.azul,
                 fontVariantNumeric: "tabular-nums",
@@ -91,13 +125,13 @@ export const Cena08B: React.FC = () => {
             >
               {br(vRet, 0)}%
             </div>
-            <div style={{ fontSize: 44, fontWeight: 500, letterSpacing: "-1.54px", lineHeight: 1.2 }}>
+            <div style={{ fontSize: rotulo, fontWeight: 500, letterSpacing: rotuloTr, lineHeight: 1.2 }}>
               voltaram a conversar
             </div>
             <div
               style={{
-                fontSize: 25,
-                letterSpacing: "-0.88px",
+                fontSize: base,
+                letterSpacing: baseTr,
                 color: m.apoio,
                 borderTop: "1px solid rgba(16,18,24,0.22)",
                 paddingTop: 16,
@@ -108,13 +142,23 @@ export const Cena08B: React.FC = () => {
           </div>
         ) : null}
 
+        {vertical && nps <= 0.001 ? <div style={{ height: 390 }} /> : null}
         {nps > 0.001 ? (
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 16, ...entra(nps, 22) }}>
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              gap: 16,
+              ...coluna,
+              ...entra(nps, 22),
+            }}
+          >
             <div
               style={{
-                fontSize: 168,
+                fontSize: numero,
                 fontWeight: 500,
-                letterSpacing: "-5.88px",
+                letterSpacing: numeroTr,
                 lineHeight: 1,
                 color: marca.azul,
                 fontVariantNumeric: "tabular-nums",
@@ -124,13 +168,13 @@ export const Cena08B: React.FC = () => {
             >
               {br(vNps, 0)}
             </div>
-            <div style={{ fontSize: 44, fontWeight: 500, letterSpacing: "-1.54px", lineHeight: 1.2 }}>
+            <div style={{ fontSize: rotulo, fontWeight: 500, letterSpacing: rotuloTr, lineHeight: 1.2 }}>
               de NPS
             </div>
             <div
               style={{
-                fontSize: 25,
-                letterSpacing: "-0.88px",
+                fontSize: base,
+                letterSpacing: baseTr,
                 color: m.apoio,
                 borderTop: "1px solid rgba(16,18,24,0.22)",
                 paddingTop: 16,

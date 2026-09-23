@@ -11,6 +11,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { janela, entra, passo, conta, br, s, tiquesDaContagem } from "../anim";
 import { Sfx } from "../Sfx";
+import { useFormato } from "../formato";
 
 /**
  * Cena 08B do case Soldiers: o resultado que chegou em 22/set/2026.
@@ -130,8 +131,24 @@ const LIMIARES: Limiar[] = [
 /** Largura util da faixa de barras, em px de 1920. 100% ocupa isso. */
 const FAIXA = 1080;
 
+/**
+ * O 9:16. Os oito blocos ocupam a largura util inteira (8 x 110 + 7 vaos de 8
+ * = 936), e por isso o valor e o "8x mais" descem para a linha de baixo da
+ * barra, em vez de ficar na ponta dela. Na reativacao a regua e de 1100 px (50%
+ * = 550), com a porcentagem na ponta e o rotulo embaixo: lado a lado ele nao
+ * cabe numa coluna de 1080.
+ */
+const V = { bloco: 110, alturaBloco: 96, faixa: 1100, alturaBarra: 72 };
+
 export const Cena08B: React.FC = () => {
   const f = useCurrentFrame();
+  const { vertical, M, W, H, seguro } = useFormato();
+  const PAD = vertical
+    ? `${seguro.topo}px ${M}px ${H - seguro.base}px`
+    : MARGEM;
+  const faixa = vertical ? V.faixa : FAIXA;
+  /** Texto de apoio no 9:16 para antes da coluna de botoes do app. */
+  const largTexto = W - M - seguro.direita;
   const conv = janela(f, CONV_EM, CONV_SAI, 11, 10);
 
   /**
@@ -161,15 +178,15 @@ export const Cena08B: React.FC = () => {
 
       {/* ---------- beat 1: o 8x contado, nao afirmado ---------- */}
       {conv > 0.001 ? (
-        <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
+        <AbsoluteFill style={{ padding: PAD, justifyContent: "center" }}>
           <div
             style={{
-              fontSize: 24,
+              fontSize: vertical ? 28 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
               color: marca.azul,
-              marginBottom: 46,
+              marginBottom: vertical ? 56 : 46,
               ...entra(conv, 14),
             }}
           >
@@ -184,9 +201,10 @@ export const Cena08B: React.FC = () => {
             cheios={unidade}
             cor={m.apoio}
             o={janela(f, UNIDADE_EM, CONV_SAI, 11, 10)}
+            vertical={vertical}
           />
 
-          <div style={{ height: 54 }} />
+          <div style={{ height: vertical ? 72 : 54 }} />
 
           <Linha
             rotulo="quem passou por um agente"
@@ -196,23 +214,29 @@ export const Cena08B: React.FC = () => {
             cor={marca.azul}
             o={janela(f, AGENTE_EM, CONV_SAI, 11, 10)}
             multiplicador={contados}
+            vertical={vertical}
           />
 
-          <Base texto={BASE} o={passo(f, BLOCOS_ATE + s(0.2), BLOCOS_ATE + s(0.6))} />
+          <Base
+            texto={BASE}
+            o={passo(f, BLOCOS_ATE + s(0.2), BLOCOS_ATE + s(0.6))}
+            vertical={vertical}
+            largura={largTexto}
+          />
         </AbsoluteFill>
       ) : null}
 
       {/* ---------- beat 2: a reativacao, em limiares acumulados ---------- */}
       {reat > 0.001 ? (
-        <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
+        <AbsoluteFill style={{ padding: PAD, justifyContent: "center" }}>
           <div
             style={{
-              fontSize: 24,
+              fontSize: vertical ? 28 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
               color: marca.azul,
-              marginBottom: 20,
+              marginBottom: vertical ? 24 : 20,
               ...entra(reat, 14),
             }}
           >
@@ -221,12 +245,14 @@ export const Cena08B: React.FC = () => {
 
           <div
             style={{
-              fontSize: 40,
+              fontSize: vertical ? 60 : 40,
               fontWeight: 500,
-              letterSpacing: "-1.4px",
-              lineHeight: 1.2,
-              maxWidth: 1180,
-              marginBottom: 44,
+              letterSpacing: vertical ? "-2.1px" : "-1.4px",
+              lineHeight: vertical ? 1.14 : 1.2,
+              // no 9:16 a quebra cai antes de "voltou a comprar", e a parte
+              // azul fica inteira na segunda linha
+              maxWidth: vertical ? 760 : 1180,
+              marginBottom: vertical ? 56 : 44,
               ...entra(reat, 18),
             }}
           >
@@ -237,6 +263,55 @@ export const Cena08B: React.FC = () => {
             const o = janela(f, l.em, CENA08B_FRAMES, 10, 0);
             if (o <= 0.001) return null;
             const cresce = passo(f, l.em, l.em + s(0.9));
+            if (vertical) {
+              // barra e porcentagem numa linha, o rotulo embaixo
+              return (
+                <div
+                  key={l.pct}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 10,
+                    marginBottom: 34,
+                    opacity: o,
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+                    <div
+                      style={{
+                        width: faixa * (l.pct / 100) * cresce,
+                        height: V.alturaBarra,
+                        background:
+                          i === 0 ? marca.azul : `rgba(36,88,245,${0.9 - i * 0.22})`,
+                        borderRadius: marca.raio.controle,
+                      }}
+                    />
+                    <div
+                      style={{
+                        fontSize: 76,
+                        fontWeight: 500,
+                        letterSpacing: "-2.66px",
+                        lineHeight: 1,
+                        fontVariantNumeric: "tabular-nums",
+                        color: marca.azul,
+                      }}
+                    >
+                      {br(conta(f, l.em, l.em + s(0.9), l.pct), 0)}%
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 32,
+                      letterSpacing: "-1.12px",
+                      color: m.apoio,
+                      maxWidth: largTexto,
+                    }}
+                  >
+                    {l.rotulo}
+                  </div>
+                </div>
+              );
+            }
             return (
               <div
                 key={l.pct}
@@ -279,6 +354,8 @@ export const Cena08B: React.FC = () => {
           <Base
             texto={`limiares acumulados: quem está há 90 dias conta nos três · ${BASE}`}
             o={passo(f, REAT_EM + s(4.4), REAT_EM + s(4.8))}
+            vertical={vertical}
+            largura={largTexto}
           />
         </AbsoluteFill>
       ) : null}
@@ -312,70 +389,125 @@ const Linha: React.FC<{
   o: number;
   /** Quando presente, o "Nx" que acompanha a contagem dos blocos. */
   multiplicador?: number;
-}> = ({ rotulo, valor, blocos, cheios, cor, o, multiplicador }) => (
-  <div style={{ ...entra(o, 18) }}>
+  /**
+   * No 9:16 os oito blocos tomam a largura toda, entao o valor e o
+   * multiplicador descem para a linha de baixo da barra (so na linha de oito:
+   * a unidade continua com o valor na ponta, que ali cabe).
+   */
+  vertical?: boolean;
+}> = ({ rotulo, valor, blocos, cheios, cor, o, multiplicador, vertical = false }) => {
+  const empilha = vertical && blocos > 1;
+  const barra = (
     <div
       style={{
-        fontSize: 28,
-        letterSpacing: "-0.98px",
-        color: modos.claro.apoio,
-        marginBottom: 16,
+        display: "flex",
+        gap: VAO_BLOCO,
+        height: vertical ? V.alturaBloco : 76,
+        // no 9:16 a linha empilhada reserva a altura antes do primeiro bloco
+        minHeight: empilha ? V.alturaBloco : undefined,
       }}
     >
-      {rotulo}
+      {Array.from({ length: blocos }, (_, i) => {
+        const parte = Math.max(0, Math.min(1, cheios - i));
+        if (parte <= 0) return null;
+        return (
+          <div
+            key={i}
+            style={{
+              width: (vertical ? V.bloco : BLOCO) * parte,
+              height: "100%",
+              background: cor,
+              borderRadius: marca.raio.controle,
+            }}
+          />
+        );
+      })}
     </div>
-    <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
-      <div style={{ display: "flex", gap: VAO_BLOCO, height: 76 }}>
-        {Array.from({ length: blocos }, (_, i) => {
-          const parte = Math.max(0, Math.min(1, cheios - i));
-          if (parte <= 0) return null;
-          return (
-            <div
-              key={i}
-              style={{
-                width: BLOCO * parte,
-                height: "100%",
-                background: cor,
-                borderRadius: marca.raio.controle,
-              }}
-            />
-          );
-        })}
+  );
+  // o valor so existe depois que a barra comeca: "0,0%" parado ao lado de
+  // uma faixa vazia le como erro de render, nao como estado inicial
+  const numero =
+    cheios > 0.02 ? (
+      <div
+        style={{
+          fontSize: vertical ? 96 : 76,
+          fontWeight: 500,
+          letterSpacing: vertical ? "-3.36px" : "-2.66px",
+          lineHeight: 1,
+          color: cor,
+          fontVariantNumeric: "tabular-nums",
+        }}
+      >
+        {br(valor, 1)}%
       </div>
-      {/* o valor so existe depois que a barra comeca: "0,0%" parado ao lado de
-          uma faixa vazia lê como erro de render, nao como estado inicial */}
-      {cheios > 0.02 ? (
+    ) : null;
+  const vezes =
+    multiplicador !== undefined && multiplicador > 0.8 ? (
+      <div
+        style={{
+          marginLeft: 24,
+          fontSize: vertical ? 72 : 64,
+          fontWeight: 500,
+          letterSpacing: vertical ? "-2.52px" : "-2.66px",
+          lineHeight: 1,
+          color: modos.claro.tinta,
+          fontVariantNumeric: "tabular-nums",
+        }}
+      >
+        {Math.floor(multiplicador)}x mais
+      </div>
+    ) : null;
+
+  if (empilha) {
+    return (
+      <div style={{ ...entra(o, 18) }}>
         <div
           style={{
-            fontSize: 76,
-            fontWeight: 500,
-            letterSpacing: "-2.66px",
-            lineHeight: 1,
-            color: cor,
-            fontVariantNumeric: "tabular-nums",
+            fontSize: 32,
+            letterSpacing: "-1.12px",
+            color: modos.claro.apoio,
+            marginBottom: 18,
           }}
         >
-          {br(valor, 1)}%
+          {rotulo}
         </div>
-      ) : null}
-      {multiplicador !== undefined && multiplicador > 0.8 ? (
+        {barra}
+        {/* a altura fica reservada: o numero entra sem empurrar a base */}
         <div
           style={{
-            marginLeft: 24,
-            fontSize: 64,
-            fontWeight: 500,
-            letterSpacing: "-2.66px",
-            lineHeight: 1,
-            color: modos.claro.tinta,
-            fontVariantNumeric: "tabular-nums",
+            display: "flex",
+            alignItems: "baseline",
+            height: 96,
+            marginTop: 24,
           }}
         >
-          {Math.floor(multiplicador)}x mais
+          {numero}
+          {vezes}
         </div>
-      ) : null}
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ ...entra(o, 18) }}>
+      <div
+        style={{
+          fontSize: vertical ? 32 : 28,
+          letterSpacing: vertical ? "-1.12px" : "-0.98px",
+          color: modos.claro.apoio,
+          marginBottom: vertical ? 18 : 16,
+        }}
+      >
+        {rotulo}
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
+        {barra}
+        {numero}
+        {vezes}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 /**
  * A linha de base, colada no numero.
@@ -384,18 +516,24 @@ const Linha: React.FC<{
  * resultado sem contexto, base e metodo, e porque rodape solto no fim da cena
  * nao conta como base: quem le o numero tem que ler o recorte no mesmo olhar.
  */
-const Base: React.FC<{ texto: string; o: number }> = ({ texto, o }) => (
+const Base: React.FC<{
+  texto: string;
+  o: number;
+  vertical?: boolean;
+  /** No 9:16, a largura que para antes da coluna de botoes do app. */
+  largura?: number;
+}> = ({ texto, o, vertical = false, largura = 1180 }) => (
   <div
     style={{
-      marginTop: 40,
-      maxWidth: 1180,
+      marginTop: vertical ? 48 : 40,
+      maxWidth: vertical ? largura : 1180,
       opacity: o,
     }}
   >
     <div
       style={{
-        fontSize: 26,
-        letterSpacing: "-0.91px",
+        fontSize: vertical ? 30 : 26,
+        letterSpacing: vertical ? "-1.05px" : "-0.91px",
         lineHeight: 1.35,
         color: modos.claro.apoio,
         borderTop: "1px solid rgba(16,18,24,0.22)",

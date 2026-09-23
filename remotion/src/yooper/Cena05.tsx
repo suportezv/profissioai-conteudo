@@ -12,6 +12,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { wa, UI } from "../whatsapp";
 import { janela, entra, passo, br, s } from "../anim";
+import { useFormato } from "../formato";
 import { Sfx } from "../Sfx";
 import { Cursor, dash } from "./Painel";
 
@@ -72,8 +73,23 @@ const ACOES = [
 const BOTAO_X = 372;
 const BOTAO_Y = 706;
 
+/**
+ * A grade do 9:16, de cima para baixo na ordem em que a cena acontece: as tres
+ * acoes nomeadas, a conversa com o botao, o valor que muda e a linha de
+ * governanca. O efeito sai da coluna e mora fixo embaixo da conversa, porque
+ * empilhado no fim da lista ele desceria a cada acao nomeada.
+ */
+const V_CHAT_T = 566;
+const V_CHAT_ESCALA = 1.36;
+const V_EFEITO_T = 1140;
+const V_RODAPE_T = 1356;
+/** O botao Confirmar no 9:16: centro dele na conversa (145, 339) em escala. */
+const V_BOTAO_X = 72 + 150 * V_CHAT_ESCALA;
+const V_BOTAO_Y = V_CHAT_T + 342 * V_CHAT_ESCALA;
+
 export const Cena05: React.FC = () => {
   const f = useCurrentFrame();
+  const { vertical, M } = useFormato();
 
   const tela = janela(f, TELA_EM, CENA05_FRAMES, 12, 0);
   const gov = janela(f, GOV_EM, CENA05_FRAMES, 10, 0);
@@ -84,8 +100,12 @@ export const Cena05: React.FC = () => {
   // o ponteiro entra, caminha ate o botao e assenta nele
   const vaiAoBotao = passo(f, PRESSIONA_EM - s(1.1), PRESSIONA_EM);
   const cursorO = janela(f, PRESSIONA_EM - s(1.2), CONFIRMA_EM + s(0.6), 8, 8);
-  const cx = interpolate(vaiAoBotao, [0, 1], [700, BOTAO_X]);
-  const cy = interpolate(vaiAoBotao, [0, 1], [860, BOTAO_Y]);
+  const cx = vertical
+    ? interpolate(vaiAoBotao, [0, 1], [760, V_BOTAO_X])
+    : interpolate(vaiAoBotao, [0, 1], [700, BOTAO_X]);
+  const cy = vertical
+    ? interpolate(vaiAoBotao, [0, 1], [1260, V_BOTAO_Y])
+    : interpolate(vaiAoBotao, [0, 1], [860, BOTAO_Y]);
   // o clique: o botao afunda por 5 quadros
   const clique =
     f >= PRESSIONA_EM && f < PRESSIONA_EM + 5
@@ -98,6 +118,54 @@ export const Cena05: React.FC = () => {
   const meta = interpolate(mudou, [0, 1], [480, 540]);
   const realce = janela(f, MUDA_EM, MUDA_EM + s(1.6), 6, 16);
 
+  // o efeito: o valor do outro lado, que so muda depois do botao
+  const efeito =
+    cartao > 0.001 ? (
+      <div
+        style={{
+          width: vertical ? 868 : 620,
+          background: marca.branco,
+          border: `1px solid ${realce > 0.01 ? marca.azul : marca.linha}`,
+          borderRadius: marca.raio.painel,
+          boxShadow: marca.sombra.painel,
+          padding: "26px 30px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 14,
+          ...entra(cartao, 16),
+        }}
+      >
+        <div style={{ fontFamily: UI, fontSize: vertical ? 24 : 18, color: dash.apoio }}>
+          Meta de receita · setembro
+        </div>
+        <div
+          style={{
+            fontFamily: UI,
+            fontSize: vertical ? 62 : 46,
+            color: mudou > 0.02 ? marca.azul : dash.tinta,
+            fontVariantNumeric: "tabular-nums",
+          }}
+        >
+          R$ {br(meta, 0)} mil
+        </div>
+        <div style={{ height: 6, borderRadius: 3, background: dash.linha, overflow: "hidden" }}>
+          <div
+            style={{
+              height: "100%",
+              // **A barra é a própria meta, e ela sobe.** Antes ela
+              // mostrava o quanto do alvo já tinha sido atingido, então
+              // subir a meta encurtava a barra: o número crescia e o
+              // desenho diminuía, que é o oposto do que a cena afirma.
+              // Agora a largura é proporcional ao valor (540/480 = 1,125,
+              // e 72 × 1,125 = 81), então o desenho diz o que o número diz.
+              width: `${interpolate(mudou, [0, 1], [72, 81])}%`,
+              background: mudou > 0.02 ? marca.azul : dash.barraViva,
+            }}
+          />
+        </div>
+      </div>
+    ) : null;
+
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
       <Superficie modo="claro" halo />
@@ -106,7 +174,20 @@ export const Cena05: React.FC = () => {
       </Sequence>
 
       {/* a conversa, com a acao proposta e o botao */}
-      <div style={{ position: "absolute", left: MARGEM, top: 206, ...entra(tela, 20) }}>
+      <div
+        style={
+          vertical
+            ? {
+                position: "absolute",
+                left: M,
+                top: V_CHAT_T,
+                ...entra(tela, 20),
+                transform: `${entra(tela, 20).transform} scale(${V_CHAT_ESCALA})`,
+                transformOrigin: "left top",
+              }
+            : { position: "absolute", left: MARGEM, top: 206, ...entra(tela, 20) }
+        }
+      >
         <div
           style={{
             width: 620,
@@ -248,17 +329,17 @@ export const Cena05: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          left: 840,
-          top: 172,
-          width: 960,
+          left: vertical ? M : 840,
+          top: vertical ? 236 : 172,
+          width: vertical ? 936 : 960,
           display: "flex",
           flexDirection: "column",
-          gap: 34,
+          gap: vertical ? 28 : 34,
         }}
       >
         <div
           style={{
-            fontSize: 24,
+            fontSize: vertical ? 28 : 24,
             fontWeight: 500,
             letterSpacing: "2px",
             textTransform: "uppercase",
@@ -269,7 +350,7 @@ export const Cena05: React.FC = () => {
           Não só responde
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: vertical ? 14 : 18 }}>
           {ACOES.map((a) => {
             const o = janela(f, a.em, CENA05_FRAMES, 10, 0);
             if (o <= 0.001) return null;
@@ -284,9 +365,20 @@ export const Cena05: React.FC = () => {
                 }}
               >
                 <div
-                  style={{ width: 3, height: 30, borderRadius: 2, background: marca.azul }}
+                  style={{
+                    width: 3,
+                    height: vertical ? 38 : 30,
+                    borderRadius: 2,
+                    background: marca.azul,
+                  }}
                 />
-                <div style={{ fontSize: 42, fontWeight: 500, letterSpacing: "-1.47px" }}>
+                <div
+                  style={{
+                    fontSize: vertical ? 52 : 42,
+                    fontWeight: 500,
+                    letterSpacing: vertical ? "-1.82px" : "-1.47px",
+                  }}
+                >
                   {a.texto}
                 </div>
               </div>
@@ -294,62 +386,22 @@ export const Cena05: React.FC = () => {
           })}
         </div>
 
-        {/* o efeito: o valor do outro lado, que so muda depois do botao */}
-        {cartao > 0.001 ? (
-          <div
-            style={{
-              width: 620,
-              background: marca.branco,
-              border: `1px solid ${realce > 0.01 ? marca.azul : marca.linha}`,
-              borderRadius: marca.raio.painel,
-              boxShadow: marca.sombra.painel,
-              padding: "26px 30px",
-              display: "flex",
-              flexDirection: "column",
-              gap: 14,
-              ...entra(cartao, 16),
-            }}
-          >
-            <div style={{ fontFamily: UI, fontSize: 18, color: dash.apoio }}>
-              Meta de receita · setembro
-            </div>
-            <div
-              style={{
-                fontFamily: UI,
-                fontSize: 46,
-                color: mudou > 0.02 ? marca.azul : dash.tinta,
-                fontVariantNumeric: "tabular-nums",
-              }}
-            >
-              R$ {br(meta, 0)} mil
-            </div>
-            <div style={{ height: 6, borderRadius: 3, background: dash.linha, overflow: "hidden" }}>
-              <div
-                style={{
-                  height: "100%",
-                  // **A barra é a própria meta, e ela sobe.** Antes ela
-                  // mostrava o quanto do alvo já tinha sido atingido, então
-                  // subir a meta encurtava a barra: o número crescia e o
-                  // desenho diminuía, que é o oposto do que a cena afirma.
-                  // Agora a largura é proporcional ao valor (540/480 = 1,125,
-                  // e 72 × 1,125 = 81), então o desenho diz o que o número diz.
-                  width: `${interpolate(mudou, [0, 1], [72, 81])}%`,
-                  background: mudou > 0.02 ? marca.azul : dash.barraViva,
-                }}
-              />
-            </div>
-          </div>
-        ) : null}
+        {vertical ? null : efeito}
       </div>
+
+      {vertical && efeito ? (
+        <div style={{ position: "absolute", left: M, top: V_EFEITO_T }}>{efeito}</div>
+      ) : null}
 
       {/* o que a categoria pergunta depois, escrito antes de perguntarem */}
       {rodape > 0.001 ? (
         <div
           style={{
             position: "absolute",
-            left: 840,
-            right: MARGEM,
-            top: 840,
+            left: vertical ? M : 840,
+            // no 9:16 a metade de baixo evita a coluna de botoes do app
+            right: vertical ? 140 : MARGEM,
+            top: vertical ? V_RODAPE_T : 840,
             borderTop: "1px solid rgba(16,18,24,0.22)",
             paddingTop: 20,
             display: "flex",
@@ -358,10 +410,22 @@ export const Cena05: React.FC = () => {
             ...entra(rodape, 14),
           }}
         >
-          <div style={{ fontSize: 36, fontWeight: 500, letterSpacing: "-1.26px" }}>
+          <div
+            style={{
+              fontSize: vertical ? 40 : 36,
+              fontWeight: 500,
+              letterSpacing: vertical ? "-1.4px" : "-1.26px",
+            }}
+          >
             Nada muda sem confirmação explícita.
           </div>
-          <div style={{ fontSize: 24, letterSpacing: "-0.84px", color: m.apoio }}>
+          <div
+            style={{
+              fontSize: vertical ? 26 : 24,
+              letterSpacing: vertical ? "-0.91px" : "-0.84px",
+              color: m.apoio,
+            }}
+          >
             troca de conta dentro do WhatsApp · nenhum dado se mistura entre clientes
           </div>
         </div>

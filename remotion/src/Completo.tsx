@@ -208,6 +208,8 @@ export const Completo: React.FC = () => (
           rotulo="Por que ela começou"
           gcEm={3.0}
           gcDura={3.4}
+          // no 9:16 a janela vertical centra no rosto dela, em x ~1060 do bruto
+          foco={57}
           // um plano por oracao, cortado na primeira palavra dela (Scribe)
           planos={[
             // "Eu percebi que a conta nao fechava": medio, apresenta ela
@@ -243,6 +245,8 @@ export const Completo: React.FC = () => (
           // o arquivo dele mede -12,0 LUFS contra -18,7 da Anaclaudia e -19,5
           // da narracao: 0,45 e os -7 dB que poem os tres no mesmo nivel
           volume={0.45}
+          // no 9:16 a janela vertical centra no rosto dele, em x ~1270 do bruto
+          foco={72}
         />
       </Series.Sequence>
 
@@ -275,6 +279,11 @@ export const Completo: React.FC = () => (
             // clipe (a janela em que o audio toca): fonte (820, 880) no plano
             // de 1080x1294, que vai para o quadro por 0,8346x + 509,5
             ponta: { x: 1190, y: 735 },
+            // no 9:16 o plano ocupa o quadro com a janela colada a esquerda,
+            // o que deixa a ilustracao da EITA de fora e o rosto dela inteiro
+            // (x 146 a 681 do bruto); a ponta foi remedida nesse quadro, no
+            // ponto em que a borda de cima do celular chega perto da borda
+            vertical: { foco: 0, ponta: { x: 990, y: 1318 } },
           }}
         />
       </Series.Sequence>

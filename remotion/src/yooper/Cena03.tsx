@@ -12,6 +12,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { wa, UI } from "../whatsapp";
 import { janela, entra, passo, s } from "../anim";
+import { useFormato } from "../formato";
 import { Sfx } from "../Sfx";
 import { dash } from "./Painel";
 
@@ -103,13 +104,56 @@ const FAN_L = CHIP_L + CHIP_W;
 const FAN_W = NO_L - FAN_L;
 
 /** Ponto da cubica no parametro t, para o pulso viajar em cima da curva. */
-const naCurva = (t: number, y0: number): [number, number] => {
+const naCurva = (
+  t: number,
+  y0: number,
+  FAN_W: number,
+  EIXO: number,
+): [number, number] => {
   const u = 1 - t;
   const x =
     3 * u * u * t * (FAN_W * 0.5) + 3 * u * t * t * (FAN_W * 0.5) + t * t * t * FAN_W;
   const yv = u * u * u * y0 + 3 * u * u * t * y0 + 3 * u * t * t * EIXO + t * t * t * EIXO;
   return [x, yv];
 };
+
+/** A grade do 16:9, a aprovada. */
+const GRADE_H = {
+  CHIP_L,
+  CHIP_W,
+  NO_L,
+  NO_W,
+  EIXO,
+  LINHA_ALT,
+  FAN_L,
+  FAN_W,
+  CHIP_FONTE: 36,
+};
+
+/**
+ * A grade do 9:16. O titulo fica no alto, o leque ocupa o meio com as fontes
+ * a esquerda convergindo no no a direita, e a conversa entra **embaixo** do
+ * no, ligada a ele por uma linha vertical, em vez de ao lado. A ordem de
+ * leitura continua a mesma: fontes, base, canal.
+ */
+const V_CHIP_L = 72;
+const V_CHIP_W = 380;
+const V_NO_L = 656;
+const GRADE_V = {
+  CHIP_L: V_CHIP_L,
+  CHIP_W: V_CHIP_W,
+  NO_L: V_NO_L,
+  NO_W: 284,
+  EIXO: 834,
+  LINHA_ALT: 104,
+  FAN_L: V_CHIP_L + V_CHIP_W,
+  FAN_W: V_NO_L - V_CHIP_L - V_CHIP_W,
+  CHIP_FONTE: 42,
+};
+/** A conversa do 9:16: mesma largura base maior, em escala. */
+const V_PAINEL_T = 1104;
+const V_PAINEL_W = 690;
+const V_PAINEL_ESCALA = 1.25;
 
 const Cilindro: React.FC = () => (
   <svg width="30" height="34" viewBox="0 0 30 34">
@@ -157,6 +201,9 @@ const Digitando: React.FC<{ o: number }> = ({ o }) => {
 
 export const Cena03: React.FC = () => {
   const f = useCurrentFrame();
+  const { vertical, M } = useFormato();
+  const G = vertical ? GRADE_V : GRADE_H;
+  const { CHIP_L, CHIP_W, NO_L, NO_W, EIXO, LINHA_ALT, FAN_L, FAN_W } = G;
 
   const titulo = janela(f, TITULO_EM, CENA03_FRAMES, 12, 0);
   const canal = janela(f, PAINEL_EM, CENA03_FRAMES, 12, 0);
@@ -177,10 +224,17 @@ export const Cena03: React.FC = () => {
       </Sequence>
 
       {/* o titulo fica no alto e nao sai: e o enunciado da cena inteira */}
-      <div style={{ position: "absolute", left: CHIP_L, top: 118, ...entra(titulo, 18) }}>
+      <div
+        style={{
+          position: "absolute",
+          left: CHIP_L,
+          top: vertical ? 236 : 118,
+          ...entra(titulo, 18),
+        }}
+      >
         <div
           style={{
-            fontSize: 24,
+            fontSize: vertical ? 28 : 24,
             fontWeight: 500,
             letterSpacing: "2px",
             textTransform: "uppercase",
@@ -192,11 +246,11 @@ export const Cena03: React.FC = () => {
         <div
           style={{
             marginTop: 18,
-            fontSize: 54,
+            fontSize: vertical ? 64 : 54,
             fontWeight: 500,
-            letterSpacing: "-1.89px",
+            letterSpacing: vertical ? "-2.24px" : "-1.89px",
             lineHeight: 1.18,
-            maxWidth: 940,
+            maxWidth: vertical ? 936 : 940,
           }}
         >
           Um agente{" "}
@@ -210,7 +264,7 @@ export const Cena03: React.FC = () => {
       {/* o leque de linhas: uma cubica por fonte, todas entrando no mesmo no */}
       <svg
         width={FAN_W}
-        height={1080}
+        height={vertical ? 1920 : 1080}
         style={{ position: "absolute", left: FAN_L, top: 0 }}
       >
         {FONTES.map((fo, i) => {
@@ -241,14 +295,14 @@ export const Cena03: React.FC = () => {
         // o pulso so existe em "na mesma base": ate la nao ha convergencia
         const pulso = Math.max(0, Math.min(1, converge * 1.3 - i * 0.06));
         const anda = converge > 0.02 && converge < 0.999;
-        const [px, py] = naCurva(pulso, y);
+        const [px, py] = naCurva(pulso, y, FAN_W, EIXO);
         return (
           <div key={fo.texto}>
             <div
               style={{
                 position: "absolute",
                 left: CHIP_L,
-                top: y - 26,
+                top: y - (vertical ? 30 : 26),
                 width: CHIP_W,
                 display: "flex",
                 alignItems: "center",
@@ -265,7 +319,13 @@ export const Cena03: React.FC = () => {
                   opacity: 0.4 + converge * 0.6,
                 }}
               />
-              <div style={{ fontSize: 36, fontWeight: 500, letterSpacing: "-1.26px" }}>
+              <div
+                style={{
+                  fontSize: G.CHIP_FONTE,
+                  fontWeight: 500,
+                  letterSpacing: vertical ? "-1.47px" : "-1.26px",
+                }}
+              >
                 {fo.texto}
               </div>
             </div>
@@ -330,7 +390,7 @@ export const Cena03: React.FC = () => {
       ) : null}
 
       {/* do no para o canal, e a linha so existe junto com o canal */}
-      {canal > 0.001 ? (
+      {canal > 0.001 && !vertical ? (
         <div
           style={{
             position: "absolute",
@@ -345,22 +405,49 @@ export const Cena03: React.FC = () => {
           }}
         />
       ) : null}
+      {/* no 9:16 o canal fica embaixo do no, e a linha desce ate ele */}
+      {canal > 0.001 && vertical ? (
+        <div
+          style={{
+            position: "absolute",
+            left: NO_L + NO_W / 2,
+            top: EIXO + 96,
+            width: 1,
+            height: V_PAINEL_T - EIXO - 96,
+            background: marca.linha,
+            transformOrigin: "top",
+            transform: `scaleY(${passo(f, PAINEL_EM, PAINEL_EM + 12)})`,
+            opacity: canal,
+          }}
+        />
+      ) : null}
 
       {/* a conversa: entra vazia e so recebe conteudo no fim */}
       {canal > 0.001 ? (
         <div
-          style={{
-            position: "absolute",
-            left: PAINEL_L,
-            top: 336,
-            transformOrigin: "left center",
-            transform: `scale(${interpolate(canal, [0, 1], [0.86, 1])})`,
-            opacity: canal,
-          }}
+          style={
+            vertical
+              ? {
+                  position: "absolute",
+                  left: M,
+                  top: V_PAINEL_T,
+                  transformOrigin: "left top",
+                  transform: `scale(${V_PAINEL_ESCALA * interpolate(canal, [0, 1], [0.86, 1])})`,
+                  opacity: canal,
+                }
+              : {
+                  position: "absolute",
+                  left: PAINEL_L,
+                  top: 336,
+                  transformOrigin: "left center",
+                  transform: `scale(${interpolate(canal, [0, 1], [0.86, 1])})`,
+                  opacity: canal,
+                }
+          }
         >
           <div
             style={{
-              width: PAINEL_W,
+              width: vertical ? V_PAINEL_W : PAINEL_W,
               background: wa.fundoChat,
               borderRadius: marca.raio.arte,
               overflow: "hidden",
@@ -391,7 +478,9 @@ export const Cena03: React.FC = () => {
             <div
               style={{
                 padding: 22,
-                height: 264,
+                // no 9:16 a coluna e mais baixa: a conversa mora embaixo do
+                // no e precisa fechar antes da faixa de interface do app
+                height: vertical ? 232 : 264,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "flex-end",

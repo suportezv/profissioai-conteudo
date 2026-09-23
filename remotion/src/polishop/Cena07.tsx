@@ -11,6 +11,7 @@ import { Superficie } from "../Superficie";
 import { janela, entra, passo, s } from "../anim";
 import { Sfx } from "../Sfx";
 import { Painel, Balao, BalaoFoto, Digitando } from "./Conversa";
+import { useFormato } from "../formato";
 
 /**
  * Cena 07 do case Polishop: a personalidade.
@@ -54,6 +55,35 @@ export const Cena07: React.FC = () => {
   const v = (em: number) => janela(f, em, CENA07_FRAMES, 9, 0);
   const dig = (em: number) =>
     f >= em - s(0.45) && f < em ? passo(f, em - s(0.45), em - s(0.45) + 5) : 0;
+  const { vertical, M, seguro } = useFormato();
+
+  // A conversa e a mesma nos dois quadros: so o painel em volta dela muda.
+  const conversa = (
+    <>
+      {v(PERGUNTA_EM) > 0.001 ? (
+        <Balao o={v(PERGUNTA_EM)} saida>
+          posso botar a picanha a 200 graus?
+        </Balao>
+      ) : null}
+      {dig(OPINIAO_EM) > 0.001 ? <Digitando o={dig(OPINIAO_EM)} /> : null}
+      {v(OPINIAO_EM) > 0.001 ? (
+        <Balao o={v(OPINIAO_EM)}>
+          Pode, mas eu não faria. A 200 a capa de gordura queima antes do
+          miolo chegar no ponto. Começa a 180 com a gordura pra cima, e
+          sobe só nos últimos 4 minutos pra dourar.
+        </Balao>
+      ) : null}
+      {v(FOTO_EM) > 0.001 ? (
+        <BalaoFoto o={v(FOTO_EM)} arquivo="prato.jpg" saida legenda="olha só" />
+      ) : null}
+      {v(FESTA_EM) > 0.001 ? (
+        <Balao o={v(FESTA_EM)}>
+          Ficou linda! Essa crosta é exatamente o ponto. Da próxima deixa
+          descansar 5 minutos antes de cortar.
+        </Balao>
+      ) : null}
+    </>
+  );
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -62,32 +92,67 @@ export const Cena07: React.FC = () => {
         <Audio src={staticFile("locucao-polishop/cena-07.mp3")} />
       </Sequence>
 
+      {/* No 9:16 a tese sobe para o alto da faixa segura e a conversa ocupa o
+          resto dela, na largura de um celular. As posicoes sao fixas: o texto
+          de apoio entra aos 4 s e nao pode empurrar o painel. */}
+      {vertical ? (
+        <>
+          <div style={{ position: "absolute", left: M, top: 236, width: 1080 - 2 * M }}>
+            <div
+              style={{
+                fontSize: 28,
+                fontWeight: 500,
+                letterSpacing: "2px",
+                textTransform: "uppercase",
+                color: marca.azul,
+                opacity: janela(f, s(0.5), CENA07_FRAMES, 10, 0),
+              }}
+            >
+              Conversa de chef
+            </div>
+            <div
+              style={{
+                marginTop: 22,
+                fontSize: 76,
+                fontWeight: 500,
+                letterSpacing: "-2.66px",
+                lineHeight: 1.18,
+                opacity: janela(f, s(1.58), CENA07_FRAMES, 11, 0),
+              }}
+            >
+              Não é um
+              <br />
+              <span style={{ color: marca.azul }}>catálogo de receitas.</span>
+            </div>
+            <div
+              style={{
+                marginTop: 24,
+                fontSize: 34,
+                letterSpacing: "-1.19px",
+                lineHeight: 1.25,
+                color: m.apoio,
+                borderTop: "1px solid rgba(16,18,24,0.22)",
+                paddingTop: 18,
+                ...entra(janela(f, s(4.0), CENA07_FRAMES, 12, 0), 14),
+              }}
+            >
+              ele dá opinião que ninguém pediu, e é isso que um chef faz
+            </div>
+          </div>
+          <div style={{ position: "absolute", left: M, top: 690 }}>
+            <Painel largura={1080 - M - seguro.direita} altura={642} o={tela}>
+              {conversa}
+            </Painel>
+          </div>
+        </>
+      ) : null}
+
+      {!vertical ? (
       <AbsoluteFill
         style={{ padding: MARGEM, flexDirection: "row", alignItems: "center", gap: 76 }}
       >
         <Painel largura={720} altura={620} o={tela}>
-          {v(PERGUNTA_EM) > 0.001 ? (
-            <Balao o={v(PERGUNTA_EM)} saida>
-              posso botar a picanha a 200 graus?
-            </Balao>
-          ) : null}
-          {dig(OPINIAO_EM) > 0.001 ? <Digitando o={dig(OPINIAO_EM)} /> : null}
-          {v(OPINIAO_EM) > 0.001 ? (
-            <Balao o={v(OPINIAO_EM)}>
-              Pode, mas eu não faria. A 200 a capa de gordura queima antes do
-              miolo chegar no ponto. Começa a 180 com a gordura pra cima, e
-              sobe só nos últimos 4 minutos pra dourar.
-            </Balao>
-          ) : null}
-          {v(FOTO_EM) > 0.001 ? (
-            <BalaoFoto o={v(FOTO_EM)} arquivo="prato.jpg" saida legenda="olha só" />
-          ) : null}
-          {v(FESTA_EM) > 0.001 ? (
-            <Balao o={v(FESTA_EM)}>
-              Ficou linda! Essa crosta é exatamente o ponto. Da próxima deixa
-              descansar 5 minutos antes de cortar.
-            </Balao>
-          ) : null}
+          {conversa}
         </Painel>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 28, flex: 1 }}>
@@ -130,6 +195,7 @@ export const Cena07: React.FC = () => {
           </div>
         </div>
       </AbsoluteFill>
+      ) : null}
 
       <Sfx som="pop" em={PERGUNTA_EM} volume={0.16} />
       <Sfx som="recebido" em={OPINIAO_EM} volume={0.18} />

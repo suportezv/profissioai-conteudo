@@ -10,6 +10,7 @@ import { marca, modos } from "./marca";
 import { Superficie } from "./Superficie";
 import { janela, entra, conta, br, s, tiquesDaContagem } from "./anim";
 import { Sfx } from "./Sfx";
+import { useFormato } from "./formato";
 
 /**
  * Cena 08 do case: o que aconteceu, em numero.
@@ -85,6 +86,10 @@ const DADOS: Dado[] = [
 
 export const Cena08: React.FC = () => {
   const f = useCurrentFrame();
+  // No 9:16 o numero cresce e centra na faixa segura, nao no quadro: um
+  // numero por vez ja e uma composicao vertical, so precisa ocupar a altura.
+  const { vertical, H, M, seguro } = useFormato();
+  const X = vertical ? M : MARGEM;
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -93,7 +98,12 @@ export const Cena08: React.FC = () => {
         <Audio src={staticFile("locucao/cena-08.mp3")} />
       </Sequence>
 
-      <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
+      <AbsoluteFill
+        style={{
+          padding: vertical ? `${seguro.topo}px ${M}px ${H - seguro.base}px` : MARGEM,
+          justifyContent: "center",
+        }}
+      >
         {DADOS.map((d, i) => {
           const ultimo = i === DADOS.length - 1;
           const o = janela(f, d.entra, d.sai, 14, ultimo ? 0 : 12);
@@ -104,19 +114,19 @@ export const Cena08: React.FC = () => {
               key={d.titulo}
               style={{
                 position: "absolute",
-                left: MARGEM,
-                right: MARGEM,
+                left: X,
+                right: X,
                 display: "flex",
                 flexDirection: "column",
-                gap: 20,
+                gap: vertical ? 28 : 20,
                 ...entra(o, 24),
               }}
             >
               <div
                 style={{
-                  fontSize: 200,
+                  fontSize: vertical ? 220 : 200,
                   fontWeight: 500,
-                  letterSpacing: "-7px",
+                  letterSpacing: vertical ? "-7.7px" : "-7px",
                   lineHeight: 1,
                   color: marca.azul,
                   fontVariantNumeric: "tabular-nums",
@@ -129,9 +139,9 @@ export const Cena08: React.FC = () => {
               </div>
               <div
                 style={{
-                  fontSize: 52,
+                  fontSize: vertical ? 64 : 52,
                   fontWeight: 500,
-                  letterSpacing: "-1.82px",
+                  letterSpacing: vertical ? "-2.24px" : "-1.82px",
                   lineHeight: 1.15,
                 }}
               >
@@ -140,12 +150,12 @@ export const Cena08: React.FC = () => {
               {/* a base anda junto do numero, nunca num rodape solto */}
               <div
                 style={{
-                  fontSize: 26,
-                  letterSpacing: "-0.91px",
+                  fontSize: vertical ? 30 : 26,
+                  letterSpacing: vertical ? "-1.05px" : "-0.91px",
                   color: m.apoio,
                   borderTop: `1px solid ${marca.linha}`,
-                  paddingTop: 16,
-                  maxWidth: 760,
+                  paddingTop: vertical ? 20 : 16,
+                  maxWidth: vertical ? undefined : 760,
                 }}
               >
                 {d.base}

@@ -11,6 +11,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { janela, entra, s } from "../anim";
 import { Sfx } from "../Sfx";
+import { useFormato } from "../formato";
 
 /**
  * Cena 09 do case Soldiers: o encerramento.
@@ -65,6 +66,16 @@ const ASSINA_EM = s(3.5);
 
 export const Cena09: React.FC = () => {
   const f = useCurrentFrame();
+  /**
+   * No 9:16 a tese quebra em mais linhas e maior, e a faixa escura da
+   * assinatura fica em pe: a Soldiers em cima, a regua de 1 px deitada, a
+   * Profissio embaixo. A ordem de leitura continua a mesma (anunciante, depois
+   * coautora), so que de cima para baixo.
+   */
+  const { vertical, M, H, seguro } = useFormato();
+  const PAD = vertical
+    ? `${seguro.topo}px ${M}px ${H - seguro.base}px`
+    : MARGEM;
 
   const tese = janela(f, s(0.3), ASSINA_EM, 10, 9);
   const assina = janela(f, ASSINA_EM, CENA09_FRAMES, 11, 0);
@@ -77,13 +88,13 @@ export const Cena09: React.FC = () => {
       </Sequence>
 
       {tese > 0.001 ? (
-        <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
+        <AbsoluteFill style={{ padding: PAD, justifyContent: "center" }}>
           <div
             style={{
-              fontSize: 76,
+              fontSize: vertical ? 92 : 76,
               fontWeight: 500,
-              letterSpacing: "-2.66px",
-              lineHeight: 1.16,
+              letterSpacing: vertical ? "-3.22px" : "-2.66px",
+              lineHeight: vertical ? 1.12 : 1.16,
               maxWidth: 1400,
               ...entra(tese, 20),
             }}
@@ -98,7 +109,7 @@ export const Cena09: React.FC = () => {
       {assina > 0.001 ? (
         <AbsoluteFill
           style={{
-            padding: MARGEM,
+            padding: PAD,
             alignItems: "center",
             justifyContent: "center",
             ...entra(assina, 20),
@@ -110,28 +121,29 @@ export const Cena09: React.FC = () => {
               background: marca.tinta,
               borderRadius: marca.raio.arte,
               boxShadow: marca.sombra.painel,
-              padding: "72px 110px",
+              padding: vertical ? "96px 72px" : "72px 110px",
               display: "flex",
+              flexDirection: vertical ? "column" : "row",
               alignItems: "center",
-              gap: 96,
+              gap: vertical ? 72 : 96,
             }}
           >
             <Img
               src={staticFile("marca-soldiers/soldiers-branco.png")}
-              style={{ height: 150, width: "auto", display: "block" }}
+              style={{ height: vertical ? 200 : 150, width: "auto", display: "block" }}
             />
 
             <div
               style={{
-                width: 1,
-                height: 150,
+                width: vertical ? 600 : 1,
+                height: vertical ? 1 : 150,
                 background: "rgba(255,255,255,0.22)",
               }}
             />
 
             <Img
               src={staticFile("marca/profissio-ai-branco.svg")}
-              style={{ width: 460, height: "auto", display: "block" }}
+              style={{ width: vertical ? 600 : 460, height: "auto", display: "block" }}
             />
           </div>
         </AbsoluteFill>

@@ -13,17 +13,9 @@ import { Superficie } from "../Superficie";
 import { wa, UI } from "../whatsapp";
 import { janela, entra, passo, s, SUAVE } from "../anim";
 import { Sfx } from "../Sfx";
-import {
-  QR,
-  QR_TAM,
-  MOTOR_L,
-  MOTOR_T,
-  MOTOR_W,
-  FIO_Y,
-  FIO_L,
-  SOQUETE_Y,
-} from "./QR";
-import { Airfryer, AF_L, AF_T, AF_W, afimNaTampa, css } from "./Airfryer";
+import { useFormato } from "../formato";
+import { QR, geoPorta, menuTam } from "./QR";
+import { Airfryer, afimNaTampa, css } from "./Airfryer";
 import { Cabecalho } from "./Cabecalho";
 import { AvatarChef } from "./Conversa";
 
@@ -106,14 +98,28 @@ const MENU = [
   "4 · Voltar ao início",
 ];
 
-const NA_TAMPA = afimNaTampa(QR_TAM, AF_L, AF_T, AF_W);
-
-/** Altura do painel antigo, e a do soquete dentro dele. */
-const PAINEL_ALT = SOQUETE_Y - MOTOR_T + 245;
-const ZAP_ALT = 356;
-
 export const Cena03: React.FC = () => {
   const f = useCurrentFrame();
+  // A geometria vem do `QR.tsx`, a mesma da cena 02: no 9:16 o motor fica no
+  // meio, o aparelho embaixo, e o fio sobe do codigo ate o soquete. A altura
+  // do painel antigo e a do soquete dentro dele saem de la tambem.
+  const { vertical, W, H } = useFormato();
+  const g = geoPorta(vertical);
+  const mt = menuTam(vertical);
+  const NA_TAMPA = afimNaTampa(g.qrTam, g.afL, g.afT, g.afW);
+  const QR_TAM = g.qrTam;
+  const MOTOR_L = g.motorL;
+  const MOTOR_T = g.motorT;
+  const MOTOR_W = g.motorW;
+  const SOQUETE_Y = g.soqueteY;
+  const PAINEL_ALT = g.painelAlt;
+  const ZAP_ALT = g.zapAlt;
+  const [ax, ay] = g.fioA;
+  const [bx, by] = g.fioB;
+  // o motor novo no 9:16: conversa em corpo de celular, nao de monitor
+  const zt = vertical
+    ? { barra: "20px 28px", avatar: 62, nome: 32, pad: 28, col: 520 - 102 - 56, msg: 31, msgW: 800 }
+    : { barra: "16px 24px", avatar: 46, nome: 23, pad: 24, col: 230, msg: 22, msgW: 620 };
 
   // o ano rola: a cena abre no 2023 da cena anterior
   const rola = passo(f, ANO_EM + s(0.28), ANO_EM + s(1.1));
@@ -172,7 +178,7 @@ export const Cena03: React.FC = () => {
       />
 
       {/* a porta: mesmo aparelho, mesmo adesivo, mesmo pixel da cena 02 */}
-      <Airfryer esq={AF_L} topo={AF_T} larg={AF_W} />
+      <Airfryer esq={g.afL} topo={g.afT} larg={g.afW} />
       <div
         style={{
           position: "absolute",
@@ -221,22 +227,22 @@ export const Cena03: React.FC = () => {
 
       {/* o fio, e o pulso que viaja nele enquanto o soquete espera */}
       <svg
-        width={1920}
-        height={1080}
+        width={W}
+        height={H}
         style={{ position: "absolute", left: 0, top: 0, pointerEvents: "none" }}
       >
         <line
-          x1={FIO_L}
-          y1={FIO_Y}
-          x2={MOTOR_L}
-          y2={SOQUETE_Y}
+          x1={ax}
+          y1={ay}
+          x2={bx}
+          y2={by}
           stroke={corFio}
           strokeWidth="1"
         />
         {pulsando ? (
           <circle
-            cx={FIO_L + (MOTOR_L - FIO_L) * pulso}
-            cy={FIO_Y + (SOQUETE_Y - FIO_Y) * pulso}
+            cx={ax + (bx - ax) * pulso}
+            cy={ay + (by - ay) * pulso}
             r={5}
             fill={marca.azul}
             opacity={interpolate(ciclo, [0, 0.08, 0.86, 1], [0, 1, 1, 0])}
@@ -270,7 +276,7 @@ export const Cena03: React.FC = () => {
             style={{
               background: "#EDEFF3",
               borderBottom: `1px solid ${marca.linha}`,
-              padding: "14px 20px",
+              padding: mt.barra,
               display: "flex",
               alignItems: "center",
               gap: 10,
@@ -278,7 +284,10 @@ export const Cena03: React.FC = () => {
             }}
           >
             {[0, 1, 2].map((i) => (
-              <div key={i} style={{ width: 12, height: 12, borderRadius: 6, background: "#D9DDE4" }} />
+              <div
+                key={i}
+                style={{ width: mt.ponto, height: mt.ponto, borderRadius: mt.ponto / 2, background: "#D9DDE4" }}
+              />
             ))}
             <div
               style={{
@@ -286,9 +295,9 @@ export const Cena03: React.FC = () => {
                 marginLeft: 12,
                 background: marca.branco,
                 borderRadius: 8,
-                padding: "7px 14px",
+                padding: mt.urlPad,
                 fontFamily: UI,
-                fontSize: 16,
+                fontSize: mt.url,
                 color: "#8A93A1",
               }}
             >
@@ -298,14 +307,14 @@ export const Cena03: React.FC = () => {
 
           <div
             style={{
-              padding: 30,
+              padding: mt.pad,
               display: "flex",
               flexDirection: "column",
-              gap: 14,
+              gap: mt.gap,
               opacity: esvazia,
             }}
           >
-            <div style={{ fontFamily: UI, fontSize: 21, color: "#4A5364" }}>
+            <div style={{ fontFamily: UI, fontSize: mt.titulo, color: "#4A5364" }}>
               Escolha uma opção:
             </div>
             {MENU.map((item, i) => {
@@ -317,10 +326,10 @@ export const Cena03: React.FC = () => {
                   key={item}
                   style={{
                     border: `1px solid ${marca.linha}`,
-                    borderRadius: 10,
-                    padding: "14px 18px",
+                    borderRadius: mt.itemRaio,
+                    padding: mt.itemPad,
                     fontFamily: UI,
-                    fontSize: 21,
+                    fontSize: mt.item,
                     color: "#4A5364",
                     opacity: 1 - some,
                     transform: `translateX(${some * 34}px)`,
@@ -334,10 +343,10 @@ export const Cena03: React.FC = () => {
               style={{
                 marginTop: 6,
                 border: `1px dashed ${marca.linha}`,
-                borderRadius: 10,
-                padding: "14px 18px",
+                borderRadius: mt.itemRaio,
+                padding: mt.itemPad,
                 fontFamily: UI,
-                fontSize: 20,
+                fontSize: mt.campo,
                 color: "#A7AEBA",
                 opacity: 1 - passo(f, DESMONTA_EM, DESMONTA_EM + 9),
               }}
@@ -406,25 +415,25 @@ export const Cena03: React.FC = () => {
           <div
             style={{
               background: wa.barra,
-              padding: "16px 24px",
+              padding: zt.barra,
               display: "flex",
               alignItems: "center",
               gap: 16,
               opacity: zap,
             }}
           >
-            <AvatarChef tam={46} />
-            <div style={{ fontFamily: UI, fontSize: 23, color: wa.texto, opacity: nome }}>
+            <AvatarChef tam={zt.avatar} />
+            <div style={{ fontFamily: UI, fontSize: zt.nome, color: wa.texto, opacity: nome }}>
               AIChef
             </div>
           </div>
 
           <div
             style={{
-              padding: 24,
+              padding: zt.pad,
               // a coluna acompanha o conteudo: alta demais ela abre um
               // retangulo preto vazio por cima das mensagens
-              height: 230,
+              height: zt.col,
               display: "flex",
               flexDirection: "column",
               justifyContent: "flex-end",
@@ -435,13 +444,13 @@ export const Cena03: React.FC = () => {
               <div
                 style={{
                   alignSelf: "flex-start",
-                  maxWidth: 620,
+                  maxWidth: zt.msgW,
                   background: wa.balaoEntrada,
                   borderRadius: 18,
                   borderTopLeftRadius: 5,
-                  padding: "14px 18px",
+                  padding: vertical ? "18px 24px" : "14px 18px",
                   fontFamily: UI,
-                  fontSize: 22,
+                  fontSize: zt.msg,
                   color: wa.texto,
                   lineHeight: 1.4,
                   ...entra(msg, 12),
@@ -458,9 +467,9 @@ export const Cena03: React.FC = () => {
                   background: wa.balaoSaida,
                   borderRadius: 18,
                   borderTopRightRadius: 5,
-                  padding: "13px 17px",
+                  padding: vertical ? "17px 23px" : "13px 17px",
                   fontFamily: UI,
-                  fontSize: 22,
+                  fontSize: zt.msg,
                   color: wa.texto,
                   ...entra(resposta, 12),
                 }}
@@ -477,9 +486,13 @@ export const Cena03: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            left: MOTOR_L,
-            top: SOQUETE_Y + ZAP_ALT / 2 + 48,
+            // no 9:16 os tres "sem" descem para a coluna a direita do aparelho,
+            // empilhados, no lugar em que a cena 02 desenhou a curva
+            left: vertical ? 540 : MOTOR_L,
+            top: vertical ? 1200 : SOQUETE_Y + ZAP_ALT / 2 + 48,
             display: "flex",
+            flexDirection: vertical ? "column" : undefined,
+            alignItems: vertical ? "flex-start" : undefined,
             gap: 14,
             ...entra(chips, 14),
           }}
@@ -491,9 +504,9 @@ export const Cena03: React.FC = () => {
                 border: `1px solid ${marca.linha}`,
                 background: marca.branco,
                 borderRadius: 999,
-                padding: "12px 22px",
-                fontSize: 24,
-                letterSpacing: "-0.84px",
+                padding: vertical ? "14px 26px" : "12px 22px",
+                fontSize: vertical ? 30 : 24,
+                letterSpacing: vertical ? "-1.05px" : "-0.84px",
                 color: m.apoio,
                 opacity: passo(f, CHIPS_EM + i * 5, CHIPS_EM + i * 5 + 10),
               }}

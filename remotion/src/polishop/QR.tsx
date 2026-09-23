@@ -1,5 +1,6 @@
 import React from "react";
 import { marca } from "../marca";
+import { AF_L, AF_T, AF_W, alturaDoCodigo } from "./Airfryer";
 
 /**
  * Um QR code recriado, desenhado em SVG.
@@ -73,6 +74,129 @@ export const FIO_L = 540;
  * obrigaria uma das duas a mentir sobre onde está.
  */
 export const SOQUETE_Y = 481;
+
+/**
+ * A geometria da porta e do motor, nos dois quadros.
+ *
+ * No 16:9 ela e literalmente as constantes acima, sem nenhum numero novo: a
+ * versao horizontal e final e nao pode andar um pixel. No 9:16 a cena deixa
+ * de ser "porta a esquerda, motor a direita" e vira **empilhada**:
+ *
+ * - o cabecalho no alto da faixa segura, como antes;
+ * - o motor no meio, na largura util inteira (72 a 1008);
+ * - o aparelho embaixo, a esquerda, com o codigo na tampa;
+ * - e o fio **sobe** do codigo ate o centro do painel, que e onde o soquete
+ *   fica quando o motor antigo e desmontado. O painel e desenhado por cima do
+ *   fio, entao enquanto ele existe so se ve o trecho entre o painel e a tampa,
+ *   e quando ele se fecha o fio inteiro aparece chegando no soquete: a porta
+ *   continua ligada ao lugar do motor, que e o argumento da cena 03.
+ *
+ * A direita do aparelho sobra uma coluna (540 a 940, fora dos 140 px de
+ * botoes do app) que recebe a curva do engajamento na cena 02 e os tres
+ * "sem" na cena 03.
+ *
+ * O fio sai do topo do codigo e nao do centro, porque o codigo e desenhado por
+ * cima e o fio que some atras da etiqueta lia como risco solto.
+ */
+export type GeoPorta = {
+  qrL: number;
+  qrT: number;
+  qrTam: number;
+  motorL: number;
+  motorT: number;
+  motorW: number;
+  soqueteY: number;
+  /** Altura do painel antigo: o soquete e o centro dele. */
+  painelAlt: number;
+  zapAlt: number;
+  /** As duas pontas do fio: a da porta e a do soquete. */
+  fioA: [number, number];
+  fioB: [number, number];
+  afL: number;
+  afT: number;
+  afW: number;
+};
+
+const GEO_H: GeoPorta = {
+  qrL: QR_L,
+  qrT: QR_T,
+  qrTam: QR_TAM,
+  motorL: MOTOR_L,
+  motorT: MOTOR_T,
+  motorW: MOTOR_W,
+  soqueteY: SOQUETE_Y,
+  painelAlt: SOQUETE_Y - MOTOR_T + 245,
+  zapAlt: 356,
+  fioA: [FIO_L, FIO_Y],
+  fioB: [MOTOR_L, SOQUETE_Y],
+  afL: AF_L,
+  afT: AF_T,
+  afW: AF_W,
+};
+
+const AF_L_V = 72;
+const AF_T_V = 1170;
+const AF_W_V = 420;
+const MOTOR_T_V = 490;
+const PAINEL_ALT_V = 620;
+const SOQUETE_Y_V = MOTOR_T_V + PAINEL_ALT_V / 2;
+/** Centro do codigo na tampa, e o topo dele (a etiqueta achatada tem ~36 px). */
+const CODIGO_X_V = AF_L_V + AF_W_V * (233 / 449);
+const CODIGO_TOPO_V = alturaDoCodigo(AF_T_V, AF_W_V) - 20;
+const QR_TAM_V = 260;
+
+const GEO_V: GeoPorta = {
+  qrL: Math.round(CODIGO_X_V - QR_TAM_V / 2),
+  qrT: 760,
+  qrTam: QR_TAM_V,
+  motorL: 72,
+  motorT: MOTOR_T_V,
+  motorW: 936,
+  soqueteY: SOQUETE_Y_V,
+  painelAlt: PAINEL_ALT_V,
+  zapAlt: 520,
+  fioA: [CODIGO_X_V, CODIGO_TOPO_V],
+  fioB: [CODIGO_X_V, SOQUETE_Y_V],
+  afL: AF_L_V,
+  afT: AF_T_V,
+  afW: AF_W_V,
+};
+
+export const geoPorta = (vertical: boolean): GeoPorta => (vertical ? GEO_V : GEO_H);
+
+/**
+ * Os tamanhos do painel de 2023 (a pagina com menu numerado), que as cenas 02
+ * e 03 desenham cada uma: o corte entre elas passa com o painel parado, entao
+ * os dois lados tem que ler os mesmos numeros. No 16:9 sao os de sempre.
+ */
+export const menuTam = (vertical: boolean) =>
+  vertical
+    ? {
+        barra: "18px 26px",
+        ponto: 16,
+        url: 22,
+        urlPad: "9px 18px",
+        pad: 38,
+        gap: 16,
+        titulo: 32,
+        item: 32,
+        itemPad: "17px 24px",
+        itemRaio: 12,
+        campo: 30,
+      }
+    : {
+        barra: "14px 20px",
+        ponto: 12,
+        url: 16,
+        urlPad: "7px 14px",
+        pad: 30,
+        gap: 14,
+        titulo: 21,
+        item: 21,
+        itemPad: "14px 18px",
+        itemRaio: 10,
+        campo: 20,
+      };
 
 /** Congruente linear, para o padrão ser o mesmo em todo frame. */
 const trama = (semente: number) => {

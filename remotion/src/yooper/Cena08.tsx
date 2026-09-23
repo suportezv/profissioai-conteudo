@@ -21,6 +21,7 @@ import {
   degraus,
 } from "../anim";
 import { Sfx } from "../Sfx";
+import { useFormato } from "../formato";
 import { Rosto } from "./Rosto";
 
 /**
@@ -88,8 +89,22 @@ const NUM_EM = s(8.86);
 const CLARO_EM = s(10.6);
 const DECISAO_EM = s(12.36);
 
+/**
+ * No 9:16 os dois atos continuam sendo uma coluna centrada na faixa segura,
+ * mas o que no 16:9 corre lado a lado passa a empilhar: o "40 minutos" sobe
+ * para cima da barra (que ganha a largura util inteira), os pontos da
+ * frequencia ficam em cima da frase, e o 12,22x fica em cima da separacao de
+ * autoria, que e texto longo e precisa de largura.
+ */
+const V_BARRA = 936;
+const V_ROSTO = 140;
+/** Topo fixo de cada ato no 9:16, para o conteudo fechar centrado na faixa segura. */
+const V_TOPO_A = 540;
+const V_TOPO_B = 470;
+
 export const Cena08: React.FC = () => {
   const f = useCurrentFrame();
+  const { vertical, M } = useFormato();
 
   const rotulo = janela(f, ROTULO_EM, CORTE, 10, 10);
   const barra = janela(f, BARRA_EM, CORTE, 10, 10);
@@ -132,8 +147,17 @@ export const Cena08: React.FC = () => {
 
       {/* ato A: quarenta minutos viram segundos, e semanal vira diario */}
       {rotulo > 0.001 ? (
-        <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 44 }}>
+        <AbsoluteFill
+          style={
+            // no 9:16 a coluna cresce para baixo a partir de um topo fixo:
+            // centrada, ela subiria a cada elemento novo, e na altura do
+            // quadro vertical esse deslize fica grande demais
+            vertical
+              ? { padding: `${V_TOPO_A}px ${M}px 0`, justifyContent: "flex-start" }
+              : { padding: MARGEM, justifyContent: "center" }
+          }
+        >
+          <div style={{ display: "flex", flexDirection: "column", gap: vertical ? 60 : 44 }}>
             <div
               style={{
                 display: "flex",
@@ -142,11 +166,11 @@ export const Cena08: React.FC = () => {
                 opacity: rotulo,
               }}
             >
-              <Rosto alegria={sorriA} tamanho={104} />
+              <Rosto alegria={sorriA} tamanho={vertical ? V_ROSTO : 104} />
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 <div
                   style={{
-                    fontSize: 24,
+                    fontSize: vertical ? 28 : 24,
                     fontWeight: 500,
                     letterSpacing: "2px",
                     textTransform: "uppercase",
@@ -155,7 +179,14 @@ export const Cena08: React.FC = () => {
                 >
                   Cliente A
                 </div>
-                <div style={{ fontSize: 34, fontWeight: 500, letterSpacing: "-1.19px" }}>
+                <div
+                  style={{
+                    fontSize: vertical ? 44 : 34,
+                    fontWeight: 500,
+                    letterSpacing: vertical ? "-1.54px" : "-1.19px",
+                    lineHeight: vertical ? 1.18 : undefined,
+                  }}
+                >
                   Um cálculo que ele pedia toda semana
                 </div>
               </div>
@@ -163,14 +194,27 @@ export const Cena08: React.FC = () => {
 
             {barra > 0.001 ? (
               <div style={{ display: "flex", flexDirection: "column", gap: 18, opacity: barra }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
+                <div
+                  style={
+                    vertical
+                      ? {
+                          // o texto sobe para cima da barra sem mudar a
+                          // ordem dos elementos
+                          display: "flex",
+                          flexDirection: "column-reverse",
+                          alignItems: "flex-start",
+                          gap: 20,
+                        }
+                      : { display: "flex", alignItems: "center", gap: 28 }
+                  }
+                >
                   <div
                     style={{
-                      height: 56,
+                      height: vertical ? 68 : 56,
                       width: interpolate(
                         encolhe,
                         [0, 1],
-                        [1160 * passo(f, BARRA_EM, BARRA_EM + s(0.8)), 34],
+                        [(vertical ? V_BARRA : 1160) * passo(f, BARRA_EM, BARRA_EM + s(0.8)), 34],
                       ),
                       borderRadius: 10,
                       background: encolhe > 0.5 ? marca.azul : marca.linha,
@@ -179,9 +223,10 @@ export const Cena08: React.FC = () => {
                   />
                   <div
                     style={{
-                      fontSize: 66,
+                      fontSize: vertical ? 96 : 66,
                       fontWeight: 500,
-                      letterSpacing: "-2.31px",
+                      letterSpacing: vertical ? "-3.36px" : "-2.31px",
+                      lineHeight: vertical ? 1.05 : undefined,
                       color: encolhe > 0.5 ? marca.azul : m.tinta,
                       whiteSpace: "nowrap",
                     }}
@@ -196,26 +241,33 @@ export const Cena08: React.FC = () => {
               <div
                 style={{
                   display: "flex",
-                  alignItems: "center",
-                  gap: 26,
+                  flexDirection: vertical ? "column" : "row",
+                  alignItems: vertical ? "flex-start" : "center",
+                  gap: vertical ? 22 : 26,
                   ...entra(freq, 16),
                 }}
               >
-                <div style={{ display: "flex", gap: 12 }}>
+                <div style={{ display: "flex", gap: vertical ? 18 : 12 }}>
                   {Array.from({ length: 7 }).map((_, i) => (
                     <div
                       key={i}
                       style={{
-                        width: 22,
-                        height: 22,
-                        borderRadius: 11,
+                        width: vertical ? 40 : 22,
+                        height: vertical ? 40 : 22,
+                        borderRadius: vertical ? 20 : 11,
                         background: i < pontos ? marca.azul : "transparent",
                         border: i < pontos ? "none" : `1px solid ${marca.linha}`,
                       }}
                     />
                   ))}
                 </div>
-                <div style={{ fontSize: 40, fontWeight: 500, letterSpacing: "-1.4px" }}>
+                <div
+                  style={{
+                    fontSize: vertical ? 54 : 40,
+                    fontWeight: 500,
+                    letterSpacing: vertical ? "-1.89px" : "-1.4px",
+                  }}
+                >
                   de semanal para diário
                 </div>
               </div>
@@ -224,8 +276,8 @@ export const Cena08: React.FC = () => {
             {base > 0.001 ? (
               <div
                 style={{
-                  fontSize: 26,
-                  letterSpacing: "-0.91px",
+                  fontSize: vertical ? 30 : 26,
+                  letterSpacing: vertical ? "-1.05px" : "-0.91px",
                   color: m.apoio,
                   borderTop: "1px solid rgba(16,18,24,0.22)",
                   paddingTop: 16,
@@ -241,14 +293,27 @@ export const Cena08: React.FC = () => {
 
       {/* ato B: o 12,22x, com a autoria do numero separada do que o agente fez */}
       {num > 0.001 ? (
-        <AbsoluteFill style={{ padding: MARGEM, justifyContent: "center" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 28, ...entra(num, 24) }}>
+        <AbsoluteFill
+          style={
+            vertical
+              ? { padding: `${V_TOPO_B}px ${M}px 0`, justifyContent: "flex-start" }
+              : { padding: MARGEM, justifyContent: "center" }
+          }
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: vertical ? 36 : 28,
+              ...entra(num, 24),
+            }}
+          >
             <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
-              <Rosto alegria={sorriB} tamanho={104} />
+              <Rosto alegria={sorriB} tamanho={vertical ? V_ROSTO : 104} />
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 <div
                   style={{
-                    fontSize: 24,
+                    fontSize: vertical ? 28 : 24,
                     fontWeight: 500,
                     letterSpacing: "2px",
                     textTransform: "uppercase",
@@ -257,18 +322,30 @@ export const Cena08: React.FC = () => {
                 >
                   Cliente B
                 </div>
-                <div style={{ fontSize: 34, fontWeight: 500, letterSpacing: "-1.19px" }}>
+                <div
+                  style={{
+                    fontSize: vertical ? 44 : 34,
+                    fontWeight: 500,
+                    letterSpacing: vertical ? "-1.54px" : "-1.19px",
+                  }}
+                >
                   ROAS faturado no mês
                 </div>
               </div>
             </div>
 
-            <div style={{ display: "flex", alignItems: "flex-end", gap: 56 }}>
+            <div
+              style={
+                vertical
+                  ? { display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 28 }
+                  : { display: "flex", alignItems: "flex-end", gap: 56 }
+              }
+            >
               <div
                 style={{
-                  fontSize: 200,
+                  fontSize: vertical ? 240 : 200,
                   fontWeight: 500,
-                  letterSpacing: "-7px",
+                  letterSpacing: vertical ? "-8.4px" : "-7px",
                   lineHeight: 0.96,
                   color: marca.azul,
                   fontVariantNumeric: "tabular-nums",
@@ -285,15 +362,15 @@ export const Cena08: React.FC = () => {
                     display: "flex",
                     flexDirection: "column",
                     gap: 16,
-                    paddingBottom: 18,
-                    maxWidth: 920,
+                    paddingBottom: vertical ? 0 : 18,
+                    maxWidth: vertical ? 868 : 920,
                     ...entra(claro, 16),
                   }}
                 >
                   <div
                     style={{
-                      fontSize: 30,
-                      letterSpacing: "-1.05px",
+                      fontSize: vertical ? 34 : 30,
+                      letterSpacing: vertical ? "-1.19px" : "-1.05px",
                       lineHeight: 1.35,
                       color: m.apoio,
                     }}
@@ -302,16 +379,16 @@ export const Cena08: React.FC = () => {
                   </div>
                   <div
                     style={{
-                      fontSize: 32,
+                      fontSize: vertical ? 38 : 32,
                       fontWeight: 500,
-                      letterSpacing: "-1.12px",
+                      letterSpacing: vertical ? "-1.33px" : "-1.12px",
                       lineHeight: 1.3,
                       borderLeft: `3px solid ${marca.azul}`,
                       paddingLeft: 20,
                     }}
                   >
                     O agente pôs esse número na frente de quem decide,
-                    <br />
+                    {vertical ? " " : <br />}
                     no dia em que ele decidia.
                   </div>
                 </div>
@@ -325,24 +402,31 @@ export const Cena08: React.FC = () => {
                   background: marca.azul,
                   borderRadius: marca.raio.painel,
                   boxShadow: marca.sombra.azul,
-                  padding: "26px 40px",
+                  padding: vertical ? "30px 40px" : "26px 40px",
                   display: "flex",
-                  alignItems: "baseline",
-                  gap: 26,
+                  flexDirection: vertical ? "column" : "row",
+                  alignItems: vertical ? "flex-start" : "baseline",
+                  gap: vertical ? 6 : 26,
                   ...entra(decisao, 18),
                 }}
               >
                 <div
                   style={{
-                    fontSize: 62,
+                    fontSize: vertical ? 72 : 62,
                     fontWeight: 500,
-                    letterSpacing: "-2.17px",
+                    letterSpacing: vertical ? "-2.52px" : "-2.17px",
                     color: marca.branco,
                   }}
                 >
                   +20% de investimento
                 </div>
-                <div style={{ fontSize: 26, letterSpacing: "-0.91px", color: marca.apoioAzul }}>
+                <div
+                  style={{
+                    fontSize: vertical ? 30 : 26,
+                    letterSpacing: vertical ? "-1.05px" : "-0.91px",
+                    color: marca.apoioAzul,
+                  }}
+                >
                   decisão do cliente
                 </div>
               </div>

@@ -10,6 +10,7 @@ import {
 } from "remotion";
 import { marca } from "../marca";
 import { passo, s } from "../anim";
+import { useFormato } from "../formato";
 
 /**
  * Cena 00 do case Polishop: a abertura.
@@ -37,8 +38,18 @@ const NARRACAO_EM = s(0.7);
 /** Onde o clipe começa, em segundos do arquivo de origem (24 fps). */
 const DE = 1.2;
 
+/**
+ * No 9:16 o plano e recortado, nao encolhido: `cover` na altura mostra so 32%
+ * da largura do arquivo, e o recorte fica em 40% porque e ali que estao a mao
+ * e o painel do aparelho nos quatro segundos usados (medido em quadros de
+ * 1,2 s a 5,4 s do arquivo). Centrado, o quadro pegava a lateral de inox e a
+ * mao so entrava pela borda.
+ */
+const RECORTE_V = "40% 50%";
+
 export const Cena00: React.FC = () => {
   const f = useCurrentFrame();
+  const { vertical } = useFormato();
   const abre = passo(f, 0, s(0.5));
   const empurra = interpolate(f, [0, CENA00_FRAMES], [1.02, 1.09], {
     extrapolateLeft: "clamp",
@@ -52,7 +63,12 @@ export const Cena00: React.FC = () => {
           src={staticFile("polishop/abertura.mp4")}
           startFrom={Math.round(DE * 24)}
           muted
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: vertical ? RECORTE_V : undefined,
+          }}
         />
       </AbsoluteFill>
 

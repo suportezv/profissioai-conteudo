@@ -12,6 +12,7 @@ import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { janela, entra, passo, conta, br, s, tiquesDaContagem } from "../anim";
 import { Sfx } from "../Sfx";
+import { useFormato } from "../formato";
 
 /**
  * Cena 01 do case Soldiers: o produto nao diferencia.
@@ -169,7 +170,19 @@ const Pote: React.FC<{
   o: number;
   escolhido: boolean;
   destaque: boolean;
-}> = ({ preco, o, escolhido, destaque }) => (
+  /** No 9:16 o pote cresce: a coluna e mais estreita, mas tem altura. */
+  silhueta?: number;
+  precoPx?: number;
+  rotuloPx?: number;
+}> = ({
+  preco,
+  o,
+  escolhido,
+  destaque,
+  silhueta = 230,
+  precoPx = 68,
+  rotuloPx = 28,
+}) => (
   <div
     style={{
       flexGrow: 1,
@@ -185,11 +198,11 @@ const Pote: React.FC<{
       ...entra(o, 22),
     }}
   >
-    <PoteSilhueta cor={escolhido ? marca.azul : "#C7CEDA"} altura={230} />
+    <PoteSilhueta cor={escolhido ? marca.azul : "#C7CEDA"} altura={silhueta} />
     <div
       style={{
-        fontSize: 28,
-        letterSpacing: "-0.98px",
+        fontSize: rotuloPx,
+        letterSpacing: `${(-rotuloPx * 0.035).toFixed(2)}px`,
         color: m.apoio,
         textAlign: "center",
       }}
@@ -198,9 +211,9 @@ const Pote: React.FC<{
     </div>
     <div
       style={{
-        fontSize: 68,
+        fontSize: precoPx,
         fontWeight: 500,
-        letterSpacing: "-2.38px",
+        letterSpacing: `${(-precoPx * 0.035).toFixed(2)}px`,
         lineHeight: 1,
         color: destaque ? marca.azul : m.tinta,
         fontVariantNumeric: "tabular-nums",
@@ -211,8 +224,21 @@ const Pote: React.FC<{
   </div>
 );
 
+/**
+ * No 9:16 os dois potes seguem lado a lado, porque a comparacao e o argumento,
+ * mas cada um e mais alto: a coluna estreita ganha a altura que o quadro tem.
+ */
+const TAM_POTE_VERTICAL = { silhueta: 440, precoPx: 96, rotuloPx: 30 };
+/** Onde o cursor pousa no 9:16: em cima do preco do pote da direita. */
+const CURSOR_V = { x: 800, y: 1180 };
+
 export const Cena01: React.FC = () => {
   const f = useCurrentFrame();
+  const { vertical, M, H, seguro } = useFormato();
+  // no 9:16 o texto mora na faixa segura: o alto e o baixo sao do app
+  const PAD = vertical
+    ? `${seguro.topo}px ${M}px ${H - seguro.base}px`
+    : MARGEM;
 
   const gondola = interpolate(
     f,
@@ -251,19 +277,25 @@ export const Cena01: React.FC = () => {
               width: "100%",
               height: "100%",
               objectFit: "cover",
+              // no 9:16 a janela vertical pega as prateleiras e o rapaz com
+              // as maos na cabeca, que no plano deitado ficam a direita
+              objectPosition: vertical ? "52% 50%" : undefined,
               transform: `scale(${zoom})`,
-              transformOrigin: "60% 50%",
+              transformOrigin: vertical ? "50% 50%" : "60% 50%",
             }}
           />
           <AbsoluteFill
             style={{
-              background:
-                "linear-gradient(90deg, rgba(16,18,24,0.66) 0%, rgba(16,18,24,0.3) 34%, rgba(16,18,24,0) 60%)",
+              // no 9:16 a frase fica embaixo e a sobrelinha no alto, entao o
+              // veu escurece as duas pontas em vez da esquerda
+              background: vertical
+                ? "linear-gradient(0deg, rgba(16,18,24,0.78) 0%, rgba(16,18,24,0.5) 34%, rgba(16,18,24,0) 58%), linear-gradient(180deg, rgba(16,18,24,0.5) 0%, rgba(16,18,24,0) 22%)"
+                : "linear-gradient(90deg, rgba(16,18,24,0.66) 0%, rgba(16,18,24,0.3) 34%, rgba(16,18,24,0) 60%)",
             }}
           />
           <AbsoluteFill
             style={{
-              padding: MARGEM,
+              padding: PAD,
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -271,7 +303,7 @@ export const Cena01: React.FC = () => {
           >
             <div
               style={{
-                fontSize: 24,
+                fontSize: vertical ? 28 : 24,
                 fontWeight: 500,
                 letterSpacing: "2px",
                 textTransform: "uppercase",
@@ -288,7 +320,7 @@ export const Cena01: React.FC = () => {
                   ela e constatacao, com a duvida acima ela cobra resposta */}
               <div
                 style={{
-                  fontSize: 30,
+                  fontSize: vertical ? 28 : 30,
                   fontWeight: 500,
                   letterSpacing: "2px",
                   textTransform: "uppercase",
@@ -317,7 +349,10 @@ export const Cena01: React.FC = () => {
               <br />
               <Estalo o={passo(f, PALAVRAS[1].em, PALAVRAS[1].em + 7)}>
                 {PALAVRAS[1].texto}
-              </Estalo>{" "}
+              </Estalo>
+              {/* no 9:16 "IGUAL, NE?" desce para a propria linha: tres linhas
+                  curtas cabem na largura, duas nao */}
+              {vertical ? <br /> : " "}
               <Estalo o={passo(f, PALAVRAS[2].em, PALAVRAS[2].em + 7)}>
                 {PALAVRAS[2].texto}
               </Estalo>{" "}
@@ -335,18 +370,18 @@ export const Cena01: React.FC = () => {
       {mercado > 0.001 ? (
         <AbsoluteFill
           style={{
-            padding: MARGEM,
+            padding: PAD,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            gap: 34,
+            gap: vertical ? 40 : 34,
             opacity: mercado,
             zIndex: 2,
           }}
         >
           <div
             style={{
-              fontSize: 24,
+              fontSize: vertical ? 28 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
@@ -358,16 +393,18 @@ export const Cena01: React.FC = () => {
           <div
             style={{
               display: "flex",
-              alignItems: "baseline",
-              gap: 24,
+              // no 9:16 o "por ano" desce para baixo do numero
+              flexDirection: vertical ? "column" : "row",
+              alignItems: vertical ? "flex-start" : "baseline",
+              gap: vertical ? 12 : 24,
               ...entra(mercado, 22),
             }}
           >
             <div
               style={{
-                fontSize: 230,
+                fontSize: vertical ? 210 : 230,
                 fontWeight: 500,
-                letterSpacing: "-8.05px",
+                letterSpacing: vertical ? "-7.35px" : "-8.05px",
                 lineHeight: 0.95,
                 color: marca.azul,
                 fontVariantNumeric: "tabular-nums",
@@ -378,9 +415,9 @@ export const Cena01: React.FC = () => {
             </div>
             <div
               style={{
-                fontSize: 44,
+                fontSize: vertical ? 56 : 44,
                 fontWeight: 500,
-                letterSpacing: "-1.54px",
+                letterSpacing: vertical ? "-1.96px" : "-1.54px",
                 color: m.apoio,
               }}
             >
@@ -390,24 +427,29 @@ export const Cena01: React.FC = () => {
           <div
             style={{
               display: "flex",
-              alignItems: "baseline",
-              gap: 32,
+              flexDirection: vertical ? "column" : "row",
+              alignItems: vertical ? "flex-start" : "baseline",
+              gap: vertical ? 10 : 32,
               borderTop: "1px solid rgba(16,18,24,0.22)",
-              paddingTop: 22,
+              paddingTop: vertical ? 28 : 22,
               maxWidth: 1180,
             }}
           >
             <div
               style={{
-                fontSize: 46,
+                fontSize: vertical ? 56 : 46,
                 fontWeight: 500,
-                letterSpacing: "-1.61px",
+                letterSpacing: vertical ? "-1.96px" : "-1.61px",
               }}
             >
               +15% em 2025
             </div>
             <div
-              style={{ fontSize: 26, letterSpacing: "-0.91px", color: m.apoio }}
+              style={{
+                fontSize: vertical ? 28 : 26,
+                letterSpacing: vertical ? "-0.98px" : "-0.91px",
+                color: m.apoio,
+              }}
             >
               fonte: BRASNUTRI
             </div>
@@ -418,16 +460,16 @@ export const Cena01: React.FC = () => {
       {/* ---------- 3. a decisao ---------- */}
       <AbsoluteFill
         style={{
-          padding: MARGEM,
+          padding: PAD,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          gap: 44,
+          gap: vertical ? 56 : 44,
         }}
       >
         <div
           style={{
-            fontSize: 24,
+            fontSize: vertical ? 28 : 24,
             fontWeight: 500,
             letterSpacing: "2px",
             textTransform: "uppercase",
@@ -438,13 +480,22 @@ export const Cena01: React.FC = () => {
           Mesmo produto, mesma dose
         </div>
 
-        <div style={{ display: "flex", gap: 40, alignItems: "stretch" }}>
-          <Pote preco={119} o={potes} escolhido={false} destaque={false} />
+        <div
+          style={{ display: "flex", gap: vertical ? 24 : 40, alignItems: "stretch" }}
+        >
+          <Pote
+            preco={119}
+            o={potes}
+            escolhido={false}
+            destaque={false}
+            {...(vertical ? TAM_POTE_VERTICAL : {})}
+          />
           <Pote
             preco={119 - precoB}
             o={potes}
             escolhido={escolheu}
             destaque={precoB > 0.5}
+            {...(vertical ? TAM_POTE_VERTICAL : {})}
           />
         </div>
       </AbsoluteFill>
@@ -454,8 +505,8 @@ export const Cena01: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            left: 1420 + (1 - cursor) * 420,
-            top: 706 + (1 - cursor) * 160,
+            left: (vertical ? CURSOR_V.x : 1420) + (1 - cursor) * 420,
+            top: (vertical ? CURSOR_V.y : 706) + (1 - cursor) * 160,
             opacity: cursor,
             zIndex: 4,
           }}

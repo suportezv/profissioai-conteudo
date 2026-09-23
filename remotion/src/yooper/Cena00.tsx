@@ -10,6 +10,7 @@ import {
 } from "remotion";
 import { marca } from "../marca";
 import { passo, s } from "../anim";
+import { useFormato } from "../formato";
 
 /**
  * Cena 00 do case Yooper: a agência apresentando o relatório.
@@ -70,8 +71,17 @@ const NARRACAO_EM = s(0.7);
 /** Onde o clipe começa, em segundos do arquivo de origem (24 fps). */
 const DE = 1.5;
 
+/**
+ * No 9:16 o plano 16:9 cobre o quadro pela altura, e sobra um terco da
+ * largura. O recorte fica no terco que tem as duas coisas da tese: as
+ * silhuetas assistindo, na borda esquerda, e a tela de dados ocupando o resto.
+ * Centrado, o recorte perdia as pessoas e virava so um monitor.
+ */
+const RECORTE_V = "38% 50%";
+
 export const Cena00: React.FC = () => {
   const f = useCurrentFrame();
+  const { vertical } = useFormato();
   const abre = passo(f, 0, s(0.5));
 
   // aproximação leve: o dolly do clipe já anda, isto só impede o plano de
@@ -94,7 +104,12 @@ export const Cena00: React.FC = () => {
           src={staticFile("yooper/abertura-dados.mp4")}
           startFrom={Math.round(DE * 24)}
           muted
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            ...(vertical ? { objectPosition: RECORTE_V } : {}),
+          }}
         />
       </AbsoluteFill>
 
