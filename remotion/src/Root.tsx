@@ -18,6 +18,7 @@ import { Cena09, CENA09_FRAMES } from "./Cena09";
 import { Completo, COMPLETO_FRAMES } from "./Completo";
 import {
   Completo as SoldiersCompleto,
+  framesDoCorte as soldiersFrames,
   COMPLETO_FRAMES as SOLDIERS_FRAMES,
 } from "./soldiers/Completo";
 import {
@@ -36,6 +37,7 @@ import { Cena08B as P08B, CENA08B_FRAMES as P08B_F } from "./polishop/Cena08B";
 import { Cena09 as P09, CENA09_FRAMES as P09_F } from "./polishop/Cena09";
 import {
   Completo as YooperCompleto,
+  framesDoCorte as yooperFrames,
   COMPLETO_FRAMES as YOOPER_FRAMES,
 } from "./yooper/Completo";
 import { Cena00 as Y00, CENA00_FRAMES as Y00_F } from "./yooper/Cena00";
@@ -153,6 +155,18 @@ export const RemotionRoot: React.FC = () => (
       width={1920}
       height={1080}
     />
+    {/* O mesmo corte sem os cartoes de lacuna, para ver o filme como ele fica
+        se as sonoras nao forem captadas. Nao e uma copia: e o mesmo
+        componente com a prop desligada. */}
+    <Composition
+      id="YooperSemLacunas"
+      component={YooperCompleto}
+      defaultProps={{ lacunas: false }}
+      durationInFrames={yooperFrames(false)}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
     <Composition
       id="YooperCena00"
       component={Y00}
@@ -229,6 +243,15 @@ export const RemotionRoot: React.FC = () => (
       id="SoldiersCompleto"
       component={SoldiersCompleto}
       durationInFrames={SOLDIERS_FRAMES}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    <Composition
+      id="SoldiersSemLacunas"
+      component={SoldiersCompleto}
+      defaultProps={{ lacunas: false }}
+      durationInFrames={soldiersFrames(false)}
       fps={30}
       width={1920}
       height={1080}

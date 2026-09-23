@@ -67,20 +67,29 @@ const TRILHA_BASE = 0.24;
 const TRILHA_ALTA = 0.4;
 const FADE = s(2.5);
 
-export const COMPLETO_FRAMES =
+const SOMA_CENAS =
   CENA00_FRAMES +
   CENA01_FRAMES +
   CENA02_FRAMES +
   CENA03_FRAMES +
-  LACUNA_04 +
   CENA05_FRAMES +
-  LACUNA_05B +
   CENA06_FRAMES +
   CENA07_FRAMES +
   CENA08_FRAMES +
   CENA09_FRAMES;
 
-const volumeTrilha = (f: number) => {
+/**
+ * Duracao do corte. As lacunas de sonora sao **opcionais**: a
+ * composicao aprovada as mantem, e a previa sem elas usa o mesmo
+ * componente com `lacunas={false}`, entao nao existe uma segunda
+ * copia do corte para envelhecer sozinha.
+ */
+export const framesDoCorte = (lacunas = true) =>
+  SOMA_CENAS + (lacunas ? LACUNA_04 + LACUNA_05B : 0);
+
+export const COMPLETO_FRAMES = framesDoCorte(true);
+
+const volumeTrilha = (total: number) => (f: number) => {
   const entrada = interpolate(f, [0, FADE], [0, TRILHA_ALTA], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -91,17 +100,19 @@ const volumeTrilha = (f: number) => {
     [TRILHA_ALTA, TRILHA_BASE],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
-  const saida = interpolate(f, [COMPLETO_FRAMES - FADE, COMPLETO_FRAMES], [1, 0], {
+  const saida = interpolate(f, [total - FADE, total], [1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
   return Math.min(entrada, leito) * saida;
 };
 
-export const Completo: React.FC = () => (
+export const Completo: React.FC<{ lacunas?: boolean }> = ({
+  lacunas = true,
+}) => (
   <AbsoluteFill style={{ backgroundColor: "#000" }}>
     {trilhaEscolhida() ? (
-      <Audio src={staticFile(trilhaEscolhida() as string)} volume={volumeTrilha} />
+      <Audio src={staticFile(trilhaEscolhida() as string)} volume={volumeTrilha(framesDoCorte(lacunas))} />
     ) : null}
 
     <Series>
@@ -123,30 +134,34 @@ export const Completo: React.FC = () => (
       </Series.Sequence>
 
       {/* REMOVIVEL: apagar este bloco tira a cena 04 inteira, sem retimar nada */}
-      <Series.Sequence durationInFrames={LACUNA_04}>
-        <Placeholder
-          cena="04"
-          rotulo="Sonora a captar · removível"
-          titulo="Um cliente da Yoodash que usa o agente todo dia"
-          detalhe="Pergunta que puxa: sobre o que você conversa com o time da Yooper agora, que não era sobre o que vocês conversavam antes? Ela responde satisfação e relacionamento, que é o critério onde o filme está mais fraco. Funcionalidade não, que as cenas 05 e 06 já provam sozinhas."
-          origem="Se a captação não acontecer, esta cena sai inteira e o filme fecha 11 s mais curto. Nada aqui é pressuposto depois: a cena 03 fecha uma afirmação completa e a 05 abre outra."
-        />
-      </Series.Sequence>
+      {lacunas ? (
+        <Series.Sequence durationInFrames={LACUNA_04}>
+          <Placeholder
+            cena="04"
+            rotulo="Sonora a captar · removível"
+            titulo="Um cliente da Yoodash que usa o agente todo dia"
+            detalhe="Pergunta que puxa: sobre o que você conversa com o time da Yooper agora, que não era sobre o que vocês conversavam antes? Ela responde satisfação e relacionamento, que é o critério onde o filme está mais fraco. Funcionalidade não, que as cenas 05 e 06 já provam sozinhas."
+            origem="Se a captação não acontecer, esta cena sai inteira e o filme fecha 11 s mais curto. Nada aqui é pressuposto depois: a cena 03 fecha uma afirmação completa e a 05 abre outra."
+          />
+        </Series.Sequence>
+      ) : null}
 
       <Series.Sequence durationInFrames={CENA05_FRAMES}>
         <Cena05 />
       </Series.Sequence>
 
       {/* NAO REMOVIVEL: a governanca e a afirmacao que o juri questiona */}
-      <Series.Sequence durationInFrames={LACUNA_05B}>
-        <Placeholder
-          cena="05B"
-          rotulo="Sonora a captar · Profissio"
-          titulo="Clésio Souza, na Profissio"
-          detalhe="Pergunta que puxa: por que um agente que pode mudar meta e orçamento nunca muda nada sozinho? A resposta é sobre governança e confiança, e ela cobre a objeção que a cena anterior acabou de abrir. Sem dado técnico na boca: número vai para lettering."
-          origem="Mesma gramática de luz das sonoras dos cases anteriores, janela e plano médio, para os filmes parecerem a mesma série. A sonora do Clésio no case Soldiers se capta na mesma sessão."
-        />
-      </Series.Sequence>
+      {lacunas ? (
+        <Series.Sequence durationInFrames={LACUNA_05B}>
+          <Placeholder
+            cena="05B"
+            rotulo="Sonora a captar · Profissio"
+            titulo="Clésio Souza, na Profissio"
+            detalhe="Pergunta que puxa: por que um agente que pode mudar meta e orçamento nunca muda nada sozinho? A resposta é sobre governança e confiança, e ela cobre a objeção que a cena anterior acabou de abrir. Sem dado técnico na boca: número vai para lettering."
+            origem="Mesma gramática de luz das sonoras dos cases anteriores, janela e plano médio, para os filmes parecerem a mesma série. A sonora do Clésio no case Soldiers se capta na mesma sessão."
+          />
+        </Series.Sequence>
+      ) : null}
 
       <Series.Sequence durationInFrames={CENA06_FRAMES}>
         <Cena06 />

@@ -75,11 +75,10 @@ const TRILHA_BASE = 0.26;
 const TRILHA_ALTA = 0.42;
 const FADE = s(2.5);
 
-export const COMPLETO_FRAMES =
+const SOMA_CENAS =
   CENA01_FRAMES +
   CENA02_FRAMES +
   CENA03_FRAMES +
-  LACUNA_04 +
   CENA05_FRAMES +
   CENA06_FRAMES +
   CENA07_FRAMES +
@@ -87,7 +86,18 @@ export const COMPLETO_FRAMES =
   CENA08B_FRAMES +
   CENA09_FRAMES;
 
-const volumeTrilha = (f: number) => {
+/**
+ * Duracao do corte. As lacunas de sonora sao **opcionais**: a
+ * composicao aprovada as mantem, e a previa sem elas usa o mesmo
+ * componente com `lacunas={false}`, entao nao existe uma segunda
+ * copia do corte para envelhecer sozinha.
+ */
+export const framesDoCorte = (lacunas = true) =>
+  SOMA_CENAS + (lacunas ? LACUNA_04 : 0);
+
+export const COMPLETO_FRAMES = framesDoCorte(true);
+
+const volumeTrilha = (total: number) => (f: number) => {
   const entrada = interpolate(f, [0, FADE], [0, TRILHA_ALTA], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -98,17 +108,19 @@ const volumeTrilha = (f: number) => {
     [TRILHA_ALTA, TRILHA_BASE],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
-  const saida = interpolate(f, [COMPLETO_FRAMES - FADE, COMPLETO_FRAMES], [1, 0], {
+  const saida = interpolate(f, [total - FADE, total], [1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
   return Math.min(entrada, leito) * saida;
 };
 
-export const Completo: React.FC = () => (
+export const Completo: React.FC<{ lacunas?: boolean }> = ({
+  lacunas = true,
+}) => (
   <AbsoluteFill style={{ backgroundColor: "#000" }}>
     {trilhaEscolhida() ? (
-      <Audio src={staticFile(trilhaEscolhida() as string)} volume={volumeTrilha} />
+      <Audio src={staticFile(trilhaEscolhida() as string)} volume={volumeTrilha(framesDoCorte(lacunas))} />
     ) : null}
 
     <Series>
@@ -124,15 +136,17 @@ export const Completo: React.FC = () => (
         <Cena03 />
       </Series.Sequence>
 
-      <Series.Sequence durationInFrames={LACUNA_04}>
-        <Placeholder
-          cena="04"
-          rotulo="Sonora a captar · a única do filme"
-          titulo="Clésio Souza, na Profissio"
-          detalhe="Pergunta que puxa: por que amarrar o acompanhamento à compra, em noventa dias cumulativos, em vez de vender uma assinatura à parte? A resposta é sobre recompra, que é o que a categoria premia, e prepara exatamente o mecanismo da cena seguinte."
-          origem="Captação: mesma gramática de luz do case da EITA, janela e plano médio, para os dois filmes parecerem a mesma série. Sem GC de dado técnico: número vai para lettering, nunca para a boca de ninguém."
-        />
-      </Series.Sequence>
+      {lacunas ? (
+        <Series.Sequence durationInFrames={LACUNA_04}>
+          <Placeholder
+            cena="04"
+            rotulo="Sonora a captar · a única do filme"
+            titulo="Clésio Souza, na Profissio"
+            detalhe="Pergunta que puxa: por que amarrar o acompanhamento à compra, em noventa dias cumulativos, em vez de vender uma assinatura à parte? A resposta é sobre recompra, que é o que a categoria premia, e prepara exatamente o mecanismo da cena seguinte."
+            origem="Captação: mesma gramática de luz do case da EITA, janela e plano médio, para os dois filmes parecerem a mesma série. Sem GC de dado técnico: número vai para lettering, nunca para a boca de ninguém."
+          />
+        </Series.Sequence>
+      ) : null}
 
       <Series.Sequence durationInFrames={CENA05_FRAMES}>
         <Cena05 />
