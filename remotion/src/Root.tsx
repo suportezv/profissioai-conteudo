@@ -2,7 +2,6 @@ import React from "react";
 import { Composition } from "remotion";
 import { CartaoTitulo } from "./CartaoTitulo";
 import { Hero } from "./Hero";
-import { MolduraVertical } from "./MolduraVertical";
 import { Cena01, CENA01_FRAMES } from "./Cena01";
 import { Cena03, CENA03_FRAMES } from "./Cena03";
 import {
@@ -60,6 +59,43 @@ const base = {
 
 export const RemotionRoot: React.FC = () => (
   <>
+    {/* Os cortes 9:16 dos quatro cases. Sao as mesmas composicoes `Completo`
+        num quadro 1080x1920: roteiro, locucao, trilha e tempos identicos, e
+        cada cena escolhe a diagramacao pelo `useFormato()`. O Yooper e o
+        Soldiers entram sem lacunas, como nos masters finais. */}
+    <Composition
+      id="PolishopVertical"
+      component={PolishopCompleto}
+      durationInFrames={POLISHOP_FRAMES}
+      fps={30}
+      width={1080}
+      height={1920}
+    />
+    <Composition
+      id="YooperVertical"
+      component={YooperCompleto}
+      defaultProps={{ lacunas: false }}
+      durationInFrames={yooperFrames(false)}
+      fps={30}
+      width={1080}
+      height={1920}
+    />
+    <Composition
+      id="SoldiersVertical"
+      component={SoldiersCompleto}
+      durationInFrames={SOLDIERS_FRAMES}
+      fps={30}
+      width={1080}
+      height={1920}
+    />
+    <Composition
+      id="CaseEitaVertical"
+      component={Completo}
+      durationInFrames={COMPLETO_FRAMES}
+      fps={30}
+      width={1080}
+      height={1920}
+    />
     <Composition
       id="PolishopCompleto"
       component={PolishopCompleto}
@@ -353,14 +389,6 @@ export const RemotionRoot: React.FC = () => (
       fps={30}
       width={1920}
       height={1080}
-    />
-    <Composition
-      id="MolduraVertical"
-      component={MolduraVertical}
-      durationInFrames={1}
-      fps={30}
-      width={1080}
-      height={1920}
     />
     <Composition
       id="CartaoTituloVertical"

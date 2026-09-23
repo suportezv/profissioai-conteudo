@@ -9,6 +9,7 @@ import {
 import { marca } from "./marca";
 import { PlanoVertical, type Fala } from "./PlanoVertical";
 import { janela, entra, s } from "./anim";
+import { useFormato } from "./formato";
 
 /**
  * Uma sonora: plano filmado com som proprio e o GC de quem fala.
@@ -108,6 +109,13 @@ export const Sonora: React.FC<{
    * bruto fica abaixo de 640 px de largura e o rosto amolece.
    */
   planos?: { em: number; zoom: number; origem: string }[];
+  /**
+   * No corte 9:16, onde esta quem fala no plano 16:9, em % da largura do
+   * bruto. O `objectFit: cover` recorta uma janela vertical do plano deitado,
+   * e sem isso a janela cairia no centro, que num enquadramento de entrevista
+   * costuma ser a parede. Nao afeta o 16:9.
+   */
+  foco?: number;
 }> = ({
   arquivo,
   nome,
@@ -120,8 +128,10 @@ export const Sonora: React.FC<{
   volume = 1,
   creditar = true,
   planos,
+  foco = 50,
 }) => {
   const f = useCurrentFrame();
+  const { vertical: quadroVertical, M, H, seguro } = useFormato();
   const gc = creditar ? janela(f, s(gcEm), s(gcEm + gcDura), 14, 14) : 0;
   const rot = janela(f, s(0.3), s(3.6), 14, 12);
 
@@ -147,14 +157,30 @@ export const Sonora: React.FC<{
       style={
         vertical
           ? { height: "100%", width: "auto" }
-          : {
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              ...(plano
-                ? { transform: `scale(${plano.z})`, transformOrigin: plano.origem }
-                : {}),
-            }
+          : quadroVertical
+            ? {
+                // janela vertical do plano deitado, centrada em quem fala; o
+                // punch-in continua, com a origem no eixo da janela (que ja e
+                // o rosto) e a altura do plano original
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: `${foco}% 50%`,
+                ...(plano
+                  ? {
+                      transform: `scale(${plano.z})`,
+                      transformOrigin: `50% ${plano.origem.split(" ")[1] ?? "50%"}`,
+                    }
+                  : {}),
+              }
+            : {
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                ...(plano
+                  ? { transform: `scale(${plano.z})`, transformOrigin: plano.origem }
+                  : {}),
+              }
       }
     />
   );
@@ -248,15 +274,17 @@ export const Sonora: React.FC<{
           <AbsoluteFill
             style={{
               background:
-                "linear-gradient(to bottom, rgba(16,18,24,0.55) 0%, rgba(16,18,24,0) 34%)",
+                quadroVertical
+                  ? "linear-gradient(to bottom, rgba(16,18,24,0.55) 0%, rgba(16,18,24,0) 24%)"
+                  : "linear-gradient(to bottom, rgba(16,18,24,0.55) 0%, rgba(16,18,24,0) 34%)",
             }}
           />
           <div
             style={{
               position: "absolute",
-              left: 120,
-              top: 120,
-              fontSize: 24,
+              left: M,
+              top: quadroVertical ? seguro.topo : 120,
+              fontSize: quadroVertical ? 28 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
@@ -273,8 +301,11 @@ export const Sonora: React.FC<{
         <AbsoluteFill
           style={{
             opacity: gc,
-            background:
-              "linear-gradient(to top right, rgba(16,18,24,0.62) 0%, rgba(16,18,24,0.28) 26%, rgba(16,18,24,0) 52%)",
+            // no 9:16 o GC mora acima da faixa da legenda do app, entao o veu
+            // sobe junto com ele em vez de escurecer so o rodape
+            background: quadroVertical
+              ? "linear-gradient(to top, rgba(16,18,24,0) 0%, rgba(16,18,24,0.5) 22%, rgba(16,18,24,0.5) 30%, rgba(16,18,24,0) 48%)"
+              : "linear-gradient(to top right, rgba(16,18,24,0.62) 0%, rgba(16,18,24,0.28) 26%, rgba(16,18,24,0) 52%)",
           }}
         />
       ) : null}
@@ -283,8 +314,8 @@ export const Sonora: React.FC<{
         <div
           style={{
             position: "absolute",
-            left: 120,
-            bottom: 120,
+            left: M,
+            bottom: quadroVertical ? H - seguro.base : 120,
             display: "flex",
             gap: 24,
             alignItems: "stretch",
