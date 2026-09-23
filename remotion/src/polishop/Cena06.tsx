@@ -108,7 +108,7 @@ export const Cena06: React.FC = () => {
 
           {dig(VIDEO_EM) > 0.001 ? <Digitando o={dig(VIDEO_EM)} /> : null}
           {v(VIDEO_EM) > 0.001 ? (
-            <BalaoVideo o={v(VIDEO_EM)} titulo="Frango na air fryer" dura="1:12" />
+            <BalaoVideo o={v(VIDEO_EM)} titulo="Frango na air fryer" dura="1:12" em={VIDEO_EM} />
           ) : null}
           {v(PASSOS_EM) > 0.001 ? (
             <Balao o={v(PASSOS_EM)}>

@@ -18,9 +18,25 @@ import { marca } from "../marca";
  *
  * Os três quadrados de canto são o que o olho usa para reconhecer um QR, então
  * eles são desenhados à parte e nunca sorteados.
+ *
+ * ## O que foi corrigido em 23/set/2026, quando o usuário chamou o código de
+ * "grosseiro"
+ *
+ * Ruído puro entre três cantos não lê como código, lê como textura. O que um
+ * QR de verdade tem além dos cantos, e que agora está aqui:
+ *
+ * - **As linhas de tempo**, a fileira e a coluna que alternam cheio e vazio
+ *   ligando um canto ao outro. São o que dá ritmo ao desenho e o que mais
+ *   separa "um QR" de "um quadrado sujo".
+ * - **O alinhamento**, o quadradinho concêntrico perto do canto inferior
+ *   direito, que é o elemento que falta em toda imitação feita às pressas.
+ * - **A calha branca de um módulo** em volta de cada canto. Sem ela o ruído
+ *   encosta no quadrado e come a forma que o olho procura.
+ * - **Vinte e cinco módulos em vez de vinte e um**, o que deixa o grão mais
+ *   fino e mais perto de um código com conteúdo de verdade.
  */
 
-const MODULOS = 21;
+const MODULOS = 25;
 
 /**
  * As coordenadas do QR e do painel que fica atrás dele, **compartilhadas pelas
@@ -46,8 +62,8 @@ export const QR_TAM = 200;
 export const MOTOR_L = 760;
 export const MOTOR_T = 236;
 export const MOTOR_W = 900;
-export const FIO_Y = 593;
-export const FIO_L = 490;
+export const FIO_Y = 543;
+export const FIO_L = 540;
 /**
  * A altura em que o fio encosta no motor, que é o centro do painel.
  *
@@ -72,9 +88,22 @@ const trama = (semente: number) => {
 
 const CELULAS = trama(20251007);
 
-/** Os cantos que o olho reconhece. Nunca sorteados. */
+/**
+ * O que é estrutura e não pode ser sorteado: os três cantos com a calha de um
+ * módulo em volta, as duas linhas de tempo e o quadrado de alinhamento.
+ */
+const ALINHA = MODULOS - 9;
+
 const noCanto = (x: number, y: number) =>
-  (x < 7 && y < 7) || (x > MODULOS - 8 && y < 7) || (x < 7 && y > MODULOS - 8);
+  (x < 8 && y < 8) || (x > MODULOS - 9 && y < 8) || (x < 8 && y > MODULOS - 9);
+
+const naLinhaDeTempo = (x: number, y: number) => x === 6 || y === 6;
+
+const noAlinhamento = (x: number, y: number) =>
+  x >= ALINHA - 2 && x <= ALINHA + 2 && y >= ALINHA - 2 && y <= ALINHA + 2;
+
+const estrutural = (x: number, y: number) =>
+  noCanto(x, y) || naLinhaDeTempo(x, y) || noAlinhamento(x, y);
 
 export const QR: React.FC<{
   tamanho?: number;
@@ -94,13 +123,24 @@ export const QR: React.FC<{
     </g>
   );
 
+  // as duas linhas de tempo: alternam cheio e vazio de canto a canto
+  const tempo: React.ReactNode[] = [];
+  for (let i = 8; i < MODULOS - 8; i++) {
+    if (i % 2 === 0) {
+      tempo.push(
+        <rect key={`tx${i}`} x={i * p} y={6 * p} width={p} height={p} fill={cor} />,
+        <rect key={`ty${i}`} x={6 * p} y={i * p} width={p} height={p} fill={cor} />,
+      );
+    }
+  }
+
   return (
     <svg width={tamanho} height={tamanho} style={{ display: "block" }}>
       <rect width={tamanho} height={tamanho} fill={fundo} />
       {CELULAS.map((linha, y) =>
         y < ate
           ? linha.map((ligado, x) =>
-              ligado && !noCanto(x, y) ? (
+              ligado && !estrutural(x, y) ? (
                 <rect
                   key={`${x}-${y}`}
                   x={x * p}
@@ -113,9 +153,17 @@ export const QR: React.FC<{
             )
           : null,
       )}
+      {revela > 0.3 ? tempo : null}
       {revela > 0.34 ? canto(0, 0) : null}
       {revela > 0.34 ? canto(MODULOS - 7, 0) : null}
       {revela > 0.9 ? canto(0, MODULOS - 7) : null}
+      {revela > 0.8 ? (
+        <g>
+          <rect x={(ALINHA - 2) * p} y={(ALINHA - 2) * p} width={5 * p} height={5 * p} fill={cor} />
+          <rect x={(ALINHA - 1) * p} y={(ALINHA - 1) * p} width={3 * p} height={3 * p} fill={fundo} />
+          <rect x={ALINHA * p} y={ALINHA * p} width={p} height={p} fill={cor} />
+        </g>
+      ) : null}
     </svg>
   );
 };

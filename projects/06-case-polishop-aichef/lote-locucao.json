@@ -43,7 +43,8 @@
     },
     {
       "nome": "cena-09",
-      "texto": "Um QR code impresso na fábrica transforma um produto na prateleira em uma conversa que continua. Sem campanha, sem e-mail, sem lembrete. E a Polishop já está levando essa inovação para a linha seguinte: fitness."
+      "texto": "Um QR code impresso na fábrica transforma um produto na prateleira em uma conversa que continua. Sem campanha, sem e-mail, sem lembrete. E a Pólishópi já está levando essa inovação para a linha seguinte: fitness.",
+      "nota": "Grafia fonetica da marca: `Pólishópi`. O acento poe a tonica na primeira silaba e o `i` final e a vogal de apoio que o portugues brasileiro poe depois da oclusiva. Escolhida por medida contra a palavra aprovada na cena 02, ver o cabecalho do Cena09.tsx. Nunca copiar esta grafia para lettering."
     }
   ]
 }

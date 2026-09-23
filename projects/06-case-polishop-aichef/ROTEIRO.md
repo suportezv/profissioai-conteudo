@@ -39,7 +39,7 @@ Por isso ele ocupa uma cena inteira (02) em vez de virar uma linha.
 | **Qualidade da experiência** | 05, 06 | Consulta o manual antes de responder; usa foto, vídeo e áudio nativos do WhatsApp |
 | **Personalização** | 05, 06 | Sabe **qual dos seis aparelhos** é o do cliente; recebe foto dos ingredientes que sobraram e devolve receita com eles |
 | **Eficiência no atendimento** | 05, 09 | A dúvida técnica deixa de virar chamado de SAC; o que foge do escopo sai por contato compartilhado, sem tirar o cliente do app |
-| **Satisfação dos clientes** | 08B | NPS 93, confirmado pelo cliente em 23/set/2026. Base declarada na mesma linha |
+| **Satisfação dos clientes** | 08B | NPS 93 em 112 respostas, confirmado pelo cliente em 23/set/2026 |
 | **Fortalecimento do relacionamento** | 07, 08B, 09 | Personalidade de chef; 35% voltaram a conversar; o QR de fábrica é porta permanente, sem campanha |
 
 ---
@@ -50,26 +50,26 @@ Por isso ele ocupa uma cena inteira (02) em vez de virar uma linha.
 |---|---|---|---|
 | **00** | 0:00 a 0:04,6 | **Abertura gerada.** Cozinha de casa, alguém tirando a airfryer da caixa e usando pela primeira vez. A narração já corre por cima. | Narração (1ª frase) |
 | **01** | 0:04,6 a 0:17,8 | O manual indo para a gaveta. Uma grade das funções do aparelho com **duas acesas e o resto apagado**. No fim, um cartão de avaliação de duas estrelas. | Narração |
-| **02** | 0:17,8 a 0:33,0 | **2023.** A marca Polishop entra em 0:18,4, na palavra. O QR nasce como cartão e em 0:23,7 **deita na tampa da airfryer**, ganhando a perspectiva da foto. Atrás dele, uma página web com **menu numerado de receitas prontas**. A linha de engajamento nasce e deita. | Narração |
+| **02** | 0:17,8 a 0:33,0 | **2023.** A marca Polishop entra em 0:18,4, na palavra. O QR nasce como cartão e em 0:23,7 **pousa no topo da airfryer iChef**, no ponto em que a foto de catálogo já mostra o emissor, de onde sai o feixe azul. Atrás dele, uma página web com **menu numerado de receitas prontas**. A linha de engajamento nasce e deita. | Narração |
 | **03** | 0:33,0 a 0:48,9 | **A virada.** Abre no 2023 da cena anterior e o **ano rola no odômetro** para 2025. O aparelho e o adesivo não se mexem; o que troca é o que está atrás: o menu é **desmontado item a item**, a moldura se fecha num soquete de 3 px, o fio pulsa, a moldura do canal novo abre dali e a conversa do A.IChef é instalada dentro dela. | Narração |
 | **04** | 0:48,9 a 0:59,9 | **SONORA POLISHOP, removível.** Hoje é cartão de lacuna. | Sonora Polishop |
 | **05** | 0:59,9 a 1:15,1 | As linhas da marca nomeadas, com a do cliente acesa; a narração é quem diz "seis". Depois o agente **recusando** uma receita que não cabe naquele aparelho. | Narração |
 | **06** | 1:15,1 a 1:32,9 | Conversa recriada: foto dos ingredientes vira receita; vídeo da própria Polishop com o passo a passo; pergunta em áudio, resposta em áudio. | Narração |
 | **07** | 1:32,9 a 1:43,3 | O agente dando opinião e o ponto da carne, e reagindo à foto do prato pronto. | Narração |
 | **08** | 1:43,3 a 1:59,5 | 11.100 conversas, 140.630 mensagens, 2.888 fotos de ingredientes. | Narração |
-| **08B** | 1:59,5 a 2:08,4 | 35% voltaram a conversar, e o NPS **93**, com a base ao lado. | Narração |
-| **09** | 2:08,4 a 2:25,0 | O fio encontra a airfryer e **os dois se fundem**; o aparelho vira uma **fileira de cinco na prateleira, todos com o mesmo código na tampa**; de cada um sobe um fio que converge num só, com quatro mensagens datadas de out/2025 a set/2026 — **a última cortada pela borda do quadro**. Depois os três riscados, a linha seguinte (fitness) e a assinatura Polishop + Profissio sobre fundo claro. | Narração |
+| **08B** | 1:59,5 a 2:08,4 | 35% voltaram a conversar, e o NPS **93 em 112 respostas**, com a base ao lado. | Narração |
+| **09** | 2:08,4 a 2:25,6 | O fio encontra a airfryer e **os dois se fundem**; o aparelho vira uma **fileira de cinco na prateleira, todos com o mesmo código na tampa**; de cada um sobe um fio que converge num só, com quatro mensagens datadas de out/2025 a set/2026 — **a última cortada pela borda do quadro**. Depois os três riscados, a linha seguinte (fitness) e a assinatura Polishop + Profissio sobre fundo claro. | Narração |
 
 ---
 
 ## Os portões de conformidade deste case
 
-**1. O NPS 93 vai para a tela com a base colada nele.** O cliente confirmou a
-nota em 23/set/2026 e o material diz "mais de 79 usuários", que é base pequena.
-No case anterior um NPS de amostra reduzida foi **cortado** por isso. Aqui ele
-fica, porque é o único número que responde ao critério de satisfação, e a tela
-declara a base: `93 · mais de 79 respondentes`. **Base pequena declarada é
-diferente de base pequena escondida.**
+**1. O NPS 93 vai para a tela com a base colada nele.** O cliente confirmou em
+23/set/2026 a nota e o número de respostas: **93 em 112**. O material escrito
+dizia "mais de 79 usuários", que era vago além de pequeno. No case anterior um
+NPS de amostra reduzida foi **cortado** por isso; aqui ele fica, porque é o
+único número que responde ao critério de satisfação, e a tela declara a base:
+`93 · 112 respondentes`. **Base declarada é diferente de base escondida.**
 
 **2. O denominador do retorno é a base de 11.100.** 3.886 ÷ 0,35 = 11.103, que
 é o mesmo 11.100 da cena anterior, então os dois números descrevem a mesma
@@ -127,10 +127,10 @@ porque a cena 03 fecha uma afirmação completa e a 05 abre outra.
 | Sonora Polishop | 04 | **captar** · removível |
 | Logo Polishop (PNG com alfa ou SVG) | 02, 09 | **recebido** em 23/set/2026 |
 | Avatar do A.IChef no WhatsApp | 03, 05, 06, 07 | **recebido** em 23/set/2026 |
-| Foto de catálogo da airfryer iChef | 02, 03, 09 | **pedir** · hoje é uma imagem gerada, sem marca nenhuma no corpo |
+| Foto de catálogo da airfryer iChef | 02, 03, 09 | **recebida** em 23/set/2026 · é ela que está no corte |
 | Arte do QR code de fábrica | 02, 03, 09 | **pedir** · hoje é recriado |
 | Foto dos seis produtos da linha | 05 | **pedir** · hoje são as linhas nomeadas em texto |
-| Um vídeo de receita da equipe Polishop | 06 | **pedir** · hoje é um cartão de vídeo recriado |
+| Um vídeo de receita da equipe Polishop | 06 | **pedir** · hoje é um clipe gerado, sem rosto, sem texto e sem marca |
 
 ---
 
@@ -138,7 +138,9 @@ porque a cena 03 fecha uma afirmação completa e a 05 abre outra.
 
 1. **A pronúncia de A.IChef.** A locução diz **"AI Chef"** (à inglesa), que é o
    que o Scribe devolve do arquivo. Se a casa fala "á-i-chef", as três faixas
-   que citam o nome se regravam.
+   que citam o nome se regravam. A de "Polishop" já está resolvida: a grafia de
+   locução é `Pólishópi`, escolhida por medida contra a palavra aprovada na
+   cena 02.
 2. **A sexta linha de cozinha.** O material nomeia cinco e fala em seis. A
    locução diz "seis" e a tela mostra os cinco nomeados, sem contá-los; se a
    sexta tiver nome, ela entra.

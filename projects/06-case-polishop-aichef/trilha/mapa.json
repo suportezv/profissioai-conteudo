@@ -6,5 +6,5 @@
   { "stem": "p-alto",  "inicio":  59.9, "fim":  75.1, "ganho": 0.74 },
   { "stem": "p-alto",  "inicio":  75.1, "fim":  92.9, "ganho": 0.82 },
   { "stem": "p-cheio", "inicio":  92.9, "fim": 128.4, "ganho": 0.84 },
-  { "stem": "p-medio", "inicio": 128.4, "fim": 145.0, "ganho": 0.68 }
+  { "stem": "p-medio", "inicio": 128.4, "fim": 145.6, "ganho": 0.68 }
 ]

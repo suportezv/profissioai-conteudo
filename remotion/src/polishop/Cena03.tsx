@@ -146,9 +146,15 @@ export const Cena03: React.FC = () => {
   const f = useCurrentFrame();
 
   // o ano rola: a cena abre no 2023 da cena anterior
-  const rola = passo(f, ANO_EM, ANO_EM + s(0.85));
-  const rotuloVelho = 1 - passo(f, ANO_EM, ANO_EM + s(0.4));
-  const rotuloNovo = passo(f, ANO_EM + s(0.35), ANO_EM + s(0.75));
+  const rola = passo(f, ANO_EM + s(0.28), ANO_EM + s(1.1));
+  // **O rótulo antigo sai inteiro antes de o ano rolar.** Ele e o novo dividiam
+  // a mesma linha do tempo, e "A primeira tentativa" é longo: ele cruzava a
+  // virada do dígito por trás, quebrado em duas linhas porque o bloco pai tem a
+  // largura do ano. O usuário viu exatamente isso, "um elemento alheio que polui
+  // visualmente a transição". Agora os três tempos são separados e nenhum dos
+  // dois rótulos quebra linha.
+  const rotuloVelho = 1 - passo(f, ANO_EM, ANO_EM + s(0.26));
+  const rotuloNovo = passo(f, ANO_EM + s(1.0), ANO_EM + s(1.3));
 
   // a porta acende e nao se mexe: e o elemento que atravessa as duas cenas
   const acende = passo(f, PORTA_EM, PORTA_EM + s(0.6));
@@ -189,7 +195,7 @@ export const Cena03: React.FC = () => {
       />
 
       <div style={{ position: "absolute", left: 120, top: 200 }}>
-        <div style={{ position: "relative", height: 30 }}>
+        <div style={{ position: "relative", height: 30, width: 520 }}>
           <div
             style={{
               position: "absolute",
@@ -197,6 +203,7 @@ export const Cena03: React.FC = () => {
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
+              whiteSpace: "nowrap",
               color: marca.azul,
               opacity: rotuloVelho,
             }}
@@ -210,6 +217,7 @@ export const Cena03: React.FC = () => {
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
+              whiteSpace: "nowrap",
               color: marca.azul,
               opacity: rotuloNovo,
               transform: `translateY(${(1 - rotuloNovo) * 10}px)`,
@@ -567,7 +575,7 @@ export const Cena03: React.FC = () => {
       ) : null}
 
       <Sfx som="tique" em={ANO_EM} volume={0.1} />
-      <Sfx som="assenta" em={ANO_EM + s(0.85)} volume={0.2} />
+      <Sfx som="assenta" em={ANO_EM + s(1.1)} volume={0.2} />
       <Sfx som="assenta" em={PORTA_EM} volume={0.24} />
       {MENU.map((item, i) => (
         <Sfx

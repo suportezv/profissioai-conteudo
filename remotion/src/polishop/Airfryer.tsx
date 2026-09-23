@@ -2,57 +2,58 @@ import React from "react";
 import { Img, staticFile } from "remotion";
 
 /**
- * O aparelho, e a geometria da tampa dele.
+ * O aparelho, e onde o código fica nele.
  *
- * ## Por que existe um arquivo só para isto
+ * ## A foto é a do produto, e ela mudou tudo
  *
- * Três cenas põem alguma coisa **em cima** do aparelho: a 02 cola o QR na
- * tampa, a 03 mantém ele lá enquanto o motor atrás é trocado, e a 09 funde os
- * dois. Se cada cena medisse a tampa por conta própria, o adesivo pularia de
- * lugar no corte, que é exatamente o defeito que a cena 03 existe para não
- * ter: **a porta não se mexe, o motor é que muda**.
+ * Até 23/set/2026 aqui morava uma airfryer **gerada**, de três quartos e vista
+ * de cima, e o código deitava na tampa por uma matriz afim medida nos quatro
+ * cantos dela. O cliente mandou a foto de catálogo da **iChef**, e ela é de
+ * frente: a tampa aparece como uma faixa rasa, não como um plano. A geometria
+ * antiga não sobrevive à troca, e insistir nela é o que produzia as três
+ * queixas do usuário sobre o código: **"grande, torto e grosseiro"**.
  *
- * ## A tampa é um paralelogramo, e isso não é aproximação
+ * - **Torto** era o cisalhamento. Numa foto frontal não existe eixo inclinado
+ *   para acompanhar, então qualquer inclinação vira lettering torto. O pouso
+ *   agora é **só um achatamento vertical**, sem rotação e sem cisalhamento.
+ * - **Grande** era o tamanho herdado da tampa vista de cima, que ocupava meia
+ *   superfície. Aqui o código vale 30% da largura do aparelho, que é a
+ *   proporção de uma etiqueta de fábrica de verdade.
+ * - **Grosseiro** era o desenho do QR, resolvido no `QR.tsx`.
  *
- * A foto é de catálogo, com a câmera longe e lente média, então a projeção da
- * tampa é praticamente afim: medindo os quatro cantos no arquivo de 657x910,
- * `A→B` deu (230,-128) e `D→C` deu (225,-127); `A→D` deu (330,65) e `B→C` deu
- * (325,66). Os pares batem em dois pixels, então um `matrix` 2D basta e não é
- * preciso `matrix3d` com perspectiva.
+ * ## A foto já tem o código, e é nele que o nosso pousa
  *
- * Cantos medidos (canto A à esquerda, B ao fundo, C à direita, D à frente):
- * A (50,140) · B (280,12) · C (605,78) · D (380,205).
+ * O produto sai de fábrica com o QR impresso no topo, e a foto mostra isso com
+ * um feixe azul saindo dele. **O código recriado pousa exatamente naquele
+ * ponto**, então o feixe da própria foto passa a sair dele: a peça não precisa
+ * inventar um brilho, e a leitura "este código está vivo" vem do produto.
  *
- * ## A orientação do rótulo sai do aparelho, não do quadro
- *
- * Quem lê uma etiqueta na tampa está **em pé na frente do aparelho**, e a
- * frente aqui é a aresta D–C, que é onde está o painel de controle. Então o
- * eixo horizontal do rótulo é `D→C` e o vertical é `A→D`, nessa ordem, que é
- * também a única das combinações com determinante positivo: invertida, a
- * etiqueta sairia espelhada e o QR viraria a imagem no espelho de um QR.
+ * Medido no arquivo de 449x542 (recorte do original de 660x660 em 97,72): o
+ * emissor fica centrado em (233, 55), e a tampa naquela altura tem 278 px de
+ * largura útil.
  */
 
-/** Proporção do arquivo: 657 x 910. */
-export const AF_RAZAO = 910 / 657;
+/** Proporção do arquivo: 449 x 542. */
+export const AF_RAZAO = 542 / 449;
 
 /**
  * Onde o aparelho fica no quadro nas cenas 02 e 03.
  *
  * Mora aqui pelo mesmo motivo que as coordenadas do QR moram no `QR.tsx`: o
- * corte entre as duas cenas só lê como continuidade se o aparelho e o adesivo
+ * corte entre as duas cenas só lê como continuidade se o aparelho e o código
  * estiverem no mesmo pixel dos dois lados.
  */
-export const AF_L = 150;
-export const AF_T = 540;
-export const AF_W = 320;
+export const AF_L = 160;
+export const AF_T = 500;
+export const AF_W = 360;
 
-const LARG_FONTE = 657;
-const CANTO = {
-  A: [50, 140],
-  B: [280, 12],
-  C: [605, 78],
-  D: [380, 205],
-} as const;
+/** Centro do emissor e largura da etiqueta, em fração do arquivo. */
+const CODIGO_CX = 233 / 449;
+const CODIGO_CY = 56 / 542;
+/** 25% da largura do aparelho: a proporção de uma etiqueta de fábrica. */
+const CODIGO_LARG = 0.25;
+/** Achatamento da tampa nesta foto. Medido no emissor: 15 px de altura por 46 de largura. */
+const CODIGO_ACHATA = 0.34;
 
 /** Uma matriz afim 2D de CSS, na ordem que o `matrix()` pede. */
 export type Afim = [number, number, number, number, number, number];
@@ -61,41 +62,29 @@ export type Afim = [number, number, number, number, number, number];
 export const afimPlana = (x: number, y: number): Afim => [1, 0, 0, 1, x, y];
 
 /**
- * A matriz que deita um elemento quadrado de `tam` px na tampa do aparelho.
+ * A matriz que pousa um elemento quadrado de `tam` px no topo do aparelho.
  *
- * `inset` é a fatia central da tampa que o elemento ocupa: 0,64 deixa 18% de
- * folga de cada lado, que é o quanto uma etiqueta de fábrica costuma respeitar
- * da borda do plástico.
+ * Sem rotação e sem cisalhamento **de propósito**: a foto é frontal, então não
+ * há eixo oblíquo a seguir e qualquer inclinação leria como erro de lettering.
+ * O que diz "isto está deitado" é o achatamento vertical, que é o que a
+ * própria foto mostra no emissor impresso.
  */
 export const afimNaTampa = (
   tam: number,
   afL: number,
   afT: number,
   afW: number,
-  inset = 0.64,
 ): Afim => {
-  const k = afW / LARG_FONTE;
-  const p = (c: readonly [number, number] | number[]) =>
-    [afL + c[0] * k, afT + c[1] * k] as [number, number];
-  const A = p(CANTO.A);
-  const B = p(CANTO.B);
-  const D = p(CANTO.D);
-  // eixo horizontal do rotulo: paralelo a frente do aparelho (A->B == D->C)
-  const u = [B[0] - A[0], B[1] - A[1]];
-  // eixo vertical: fugindo da frente para o fundo (A->D == B->C)
-  const v = [D[0] - A[0], D[1] - A[1]];
-  const folga = (1 - inset) / 2;
-  const ox = A[0] + folga * (u[0] + v[0]);
-  const oy = A[1] + folga * (u[1] + v[1]);
-  return [
-    (u[0] * inset) / tam,
-    (u[1] * inset) / tam,
-    (v[0] * inset) / tam,
-    (v[1] * inset) / tam,
-    ox,
-    oy,
-  ];
+  const larg = afW * CODIGO_LARG;
+  const alt = larg * CODIGO_ACHATA;
+  const cx = afL + afW * CODIGO_CX;
+  const cy = afT + afW * AF_RAZAO * CODIGO_CY;
+  return [larg / tam, 0, 0, alt / tam, cx - larg / 2, cy - alt / 2];
 };
+
+/** A altura, no quadro, em que o código pousa. É de onde o fio tem que sair. */
+export const alturaDoCodigo = (afT: number, afW: number) =>
+  afT + afW * AF_RAZAO * CODIGO_CY;
 
 /** Interpola duas matrizes afins componente a componente. */
 export const afimEntre = (a: Afim, b: Afim, t: number): Afim =>

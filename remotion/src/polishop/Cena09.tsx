@@ -20,19 +20,41 @@ import {
   afimNaTampa,
   afimPlana,
   afimEntre,
+  alturaDoCodigo,
   css,
 } from "./Airfryer";
 
 /**
  * Cena 09 do case Polishop: o aprendizado, e a assinatura.
  *
- * 16,6 s. Locução de 13,37 s entrando em 0,4 s.
+ * 17,2 s. Locução de 13,98 s entrando em 0,4 s.
  *
  * Marcas de palavra com o atraso: "Um QR code" 0,46 · "impresso na fábrica"
- * 1,28 · "transforma" 2,34 · "um produto" 2,90 · "na prateleira" 3,44 · "em
- * uma conversa" 3,96 · "continua" 4,84 · "Sem campanha" 6,06 · "sem e-mail"
- * 7,06 · "sem lembrete" 7,96 · "a Polishop" 9,44 · "essa inovação" 11,02 ·
- * "para a linha seguinte" 11,96 · "fitness" 12,92.
+ * 1,28 · "transforma" 2,40 · "um produto" 2,96 · "na prateleira" 3,56 · "em
+ * uma conversa" 4,06 · "continua" 5,00 · "Sem campanha" 6,20 · "sem e-mail"
+ * 7,26 · "sem lembrete" 8,26 · "a Polishop" 9,96 · "essa inovação" 11,44 ·
+ * "para a linha seguinte" 12,00 · "fitness" 13,52.
+ *
+ * ## A faixa foi regravada em 23/set/2026 por causa da pronúncia da marca
+ *
+ * O usuário ouviu "Polishop" aqui e na cena 02 e disse que esta soava
+ * estranha. **Dá para medir onde está a diferença sem ouvir**: recortando a
+ * palavra nas duas faixas e olhando onde cai o pico de energia dentro dela, a
+ * cena 02 (aprovada) marca em 12% da palavra e esta marcava em 39%. Ou seja
+ * **a tônica tinha escorregado para a segunda sílaba**, "po-LI-shop" em vez de
+ * "PO-li-shop".
+ *
+ * Três grafias foram geradas e escolhidas pela medida, não pelo gosto:
+ * `Pólishop` piorou (pico em 78%), `Póli shop` e `Pólishópi` acertaram os dois
+ * em 13%. O desempate foi uma assinatura de banda por quadro da palavra
+ * inteira comparada por cosseno contra a da cena 02: 0,50 na versão recusada,
+ * 0,93 nas duas boas. Ficou **`Pólishópi`**, que tem o centroide espectral
+ * mais perto da referência (1530 contra 1584 Hz; a com espaço deu 1292) e é
+ * uma palavra só, sem o risco de o TTS abrir uma micropausa no espaço.
+ *
+ * O Scribe devolve "Polishop", então a grafia não vaza para a transcrição. O
+ * lettering na tela continua "Polishop": o acento existe só para o TTS, como
+ * já valia para "co-órte" no case anterior.
  *
  * ## A cena foi refeita em 23/set/2026, e o pedido era de ilustração
  *
@@ -71,19 +93,19 @@ import {
  * claro a Profissio.ai entra na versão escura.
  */
 
-export const CENA09_FRAMES = s(16.6);
+export const CENA09_FRAMES = s(17.2);
 const AUDIO_EM = s(0.4);
 const m = modos.claro;
 
 const QR_EM = s(0.46);
 const FIO_EM = s(1.28);
-const APARELHO_EM = s(2.2);
-const FUNDE_EM = s(2.9);
+const APARELHO_EM = s(2.25);
+const FUNDE_EM = s(2.95);
 const PRATELEIRA_EM = s(3.6);
 const CONVERSA_EM = s(4.1);
-const RISCOS_EM = s(6.06);
-const FECHO_EM = s(9.44);
-const ASSINA_EM = s(13.4);
+const RISCOS_EM = s(6.2);
+const FECHO_EM = s(9.96);
+const ASSINA_EM = s(14.0);
 
 const RISCOS = ["sem campanha", "sem e-mail", "sem lembrete"];
 
@@ -102,8 +124,10 @@ const G_W = 320;
 const G_TAM = 200;
 const PLANA = afimPlana(240, 400);
 const NA_TAMPA = afimNaTampa(G_TAM, G_L, G_T, G_W);
-// centro do adesivo na tampa, para o fio chegar onde o codigo esta de fato
-const FIO_Y = G_T + 53;
+// altura do codigo no aparelho, para o fio chegar onde ele esta de fato
+const FIO_Y = alturaDoCodigo(G_T, G_W);
+// borda esquerda do codigo: 51,9% do centro menos metade dos 25% de largura
+const CODIGO_L = G_L + G_W * (0.519 - 0.125);
 
 /* --- geometria do ato 2: a fileira na prateleira --- */
 const P_W = 150;
@@ -148,7 +172,7 @@ export const Cena09: React.FC = () => {
             <line
               x1={460}
               y1={FIO_Y}
-              x2={460 + (G_L + 73 - 460) * fio}
+              x2={460 + (CODIGO_L - 460) * fio}
               y2={FIO_Y}
               stroke={marca.azul}
               strokeWidth="2"
@@ -393,7 +417,7 @@ export const Cena09: React.FC = () => {
             <span
               style={{
                 color: marca.azul,
-                opacity: passo(f, FECHO_EM + s(3.4), FECHO_EM + s(3.65)),
+                opacity: passo(f, FECHO_EM + s(3.5), FECHO_EM + s(3.75)),
               }}
             >
               fitness

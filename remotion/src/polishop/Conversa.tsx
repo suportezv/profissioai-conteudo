@@ -1,8 +1,18 @@
 import React from "react";
-import { Img, interpolate, staticFile, useCurrentFrame } from "remotion";
+import {
+  Img,
+  Loop,
+  OffthreadVideo,
+  interpolate,
+  staticFile,
+  useCurrentFrame,
+} from "remotion";
 import { marca } from "../marca";
 import { wa, UI } from "../whatsapp";
-import { entra } from "../anim";
+import { entra, s } from "../anim";
+
+/** Duração real do clipe gerado, que é o que a barra de progresso anda. */
+const CLIPE_FRAMES = s(4);
 
 /**
  * As peças de conversa que as cenas 03, 06 e 07 dividem.
@@ -297,13 +307,44 @@ export const BalaoAudio: React.FC<{
   </div>
 );
 
-/** Cartão de vídeo, como o app mostra um mp4 recebido. */
-export const BalaoVideo: React.FC<{ o: number; titulo: string; dura: string }> = ({
-  o,
-  titulo,
-  dura,
-}) => {
+/**
+ * Cartão de vídeo, como o app mostra um mp4 recebido.
+ *
+ * ## O quadro estava vazio, e vazio é o que o usuário viu
+ *
+ * Até 23/set/2026 aqui havia um retângulo `#16232A` com um botão de play e uma
+ * barra correndo. A intenção era "não usar material do cliente", mas o efeito
+ * era **um cartão de vídeo sem vídeo**, e o usuário pediu para gerar um. Ele
+ * tem razão e a razão é de argumento: a cena afirma que a Polishop grava as
+ * próprias receitas e manda o vídeo junto do passo a passo, e um retângulo
+ * escuro não afirma nada.
+ *
+ * O clipe é **gerado**, não é material do cliente, o que mantém a regra de
+ * recriação intacta: mãos arrumando frango no cesto de uma air fryer numa
+ * cozinha, sem rosto, sem texto e sem marca nenhuma no quadro.
+ *
+ * ## O play some, porque vídeo parado num filme de motion lê como foto
+ *
+ * No app o vídeo fica parado até alguém tocar. Aqui ele começa parado com o
+ * play por cima e, meio segundo depois, o play sai e o vídeo corre, como se
+ * tivesse sido tocado. A barra de progresso anda **na duração real do
+ * arquivo**, não numa contagem inventada.
+ */
+export const BalaoVideo: React.FC<{
+  o: number;
+  titulo: string;
+  dura: string;
+  /** Frame da cena em que o balão entrou, de onde sai o tempo de reprodução. */
+  em: number;
+}> = ({ o, titulo, dura, em }) => {
   const f = useCurrentFrame();
+  const decorrido = Math.max(0, f - em);
+  const toca = interpolate(decorrido, [12, 22], [1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const andou = Math.min(1, decorrido / (CLIPE_FRAMES * 2));
+
   return (
     <div
       style={{
@@ -321,29 +362,52 @@ export const BalaoVideo: React.FC<{ o: number; titulo: string; dura: string }> =
           height: 186,
           borderRadius: 14,
           background: "#16232A",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           position: "relative",
           overflow: "hidden",
         }}
       >
+        {/* `OffthreadVideo` nao tem `loop` nesta versao; o `Loop` do Remotion
+            repete o clipe de 4 s pelos ~10 s que o balao fica em cena. */}
+        <Loop durationInFrames={CLIPE_FRAMES} layout="none">
+          <OffthreadVideo
+            src={staticFile("polishop/receita-frango.mp4")}
+            muted
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+            }}
+          />
+        </Loop>
+        {/* o play sai como se alguem tivesse tocado */}
         <div
           style={{
-            width: 62,
-            height: 62,
-            borderRadius: 31,
-            background: "rgba(255,255,255,0.16)",
+            position: "absolute",
+            inset: 0,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            background: `rgba(11,20,26,${0.28 * toca})`,
+            opacity: toca,
           }}
         >
-          <svg width="22" height="26" viewBox="0 0 22 26">
-            <path d="M3 2l17 11L3 24z" fill={wa.texto} />
-          </svg>
+          <div
+            style={{
+              width: 62,
+              height: 62,
+              borderRadius: 31,
+              background: "rgba(255,255,255,0.22)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <svg width="22" height="26" viewBox="0 0 22 26">
+              <path d="M3 2l17 11L3 24z" fill={wa.texto} />
+            </svg>
+          </div>
         </div>
-        {/* a barra anda: cartao de video parado le como imagem quebrada */}
         <div
           style={{
             position: "absolute",
@@ -356,13 +420,7 @@ export const BalaoVideo: React.FC<{ o: number; titulo: string; dura: string }> =
             overflow: "hidden",
           }}
         >
-          <div
-            style={{
-              height: "100%",
-              width: `${interpolate(f % 90, [0, 90], [0, 100])}%`,
-              background: wa.verde,
-            }}
-          />
+          <div style={{ height: "100%", width: `${andou * 100}%`, background: wa.verde }} />
         </div>
       </div>
       <div

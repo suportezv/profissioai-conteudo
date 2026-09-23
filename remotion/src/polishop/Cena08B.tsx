@@ -30,8 +30,8 @@ import { Sfx } from "../Sfx";
  *
  * **O NPS 93 foi confirmado pelo cliente em 23/set/2026**, e com ele caíram as
  * duas ressalvas em rosa que a cena carregava. A base continua na mesma linha,
- * porque base pequena declarada é diferente de base pequena escondida: o
- * material do cliente diz "mais de 79 usuários".
+ * porque base declarada é diferente de base escondida: o cliente fechou em
+ * **112 respostas**, e o material escrito dizia "mais de 79 usuários".
  *
  * **O denominador do retorno é o mesmo 11.100 da cena anterior.** 3.886 ÷ 0,35
  * = 11.103, então os dois números descrevem a mesma população. A tela mostra a
@@ -136,7 +136,7 @@ export const Cena08B: React.FC = () => {
                 paddingTop: 16,
               }}
             >
-              mais de 79 respondentes
+              112 respondentes
             </div>
           </div>
         ) : null}
