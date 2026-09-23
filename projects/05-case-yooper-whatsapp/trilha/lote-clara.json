@@ -1,0 +1,10 @@
+[
+  { "nome": "z-cheio-1", "segundos": 20,
+    "prompt": "Warm optimistic corporate underscore in D major, slow tempo 92 beats per minute, half time groove. Warm analog synth bass on D, felt piano playing a simple bright three note motif in D major, muted plucked synth answering it, soft kick every two beats, gentle shaker, warm sustained strings underneath. Clear, confident and positive. No vocals, no drop, no fast percussion, no minor chords, not sad, not dark." },
+  { "nome": "z-cheio-2", "segundos": 20,
+    "prompt": "Bright uplifting technology underscore in D major at a relaxed 92 bpm. Round analog bass on D, warm felt piano motif, plucked synth counter line, light rim click and shaker, airy pad. Hopeful and clear headed, the feeling of something working well. No vocals, no drop, no tension, no dissonance, no dark tones." },
+  { "nome": "z-suspenso", "segundos": 20,
+    "prompt": "Warm anticipation bed in D major at 92 bpm, very sparse. A soft analog bass pulses slowly on D while a felt piano holds one bright sustained note that has not resolved yet, plus a faint airy pad. Expectant and curious, not sad, not dark, no dissonance, no drums, no vocals." },
+  { "nome": "z-leve", "segundos": 20,
+    "prompt": "Very quiet warm pad in D major to sit under a speaking voice, one slow bright sustained chord and a soft low pulse, almost silent, calm and positive. No rhythm, no percussion, no melody, no vocals, no tension." }
+]

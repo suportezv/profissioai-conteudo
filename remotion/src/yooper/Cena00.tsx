@@ -14,7 +14,7 @@ import { passo, s } from "../anim";
 /**
  * Cena 00 do case Yooper: a agência apresentando o relatório.
  *
- * 4,8 s em **dois planos**, com a narração já correndo por cima. É o padrão da
+ * 4,8 s num **plano só**, com a narração já correndo por cima. É o padrão da
  * casa desde o case 03: o filme abre com um plano que estabelece o mundo antes
  * de qualquer afirmação.
  *
@@ -38,12 +38,17 @@ import { passo, s } from "../anim";
  * expressão, e a câmera correndo pelos dados na tela. A segunda metade, a
  * decisão que não acontece, é a cena 01 inteira.
  *
- * ## Dois planos, e o corte cai na palavra
+ * ## Era em dois planos, e virou um
  *
- * O plano A é o analista gesticulando; o B é a travelling lateral pela tela.
- * O corte acontece em **2,30 s, exatamente quando a locução diz "dashboard"**:
- * a palavra e a imagem chegam juntas, o que é o oposto de cortar quando o
- * plano cansou.
+ * A primeira versão abria com o analista gesticulando e cortava para a
+ * travelling pela tela em 2,30 s, exatamente na palavra "dashboard". O corte
+ * na palavra funcionava, mas o usuário cortou o plano do analista: **um rosto
+ * em close abre um filme sobre uma pessoa**, e este é sobre a operação dela.
+ * A travelling sozinha diz "a entrega está acontecendo" sem prometer um
+ * personagem que o filme não tem.
+ *
+ * O clipe do analista fica em `broll/`, porque a decisão pode voltar se algum
+ * corte derivado precisar de rosto na abertura.
  *
  * ## A locução começa aqui, e por isso o arquivo foi partido
  *
@@ -52,69 +57,46 @@ import { passo, s } from "../anim";
  * a primeira metade toca aqui, a segunda abre a cena 01. Partir no silêncio é
  * o que faz o corte de cena ser invisível para o ouvido.
  *
- * ## O reenquadramento do plano A não é gosto
+ * ## O áudio do clipe fica mudo
  *
- * A tela ao fundo dele saiu com texto ilegível gerado, que lê como artefato de
- * IA. A escala com a origem deslocada para a direita empurra aquele lado para
- * fora e desfoca o que sobra, sem precisar de máscara; a origem também sobe,
- * porque recortar só pela horizontal cortava o alto da cabeça. O áudio dos
- * dois clipes fica mudo: vídeo gerado traz trilha que ninguém pediu.
+ * Vídeo gerado traz trilha, e às vezes fala, que ninguém pediu. A atmosfera,
+ * quando precisa existir, é gerada à parte, onde dá para medir e refazer.
  */
 
 export const CENA00_FRAMES = s(4.8);
 
-/** Onde o plano B entra. Cai em cima da palavra "dashboard". */
-const CORTE = s(2.3);
 const NARRACAO_EM = s(0.7);
 
-/** Onde cada clipe começa, em segundos do arquivo de origem (24 fps). */
-const A_DE = 3.0;
-const B_DE = 2.0;
+/** Onde o clipe começa, em segundos do arquivo de origem (24 fps). */
+const DE = 1.5;
 
 export const Cena00: React.FC = () => {
   const f = useCurrentFrame();
   const abre = passo(f, 0, s(0.5));
 
-  // plano A: recorte forte à direita, que é o que tira a tela do quadro
-  const empurraA = interpolate(f, [0, CORTE], [1.16, 1.24], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  // plano B: aproximação leve, só para o plano não ler como foto
-  const empurraB = interpolate(f, [CORTE, CENA00_FRAMES], [1.02, 1.09], {
+  // aproximação leve: o dolly do clipe já anda, isto só impede o plano de
+  // ler como foto no primeiro segundo
+  const empurra = interpolate(f, [0, CENA00_FRAMES], [1.02, 1.09], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
   return (
     <AbsoluteFill style={{ backgroundColor: marca.tinta }}>
-      {f < CORTE ? (
-        <AbsoluteFill
-          style={{
-            opacity: abre,
-            transform: `scale(${empurraA})`,
-            transformOrigin: "74% 42%",
-          }}
-        >
-          <OffthreadVideo
-            src={staticFile("yooper/abertura-analista.mp4")}
-            startFrom={Math.round(A_DE * 24)}
-            muted
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        </AbsoluteFill>
-      ) : (
-        <AbsoluteFill
-          style={{ transform: `scale(${empurraB})`, transformOrigin: "50% 50%" }}
-        >
-          <OffthreadVideo
-            src={staticFile("yooper/abertura-dados.mp4")}
-            startFrom={Math.round(B_DE * 24)}
-            muted
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        </AbsoluteFill>
-      )}
+      <AbsoluteFill
+        style={{
+          opacity: abre,
+          transform: `scale(${empurra})`,
+          transformOrigin: "50% 50%",
+        }}
+      >
+        <OffthreadVideo
+          src={staticFile("yooper/abertura-dados.mp4")}
+          startFrom={Math.round(DE * 24)}
+          muted
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
+      </AbsoluteFill>
 
       {/* vinheta discreta: os dois planos são claros, então ela é leve */}
       <AbsoluteFill

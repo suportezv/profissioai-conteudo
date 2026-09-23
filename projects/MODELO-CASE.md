@@ -62,12 +62,20 @@ para a trilha.
 
 `scripts/costura_secoes.py` monta isso a partir de um mapa de seções, com as
 bordas caindo **exatamente nos cortes de cena**, trechos quase mudos sob as
-sonoras e a maior densidade na cena que carrega a prova. O material é **um só
-em três densidades**: o nível médio se deriva do cheio por `lowpass`, o que
-garante mesma tonalidade e mesmo andamento em vez de torcer para o modelo
-repetir. E a coerência se mede antes de montar: BPM por autocorrelação do fluxo
-de energia e perfil de croma comparado por cosseno pegam um trecho fora de
-tempo ou fora de tom sem precisar ouvir.
+sonoras e a maior densidade na cena que carrega a prova. O material é **um só, em
+densidades obtidas por filtro**: o nível baixo é o próprio arquivo cheio
+passado por `lowpass`, com o corte subindo ao longo do filme (700 → 1600 →
+3000 → aberto). Isso garante tonalidade e andamento idênticos por construção,
+em vez de torcer para o modelo repetir, e o ponto de tensão vira **o filtro
+abrindo junto do ganho**. Debaixo de fala entra um pad sem percussão: mixagem
+cheia filtrada ainda tem bumbo, e ele tiquetaqueia sob a voz.
+
+Três coisas se medem antes de montar, e as três já pegaram defeito real: **BPM**
+por autocorrelação do fluxo de energia (um trecho saiu a 123 contra 92 dos
+outros); **tonalidade e modo** pelo perfil de Krumhansl, correlacionando o croma
+contra os 24 perfis, que é o que separa "somber" de "warm" sem ouvir e é mais
+honesto que olhar a nota mais forte; e a **trilha montada** no fim, não só os
+trechos.
 
 **6. B-roll pago por último**, quando o buraco já está medido. E antes de gerar
 qualquer clipe, conferir se o que a cena precisa **não é informação em vez de
