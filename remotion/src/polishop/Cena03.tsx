@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  Img,
   Sequence,
   interpolate,
   staticFile,
@@ -10,9 +11,20 @@ import {
 import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
 import { wa, UI } from "../whatsapp";
-import { janela, entra, passo, s } from "../anim";
+import { janela, entra, passo, s, SUAVE } from "../anim";
 import { Sfx } from "../Sfx";
-import { QR, QR_L, QR_T, QR_TAM, MOTOR_L, MOTOR_T, MOTOR_W } from "./QR";
+import {
+  QR,
+  QR_TAM,
+  MOTOR_L,
+  MOTOR_T,
+  MOTOR_W,
+  FIO_Y,
+  FIO_L,
+  SOQUETE_Y,
+} from "./QR";
+import { Airfryer, AF_L, AF_T, AF_W, afimNaTampa, css } from "./Airfryer";
+import { AvatarChef } from "./Conversa";
 
 /**
  * Cena 03 do case Polishop: a virada. **É a cena do filme.**
@@ -26,21 +38,40 @@ import { QR, QR_L, QR_T, QR_TAM, MOTOR_L, MOTOR_T, MOTOR_W } from "./QR";
  *
  * ## A cena abre exatamente onde a anterior fechou
  *
- * O QR e o painel de 2023 entram já montados, nas mesmas coordenadas, porque
- * **a continuidade é o argumento**. A narração diz "manteve a porta e trocou o
- * motor", e a tela faz literalmente isso: em 2,28 s a porta acende e não se
- * mexe; em 3,22 s o que está atrás dela se desfaz; em 7,06 s outra coisa
- * cresce no mesmo retângulo.
+ * O aparelho, o adesivo na tampa e o painel de 2023 entram já montados, nas
+ * mesmas coordenadas, porque **a continuidade é o argumento**. A narração diz
+ * "manteve a porta e trocou o motor", e a tela faz literalmente isso: a porta
+ * acende e não se mexe, o que está atrás dela é desmontado, e outra coisa é
+ * instalada no mesmo soquete.
  *
  * Trocar o layout junto com o motor destruiria a leitura: seria só uma cena
  * nova depois de outra cena. O que faz a virada existir é **o que fica parado**.
  *
- * ## O painel antigo se desfaz para cima, o novo cresce do centro
+ * ## A transição foi refeita em 23/set/2026, e o defeito era tempo morto
  *
- * Duas saídas diferentes de propósito. O antigo sobe e desbota, como algo que
- * foi retirado; o novo cresce a partir do meio do mesmo retângulo, como algo
- * que foi instalado ali. Se os dois usassem fade, o espectador leria uma
- * transição de slide.
+ * A versão anterior desbotava o painel antigo em 3,22 s e fazia o novo crescer
+ * em 7,06 s. **Entre os dois havia quase quatro segundos com o lado direito
+ * vazio**, e o usuário leu exatamente isso: "estática e monótona, pouco
+ * caprichada". Fade de saída mais fade de entrada não é uma virada, é um
+ * corte de slide com espera no meio.
+ *
+ * O que ficou no lugar tem quatro tempos encadeados, e nenhum deles é espera:
+ *
+ * 1. **O ano vira no odômetro** (0,48 s). A cena abre com o "2023" da cena
+ *    anterior e o último dígito rola 3 → 4 → 5. É a evolução dita na unidade
+ *    mais barata que existe, e é o que emenda os dois planos: o corte deixa de
+ *    ser "outra cena" e passa a ser "o mesmo quadro, dois anos depois".
+ * 2. **O motor antigo é desmontado, não apagado** (3,22 s). Os itens do menu
+ *    somem de baixo para cima, um a um, e só então a moldura se fecha na
+ *    horizontal até virar um soquete de 3 px. Desmontar é o que faz o
+ *    espectador entender que o lugar continua existindo.
+ * 3. **O fio pulsa enquanto o soquete está vazio** (4,68 s). O ponto viaja do
+ *    adesivo até o soquete e chega repetidamente; é o device de grafo da
+ *    gramática da casa, e aqui ele tem função: diz que a porta continua
+ *    alimentando alguma coisa enquanto a troca acontece.
+ * 4. **O motor novo é instalado a partir do soquete** (7,06 s). Ele abre na
+ *    vertical a partir da mesma linha, em vez de crescer do centro: o que
+ *    cresce do centro aparece, o que abre do soquete foi **encaixado ali**.
  *
  * ## O que o agente diz na primeira mensagem
  *
@@ -54,8 +85,12 @@ export const CENA03_FRAMES = s(15.9);
 const AUDIO_EM = s(0.4);
 const m = modos.claro;
 
+const ANO_EM = s(0.48);
 const PORTA_EM = s(2.28);
-const SAI_MOTOR_EM = s(3.22);
+const DESMONTA_EM = s(3.22);
+const SOQUETE_EM = s(4.5);
+const PULSO_EM = s(4.68);
+const ABRE_EM = s(5.86);
 const ENTRA_ZAP_EM = s(7.06);
 const NOME_EM = s(7.94);
 const MSG_EM = s(9.3);
@@ -63,20 +98,83 @@ const RESPOSTA_EM = s(11.4);
 const CHIPS_EM = s(13.1);
 
 const CHIPS = ["sem baixar nada", "sem cadastro", "sem aprender aplicativo"];
+const MENU = [
+  "1 · Batata frita",
+  "2 · Frango grelhado",
+  "3 · Legumes assados",
+  "4 · Voltar ao início",
+];
+
+const NA_TAMPA = afimNaTampa(QR_TAM, AF_L, AF_T, AF_W);
+
+/** Altura do painel antigo, e a do soquete dentro dele. */
+const PAINEL_ALT = SOQUETE_Y - MOTOR_T + 245;
+const ZAP_ALT = 356;
+
+/**
+ * O último dígito do ano rolando, como um odômetro.
+ *
+ * A coluna inteira existe sempre e o que muda é o deslocamento: animar o
+ * conteúdo do texto faria o dígito **trocar**, e trocar não é rolar. O 4 no
+ * meio não é enfeite, é o que prova que a coluna andou em vez de piscar.
+ */
+const Odometro: React.FC<{ p: number; corpo: number }> = ({ p, corpo }) => (
+  <span
+    style={{
+      display: "inline-block",
+      height: corpo,
+      overflow: "hidden",
+      verticalAlign: "top",
+    }}
+  >
+    <span
+      style={{
+        display: "block",
+        transform: `translateY(${-p * 2 * corpo}px)`,
+      }}
+    >
+      {[3, 4, 5].map((d) => (
+        <span key={d} style={{ display: "block", height: corpo, lineHeight: 1 }}>
+          {d}
+        </span>
+      ))}
+    </span>
+  </span>
+);
 
 export const Cena03: React.FC = () => {
   const f = useCurrentFrame();
 
+  // o ano rola: a cena abre no 2023 da cena anterior
+  const rola = passo(f, ANO_EM, ANO_EM + s(0.85));
+  const rotuloVelho = 1 - passo(f, ANO_EM, ANO_EM + s(0.4));
+  const rotuloNovo = passo(f, ANO_EM + s(0.35), ANO_EM + s(0.75));
+
   // a porta acende e nao se mexe: e o elemento que atravessa as duas cenas
   const acende = passo(f, PORTA_EM, PORTA_EM + s(0.6));
   const anel = janela(f, PORTA_EM, PORTA_EM + s(2.2), 8, 20);
-  // o motor antigo sobe e desbota; o novo cresce do centro do mesmo retangulo
-  const saiMotor = passo(f, SAI_MOTOR_EM, SAI_MOTOR_EM + s(1.0));
-  const zap = janela(f, ENTRA_ZAP_EM, CENA03_FRAMES, 12, 0);
+
+  // o motor antigo e desmontado peca por peca, depois a moldura se fecha
+  const fecha = passo(f, DESMONTA_EM + s(0.7), SOQUETE_EM);
+  // o miolo sai antes da moldura se fechar: texto espremido pelo scaleY le
+  // como defeito de render, nao como peca sendo retirada
+  const esvazia = 1 - passo(f, DESMONTA_EM + s(0.55), DESMONTA_EM + s(0.85));
+  const soquete = passo(f, SOQUETE_EM, SOQUETE_EM + s(0.3));
+  // "abrindo uma conversa": a moldura do motor novo abre do soquete, vazia
+  const moldura = passo(f, ABRE_EM, ABRE_EM + s(0.7));
+
+  // o pulso viaja o fio enquanto o soquete espera o motor novo
+  const pulsando = f > PULSO_EM && f < ENTRA_ZAP_EM + s(0.3);
+  const ciclo = ((f - PULSO_EM) % s(1.15)) / s(1.15);
+  const pulso = interpolate(ciclo, [0, 1], [0, 1], { easing: SUAVE });
+
+  const zap = passo(f, ENTRA_ZAP_EM, ENTRA_ZAP_EM + s(0.55));
   const nome = passo(f, NOME_EM, NOME_EM + s(0.4));
   const msg = janela(f, MSG_EM, CENA03_FRAMES, 10, 0);
   const resposta = janela(f, RESPOSTA_EM, CENA03_FRAMES, 10, 0);
   const chips = janela(f, CHIPS_EM, CENA03_FRAMES, 10, 0);
+
+  const corFio = acende > 0.5 ? marca.azul : marca.linha;
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -85,124 +183,286 @@ export const Cena03: React.FC = () => {
         <Audio src={staticFile("locucao-polishop/cena-03.mp3")} />
       </Sequence>
 
-      <div style={{ position: "absolute", left: 120, top: 118 }}>
-        <div
-          style={{
-            fontSize: 24,
-            fontWeight: 500,
-            letterSpacing: "2px",
-            textTransform: "uppercase",
-            color: marca.azul,
-          }}
-        >
-          A virada
+      <Img
+        src={staticFile("marca-polishop/polishop.png")}
+        style={{ position: "absolute", left: 120, top: 100, width: 210 }}
+      />
+
+      <div style={{ position: "absolute", left: 120, top: 200 }}>
+        <div style={{ position: "relative", height: 30 }}>
+          <div
+            style={{
+              position: "absolute",
+              fontSize: 24,
+              fontWeight: 500,
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              color: marca.azul,
+              opacity: rotuloVelho,
+            }}
+          >
+            A primeira tentativa
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              fontSize: 24,
+              fontWeight: 500,
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              color: marca.azul,
+              opacity: rotuloNovo,
+              transform: `translateY(${(1 - rotuloNovo) * 10}px)`,
+            }}
+          >
+            A virada
+          </div>
         </div>
         <div
           style={{
-            marginTop: 10,
-            fontSize: 96,
+            marginTop: 2,
+            fontSize: 84,
             fontWeight: 500,
-            letterSpacing: "-3.36px",
+            letterSpacing: "-2.94px",
             lineHeight: 1,
+            display: "flex",
           }}
         >
-          2025
+          <span>202</span>
+          <Odometro p={rola} corpo={84} />
         </div>
       </div>
 
-      {/* a porta: mesma posicao da cena 02, e ela nao se mexe */}
-      <div style={{ position: "absolute", left: QR_L, top: QR_T }}>
-        <div
-          style={{
-            position: "relative",
-            background: marca.branco,
-            border: `1px solid ${acende > 0.5 ? marca.azul : marca.linha}`,
-            borderRadius: marca.raio.painel,
-            boxShadow: acende > 0.5 ? marca.sombra.azul : marca.sombra.painel,
-            padding: 26,
-          }}
-        >
-          <QR tamanho={QR_TAM} />
-          {/* o anel que passa uma vez: diz "esta e a mesma porta" */}
-          {anel > 0.01 ? (
-            <div
-              style={{
-                position: "absolute",
-                inset: -14,
-                border: `2px solid ${marca.azul}`,
-                borderRadius: marca.raio.painel + 12,
-                opacity: anel,
-                transform: `scale(${interpolate(anel, [0, 1], [1.06, 1])})`,
-              }}
-            />
-          ) : null}
-        </div>
-        <div
-          style={{
-            marginTop: 16,
-            fontSize: 24,
-            letterSpacing: "-0.84px",
-            color: acende > 0.5 ? marca.azul : m.apoio,
-            maxWidth: QR_TAM + 52,
-          }}
-        >
-          o mesmo QR code
-        </div>
-      </div>
-
+      {/* a porta: mesmo aparelho, mesmo adesivo, mesmo pixel da cena 02 */}
+      <Airfryer esq={AF_L} topo={AF_T} larg={AF_W} />
       <div
         style={{
           position: "absolute",
-          left: QR_L + QR_TAM + 52,
-          top: QR_T + 26 + QR_TAM / 2,
-          width: MOTOR_L - (QR_L + QR_TAM + 52),
-          height: 1,
-          background: acende > 0.5 ? marca.azul : marca.linha,
+          left: 0,
+          top: 0,
+          width: QR_TAM,
+          height: QR_TAM,
+          background: marca.branco,
+          borderRadius: 12,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          transformOrigin: "0 0",
+          transform: css(NA_TAMPA),
         }}
-      />
+      >
+        <QR tamanho={QR_TAM * 0.84} />
+      </div>
+      {/* o anel que passa uma vez: diz "esta e a mesma porta".
+          O anel mora *dentro* do elemento ja deitado na tampa, porque um
+          `scale` depois da matriz escalaria a partir do canto superior
+          esquerdo e o anel sairia deslocado do adesivo. */}
+      {anel > 0.01 ? (
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            width: QR_TAM,
+            height: QR_TAM,
+            transformOrigin: "0 0",
+            transform: css(NA_TAMPA),
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              inset: -16,
+              border: `6px solid ${marca.azul}`,
+              opacity: anel,
+              transform: `scale(${interpolate(anel, [0, 1], [1.1, 1])})`,
+            }}
+          />
+        </div>
+      ) : null}
 
-      {/* o motor de 2023 saindo */}
-      {saiMotor < 0.999 ? (
+      {/* o fio, e o pulso que viaja nele enquanto o soquete espera */}
+      <svg
+        width={1920}
+        height={1080}
+        style={{ position: "absolute", left: 0, top: 0, pointerEvents: "none" }}
+      >
+        <line
+          x1={FIO_L}
+          y1={FIO_Y}
+          x2={MOTOR_L}
+          y2={SOQUETE_Y}
+          stroke={corFio}
+          strokeWidth="1"
+        />
+        {pulsando ? (
+          <circle
+            cx={FIO_L + (MOTOR_L - FIO_L) * pulso}
+            cy={FIO_Y + (SOQUETE_Y - FIO_Y) * pulso}
+            r={5}
+            fill={marca.azul}
+            opacity={interpolate(ciclo, [0, 0.08, 0.86, 1], [0, 1, 1, 0])}
+          />
+        ) : null}
+      </svg>
+
+      {/* o motor de 2023 sendo desmontado peca por peca */}
+      {fecha < 0.999 ? (
         <div
           style={{
             position: "absolute",
             left: MOTOR_L,
             top: MOTOR_T,
             width: MOTOR_W,
-            height: 420,
+            height: PAINEL_ALT,
             background: marca.branco,
             border: `1px solid ${marca.linha}`,
             borderRadius: marca.raio.painel,
             boxShadow: marca.sombra.painel,
-            opacity: 1 - saiMotor,
-            transform: `translateY(${saiMotor * -46}px)`,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontFamily: UI,
-            fontSize: 21,
-            color: "#A7AEBA",
+            overflow: "hidden",
+            transformOrigin: `0px ${SOQUETE_Y - MOTOR_T}px`,
+            transform: `scaleY(${1 - fecha})`,
+            opacity: interpolate(fecha, [0.7, 1], [1, 0], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            }),
           }}
         >
-          Escolha uma opção: 1, 2, 3 ou 4
+          <div
+            style={{
+              background: "#EDEFF3",
+              borderBottom: `1px solid ${marca.linha}`,
+              padding: "14px 20px",
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              opacity: esvazia,
+            }}
+          >
+            {[0, 1, 2].map((i) => (
+              <div key={i} style={{ width: 12, height: 12, borderRadius: 6, background: "#D9DDE4" }} />
+            ))}
+            <div
+              style={{
+                flex: 1,
+                marginLeft: 12,
+                background: marca.branco,
+                borderRadius: 8,
+                padding: "7px 14px",
+                fontFamily: UI,
+                fontSize: 16,
+                color: "#8A93A1",
+              }}
+            >
+              assistente de receitas
+            </div>
+          </div>
+
+          <div
+            style={{
+              padding: 30,
+              display: "flex",
+              flexDirection: "column",
+              gap: 14,
+              opacity: esvazia,
+            }}
+          >
+            <div style={{ fontFamily: UI, fontSize: 21, color: "#4A5364" }}>
+              Escolha uma opção:
+            </div>
+            {MENU.map((item, i) => {
+              // de baixo para cima: o ultimo item da lista sai primeiro
+              const em = DESMONTA_EM + (MENU.length - 1 - i) * 4;
+              const some = passo(f, em, em + 9);
+              return (
+                <div
+                  key={item}
+                  style={{
+                    border: `1px solid ${marca.linha}`,
+                    borderRadius: 10,
+                    padding: "14px 18px",
+                    fontFamily: UI,
+                    fontSize: 21,
+                    color: "#4A5364",
+                    opacity: 1 - some,
+                    transform: `translateX(${some * 34}px)`,
+                  }}
+                >
+                  {item}
+                </div>
+              );
+            })}
+            <div
+              style={{
+                marginTop: 6,
+                border: `1px dashed ${marca.linha}`,
+                borderRadius: 10,
+                padding: "14px 18px",
+                fontFamily: UI,
+                fontSize: 20,
+                color: "#A7AEBA",
+                opacity: 1 - passo(f, DESMONTA_EM, DESMONTA_EM + 9),
+              }}
+            >
+              digite o número da opção
+            </div>
+          </div>
         </div>
       ) : null}
 
-      {/* o motor novo crescendo no mesmo retangulo */}
+      {/* o soquete: o lugar continua existindo enquanto o motor nao chega */}
+      {soquete > 0.001 && zap < 0.7 ? (
+        <div
+          style={{
+            position: "absolute",
+            left: MOTOR_L,
+            top: SOQUETE_Y - 1,
+            width: MOTOR_W,
+            height: 3,
+            borderRadius: 2,
+            background: marca.azul,
+            opacity: soquete * (1 - zap) * (0.5 + 0.5 * Math.abs(Math.cos(ciclo * Math.PI))),
+            boxShadow: `0 0 26px ${marca.azul}`,
+          }}
+        />
+      ) : null}
+
+      {/* "abrindo uma conversa": a moldura abre do soquete antes do conteudo.
+          Sem ela o soquete fica sozinho por dois segundos e meio, que e o
+          mesmo tempo morto que esta revisao existe para eliminar. */}
+      {moldura > 0.001 && zap < 0.999 ? (
+        <div
+          style={{
+            position: "absolute",
+            left: MOTOR_L,
+            top: SOQUETE_Y - ZAP_ALT / 2,
+            width: MOTOR_W,
+            height: ZAP_ALT,
+            border: `1px solid ${marca.azul}`,
+            borderRadius: marca.raio.arte,
+            transformOrigin: "center center",
+            transform: `scaleY(${interpolate(moldura, [0, 1], [0.01, 1])})`,
+            opacity: moldura * (1 - zap),
+          }}
+        />
+      ) : null}
+
+      {/* o motor novo, instalado dentro da moldura que ja abriu */}
       {zap > 0.001 ? (
         <div
           style={{
             position: "absolute",
             left: MOTOR_L,
-            top: MOTOR_T,
+            top: SOQUETE_Y - ZAP_ALT / 2,
             width: MOTOR_W,
+            height: ZAP_ALT,
             background: wa.fundoChat,
             borderRadius: marca.raio.arte,
             overflow: "hidden",
             boxShadow: marca.sombra.painel,
-            opacity: zap,
-            transform: `scale(${interpolate(zap, [0, 1], [0.86, 1])})`,
             transformOrigin: "center center",
+            transform: `scale(${interpolate(zap, [0, 1], [0.97, 1])})`,
+            opacity: zap,
           }}
         >
           <div
@@ -212,10 +472,10 @@ export const Cena03: React.FC = () => {
               display: "flex",
               alignItems: "center",
               gap: 16,
+              opacity: zap,
             }}
           >
-            {/* avatar do A.IChef pendente do cliente: circulo de acento */}
-            <div style={{ width: 46, height: 46, borderRadius: 23, background: wa.verde }} />
+            <AvatarChef tam={46} />
             <div style={{ fontFamily: UI, fontSize: 23, color: wa.texto, opacity: nome }}>
               A.IChef
             </div>
@@ -274,13 +534,13 @@ export const Cena03: React.FC = () => {
         </div>
       ) : null}
 
-      {/* o que o canal dispensa */}
+      {/* o que o canal dispensa, embaixo do painel a que se referem */}
       {chips > 0.001 ? (
         <div
           style={{
             position: "absolute",
-            left: 120,
-            bottom: 108,
+            left: MOTOR_L,
+            top: SOQUETE_Y + ZAP_ALT / 2 + 48,
             display: "flex",
             gap: 14,
             ...entra(chips, 14),
@@ -306,8 +566,18 @@ export const Cena03: React.FC = () => {
         </div>
       ) : null}
 
+      <Sfx som="tique" em={ANO_EM} volume={0.1} />
+      <Sfx som="assenta" em={ANO_EM + s(0.85)} volume={0.2} />
       <Sfx som="assenta" em={PORTA_EM} volume={0.24} />
-      <Sfx som="apaga" em={SAI_MOTOR_EM} volume={0.2} />
+      {MENU.map((item, i) => (
+        <Sfx
+          key={item}
+          som="tique"
+          em={DESMONTA_EM + (MENU.length - 1 - i) * 4}
+          volume={0.05}
+        />
+      ))}
+      <Sfx som="apaga" em={SOQUETE_EM - s(0.3)} volume={0.2} />
       <Sfx som="surge" em={ENTRA_ZAP_EM} volume={0.22} />
       <Sfx som="recebido" em={MSG_EM} volume={0.18} />
       <Sfx som="pop" em={RESPOSTA_EM} volume={0.16} />

@@ -30,13 +30,33 @@ const MODULOS = 21;
  * isso só se lê se o QR estiver **exatamente no mesmo pixel** nas duas cenas.
  * Se cada cena guardasse a própria posição, elas divergiriam na primeira
  * revisão e o corte viraria um salto.
+ *
+ * `QR_L`/`QR_T`/`QR_TAM` são o **cartão plano**, que só existe na cena 02 e só
+ * até o código ser colado no aparelho. A partir dali a porta é o adesivo na
+ * tampa, cuja posição sai de `afimNaTampa` no `Airfryer.tsx`, e é essa que
+ * atravessa o corte para a cena 03.
+ *
+ * `FIO_Y` é a altura do fio que liga a porta ao motor. Ela sai da altura do
+ * centro do adesivo na tampa, não de um número escolhido: fio que não sai de
+ * onde o elemento está lê como enfeite.
  */
-export const QR_L = 150;
-export const QR_T = 392;
-export const QR_TAM = 260;
+export const QR_L = 168;
+export const QR_T = 348;
+export const QR_TAM = 200;
 export const MOTOR_L = 760;
 export const MOTOR_T = 236;
 export const MOTOR_W = 900;
+export const FIO_Y = 593;
+export const FIO_L = 490;
+/**
+ * A altura em que o fio encosta no motor, que é o centro do painel.
+ *
+ * O fio sai do adesivo (593) e sobe até aqui (481), porque as duas pontas têm
+ * donos diferentes: a de baixo é a tampa do aparelho e a de cima é o meio do
+ * retângulo que troca de conteúdo na cena 03. Forçar o fio a ser horizontal
+ * obrigaria uma das duas a mentir sobre onde está.
+ */
+export const SOQUETE_Y = 481;
 
 /** Congruente linear, para o padrão ser o mesmo em todo frame. */
 const trama = (semente: number) => {

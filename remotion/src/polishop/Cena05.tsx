@@ -33,13 +33,15 @@ import { Painel, Balao } from "./Conversa";
  * isso sem que ninguém explique o que é RAG. Por isso a recusa ocupa os
  * últimos cinco segundos e não uma linha de lettering.
  *
- * ## A sexta linha está marcada como pendente, e isso é deliberado
+ * ## A lista nomeia cinco, e a narração é quem diz seis
  *
- * O material do cliente diz "seis linhas" e nomeia cinco: airfryers, panela de
- * pressão elétrica, forno de pizza, forno multifunção e forno 3 em 1. Mostrar
- * cinco com o rótulo "seis" seria erro de fato num material de júri, e inventar
- * a sexta seria pior. O slot aparece com `a confirmar` escrito. Buraco visível
- * é revisável.
+ * O material do cliente fala em seis linhas e nomeia cinco: airfryers, panela
+ * de pressão elétrica, forno de pizza, forno multifunção e forno 3 em 1. A cena
+ * teve um sexto slot escrito `a confirmar`, e o usuário mandou tirar em
+ * 23/set/2026. **O que sobrou não é uma contagem, é um exemplário**: o rótulo
+ * diz "ele consulta o manual" e não "estas são as seis", então cinco nomes na
+ * tela não contradizem o "seis linhas" que a locução afirma. Inventar a sexta
+ * continua fora de questão.
  */
 
 export const CENA05_FRAMES = s(15.2);
@@ -54,17 +56,13 @@ const RECUSA_EM = s(10.6);
 const NAO_CABE_EM = s(11.6);
 const RESPOSTA_EM = s(12.3);
 
-/**
- * As seis linhas. A sexta não é nomeada no material do cliente, e fica escrita
- * como pendência em vez de inventada.
- */
+/** As cinco linhas que o material do cliente nomeia. */
 const LINHAS = [
   { nome: "airfryers", meu: true },
   { nome: "panela de pressão elétrica", meu: false },
   { nome: "forno de pizza", meu: false },
   { nome: "forno multifunção", meu: false },
   { nome: "forno 3 em 1", meu: false },
-  { nome: "sexta linha: a confirmar", meu: false, pendente: true },
 ];
 
 export const Cena05: React.FC = () => {
@@ -115,7 +113,6 @@ export const Cena05: React.FC = () => {
                     alignItems: "center",
                     gap: 18,
                     ...ent,
-                    opacity: ent.opacity * (l.pendente ? 0.6 : 1),
                   }}
                 >
                   <div
@@ -131,7 +128,7 @@ export const Cena05: React.FC = () => {
                       fontSize: 40,
                       fontWeight: 500,
                       letterSpacing: "-1.4px",
-                      color: l.pendente ? marca.rosa : aceso ? marca.azul : m.tinta,
+                      color: aceso ? marca.azul : m.tinta,
                     }}
                   >
                     {l.nome}

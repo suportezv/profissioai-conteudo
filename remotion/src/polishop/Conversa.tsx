@@ -16,6 +16,42 @@ import { entra } from "../anim";
  * o "cliente" manda são imagens geradas, não material de usuário.
  */
 
+/**
+ * O avatar do A.IChef, como o WhatsApp mostra a foto de perfil de uma empresa.
+ *
+ * O arquivo do cliente é o balão escuro com o chapéu de chef vermelho, num
+ * retrato alto. Avatar de app é redondo, então o desenho vai **contido** num
+ * disco branco em vez de preencher o círculo: cortar pela borda decapitaria o
+ * chapéu, que é justamente o que identifica a marca. O deslocamento vertical
+ * de 4% centra o conjunto chapéu mais balão, que tem o peso visual embaixo.
+ */
+export const AvatarChef: React.FC<{ tam: number }> = ({ tam }) => (
+  <div
+    style={{
+      width: tam,
+      height: tam,
+      borderRadius: tam / 2,
+      background: "#FFFFFF",
+      flexShrink: 0,
+      overflow: "hidden",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <Img
+      src={staticFile("marca-polishop/aichef-avatar.png")}
+      style={{
+        width: tam * 0.7,
+        height: tam * 0.82,
+        objectFit: "contain",
+        transform: `translateY(${tam * 0.04}px)`,
+        display: "block",
+      }}
+    />
+  </div>
+);
+
 export const Painel: React.FC<{
   largura: number;
   altura: number;
@@ -41,8 +77,7 @@ export const Painel: React.FC<{
         gap: 14,
       }}
     >
-      {/* o avatar oficial do A.IChef esta pendente do cliente */}
-      <div style={{ width: 44, height: 44, borderRadius: 22, background: wa.verde }} />
+      <AvatarChef tam={44} />
       <div style={{ fontFamily: UI, fontSize: 22, color: wa.texto }}>A.IChef</div>
     </div>
     <div

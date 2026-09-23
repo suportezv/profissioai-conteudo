@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  Img,
   Sequence,
   interpolate,
   staticFile,
@@ -12,17 +13,38 @@ import { Superficie } from "../Superficie";
 import { UI } from "../whatsapp";
 import { janela, entra, passo, s } from "../anim";
 import { Sfx } from "../Sfx";
-import { QR, QR_L, QR_T, QR_TAM, MOTOR_L, MOTOR_T, MOTOR_W } from "./QR";
+import {
+  QR,
+  QR_L,
+  QR_T,
+  QR_TAM,
+  MOTOR_L,
+  MOTOR_T,
+  MOTOR_W,
+  FIO_Y,
+  FIO_L,
+  SOQUETE_Y,
+} from "./QR";
+import {
+  Airfryer,
+  AF_L,
+  AF_T,
+  AF_W,
+  afimNaTampa,
+  afimPlana,
+  afimEntre,
+  css,
+} from "./Airfryer";
 
 /**
  * Cena 02 do case Polishop: a tentativa de 2023, que não funcionou.
  *
  * 15,2 s. Locução de 14,02 s entrando em 0,4 s.
  *
- * Marcas de palavra com o atraso: "problema" 2,20 · "Em 2023" 3,16 ·
- * "imprimiu um QR code" 4,22 · "aparelho" 5,90 · "a tecnologia da época" 6,98 ·
- * "chatbot de receitas prontas" 8,94 · "sem conversa de verdade" 11,08 ·
- * "o engajamento não veio" 12,94.
+ * Marcas de palavra com o atraso: "Polishop" 0,58 · "problema" 2,20 ·
+ * "Em 2023" 3,16 · "imprimiu um QR code" 4,22 · "no próprio aparelho" 5,40 ·
+ * "a tecnologia da época" 6,98 · "chatbot de receitas prontas" 8,94 ·
+ * "sem conversa de verdade" 11,08 · "o engajamento não veio" 12,94.
  *
  * ## Esta cena existe inteira porque o fracasso é o melhor material do case
  *
@@ -31,13 +53,27 @@ import { QR, QR_L, QR_T, QR_TAM, MOTOR_L, MOTOR_T, MOTOR_W } from "./QR";
  * virada em vez de lista de recursos, explica por que o resultado de 2026 não
  * é sorte, e compra a confiança de quem está julgando.
  *
+ * ## O QR é impresso, então ele tem que ser visto sendo impresso
+ *
+ * O código nasce como um cartão plano, que é como um QR existe num arquivo, e
+ * em 5,85 s **desce e deita na tampa do aparelho**, ganhando a perspectiva da
+ * foto. A narração diz "imprimiu um QR code no próprio aparelho": até a
+ * revisão de 23/set/2026 a tela mostrava o cartão e a frase "impresso no
+ * aparelho" escrita embaixo, que é legenda e não prova. **O aparelho estava
+ * sendo descrito em vez de mostrado.**
+ *
+ * A matriz do pouso sai de `afimNaTampa`, medida nos quatro cantos da tampa, e
+ * a legenda sai de cena quando o adesivo pousa: repetir por escrito o que a
+ * imagem acabou de mostrar é o defeito que a peça estava corrigindo.
+ *
  * ## O QR nasce aqui e **não sai da tela**
  *
- * Ele entra em 4,22 s, na posição que vai ocupar também na cena 03, e fica.
- * É o que torna a virada legível sem lettering: na cena seguinte **o QR não se
- * mexe e o que está atrás dele é substituído**, que é exatamente o que a
- * narração diz, "manteve a porta e trocou o motor". As coordenadas moram no
- * `QR.tsx` para as duas cenas não divergirem na primeira revisão.
+ * Depois de colado ele fica, na posição que vai ocupar também na cena 03. É o
+ * que torna a virada legível sem lettering: na cena seguinte **o aparelho e o
+ * adesivo não se mexem e o que está atrás deles é substituído**, que é
+ * exatamente o que a narração diz, "manteve a porta e trocou o motor". As
+ * coordenadas moram no `QR.tsx` e no `Airfryer.tsx` para as duas cenas não
+ * divergirem na primeira revisão.
  *
  * ## O menu numerado é o contraexemplo que todo brasileiro reconhece
  *
@@ -49,15 +85,20 @@ import { QR, QR_L, QR_T, QR_TAM, MOTOR_L, MOTOR_T, MOTOR_W } from "./QR";
  *
  * Cair seria drama e seria outra afirmação: o projeto não desabou, ele **nunca
  * subiu**. A curva sobe um pouco no lançamento e fica rente ao chão, que é o
- * que "o engajamento não veio" quer dizer.
+ * que "o engajamento não veio" quer dizer. Ela desceu para baixo do painel do
+ * navegador quando o aparelho ocupou a coluna da esquerda.
  */
 
 export const CENA02_FRAMES = s(15.2);
 const AUDIO_EM = s(0.4);
 const m = modos.claro;
 
+const LOGO_EM = s(0.58);
 const ANO_EM = s(2.9);
 const QR_EM = s(4.22);
+const AF_EM = s(5.3);
+const COLA_EM = s(5.85);
+const COLA_DUR = s(0.9);
 const MOTOR_EM = s(8.6);
 const MENU_EM = s(9.0);
 const SEM_CONVERSA_EM = s(11.08);
@@ -74,15 +115,25 @@ const MENU = [
 /** A curva do engajamento: sobe pouco no lançamento e fica rente ao chão. */
 const CURVA = [0.05, 0.42, 0.68, 0.51, 0.3, 0.19, 0.13, 0.1, 0.08, 0.07, 0.06, 0.05];
 
+const PLANA = afimPlana(QR_L, QR_T);
+const NA_TAMPA = afimNaTampa(QR_TAM, AF_L, AF_T, AF_W);
+
 export const Cena02: React.FC = () => {
   const f = useCurrentFrame();
 
+  const logo = janela(f, LOGO_EM, CENA02_FRAMES, 12, 0);
   const ano = janela(f, ANO_EM, CENA02_FRAMES, 10, 0);
   const qr = janela(f, QR_EM, CENA02_FRAMES, 12, 0);
-  const fio = passo(f, QR_EM + 10, MOTOR_EM);
+  const aparelho = passo(f, AF_EM, AF_EM + s(0.8));
+  // o cartao se desfaz enquanto o codigo deita na tampa
+  const cola = passo(f, COLA_EM, COLA_EM + COLA_DUR);
+  const cartao = 1 - passo(f, COLA_EM, COLA_EM + s(0.45));
+  const fio = passo(f, COLA_EM + COLA_DUR, MOTOR_EM);
   const motor = janela(f, MOTOR_EM, CENA02_FRAMES, 12, 0);
   const desenha = passo(f, LINHA_EM, LINHA_EM + s(1.4));
   const linha = janela(f, LINHA_EM, CENA02_FRAMES, 10, 0);
+
+  const matriz = afimEntre(PLANA, NA_TAMPA, cola);
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -91,7 +142,19 @@ export const Cena02: React.FC = () => {
         <Audio src={staticFile("locucao-polishop/cena-02.mp3")} />
       </Sequence>
 
-      <div style={{ position: "absolute", left: 120, top: 118, ...entra(ano, 16) }}>
+      {/* a marca entra na palavra: "A Polishop ja tinha atacado esse problema" */}
+      <Img
+        src={staticFile("marca-polishop/polishop.png")}
+        style={{
+          position: "absolute",
+          left: 120,
+          top: 100,
+          width: 210,
+          ...entra(logo, 14),
+        }}
+      />
+
+      <div style={{ position: "absolute", left: 120, top: 200, ...entra(ano, 16) }}>
         <div
           style={{
             fontSize: 24,
@@ -105,10 +168,10 @@ export const Cena02: React.FC = () => {
         </div>
         <div
           style={{
-            marginTop: 10,
-            fontSize: 96,
+            marginTop: 8,
+            fontSize: 84,
             fontWeight: 500,
-            letterSpacing: "-3.36px",
+            letterSpacing: "-2.94px",
             lineHeight: 1,
           }}
         >
@@ -116,49 +179,61 @@ export const Cena02: React.FC = () => {
         </div>
       </div>
 
-      {/* o QR nasce aqui e fica na mesma posicao na cena 03 */}
+      {/* o aparelho sobe para receber o codigo */}
+      {aparelho > 0.001 ? (
+        <Airfryer
+          esq={AF_L}
+          topo={AF_T}
+          larg={AF_W}
+          o={aparelho}
+          sobe={(1 - aparelho) * 34}
+        />
+      ) : null}
+
+      {/* A etiqueta: um elemento so, do cartao plano ate a tampa.
+          A placa branca com folga em volta nao e enfeite, e o que faz o
+          codigo ler como etiqueta impressa: sem a zona de silencio, um QR
+          denso sobre plastico preto vira uma mancha escura. A sombra e a
+          borda saem quando ele pousa, porque adesivo colado nao flutua. */}
       {qr > 0.001 ? (
-        <div style={{ position: "absolute", left: QR_L, top: QR_T, ...entra(qr, 18) }}>
-          <div
-            style={{
-              background: marca.branco,
-              border: `1px solid ${marca.linha}`,
-              borderRadius: marca.raio.painel,
-              boxShadow: marca.sombra.painel,
-              padding: 26,
-            }}
-          >
-            <QR tamanho={QR_TAM} revela={passo(f, QR_EM, QR_EM + s(0.9))} />
-          </div>
-          <div
-            style={{
-              marginTop: 16,
-              fontSize: 24,
-              letterSpacing: "-0.84px",
-              color: m.apoio,
-              maxWidth: QR_TAM + 52,
-              lineHeight: 1.35,
-            }}
-          >
-            impresso no aparelho
-          </div>
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            width: QR_TAM,
+            height: QR_TAM,
+            background: marca.branco,
+            borderRadius: 12,
+            border: `1px solid ${cola > 0.6 ? "transparent" : marca.linha}`,
+            boxShadow: cola > 0.6 ? "none" : marca.sombra.painel,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transformOrigin: "0 0",
+            transform: css(matriz),
+            opacity: qr,
+          }}
+        >
+          <QR tamanho={QR_TAM * 0.84} revela={passo(f, QR_EM, QR_EM + s(0.9))} />
         </div>
       ) : null}
 
-      {/* o fio do QR para o que esta atras dele */}
-      <div
-        style={{
-          position: "absolute",
-          left: QR_L + QR_TAM + 52,
-          top: QR_T + 26 + QR_TAM / 2,
-          width: MOTOR_L - (QR_L + QR_TAM + 52),
-          height: 1,
-          background: marca.linha,
-          transformOrigin: "left",
-          transform: `scaleX(${fio})`,
-          opacity: qr,
-        }}
-      />
+      {/* o fio do adesivo para o que ha atras dele */}
+      <svg
+        width={1920}
+        height={1080}
+        style={{ position: "absolute", left: 0, top: 0, pointerEvents: "none" }}
+      >
+        <line
+          x1={FIO_L}
+          y1={FIO_Y}
+          x2={FIO_L + (MOTOR_L - FIO_L) * fio}
+          y2={FIO_Y + (SOQUETE_Y - FIO_Y) * fio}
+          stroke={marca.linha}
+          strokeWidth="1"
+        />
+      </svg>
 
       {/* o motor de 2023: uma pagina web com menu numerado */}
       {motor > 0.001 ? (
@@ -254,8 +329,8 @@ export const Cena02: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            left: 120,
-            bottom: 132,
+            left: MOTOR_L,
+            bottom: 96,
             width: 520,
             ...entra(linha, 16),
           }}
@@ -295,6 +370,8 @@ export const Cena02: React.FC = () => {
       ) : null}
 
       <Sfx som="tique" em={QR_EM} volume={0.08} />
+      <Sfx som="surge" em={AF_EM} volume={0.12} />
+      <Sfx som="assenta" em={COLA_EM + COLA_DUR} volume={0.26} />
       <Sfx som="surge" em={MOTOR_EM} volume={0.16} />
       {MENU.map((item, i) => (
         <Sfx key={item} som="tique" em={MENU_EM + i * 4} volume={0.05} />
