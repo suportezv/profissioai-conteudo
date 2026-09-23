@@ -86,8 +86,8 @@ const CURSOR_CHEGA = s(9.9);
 const ESCOLHE = s(10.6);
 
 /**
- * A frase de efeito que abre o filme, em tres tempos: "Creatina / e tudo /
- * igual!".
+ * A frase de efeito que abre o filme, em quatro tempos: "Creatina / e tudo /
+ * igual, / ne?".
  *
  * **O texto mudou em 23/set**, depois de o usuario recusar as tres versoes de
  * "Creatina e creatina" com desdem. A frase agora diz a tese do mercado com
@@ -99,12 +99,17 @@ const ESCOLHE = s(10.6);
  * mediana de f0 mais alta (124 Hz contra 101 da frase seguinte) e o unico que
  * sustenta a altura em "igual" em vez de cair nele.
  *
- * "IGUAL!" entra na tonica da palavra e leva o som forte.
+ * "IGUAL," entra na tonica da palavra e leva o som forte. O "ne?" foi pedido
+ * depois, com a entonacao aprovada: por isso ele e emendado no mesmo take (o
+ * "ne?" vem do take 5, que sobe de 113 para 124 Hz, na altura em que o take 2
+ * termina o "igual"), e nao um take novo da frase inteira. Com quatro tempos a
+ * segunda linha nao cabia a 132 px, e o corpo desceu para 112.
  */
 const PALAVRAS: { texto: string; em: number }[] = [
   { texto: "CREATINA", em: s(1.08) },
   { texto: "É TUDO", em: s(1.52) },
-  { texto: "IGUAL!", em: s(1.9) },
+  { texto: "IGUAL,", em: s(1.9) },
+  { texto: "NÉ?", em: s(2.58) },
 ];
 
 const Estalo: React.FC<{ o: number; children: React.ReactNode }> = ({
@@ -294,9 +299,9 @@ export const Cena01: React.FC = () => {
               </div>
             <div
               style={{
-                fontSize: 132,
+                fontSize: 112,
                 fontWeight: 500,
-                letterSpacing: "-4.62px",
+                letterSpacing: "-3.92px",
                 lineHeight: 1.02,
                 color: marca.branco,
                 maxWidth: 1180,
@@ -313,6 +318,9 @@ export const Cena01: React.FC = () => {
               </Estalo>{" "}
               <Estalo o={passo(f, PALAVRAS[2].em, PALAVRAS[2].em + 7)}>
                 {PALAVRAS[2].texto}
+              </Estalo>{" "}
+              <Estalo o={passo(f, PALAVRAS[3].em, PALAVRAS[3].em + 7)}>
+                {PALAVRAS[3].texto}
                 <span style={{ color: marca.apoioEscuro }}>”</span>
               </Estalo>
             </div>
@@ -464,6 +472,7 @@ export const Cena01: React.FC = () => {
       <Sfx som="tique" em={PALAVRAS[0].em} volume={0.14} />
       <Sfx som="tique" em={PALAVRAS[1].em} volume={0.12} />
       <Sfx som="marca" em={PALAVRAS[2].em} volume={0.26} />
+      <Sfx som="tique" em={PALAVRAS[3].em} volume={0.12} />
       <Sfx som="surge" em={MERCADO_EM} volume={0.2} />
       {tiquesDaContagem(CONTA_EM, CONTA_ATE).map((fr, i) => (
         <Sfx key={i} som="tique" em={fr} volume={0.06} />
