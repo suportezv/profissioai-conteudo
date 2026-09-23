@@ -3,6 +3,7 @@ import {
   AbsoluteFill,
   Audio,
   Sequence,
+  interpolate,
   staticFile,
   useCurrentFrame,
 } from "remotion";
@@ -51,8 +52,19 @@ export const Cena08B: React.FC = () => {
   const retorno = janela(f, RETORNO_EM, CENA08B_FRAMES, 13, 0);
   const nps = janela(f, NPS_EM, CENA08B_FRAMES, 12, 0);
   const vRet = conta(f, RETORNO_EM, RETORNO_EM + s(1.1), 35);
-  const vNps = conta(f, NPS_EM + s(2.3), NPS_EM + s(3.0), 93);
-  const mostraNps = passo(f, NPS_EM + s(2.3), NPS_EM + s(2.4));
+  // **Contagem linear, e comecando junto com o rotulo.** O rotulo "de NPS"
+  // entra quando a locucao diz a palavra, em 4,5 s, e o numero e dito em
+  // 7,02 s: com a curva SUAVE, que salta e freia, o numero chegava perto do
+  // valor em um segundo e ficava rastejando; e com o contador comecando so
+  // em 6,4 s a tela mostrava **um rotulo com um vazio em cima dele por dois
+  // segundos e meio**, que le como render travado e e o mesmo defeito que o
+  // case anterior corrigiu na barra de multiplicacao. Linear, do rotulo ate
+  // a palavra, nunca ha buraco e o numero assenta quando ele e dito.
+  const vNps = interpolate(f, [NPS_EM + s(0.45), NPS_EM + s(2.95)], [0, 93], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const mostraNps = passo(f, NPS_EM + s(0.3), NPS_EM + s(0.45));
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -131,7 +143,7 @@ export const Cena08B: React.FC = () => {
       </AbsoluteFill>
 
       <Sfx som="assenta" em={RETORNO_EM + s(1.1)} volume={0.34} />
-      <Sfx som="assenta" em={NPS_EM + s(3.0)} volume={0.38} />
+      <Sfx som="assenta" em={NPS_EM + s(2.95)} volume={0.38} />
     </AbsoluteFill>
   );
 };
