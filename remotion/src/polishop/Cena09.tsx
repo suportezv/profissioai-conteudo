@@ -27,34 +27,30 @@ import {
 /**
  * Cena 09 do case Polishop: o aprendizado, e a assinatura.
  *
- * 17,2 s. Locução de 13,98 s entrando em 0,4 s.
+ * 15,7 s. Locução de 11,80 s entrando em 0,4 s.
  *
- * Marcas de palavra com o atraso: "Um QR code" 0,46 · "impresso na fábrica"
- * 1,28 · "transforma" 2,40 · "um produto" 2,96 · "na prateleira" 3,56 · "em
- * uma conversa" 4,06 · "continua" 5,00 · "Sem campanha" 6,20 · "sem e-mail"
- * 7,26 · "sem lembrete" 8,26 · "a Polishop" 9,96 · "essa inovação" 11,44 ·
- * "para a linha" 12,56 · "fitness" 13,68.
+ * Marcas de palavra com o atraso: "Um QR code" 0,48 · "impresso na fábrica"
+ * 1,28 · "transforma" 2,34 · "um produto" 2,88 · "na prateleira" 3,50 · "em
+ * uma conversa" 4,06 · "continua" 4,90 · "Sem campanha" 6,18 · "sem e-mail"
+ * 6,98 · "sem lembrete" 7,56 · "A Polishop" 8,80 · "essa inovação" 10,32 ·
+ * "para a linha" 10,90 · "fitness" 11,36.
  *
- * ## A faixa foi regravada em 23/set/2026 por causa da pronúncia da marca
+ * ## A faixa foi escolhida entre oito takes, por duas medidas
  *
- * O usuário ouviu "Polishop" aqui e na cena 02 e disse que esta soava
- * estranha. **Dá para medir onde está a diferença sem ouvir**: recortando a
- * palavra nas duas faixas e olhando onde cai o pico de energia dentro dela, a
- * cena 02 (aprovada) marca em 12% da palavra e esta marcava em 39%. Ou seja
- * **a tônica tinha escorregado para a segunda sílaba**, "po-LI-shop" em vez de
- * "PO-li-shop".
+ * A pronúncia de "Polishop" aqui foi recusada três vezes, e o que separa um
+ * take bom de um ruim é o **f0 mediano da palavra**: 143 Hz na faixa aprovada
+ * da cena 02. A grafia não resolve, o registro resolve, e por isso a frase que
+ * cita a marca começa uma oração nova. Mesmo assim o TTS varia: os oito takes
+ * deste texto mediram de 97 a 172 Hz.
  *
- * Três grafias foram geradas e escolhidas pela medida, não pelo gosto:
- * `Pólishop` piorou (pico em 78%), `Póli shop` e `Pólishópi` acertaram os dois
- * em 13%. O desempate foi uma assinatura de banda por quadro da palavra
- * inteira comparada por cosseno contra a da cena 02: 0,50 na versão recusada,
- * 0,93 nas duas boas. Ficou **`Pólishópi`**, que tem o centroide espectral
- * mais perto da referência (1530 contra 1584 Hz; a com espaço deu 1292) e é
- * uma palavra só, sem o risco de o TTS abrir uma micropausa no espaço.
+ * A segunda medida apareceu porque o usuário ouviu **uma falha em "para a
+ * linha fitness"**, e ela é reprodutível: **três dos oito takes tropeçam
+ * exatamente ali** ("para a lin-para a linha", "para esse, para a linha",
+ * "pra linha"). O Scribe pega todos, desde que a conferência seja de
+ * **igualdade exata** da lista de palavras contra o texto pedido; comparar "o
+ * texto parece certo" deixa passar.
  *
- * O Scribe devolve "Polishop", então a grafia não vaza para a transcrição. O
- * lettering na tela continua "Polishop": o acento existe só para o TTS, como
- * já valia para "co-órte" no case anterior.
+ * Este take mede **149 Hz** e transcreve palavra por palavra igual ao roteiro.
  *
  * ## A cena foi refeita em 23/set/2026, e o pedido era de ilustração
  *
@@ -93,19 +89,19 @@ import {
  * claro a Profissio.ai entra na versão escura.
  */
 
-export const CENA09_FRAMES = s(17.4);
+export const CENA09_FRAMES = s(15.7);
 const AUDIO_EM = s(0.4);
 const m = modos.claro;
 
 const QR_EM = s(0.48);
 const FIO_EM = s(1.26);
-const APARELHO_EM = s(2.6);
-const FUNDE_EM = s(3.2);
-const PRATELEIRA_EM = s(3.9);
-const CONVERSA_EM = s(4.9);
-const RISCOS_EM = s(7.04);
-const FECHO_EM = s(10.3);
-const ASSINA_EM = s(14.7);
+const APARELHO_EM = s(2.35);
+const FUNDE_EM = s(2.9);
+const PRATELEIRA_EM = s(3.5);
+const CONVERSA_EM = s(4.2);
+const RISCOS_EM = s(6.18);
+const FECHO_EM = s(8.8);
+const ASSINA_EM = s(12.5);
 
 const RISCOS = ["sem campanha", "sem e-mail", "sem lembrete"];
 
@@ -349,7 +345,7 @@ export const Cena09: React.FC = () => {
               }}
             >
               {RISCOS.map((r, i) => {
-                const risca = passo(f, RISCOS_EM + i * s(1.0), RISCOS_EM + i * s(1.0) + 12);
+                const risca = passo(f, RISCOS_EM + i * s(0.69), RISCOS_EM + i * s(0.69) + 11);
                 return (
                   <div
                     key={r}
@@ -408,7 +404,7 @@ export const Cena09: React.FC = () => {
               letterSpacing: "-2.24px",
               lineHeight: 1.18,
               maxWidth: 1400,
-              opacity: passo(f, FECHO_EM + s(1.4), FECHO_EM + s(1.9)),
+              opacity: passo(f, FECHO_EM + s(0.7), FECHO_EM + s(1.0)),
             }}
           >
             já está levando essa inovação
@@ -417,7 +413,7 @@ export const Cena09: React.FC = () => {
             <span
               style={{
                 color: marca.azul,
-                opacity: passo(f, FECHO_EM + s(3.38), FECHO_EM + s(3.6)),
+                opacity: passo(f, FECHO_EM + s(2.56), FECHO_EM + s(2.78)),
               }}
             >
               fitness
@@ -469,7 +465,7 @@ export const Cena09: React.FC = () => {
         />
       ))}
       {RISCOS.map((r, i) => (
-        <Sfx key={r} som="apaga" em={RISCOS_EM + i * s(1.0)} volume={0.12} />
+        <Sfx key={r} som="apaga" em={RISCOS_EM + i * s(0.69)} volume={0.12} />
       ))}
       <Sfx som="surge" em={ASSINA_EM} volume={0.2} />
     </AbsoluteFill>

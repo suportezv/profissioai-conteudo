@@ -57,7 +57,7 @@ Por isso ele ocupa uma cena inteira (02) em vez de virar uma linha.
 | **07** | 1:13,5 a 1:21,3 | O agente dando opinião e reagindo à foto do prato pronto. | Narração |
 | **08** | 1:21,3 a 1:33,9 | 11.100 conversas, 140.630 mensagens, 2.888 fotos de ingredientes. | Narração |
 | **08B** | 1:33,9 a 1:42,5 | 35% voltaram a conversar, e o NPS **93 em 112 respostas**, com a base ao lado. | Narração |
-| **09** | 1:42,5 a 1:59,9 | O fio encontra a airfryer e **os dois se fundem**; o aparelho vira uma **fileira de cinco na prateleira, todos com o mesmo código na tampa**; de cada um sobe um fio que converge num só, com quatro mensagens datadas de out/2025 a set/2026 — **a última cortada pela borda do quadro**. Depois os três riscados, a linha fitness e a assinatura Polishop + Profissio sobre fundo claro. | Narração |
+| **09** | 1:42,5 a 1:58,1 | O fio encontra a airfryer e **os dois se fundem**; o aparelho vira uma **fileira de cinco na prateleira, todos com o mesmo código na tampa**; de cada um sobe um fio que converge num só, com quatro mensagens datadas de out/2025 a set/2026 — **a última cortada pela borda do quadro**. Depois os três riscados, a linha fitness e a assinatura Polishop + Profissio sobre fundo claro. | Narração |
 
 ---
 

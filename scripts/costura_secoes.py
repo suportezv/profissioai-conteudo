@@ -41,8 +41,20 @@ Uso:
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
+
+
+def lufs(caminho):
+    """Loudness integrada do arquivo, pelo `ebur128` do ffmpeg."""
+    r = subprocess.run(
+        ["ffmpeg", "-hide_banner", "-nostats", "-i", caminho,
+         "-af", "ebur128=framelog=quiet", "-f", "null", "-"],
+        capture_output=True, text=True,
+    )
+    m = re.search(r"Integrated loudness:\s*\n\s*I:\s*(-?[\d.]+)", r.stderr)
+    return float(m.group(1)) if m else None
 
 
 def roda(args):
@@ -56,6 +68,12 @@ def main():
                                  '"ganho":0.5,"corte":1600}]')
     ap.add_argument("saida")
     ap.add_argument("--pasta", default=".", help="onde estao os stems")
+    ap.add_argument(
+        "--normaliza", type=float, default=None, metavar="LUFS",
+        help="mede cada stem e iguala a loudness antes de aplicar os ganhos do "
+             "mapa (ex.: -16). Sem isso o ganho do mapa multiplica material de "
+             "volumes diferentes e o mesmo numero soa diferente em cada secao.",
+    )
     ap.add_argument("--cruzamento", type=float, default=1.4,
                     help="segundos de sobreposicao entre secoes")
     a = ap.parse_args()
@@ -64,6 +82,23 @@ def main():
     if not secoes:
         sys.exit("mapa vazio")
     total = max(s["fim"] for s in secoes)
+
+    # **Igualar a loudness dos stems antes de aplicar os ganhos.**
+    # Sem isso o numero do mapa nao quer dizer nada: um pad gerado a -44 LUFS
+    # com ganho 0,46 vira silencio ao lado de um trecho a -14, e o que o
+    # espectador ouve e um buraco na trilha, nao um leito.
+    correcao = {}
+    if a.normaliza is not None:
+        for s in secoes:
+            nome = s["stem"]
+            if nome in correcao:
+                continue
+            caminho = os.path.join(a.pasta, nome + ".mp3")
+            if not os.path.exists(caminho):
+                continue
+            medido = lufs(caminho)
+            correcao[nome] = 1.0 if medido is None else 10 ** ((a.normaliza - medido) / 20)
+            print("  %-10s %6.1f LUFS -> x%.3f" % (nome, medido or 0.0, correcao[nome]))
 
     entradas, filtros, rotulos = [], [], []
     for i, s in enumerate(secoes):
@@ -87,7 +122,8 @@ def main():
             "afade=t=in:st=0:d=%.3f,afade=t=out:st=%.3f:d=%.3f,"
             "volume=%.4f,adelay=%d:all=1[s%d]"
             % (i, dura, passa, ent, max(0.0, dura - sai), sai,
-               float(s.get("ganho", 1.0)), int(ini * 1000), i)
+               float(s.get("ganho", 1.0)) * correcao.get(s["stem"], 1.0),
+               int(ini * 1000), i)
         )
         rotulos.append("[s%d]" % i)
 

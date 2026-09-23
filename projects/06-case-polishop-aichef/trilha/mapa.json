@@ -1,11 +1,10 @@
 [
-  { "stem": "q-a",    "inicio":   0.0, "fim":  13.2, "ganho": 0.58, "corte": 1400 },
-  { "stem": "q-c",    "inicio":  13.2, "fim":  28.2, "ganho": 0.62, "corte": 2200 },
-  { "stem": "q-b",    "inicio":  28.2, "fim":  43.9, "ganho": 0.80 },
-  { "stem": "q-pad2", "inicio":  43.9, "fim":  55.1, "ganho": 0.46 },
-  { "stem": "q-a",    "inicio":  55.1, "fim":  73.5, "ganho": 0.70, "corte": 3200 },
-  { "stem": "q-c",    "inicio":  73.5, "fim":  81.3, "ganho": 0.66, "corte": 2600 },
-  { "stem": "q-b",    "inicio":  81.3, "fim":  93.9, "ganho": 0.86 },
-  { "stem": "q-a",    "inicio":  93.9, "fim": 102.5, "ganho": 0.78 },
-  { "stem": "q-d",    "inicio": 102.5, "fim": 119.9, "ganho": 0.82 }
+  { "stem": "q-a", "inicio":   0.0, "fim":  13.2, "ganho": 0.50, "corte": 1400 },
+  { "stem": "q-c", "inicio":  13.2, "fim":  28.2, "ganho": 0.68, "corte": 2200 },
+  { "stem": "q-b", "inicio":  28.2, "fim":  43.9, "ganho": 0.68 },
+  { "stem": "q-d", "inicio":  43.9, "fim":  55.1, "ganho": 0.78, "corte": 1000 },
+  { "stem": "q-a", "inicio":  55.1, "fim":  73.5, "ganho": 0.64, "corte": 3200 },
+  { "stem": "q-c", "inicio":  73.5, "fim":  81.3, "ganho": 0.74, "corte": 2600 },
+  { "stem": "q-b", "inicio":  81.3, "fim": 102.5, "ganho": 0.80 },
+  { "stem": "q-d", "inicio": 102.5, "fim": 118.2, "ganho": 0.76 }
 ]
