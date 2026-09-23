@@ -415,7 +415,7 @@ export const Cena03: React.FC = () => {
           >
             <AvatarChef tam={46} />
             <div style={{ fontFamily: UI, fontSize: 23, color: wa.texto, opacity: nome }}>
-              A.IChef
+              AIChef
             </div>
           </div>
 
@@ -447,7 +447,7 @@ export const Cena03: React.FC = () => {
                   ...entra(msg, 12),
                 }}
               >
-                Oi! Sou o A.IChef. Vi que você tem uma Air Fryer iChef. O que
+                Oi! Sou o AIChef. Vi que você tem uma Air Fryer AIChef. O que
                 vamos fazer hoje?
               </div>
             ) : null}

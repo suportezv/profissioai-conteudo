@@ -32,6 +32,16 @@ import { Sfx } from "../Sfx";
  * Por isso ele entra por último, fica mais tempo e leva a linha de base
  * explicando de onde veio.
  *
+ * ## O número mora inteiro, e o separador de milhar vem de graça
+ *
+ * Os três valores estavam guardados **em milhares com ponto decimal**
+ * (`alvo: 11.1` com três casas), e `toLocaleString("pt-BR")` escreve a casa
+ * decimal com **vírgula**: a tela dizia "11,100" e "140,630", que um brasileiro
+ * lê como onze vírgula um. O `alvo` agora é o inteiro e `casas` é zero, então o
+ * mesmo `br()` entrega "11.100" e "140.630", com o ponto de milhar que é o
+ * padrão daqui. A contagem não muda: `tiquesDaContagem` divide a curva em vinte
+ * degraus, não no valor.
+ *
  * ## A distribuição regional não está aqui
  *
  * 63% Sudeste, 14,5% Nordeste e o resto ficaram fora do corte. Geografia não
@@ -59,24 +69,24 @@ const DADOS: Dado[] = [
   {
     entra: s(4.8),
     sai: s(7.0),
-    alvo: 11.1,
-    casas: 3,
+    alvo: 11100,
+    casas: 0,
     titulo: "conversas",
     base: "out/2025 a 18/set/2026",
   },
   {
     entra: s(7.0),
     sai: s(9.4),
-    alvo: 140.63,
-    casas: 3,
+    alvo: 140630,
+    casas: 0,
     titulo: "mensagens trocadas",
     base: "88,6% em texto · 9,1% em áudio",
   },
   {
     entra: s(9.4),
     sai: CENA08_FRAMES,
-    alvo: 2.888,
-    casas: 3,
+    alvo: 2888,
+    casas: 0,
     titulo: "fotos de ingredientes",
     base: "mandadas pelos próprios clientes, pedindo receita",
   },

@@ -85,6 +85,56 @@ export const br = (n: number, casas = 0) =>
   });
 
 /**
+ * Uma contagem inteira, e os frames em que ela muda de valor.
+ *
+ * O par existe para que **imagem e som saiam da mesma expressao**. Sempre que
+ * os dois moram em lugares diferentes eles comecam iguais e divergem na
+ * primeira revisao: no case 05 os sete pontos da cena 08 cresciam na curva
+ * `SUAVE` enquanto os toques tocavam a cada cinco quadros, e o usuario ouviu
+ * "mais efeito de som do que bolinha".
+ *
+ * A curva e **linear por padrao, de proposito**. `SUAVE` chega a 93% na
+ * primeira metade do intervalo, entao numa contagem que o olho precisa seguir
+ * item a item os primeiros degraus caem quase juntos e a enumeracao deixa de
+ * existir. Curva serve para entrada; contagem e linear.
+ */
+export const contaInteira = (
+  f: number,
+  ini: number,
+  fim: number,
+  de: number,
+  ate: number,
+  easing?: (n: number) => number,
+) =>
+  Math.round(
+    interpolate(f, [ini, fim], [de, ate], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      ...(easing ? { easing } : {}),
+    }),
+  );
+
+/** Os frames em que `contaInteira` troca de valor, com os mesmos argumentos. */
+export const degraus = (
+  ini: number,
+  fim: number,
+  de: number,
+  ate: number,
+  easing?: (n: number) => number,
+) => {
+  const fora: number[] = [];
+  let ultimo = contaInteira(Math.floor(ini), ini, fim, de, ate, easing);
+  for (let f = Math.floor(ini) + 1; f <= Math.ceil(fim); f++) {
+    const v = contaInteira(f, ini, fim, de, ate, easing);
+    if (v !== ultimo) {
+      fora.push(f);
+      ultimo = v;
+    }
+  }
+  return fora;
+};
+
+/**
  * Os frames em que um contador cruza cada degrau do valor.
  *
  * Serve para sonorizar a contagem **derivando o som da mesma curva que move o

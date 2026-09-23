@@ -157,8 +157,20 @@ export const Cena09: React.FC = () => {
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
       <Superficie modo="claro" halo />
+      {/* Duas faixas, e a divisão é a correção da pronúncia da marca.
+
+          "A Polishop" era a **terceira** frase de um bloco longo, e a voz
+          declina ao longo de um parágrafo: a palavra saía num registro mais
+          grave que o da cena 02, que é a aprovada. Mesma causa e mesmo
+          conserto da cena 06. A `09a` é o arquivo antigo cortado no silêncio
+          entre as orações, então as duas primeiras frases continuam sendo
+          exatamente o take já aprovado; só a frase da marca é nova, e ela
+          nasce em início de fala. */}
       <Sequence from={AUDIO_EM}>
-        <Audio src={staticFile("locucao-polishop/cena-09.mp3")} />
+        <Audio src={staticFile("locucao-polishop/cena-09a.mp3")} />
+      </Sequence>
+      <Sequence from={FECHO_EM}>
+        <Audio src={staticFile("locucao-polishop/cena-09b.mp3")} />
       </Sequence>
 
       {/* ato 1: o fio encontra o aparelho e os dois se fundem */}
@@ -227,8 +239,8 @@ export const Cena09: React.FC = () => {
                   d={`M ${cx} ${P_T + 30} C ${cx} ${FIO_CONV + 60}, ${cx} ${FIO_CONV + 40}, ${cx + 0} ${FIO_CONV}`}
                   fill="none"
                   stroke={marca.azul}
-                  strokeWidth="1"
-                  opacity={abre * 0.55}
+                  strokeWidth="2"
+                  opacity={abre}
                 />
               );
             })}
@@ -413,7 +425,7 @@ export const Cena09: React.FC = () => {
             <span
               style={{
                 color: marca.azul,
-                opacity: passo(f, FECHO_EM + s(2.56), FECHO_EM + s(2.78)),
+                opacity: passo(f, FECHO_EM + s(2.66), FECHO_EM + s(2.88)),
               }}
             >
               fitness

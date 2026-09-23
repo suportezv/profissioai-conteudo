@@ -9,7 +9,17 @@ import {
 } from "remotion";
 import { marca, modos } from "../marca";
 import { Superficie } from "../Superficie";
-import { janela, entra, conta, br, passo, s, tiquesDaContagem } from "../anim";
+import {
+  janela,
+  entra,
+  conta,
+  br,
+  passo,
+  s,
+  tiquesDaContagem,
+  contaInteira,
+  degraus,
+} from "../anim";
 import { Sfx } from "../Sfx";
 import { Rosto } from "./Rosto";
 
@@ -63,7 +73,7 @@ import { Rosto } from "./Rosto";
  * isso os sete pontos entram em "todo dia" e nao junto da barra.
  */
 
-export const CENA08_FRAMES = s(16);
+export const CENA08_FRAMES = s(16.5);
 const AUDIO_EM = s(0.4);
 const MARGEM = 120;
 const m = modos.claro;
@@ -72,6 +82,7 @@ const ROTULO_EM = s(0.46);
 const BARRA_EM = s(3.1);
 const ENCOLHE_EM = s(5.36);
 const FREQ_EM = s(6.84);
+const PONTOS_ATE = FREQ_EM + s(1.0);
 const CORTE = s(8.5);
 const NUM_EM = s(8.86);
 const CLARO_EM = s(10.6);
@@ -104,7 +115,13 @@ export const Cena08: React.FC = () => {
   const sorriB = passo(f, DECISAO_EM, DECISAO_EM + s(0.8));
 
   // 1 ponto por semana vira 7 por semana: a frequencia e o habito
-  const pontos = Math.round(interpolate(freq > 0.02 ? passo(f, FREQ_EM, FREQ_EM + s(1.0)) : 0, [0, 1], [1, 7]));
+  // **Imagem e som saem da mesma expressão.** Os pontos cresciam na curva
+  // SUAVE e os toques tocavam a cada cinco quadros: duas cadências, e um
+  // toque a mais, porque o primeiro soava quando a contagem ainda estava em 1
+  // e nenhum ponto novo tinha aparecido. Agora a contagem é linear (o olho
+  // precisa contar, e curva junta os primeiros degraus) e os toques vêm de
+  // `degraus`, que devolve exatamente os quadros em que ela muda.
+  const pontos = freq > 0.02 ? contaInteira(f, FREQ_EM, PONTOS_ATE, 1, 7) : 1;
 
   return (
     <AbsoluteFill style={{ fontFamily: marca.fonte, color: m.tinta }}>
@@ -336,8 +353,8 @@ export const Cena08: React.FC = () => {
 
       <Sfx som="tique" em={BARRA_EM} volume={0.08} />
       <Sfx som="apaga" em={ENCOLHE_EM} volume={0.2} />
-      {Array.from({ length: 6 }).map((_, i) => (
-        <Sfx key={i} som="tique" em={FREQ_EM + i * 5} volume={0.06} />
+      {degraus(FREQ_EM, PONTOS_ATE, 1, 7).map((fr, i) => (
+        <Sfx key={i} som="tique" em={fr} volume={0.06} />
       ))}
       {tiquesDaContagem(NUM_EM, NUM_EM + s(1.3)).map((fr, i) => (
         <Sfx key={i} som="tique" em={fr} volume={0.07} />

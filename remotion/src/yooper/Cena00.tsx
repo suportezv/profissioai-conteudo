@@ -63,7 +63,7 @@ import { passo, s } from "../anim";
  * quando precisa existir, é gerada à parte, onde dá para medir e refazer.
  */
 
-export const CENA00_FRAMES = s(4.8);
+export const CENA00_FRAMES = s(5.3);
 
 const NARRACAO_EM = s(0.7);
 

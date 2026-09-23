@@ -26,7 +26,8 @@ import { Sfx } from "../Sfx";
  *    outra coisa. O numero absoluto chegou em 22/set: **54 conversas** fora do
  *    horario comercial, e e ele que vai na regua embaixo do percentual. Quem
  *    confere deriva a base sozinho, e a pendencia saiu da tela.
- * 2. **O NPS ainda nao chegou.** Ele aparece como pendencia na mesma regua do
+ * 2. **O NPS chegou em 23/set/2026: 100.** Antes ele aparecia como pendencia
+ *    em rosa; confirmado, entra como dado na mesma regua do
  *    75%, e nao como ausencia silenciosa.
  *
  * ## O 75% nao e um numero, e uma contagem
@@ -266,8 +267,7 @@ export const Cena07: React.FC = () => {
                   ...entra(rodape, 14),
                 }}
               >
-                {SEM_HUMANO} de {TOTAL} usuários ·{" "}
-                <span style={{ color: marca.rosa }}>NPS: a confirmar</span>
+                {SEM_HUMANO} de {TOTAL} usuários · NPS 100
               </div>
             ) : null}
           </div>

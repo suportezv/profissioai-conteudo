@@ -1,9 +1,9 @@
 [
-  { "stem": "w-abre",  "inicio":   0.0, "fim":  13.7, "ganho": 0.58 },
-  { "stem": "w-medio", "inicio":  13.7, "fim":  27.2, "ganho": 0.72 },
-  { "stem": "w-alto",  "inicio":  27.2, "fim":  43.0, "ganho": 0.70 },
-  { "stem": "w-medio", "inicio":  43.0, "fim":  57.4, "ganho": 0.66 },
-  { "stem": "w-alto",  "inicio":  57.4, "fim":  74.2, "ganho": 0.74 },
-  { "stem": "w-cheio", "inicio":  74.2, "fim": 107.1, "ganho": 0.82 },
-  { "stem": "w-medio", "inicio": 107.1, "fim": 117.1, "ganho": 0.64 }
+  { "stem": "w-abre",  "inicio":   0.0, "fim":  14.2, "ganho": 0.58 },
+  { "stem": "w-medio", "inicio":  14.2, "fim":  27.7, "ganho": 0.72 },
+  { "stem": "w-alto",  "inicio":  27.7, "fim":  44.0, "ganho": 0.70 },
+  { "stem": "w-medio", "inicio":  44.0, "fim":  58.4, "ganho": 0.66 },
+  { "stem": "w-alto",  "inicio":  58.4, "fim":  75.2, "ganho": 0.74 },
+  { "stem": "w-cheio", "inicio":  75.2, "fim": 108.6, "ganho": 0.82 },
+  { "stem": "w-medio", "inicio": 108.6, "fim": 120.0, "ganho": 0.64 }
 ]

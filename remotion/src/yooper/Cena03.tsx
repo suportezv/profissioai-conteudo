@@ -48,7 +48,7 @@ import { dash } from "./Painel";
 
  */
 
-export const CENA03_FRAMES = s(15.8);
+export const CENA03_FRAMES = s(16.3);
 const AUDIO_EM = s(0.5);
 const m = modos.claro;
 

@@ -20,7 +20,7 @@ import { Cena08B, CENA08B_FRAMES } from "./Cena08B";
 import { Cena09, CENA09_FRAMES } from "./Cena09";
 
 /**
- * Corte de montagem do case Polishop A.IChef, ponta a ponta.
+ * Corte de montagem do case Polishop AIChef, ponta a ponta.
  *
  * ## A lacuna da sonora saiu, e o filme foi apertado para 2:00
  *

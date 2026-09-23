@@ -23,6 +23,25 @@ Cada secao vira uma faixa propria que:
   * entra com `afade in` e sai com `afade out`;
   * e atrasada com `adelay` para o seu instante no filme.
 
+## A emenda do laco, que custou um clique audivel
+
+`-stream_loop` **cola o fim do arquivo no comeco dele sem cruzamento nenhum**.
+Enquanto a secao cabe dentro do stem isso nunca aparece; quando ela e mais
+longa, a volta do laco cai dentro do filme e o corte seco vira um clique. No
+case 06 a secao de 81,3 a 102,5 s pedia 24 s de um stem de 22, e o usuario
+ouviu um "pequeno salto" em 1:41. A conta fecha exata: a secao comeca em
+`81,3 - 1,4` de cruzamento e `79,9 + 22 = 101,9`.
+
+Por isso, quando o laco e necessario, o stem e **refeito para dar a volta sem
+emenda**: a cauda dele e cruzada por cima da propria cabeca, o que encurta o
+arquivo em um cruzamento e faz o ultimo quadro encostar no primeiro de forma
+continua por construcao. Dai `-stream_loop` pode repetir a vontade.
+
+O cruzamento do laco usa `qsin` nos dois lados, e nao a rampa linear do
+`afade` padrao: as duas pontas sao o mesmo material em fases diferentes, ou
+seja **sinais nao correlacionados**, e somar duas rampas lineares deixa um
+buraco de 3 dB no meio do cruzamento. Curva de potencia constante nao deixa.
+
 As faixas sao somadas com `amix`. Como cada secao comeca `cruzamento` segundos
 antes do fim da anterior e as duas estao em fade oposto, **o cruzamento sai da
 soma**, sem precisar de `acrossfade` encadeado, que exigiria montar a cadeia
@@ -44,6 +63,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 
 
 def lufs(caminho):
@@ -59,6 +79,41 @@ def lufs(caminho):
 
 def roda(args):
     return subprocess.run(args, capture_output=True, text=True)
+
+
+def duracao(caminho):
+    """Duracao do arquivo em segundos."""
+    r = roda(["ffprobe", "-v", "error", "-show_entries", "format=duration",
+              "-of", "csv=p=0", caminho])
+    try:
+        return float(r.stdout.strip())
+    except ValueError:
+        return None
+
+
+def laco_sem_emenda(caminho, cruz, destino):
+    """Reescreve o stem para que ele de a volta sem corte seco.
+
+    A cauda de `cruz` segundos e somada por cima da cabeca, as duas em curva de
+    potencia constante. O arquivo fica `cruz` segundos mais curto e o sample
+    seguinte ao ultimo passa a ser, por construcao, o que ja seguia aquele
+    ponto no material original.
+    """
+    dur = duracao(caminho)
+    if dur is None or dur <= cruz * 2:
+        return caminho
+    corpo = dur - cruz
+    filtro = (
+        "[0:a]atrim=0:%.4f,asetpts=N/SR/TB,afade=t=in:st=0:d=%.4f:curve=qsin[c];"
+        "[0:a]atrim=%.4f:%.4f,asetpts=N/SR/TB,"
+        "afade=t=out:st=0:d=%.4f:curve=qsin[t];"
+        "[c][t]amix=inputs=2:normalize=0:dropout_transition=0[out]"
+        % (corpo, cruz, corpo, dur, cruz)
+    )
+    r = roda(["ffmpeg", "-v", "error", "-y", "-i", caminho,
+              "-filter_complex", filtro, "-map", "[out]",
+              "-c:a", "pcm_s16le", destino])
+    return destino if r.returncode == 0 else caminho
 
 
 def main():
@@ -101,6 +156,8 @@ def main():
             print("  %-10s %6.1f LUFS -> x%.3f" % (nome, medido or 0.0, correcao[nome]))
 
     entradas, filtros, rotulos = [], [], []
+    temp = tempfile.mkdtemp(prefix="costura-")
+    lacados = {}
     for i, s in enumerate(secoes):
         caminho = os.path.join(a.pasta, s["stem"] + ".mp3")
         if not os.path.exists(caminho):
@@ -111,6 +168,19 @@ def main():
         dura = fim - ini
         ent = a.cruzamento if s["inicio"] > 0 else 0.8
         sai = a.cruzamento if s["fim"] < total else 2.0
+        # **A secao so pode passar da duracao do stem se o laco for sem
+        # emenda.** `-stream_loop` cola o fim no comeco sem cruzamento, e esse
+        # corte seco e audivel como clique quando a volta cai dentro do filme.
+        origem = duracao(caminho)
+        if origem is not None and dura > origem - 0.001:
+            if s["stem"] not in lacados:
+                lacados[s["stem"]] = laco_sem_emenda(
+                    caminho, a.cruzamento,
+                    os.path.join(temp, s["stem"] + "-laco.wav"),
+                )
+                print("  %-10s laco sem emenda (%.1fs pedidos de %.1fs)"
+                      % (s["stem"], dura, origem))
+            caminho = lacados[s["stem"]]
         entradas += ["-stream_loop", "-1", "-i", caminho]
         # `corte` e a densidade da secao: um passa-baixa tira o brilho e a
         # percussao de cima sem mudar tom nem andamento, que e o que garante

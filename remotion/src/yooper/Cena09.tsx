@@ -41,7 +41,7 @@ import { Sfx } from "../Sfx";
  * condicao. A Yooper e a anunciante; a Profissio assina como coautora.
  */
 
-export const CENA09_FRAMES = s(10);
+export const CENA09_FRAMES = s(11.4);
 const AUDIO_EM = s(0.4);
 const MARGEM = 120;
 const m = modos.claro;

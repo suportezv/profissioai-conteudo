@@ -327,7 +327,13 @@ export const Cena05: React.FC = () => {
               <div
                 style={{
                   height: "100%",
-                  width: `${interpolate(mudou, [0, 1], [72, 64])}%`,
+                  // **A barra é a própria meta, e ela sobe.** Antes ela
+                  // mostrava o quanto do alvo já tinha sido atingido, então
+                  // subir a meta encurtava a barra: o número crescia e o
+                  // desenho diminuía, que é o oposto do que a cena afirma.
+                  // Agora a largura é proporcional ao valor (540/480 = 1,125,
+                  // e 72 × 1,125 = 81), então o desenho diz o que o número diz.
+                  width: `${interpolate(mudou, [0, 1], [72, 81])}%`,
                   background: mudou > 0.02 ? marca.azul : dash.barraViva,
                 }}
               />

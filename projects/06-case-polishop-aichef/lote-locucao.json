@@ -47,9 +47,14 @@
       "texto": "Trinta e cinco por cento dos clientes voltaram a conversar. E numa pesquisa de NPS, o agente alcançou noventa e três."
     },
     {
-      "nome": "cena-09",
-      "texto": "Um QR code impresso na fábrica transforma um produto na prateleira em uma conversa que continua. Sem campanha, sem e-mail, sem lembrete. A Polishop já está levando essa inovação para a linha fitness.",
-      "nota": "A frase que cita a marca comeca uma oracao nova, pelo mesmo motivo da cena 06. Este take mede 148 Hz contra os 143 Hz da referencia. A grafia fonetica `Pólishópi`, tentada antes, foi abandonada: ela acertava a tonica e nao o registro, que era o problema real."
+      "nome": "cena-09a",
+      "texto": "Um QR code impresso na fábrica transforma um produto na prateleira em uma conversa que continua. Sem campanha, sem e-mail, sem lembrete.",
+      "nota": "Nao foi regerada: e o take aprovado de cena-09 cortado em 8,05 s, no silencio entre a segunda e a terceira oracao."
+    },
+    {
+      "nome": "cena-09b",
+      "texto": "A Polishop já está levando essa inovação para a linha fitness.",
+      "nota": "Faixa separada pelo mesmo motivo da 06b: a marca tem que nascer em inicio de fala. Dez takes gerados, todos com transcricao igual ao pedido; escolhido o de f0 mais perto da referencia da cena 02."
     }
   ]
 }

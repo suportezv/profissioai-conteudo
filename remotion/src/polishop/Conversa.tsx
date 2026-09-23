@@ -20,14 +20,14 @@ const CLIPE_FRAMES = s(4);
  * Fica separado pelo mesmo motivo do `whatsapp.ts`: **três cenas desenham a
  * mesma conversa**, e se cada uma guardasse os próprios balões elas
  * divergiriam na primeira revisão. O filme depende de o espectador reconhecer
- * que é sempre o mesmo A.IChef.
+ * que é sempre o mesmo AIChef.
  *
  * Nenhuma conversa real entra na peça: tudo aqui é recriação, e as fotos que
  * o "cliente" manda são imagens geradas, não material de usuário.
  */
 
 /**
- * O avatar do A.IChef, como o WhatsApp mostra a foto de perfil de uma empresa.
+ * O avatar do AIChef, como o WhatsApp mostra a foto de perfil de uma empresa.
  *
  * O arquivo do cliente é o balão escuro com o chapéu de chef vermelho, num
  * retrato alto. Avatar de app é redondo, então o desenho vai **contido** num
@@ -88,7 +88,7 @@ export const Painel: React.FC<{
       }}
     >
       <AvatarChef tam={44} />
-      <div style={{ fontFamily: UI, fontSize: 22, color: wa.texto }}>A.IChef</div>
+      <div style={{ fontFamily: UI, fontSize: 22, color: wa.texto }}>AIChef</div>
     </div>
     <div
       style={{
