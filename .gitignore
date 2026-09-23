@@ -40,4 +40,4 @@ remotion/public/soldiers-broll/
 
 # trilha copiada de projects/ para o Remotion enxergar. O mestre e os stems
 # moram em projects/<case>/trilha/, junto do mapa de secoes que os costura.
-remotion/public/*/trilha.mp3
+remotion/public/*/trilha*.mp3
