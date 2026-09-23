@@ -135,9 +135,11 @@ export const Cena08: React.FC = () => {
             >
               <div
                 style={{
-                  fontSize: vertical ? 260 : 190,
+                  // 220 e o maior corpo em que "151.034" cabe nos 936 px uteis;
+                  // a 260 o ultimo digito saia pela borda direita
+                  fontSize: vertical ? 220 : 190,
                   fontWeight: 500,
-                  letterSpacing: vertical ? "-9.1px" : "-6.65px",
+                  letterSpacing: vertical ? "-7.7px" : "-6.65px",
                   lineHeight: 1,
                   color: marca.azul,
                   fontVariantNumeric: "tabular-nums",
