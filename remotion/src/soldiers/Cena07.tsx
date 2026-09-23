@@ -106,7 +106,7 @@ const LIGA = s(6.2);
  * entao a foto ancora no topo: o recorte ja foi feito pela cabeca, e cortar o
  * alto dela seria desfazer isso.
  */
-const V = { base: 280, cartao: 380, vao: 16 };
+const V = { base: 250, cartao: 400, vao: 16 };
 
 export const Cena07: React.FC = () => {
   const f = useCurrentFrame();
@@ -129,12 +129,12 @@ export const Cena07: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          gap: vertical ? 36 : 48,
+          gap: vertical ? 28 : 48,
         }}
       >
         <div
           style={{
-            fontSize: vertical ? 28 : 24,
+            fontSize: vertical ? 30 : 24,
             fontWeight: 500,
             letterSpacing: "2px",
             textTransform: "uppercase",
@@ -238,8 +238,8 @@ export const Cena07: React.FC = () => {
                       alignSelf: "flex-start",
                       border: `1px solid ${p.base ? "#3a3a3a" : "#4c471f"}`,
                       borderRadius: 999,
-                      padding: vertical ? "6px 14px" : "5px 12px",
-                      fontSize: vertical ? 16 : 13,
+                      padding: vertical ? "7px 16px" : "5px 12px",
+                      fontSize: vertical ? 20 : 13,
                       fontWeight: 500,
                       letterSpacing: "1px",
                       textTransform: "uppercase",
@@ -250,7 +250,7 @@ export const Cena07: React.FC = () => {
                   </div>
                   <div
                     style={{
-                      fontSize: vertical ? 18 : 15,
+                      fontSize: vertical ? 24 : 15,
                       fontWeight: 700,
                       letterSpacing: "1px",
                       color: MODO_AMARELO,
@@ -260,9 +260,10 @@ export const Cena07: React.FC = () => {
                   </div>
                   <div
                     style={{
-                      // 24 e o teto: "VITOR ZANELATO" na coluna da direita
-                      // tem que acabar antes da coluna de botoes do app
-                      fontSize: vertical ? 24 : 22,
+                      // 36 e o teto: "CEUBOLINHA", a palavra mais larga, mede
+                      // 250 px num cartao de 265 uteis; nome de duas palavras
+                      // quebra em duas linhas
+                      fontSize: vertical ? 36 : 22,
                       fontWeight: 700,
                       letterSpacing: "-0.5px",
                       lineHeight: 1.1,
@@ -299,8 +300,8 @@ export const Cena07: React.FC = () => {
               right: 0,
               // no 9:16 a legenda alinha a esquerda, como o resto do quadro
               textAlign: vertical ? "left" : "center",
-              fontSize: vertical ? 34 : 30,
-              letterSpacing: vertical ? "-1.19px" : "-1.05px",
+              fontSize: vertical ? 38 : 30,
+              letterSpacing: vertical ? "-1.33px" : "-1.05px",
               color: m.apoio,
               ...entra(base, 14),
             }}

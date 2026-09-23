@@ -360,11 +360,11 @@ const BalaoTexto: React.FC<{
 /**
  * No 9:16 o texto sobe e a conversa desce, e a conversa cresce: e o formato
  * natural dela. O painel e o mesmo, ampliado por `zoom` (que escala o layout
- * inteiro, fontes e baloes juntos, sem refazer as medidas do app) e mais alto,
- * para caber mais dias do rastro. A largura para antes da coluna de botoes do
- * app, porque as respostas do cliente ficam alinhadas a direita.
+ * inteiro, fontes e baloes juntos, sem refazer as medidas do app) ate a
+ * largura util: 660 x 1,418 = 936 px, e o texto dos baloes (22 px no app) sai
+ * com 31 px efetivos. A coluna de mensagens tem 462 px no app, 655 no quadro.
  */
-const V = { zoom: 1.3, chat: 560 };
+const V = { zoom: 936 / 660, chat: 462 };
 
 export const Cena06: React.FC = () => {
   const f = useCurrentFrame();
@@ -408,7 +408,7 @@ export const Cena06: React.FC = () => {
           flexDirection: vertical ? "column-reverse" : "row",
           alignItems: vertical ? "flex-start" : "center",
           justifyContent: vertical ? "flex-end" : undefined,
-          gap: vertical ? 48 : 72,
+          gap: vertical ? 44 : 72,
         }}
       >
         {/* a tela recriada: a conversa empilha e o antigo sobe e sai */}
@@ -552,12 +552,12 @@ export const Cena06: React.FC = () => {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: vertical ? 24 : 28,
+            gap: vertical ? 22 : 28,
           }}
         >
           <div
             style={{
-              fontSize: vertical ? 28 : 24,
+              fontSize: vertical ? 30 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
@@ -569,10 +569,10 @@ export const Cena06: React.FC = () => {
           </div>
           <div
             style={{
-              fontSize: vertical ? 64 : 52,
+              fontSize: vertical ? 84 : 52,
               fontWeight: 500,
-              letterSpacing: vertical ? "-2.24px" : "-1.82px",
-              lineHeight: vertical ? 1.14 : 1.22,
+              letterSpacing: vertical ? "-2.94px" : "-1.82px",
+              lineHeight: vertical ? 1.1 : 1.22,
               opacity: janela(f, s(1.2), CENA06_FRAMES, 10, 0),
             }}
           >
@@ -584,8 +584,8 @@ export const Cena06: React.FC = () => {
           </div>
           <div
             style={{
-              fontSize: vertical ? 32 : 30,
-              letterSpacing: vertical ? "-1.12px" : "-1.05px",
+              fontSize: vertical ? 36 : 30,
+              letterSpacing: vertical ? "-1.26px" : "-1.05px",
               color: m.apoio,
               borderTop: "1px solid rgba(16,18,24,0.22)",
               paddingTop: 20,

@@ -91,10 +91,10 @@ export const Cena09: React.FC = () => {
         <AbsoluteFill style={{ padding: PAD, justifyContent: "center" }}>
           <div
             style={{
-              fontSize: vertical ? 92 : 76,
+              fontSize: vertical ? 110 : 76,
               fontWeight: 500,
-              letterSpacing: vertical ? "-3.22px" : "-2.66px",
-              lineHeight: vertical ? 1.12 : 1.16,
+              letterSpacing: vertical ? "-3.85px" : "-2.66px",
+              lineHeight: vertical ? 1.1 : 1.16,
               maxWidth: 1400,
               ...entra(tese, 20),
             }}
@@ -121,21 +121,23 @@ export const Cena09: React.FC = () => {
               background: marca.tinta,
               borderRadius: marca.raio.arte,
               boxShadow: marca.sombra.painel,
-              padding: vertical ? "96px 72px" : "72px 110px",
+              // no 9:16 a faixa toma a largura util
+              width: vertical ? 936 : undefined,
+              padding: vertical ? "120px 72px" : "72px 110px",
               display: "flex",
               flexDirection: vertical ? "column" : "row",
               alignItems: "center",
-              gap: vertical ? 72 : 96,
+              gap: vertical ? 88 : 96,
             }}
           >
             <Img
               src={staticFile("marca-soldiers/soldiers-branco.png")}
-              style={{ height: vertical ? 200 : 150, width: "auto", display: "block" }}
+              style={{ height: vertical ? 260 : 150, width: "auto", display: "block" }}
             />
 
             <div
               style={{
-                width: vertical ? 600 : 1,
+                width: vertical ? 720 : 1,
                 height: vertical ? 1 : 150,
                 background: "rgba(255,255,255,0.22)",
               }}
@@ -143,7 +145,7 @@ export const Cena09: React.FC = () => {
 
             <Img
               src={staticFile("marca/profissio-ai-branco.svg")}
-              style={{ width: vertical ? 600 : 460, height: "auto", display: "block" }}
+              style={{ width: vertical ? 720 : 460, height: "auto", display: "block" }}
             />
           </div>
         </AbsoluteFill>

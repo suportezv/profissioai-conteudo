@@ -129,15 +129,15 @@ export const Cena08: React.FC = () => {
                 right: lado,
                 display: "flex",
                 flexDirection: "column",
-                gap: vertical ? 24 : 20,
+                gap: vertical ? 28 : 20,
                 ...entra(o, 24),
               }}
             >
               <div
                 style={{
-                  fontSize: vertical ? 220 : 190,
+                  fontSize: vertical ? 260 : 190,
                   fontWeight: 500,
-                  letterSpacing: vertical ? "-7.7px" : "-6.65px",
+                  letterSpacing: vertical ? "-9.1px" : "-6.65px",
                   lineHeight: 1,
                   color: marca.azul,
                   fontVariantNumeric: "tabular-nums",
@@ -149,9 +149,9 @@ export const Cena08: React.FC = () => {
               </div>
               <div
                 style={{
-                  fontSize: vertical ? 72 : 52,
+                  fontSize: vertical ? 88 : 52,
                   fontWeight: 500,
-                  letterSpacing: vertical ? "-2.52px" : "-1.82px",
+                  letterSpacing: vertical ? "-3.08px" : "-1.82px",
                   lineHeight: 1.15,
                 }}
               >
@@ -160,8 +160,8 @@ export const Cena08: React.FC = () => {
               {/* a base anda junto do numero, nunca num rodape solto */}
               <div
                 style={{
-                  fontSize: vertical ? 34 : 26,
-                  letterSpacing: vertical ? "-1.19px" : "-0.91px",
+                  fontSize: vertical ? 38 : 26,
+                  letterSpacing: vertical ? "-1.33px" : "-0.91px",
                   lineHeight: vertical ? 1.3 : undefined,
                   color: m.apoio,
                   borderTop: "1px solid rgba(16,18,24,0.22)",

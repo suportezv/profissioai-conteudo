@@ -133,12 +133,20 @@ const FAIXA = 1080;
 
 /**
  * O 9:16. Os oito blocos ocupam a largura util inteira (8 x 110 + 7 vaos de 8
- * = 936), e por isso o valor e o "8x mais" descem para a linha de baixo da
- * barra, em vez de ficar na ponta dela. Na reativacao a regua e de 1100 px (50%
- * = 550), com a porcentagem na ponta e o rotulo embaixo: lado a lado ele nao
- * cabe numa coluna de 1080.
+ * = 936), e por isso o valor desce para baixo da barra, com o "8x mais" numa
+ * linha propria: "13,5%" a 260 px mede 692, e os dois lado a lado passam da
+ * largura util. As duas taxas tem o mesmo corpo, como no 16:9. Na reativacao a
+ * regua e de 1100 px (50% = 550), com a porcentagem na ponta e o rotulo
+ * embaixo: lado a lado ele nao cabe numa coluna de 1080.
  */
-const V = { bloco: 110, alturaBloco: 96, faixa: 1100, alturaBarra: 72 };
+const V = {
+  bloco: 110,
+  alturaBloco: 110,
+  taxa: 260,
+  faixa: 1100,
+  alturaBarra: 100,
+  limiar: 120,
+};
 
 export const Cena08B: React.FC = () => {
   const f = useCurrentFrame();
@@ -181,12 +189,12 @@ export const Cena08B: React.FC = () => {
         <AbsoluteFill style={{ padding: PAD, justifyContent: "center" }}>
           <div
             style={{
-              fontSize: vertical ? 28 : 24,
+              fontSize: vertical ? 30 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
               color: marca.azul,
-              marginBottom: vertical ? 56 : 46,
+              marginBottom: vertical ? 48 : 46,
               ...entra(conv, 14),
             }}
           >
@@ -204,7 +212,7 @@ export const Cena08B: React.FC = () => {
             vertical={vertical}
           />
 
-          <div style={{ height: vertical ? 72 : 54 }} />
+          <div style={{ height: vertical ? 56 : 54 }} />
 
           <Linha
             rotulo="quem passou por um agente"
@@ -231,7 +239,7 @@ export const Cena08B: React.FC = () => {
         <AbsoluteFill style={{ padding: PAD, justifyContent: "center" }}>
           <div
             style={{
-              fontSize: vertical ? 28 : 24,
+              fontSize: vertical ? 30 : 24,
               fontWeight: 500,
               letterSpacing: "2px",
               textTransform: "uppercase",
@@ -245,13 +253,13 @@ export const Cena08B: React.FC = () => {
 
           <div
             style={{
-              fontSize: vertical ? 60 : 40,
+              fontSize: vertical ? 84 : 40,
               fontWeight: 500,
-              letterSpacing: vertical ? "-2.1px" : "-1.4px",
-              lineHeight: vertical ? 1.14 : 1.2,
-              // no 9:16 a quebra cai antes de "voltou a comprar", e a parte
-              // azul fica inteira na segunda linha
-              maxWidth: vertical ? 760 : 1180,
+              letterSpacing: vertical ? "-2.94px" : "-1.4px",
+              lineHeight: vertical ? 1.1 : 1.2,
+              // no 9:16 "quem ja tinha esfriado" mede 889 px e fecha a primeira
+              // linha: a parte azul fica inteira na segunda
+              maxWidth: vertical ? 936 : 1180,
               marginBottom: vertical ? 56 : 44,
               ...entra(reat, 18),
             }}
@@ -272,7 +280,7 @@ export const Cena08B: React.FC = () => {
                     display: "flex",
                     flexDirection: "column",
                     gap: 10,
-                    marginBottom: 34,
+                    marginBottom: 30,
                     opacity: o,
                   }}
                 >
@@ -288,9 +296,9 @@ export const Cena08B: React.FC = () => {
                     />
                     <div
                       style={{
-                        fontSize: 76,
+                        fontSize: V.limiar,
                         fontWeight: 500,
-                        letterSpacing: "-2.66px",
+                        letterSpacing: "-4.2px",
                         lineHeight: 1,
                         fontVariantNumeric: "tabular-nums",
                         color: marca.azul,
@@ -301,8 +309,8 @@ export const Cena08B: React.FC = () => {
                   </div>
                   <div
                     style={{
-                      fontSize: 32,
-                      letterSpacing: "-1.12px",
+                      fontSize: 40,
+                      letterSpacing: "-1.4px",
                       color: m.apoio,
                       maxWidth: largTexto,
                     }}
@@ -430,9 +438,9 @@ const Linha: React.FC<{
     cheios > 0.02 ? (
       <div
         style={{
-          fontSize: vertical ? 96 : 76,
+          fontSize: vertical ? V.taxa : 76,
           fontWeight: 500,
-          letterSpacing: vertical ? "-3.36px" : "-2.66px",
+          letterSpacing: vertical ? "-9.1px" : "-2.66px",
           lineHeight: 1,
           color: cor,
           fontVariantNumeric: "tabular-nums",
@@ -445,10 +453,10 @@ const Linha: React.FC<{
     multiplicador !== undefined && multiplicador > 0.8 ? (
       <div
         style={{
-          marginLeft: 24,
-          fontSize: vertical ? 72 : 64,
+          marginLeft: vertical ? 0 : 24,
+          fontSize: vertical ? 84 : 64,
           fontWeight: 500,
-          letterSpacing: vertical ? "-2.52px" : "-2.66px",
+          letterSpacing: vertical ? "-2.94px" : "-2.66px",
           lineHeight: 1,
           color: modos.claro.tinta,
           fontVariantNumeric: "tabular-nums",
@@ -463,8 +471,8 @@ const Linha: React.FC<{
       <div style={{ ...entra(o, 18) }}>
         <div
           style={{
-            fontSize: 32,
-            letterSpacing: "-1.12px",
+            fontSize: 40,
+            letterSpacing: "-1.4px",
             color: modos.claro.apoio,
             marginBottom: 18,
           }}
@@ -476,9 +484,10 @@ const Linha: React.FC<{
         <div
           style={{
             display: "flex",
-            alignItems: "baseline",
-            height: 96,
-            marginTop: 24,
+            flexDirection: "column",
+            gap: 8,
+            height: V.taxa + 8 + 84,
+            marginTop: 20,
           }}
         >
           {numero}
@@ -492,8 +501,8 @@ const Linha: React.FC<{
     <div style={{ ...entra(o, 18) }}>
       <div
         style={{
-          fontSize: vertical ? 32 : 28,
-          letterSpacing: vertical ? "-1.12px" : "-0.98px",
+          fontSize: vertical ? 40 : 28,
+          letterSpacing: vertical ? "-1.4px" : "-0.98px",
           color: modos.claro.apoio,
           marginBottom: vertical ? 18 : 16,
         }}
@@ -525,15 +534,15 @@ const Base: React.FC<{
 }> = ({ texto, o, vertical = false, largura = 1180 }) => (
   <div
     style={{
-      marginTop: vertical ? 48 : 40,
+      marginTop: vertical ? 36 : 40,
       maxWidth: vertical ? largura : 1180,
       opacity: o,
     }}
   >
     <div
       style={{
-        fontSize: vertical ? 30 : 26,
-        letterSpacing: vertical ? "-1.05px" : "-0.91px",
+        fontSize: vertical ? 32 : 26,
+        letterSpacing: vertical ? "-1.12px" : "-0.91px",
         lineHeight: 1.35,
         color: modos.claro.apoio,
         borderTop: "1px solid rgba(16,18,24,0.22)",
